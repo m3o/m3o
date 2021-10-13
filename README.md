@@ -1,6 +1,10 @@
-<img src="images/banner.png" />
-
-# M3O
+<p align="center">
+  <a href="https://m3o.com">
+    <img src="https://avatars.githubusercontent.com/u/65984637?s=200&v=4" height="96">
+    <h3 align="center">M3O</h3>
+  </a>
+  <p align="center">An open source AWS alternative</p>
+</p>
 
 [M3O](https://m3o.com) is an open source public cloud platform. We are building an AWS alternative for the next generation of developers.
 
