@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="http://m3o.com">
+	<a href="http://m3o.com" style="color: black;">
 		<img src="https://avatars.githubusercontent.com/u/65984637?s=200&v=4" />
 		<h1 align="center">M3O</h1>
 	</a>
