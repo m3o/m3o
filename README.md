@@ -1,6 +1,6 @@
 <p align="center">
 	<a href="http://m3o.com">
-		<img src="https://avatars.githubusercontent.com/u/65984637?s=200&v=4" />
+		<img src="https://avatars.githubusercontent.com/u/65984637?s=200&v=4" style="border-radius: 5px;" />
 		<h1 align="center">M3O</h1>
 	</a>
 </p>
