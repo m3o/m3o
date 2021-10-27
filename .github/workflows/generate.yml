@@ -91,7 +91,7 @@ jobs:
 
       - name: Move clients/examples
         run: |
-          rm -rf clients examples/go examples/ts examples/curl
+          rm -rf clients services examples/go examples/ts examples/curl
           cp -r ./services/clients .
           cp -r ./services/examples/* examples/
 
