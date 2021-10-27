@@ -52,21 +52,6 @@ jobs:
         run: |
           go install
 
-#      - name: install postman converter
-#        working-directory: services
-#        run: |
-#          sudo npm install -g openapi-to-postmanv2
-#          sudo npm install -g prettier
-#          openapi2postmanv2 -h
-
-#      - name: Generate openapi spec and publish the api
-#        working-directory: services
-#        if: github.ref == 'refs/heads/master'
-#        run: |
-#          go run cmd/publisher/main.go .
-#        env:
-#          MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
-
       - name: Generate package
         working-directory: services
         if: github.ref == 'refs/heads/master'
@@ -101,22 +86,37 @@ jobs:
       - name: Commit back clients/examples
         uses: EndBug/add-and-commit@v7
 
-      - name: npm install
-        working-directory: services
-        if: github.ref == 'refs/heads/master'
-        run: |
-          git status
-          cd clients/ts;
-          npm install
-          npm run build
-          npm publish --access public
+#      - name: install postman converter
+#        working-directory: services
+#        run: |
+#          sudo npm install -g openapi-to-postmanv2
+#          sudo npm install -g prettier
+#          openapi2postmanv2 -h
 
-      - name: npm install beta
-        working-directory: services
-        if: github.ref == 'refs/heads/beta'
-        run: |
-          git status
-          cd clients/ts;
-          npm install
-          npm run build
-          npm publish --access public --tag beta
+#      - name: Generate openapi spec and publish the api
+#        working-directory: services
+#        if: github.ref == 'refs/heads/master'
+#        run: |
+#          go run cmd/publisher/main.go .
+#        env:
+#          MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
+
+#      - name: publish npm clients
+#        working-directory: services
+#        if: github.ref == 'refs/heads/master'
+#        run: |
+#          git status
+#          cd clients/ts;
+#          npm install
+#          npm run build
+#          npm publish --access public
+
+#      - name: publish npm beta clients
+#        working-directory: services
+#        if: github.ref == 'refs/heads/beta'
+#        run: |
+#          git status
+#          cd clients/ts;
+#          npm install
+#          npm run build
+#          npm publish --access public --tag beta
