@@ -1,0 +1,114 @@
+name: Generate Clients & Examples
+on:
+  repository_dispatch:
+    types: [micro_services]
+    
+jobs:
+  docs:
+    name: Generate docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@master
+
+      - name: Check services repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'micro/services'
+          path: services
+
+      - name: Check micro repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'micro/micro'
+          path: 'micro'
+          ref: 'master'
+
+      - name: Enable caching
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install protoc gen micro plugin
+        working-directory: micro/cmd/protoc-gen-micro
+        run: |
+          go get -u github.com/golang/protobuf/protoc-gen-go
+          go install
+
+      - name: Install openapi plugin
+        working-directory: micro/cmd/protoc-gen-openapi
+        run: |
+          go install
+
+      - name: install postman converter
+        working-directory: services
+        run: |
+          sudo npm install -g openapi-to-postmanv2
+          sudo npm install -g prettier
+          openapi2postmanv2 -h
+
+      - name: Generate openapi spec and publish the api
+        working-directory: services
+        if: github.ref == 'refs/heads/master'
+        run: |
+          go run cmd/publisher/main.go .
+        env:
+          MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
+
+      - name: Generate package
+        working-directory: services
+        if: github.ref == 'refs/heads/master'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          pwd
+          cd cmd/clients;
+          go install;
+          cd ../..;
+          clients .
+      
+      - name: Generate beta package
+        working-directory: services
+        if: github.ref == 'refs/heads/beta'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          IS_BETA: yup
+        run: |
+          pwd
+          cd cmd/clients;
+          go install;
+          cd ../..;
+          clients .
+
+      - uses: EndBug/add-and-commit@v7
+        with:
+          cwd: './services'
+
+      - name: npm install
+        working-directory: services
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git status
+          cd clients/ts;
+          npm install
+          npm run build
+          npm publish --access public
+
+      - name: npm install beta
+        working-directory: services
+        if: github.ref == 'refs/heads/beta'
+        run: |
+          git status
+          cd clients/ts;
+          npm install
+          npm run build
+          npm publish --access public --tag beta
