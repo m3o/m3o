@@ -18,14 +18,16 @@ import (
 	"github.com/micro/micro/v3/service/runtime/source/git"
 )
 
+const originRepo = "github.com/m3o/m3o"
+
 var repos = map[string][]string{
-	"github.com/m3o/m3o": []string{"%v-js", "examples/js"},
-	"github.com/m3o/m3o": []string{"%v-go", "examples/go"},
+	"js": []string{"%v-js", "examples/js"},
+	"go": []string{"%v-go", "examples/go"},
 }
 
 func Push(pat string) {
 	for {
-		for originRepo, d := range repos {
+		for _, d := range repos {
 			newRepoTemplate := d[0]
 			examplesPath := d[1]
 			log.Infof("Processing repo %v", originRepo)
