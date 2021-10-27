@@ -89,9 +89,14 @@ jobs:
           cd ../..;
           clients .
 
-      - uses: EndBug/add-and-commit@v7
-        with:
-          cwd: './services'
+      - name: Move clients/examples
+        run: |
+          rm -rf clients examples/go examples/ts examples/curl
+          cp -r ./services/clients .
+          cp -r ./services/examples/* examples/
+
+      - name: Commit back clients/examples
+        uses: EndBug/add-and-commit@v7
 
       - name: npm install
         working-directory: services
