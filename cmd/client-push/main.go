@@ -19,7 +19,7 @@ import (
 )
 
 var repos = map[string][]string{
-	//"github.com/m3o/m3o": []string{"%v-js", "examples/js"},
+	"github.com/m3o/m3o": []string{"%v-js", "examples/js"},
 	"github.com/m3o/m3o": []string{"%v-go", "examples/go"},
 }
 
