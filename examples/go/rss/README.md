@@ -4,6 +4,33 @@ An [m3o.com](https://m3o.com) API. For example usage see [m3o.com/Rss/api](https
 
 Endpoints:
 
+## Feed
+
+Get an RSS feed by name. If no name is given, all feeds are returned. Default limit is 25 entries.
+
+
+[https://m3o.com/rss/api#Feed](https://m3o.com/rss/api#Feed)
+
+```go
+package example
+
+import(
+	"fmt"
+	"os"
+
+	"github.com/micro/services/clients/go/rss"
+)
+
+// Get an RSS feed by name. If no name is given, all feeds are returned. Default limit is 25 entries.
+func ReadAfeed() {
+	rssService := rss.NewRssService(os.Getenv("MICRO_API_TOKEN"))
+	rsp, err := rssService.Feed(&rss.FeedRequest{
+		Name: "bbc",
+
+	})
+	fmt.Println(rsp, err)
+}
+```
 ## List
 
 List the saved RSS fields
@@ -81,33 +108,6 @@ func AddAnewFeed() {
 		Category: "news",
 Name: "bbc",
 Url: "http://feeds.bbci.co.uk/news/rss.xml",
-
-	})
-	fmt.Println(rsp, err)
-}
-```
-## Feed
-
-Get an RSS feed by name. If no name is given, all feeds are returned. Default limit is 25 entries.
-
-
-[https://m3o.com/rss/api#Feed](https://m3o.com/rss/api#Feed)
-
-```go
-package example
-
-import(
-	"fmt"
-	"os"
-
-	"github.com/micro/services/clients/go/rss"
-)
-
-// Get an RSS feed by name. If no name is given, all feeds are returned. Default limit is 25 entries.
-func ReadAfeed() {
-	rssService := rss.NewRssService(os.Getenv("MICRO_API_TOKEN"))
-	rsp, err := rssService.Feed(&rss.FeedRequest{
-		Name: "bbc",
 
 	})
 	fmt.Println(rsp, err)
