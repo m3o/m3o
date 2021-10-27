@@ -1,5 +1,8 @@
 name: Generate Clients & Examples
 on:
+  push:
+    branches:
+      - master
   repository_dispatch:
     types: [micro_services]
     
