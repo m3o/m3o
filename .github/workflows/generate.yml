@@ -102,7 +102,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/clients/go'
+          source_file: 'services/clients/go/'
           destination_repo: 'm3o/m3o-go'
           destination_branch: 'master'
           github_server: 'github.com'
