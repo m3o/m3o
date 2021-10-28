@@ -82,7 +82,7 @@ jobs:
       
       - name: Generate beta package
         working-directory: services
-        if: github.ref == 'refs/heads/beta'
+        #if: github.ref == 'refs/heads/beta'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           IS_BETA: yup
@@ -104,6 +104,7 @@ jobs:
         with:
           source_file: 'services/clients/go'
           destination_repo: 'm3o/m3o-go'
+          destination_branch: 'master'
           github_server: 'github.com'
           user_name: 'm3o-actions'
           commit_message: 'Commit from m3o/m3o action'
