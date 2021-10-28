@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - fixgen2
   repository_dispatch:
     types: [micro_services]
     
