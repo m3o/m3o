@@ -94,6 +94,8 @@ jobs:
         working-directory: services
         run: |
           ls
+          ls clients
+          ls examples
           # the final imports in m3o/m3o-go differ
           cd clients/go
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go/m3o\/m3o-go/g'
