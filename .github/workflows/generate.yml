@@ -103,7 +103,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_file: 'services/clients/go'
-          destination_repo: 'github.com/m3o/m3o-go'
+          destination_repo: 'git@github.com:m3o/m3o-go.git'
           user_name: 'm3o-actions'
           commit_message: 'Commit from m3o/m3o action'
 
