@@ -134,7 +134,7 @@ func main() {
 		}
 		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {
 			serviceName := f.Name()
-			tsFileList = append(tsFileList, serviceName)
+			//tsFileList = append(tsFileList, serviceName)
 			serviceDir := filepath.Join(workDir, f.Name())
 			cmd := exec.Command("make", "api")
 			cmd.Dir = serviceDir
@@ -726,7 +726,7 @@ func main() {
 	}
 
 	// add file list to gitignore
-	f, err = os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	for _, sname := range tsFileList {
 		_, err := f.Write([]byte(sname + "\n"))
 		if err != nil {
