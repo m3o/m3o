@@ -103,7 +103,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_file: 'services/clients/go'
-          destination_repo: 'm3o/m3o-go'
+          destination_repo: 'github.com/m3o/m3o-go'
+          user_name: 'm3o-actions'
           commit_message: 'Commit from m3o/m3o action'
 
       - name: publish npm clients
