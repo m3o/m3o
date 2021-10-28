@@ -6,7 +6,7 @@ on:
       - fixgen2
   repository_dispatch:
     types: [micro_services]
-    
+
 jobs:
   generate:
     name: Generate Clients
@@ -58,7 +58,7 @@ jobs:
         working-directory: micro/cmd/protoc-gen-openapi
         run: |
           go install
-          
+
       - name: Install generator
         working-directory: m3o
         run: |
@@ -79,7 +79,7 @@ jobs:
         run: |
           rm -rf clients examples
           clients .
-      
+
       - name: Generate beta package
         working-directory: services
         #if: github.ref == 'refs/heads/beta'
@@ -93,13 +93,10 @@ jobs:
       - name: Adjust generated things before pushing
         working-directory: services
         run: |
-          ls
-          ls clients
-          ls examples
           # the final imports in m3o/m3o-go differ
           cd clients/go
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go/m3o\/m3o-go/g'
-          cd ../../..
+          cd ../..
 
           # put the examples into clients
           mkdir clients/go/examples
@@ -127,7 +124,7 @@ jobs:
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
-      
+
       - name: Push JS files
         uses: dmnemec/copy_file_to_another_repo_action@main
         #if: github.ref == 'refs/heads/main'
@@ -175,4 +172,3 @@ jobs:
           go run cmd/publisher/main.go .
         env:
           MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
-
