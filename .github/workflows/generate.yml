@@ -104,7 +104,7 @@ jobs:
 
           # replace path in go examples
           cd clients/go/examples
-          grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go.m3o.com/g'
+          grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go\.m3o\.com/g'
           cd ../../..
 
           # same for js examples
