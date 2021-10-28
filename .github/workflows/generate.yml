@@ -104,12 +104,12 @@ jobs:
 
           # replace path in go examples
           cd clients/go/examples
-          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@micro/services/clients/go@\.m3o\.com@g'
+          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@micro/services/clients/go@go\.m3o\.com@g'
           cd ../../..
 
           # same for js examples
-          mkdir clients/js/examples
-          mv examples/js/* clients/js/examples/
+          mkdir clients/ts/examples
+          mv examples/ts/* clients/ts/examples/
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
@@ -131,7 +131,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/clients/js/'
+          source_file: 'services/clients/ts/'
           destination_repo: 'm3o/m3o-js'
           destination_branch: 'master'
           github_server: 'github.com'
