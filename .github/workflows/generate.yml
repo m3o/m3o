@@ -93,6 +93,7 @@ jobs:
       - name: Adjust generated things before pushing
         working-directory: services
         run: |
+          ls
           # the final imports in m3o/m3o-go differ
           cd clients/go
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go/m3o\/m3o-go/g'
