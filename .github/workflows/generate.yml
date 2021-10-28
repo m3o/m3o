@@ -71,7 +71,7 @@ jobs:
         run: |
           sudo npm install -g prettier
 
-      - name: Generate package
+      - name: Generate Go and JS packages
         working-directory: services
         if: github.ref == 'refs/heads/main'
         env:
@@ -87,23 +87,37 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           IS_BETA: yup
         run: |
+          rm -rf clients examples
           clients .
 
-      - name: Copy clients/examples
+      - name: Adjust generated things before pushing
         working-directory: m3o
         run: |
-          rm -rf clients/go && rm -rf clients/js && rm -rf clients/curl
-          rm -rf examples/go && rm -rf examples/js && rm -rf examples/curl
-          cp -r ../services/clients/* clients/.
-          cp -r ../services/examples/* examples/.
+          cd services/clients/go
+          grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go/m3o\/m3o-go/g'
 
-      - name: Pushes files
+      - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
+        #if: github.ref == 'refs/heads/main'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_file: 'services/clients/go/'
           destination_repo: 'm3o/m3o-go'
+          destination_branch: 'master'
+          github_server: 'github.com'
+          user_name: 'm3o-actions'
+          use_rsync: true
+          commit_message: 'Commit from m3o/m3o action'
+      
+      - name: Push JS files
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        #if: github.ref == 'refs/heads/main'
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'services/clients/js/'
+          destination_repo: 'm3o/m3o-js'
           destination_branch: 'master'
           github_server: 'github.com'
           user_name: 'm3o-actions'
