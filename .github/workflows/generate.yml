@@ -91,25 +91,25 @@ jobs:
           clients .
 
       - name: Adjust generated things before pushing
-        working-directory: m3o
+        working-directory: services
         run: |
           # the final imports in m3o/m3o-go differ
-          cd services/clients/go
+          cd clients/go
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go/m3o\/m3o-go/g'
           cd ../../..
 
           # put the examples into clients
-          mkdir services/clients/go/examples
-          mv services/examples/go/* services/clients/go/examples/
+          mkdir clients/go/examples
+          mv examples/go/* clients/go/examples/
 
           # replace path in go examples
-          cd services/clients/go/examples
+          cd clients/go/examples
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's/micro\/services\/clients\/go.m3o.com/g'
           cd ../../..
 
           # same for js examples
-          mkdir services/clients/js/examples
-          mv services/examples/js/* services/clients/js/examples/
+          mkdir clients/js/examples
+          mv examples/js/* clients/js/examples/
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
