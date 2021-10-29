@@ -109,7 +109,7 @@ jobs:
 
           # same for js examples
           mkdir clients/ts/examples
-          mv examples/ts/* clients/ts/examples/
+          mv examples/js/* clients/ts/examples/
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
