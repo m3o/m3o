@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - fixgen3
   repository_dispatch:
     types: [micro_services]
 
@@ -81,7 +82,7 @@ jobs:
 
       - name: Generate beta package
         working-directory: services
-        if: github.ref == 'refs/heads/beta'
+        #if: github.ref == 'refs/heads/beta'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           IS_BETA: yup
@@ -103,10 +104,10 @@ jobs:
 
           # replace path in go examples
           cd clients/go/examples
-          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@micro/services/clients/go@go\.m3o\.com@g'
+          grep -rl 'github.com/micro/services/clients/go' . | xargs sed -i 's@github\.com/micro/services/clients/go@go\.m3o\.com@g'
           cd ../../..
 
-          # same for js examples
+          #  js examples
           mkdir clients/ts/examples
           mv examples/js/* clients/ts/examples/
 
@@ -116,8 +117,9 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/clients/go/'
+          source_file: 'services/examples/curl'
           destination_repo: 'm3o/m3o-go'
+          destination
           destination_branch: 'master'
           github_server: 'github.com'
           user_name: 'm3o-actions'
@@ -137,9 +139,24 @@ jobs:
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
+      
+      - name: Push shell files
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        #if: github.ref == 'refs/heads/main'
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'services/examples/curl/'
+          destination_repo: 'm3o/m3o-sh'
+          destination_folder: 'examples'
+          destination_branch: 'master'
+          github_server: 'github.com'
+          user_name: 'm3o-actions'
+          use_rsync: true
+          commit_message: 'Commit from m3o/m3o action'
 
       - name: publish npm clients
-        working-directory: m3o
+        working-directory: services
         if: github.ref == 'refs/heads/main'
         run: |
           git status
@@ -149,7 +166,7 @@ jobs:
           npm publish --access public
 
       - name: publish npm beta clients
-        working-directory: m3o
+        working-directory: services
         if: github.ref == 'refs/heads/beta'
         run: |
           git status

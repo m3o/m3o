@@ -7,3 +7,5 @@ tmp
 index.js
 index.d.ts
 esm
+.npmrc
+npmrc
