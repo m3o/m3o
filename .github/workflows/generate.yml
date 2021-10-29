@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - fixbuild2
   repository_dispatch:
     types: [micro_services]
 
@@ -82,7 +81,7 @@ jobs:
 
       - name: Generate beta package
         working-directory: services
-        #if: github.ref == 'refs/heads/beta'
+        if: github.ref == 'refs/heads/beta'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           IS_BETA: yup
@@ -92,7 +91,7 @@ jobs:
 
       - name: Adjust generated things before pushing
         working-directory: services
-        #if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           # the final imports in m3o/m3o-go differ
           cd clients/go
@@ -115,7 +114,7 @@ jobs:
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
-        #if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
