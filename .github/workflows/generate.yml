@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - fixbuild2
   repository_dispatch:
     types: [micro_services]
 
@@ -81,7 +82,7 @@ jobs:
 
       - name: Generate beta package
         working-directory: services
-        if: github.ref == 'refs/heads/beta'
+        #if: github.ref == 'refs/heads/beta'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           IS_BETA: yup
@@ -91,12 +92,12 @@ jobs:
 
       - name: Adjust generated things before pushing
         working-directory: services
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         run: |
           # the final imports in m3o/m3o-go differ
           cd clients/go
-          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@github.com/micro/services/go@go.m3o.com@g'
-          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@github.com/m3o/m3o-go@go.m3o.com@g'
+          grep -rl 'github.com/micro/services' . | xargs sed -i 's@github.com/micro/services/go@go.m3o.com@g'
+          grep -rl 'github.com/m3o/m3o-go' . | xargs sed -i 's@github.com/m3o/m3o-go@go.m3o.com@g'
           cd ../..
 
           # put the examples into clients
@@ -105,7 +106,7 @@ jobs:
 
           # replace path in go examples
           cd clients/go/examples
-          grep -rl 'github.com/micro/services/clients/go' . | xargs sed -i 's@github.com/micro/services/go@go.m3o.com@g'
+          grep -rl 'github.com/micro/services/go' . | xargs sed -i 's@github.com/micro/services/go@go.m3o.com@g'
           cd ../../..
 
           #  js examples
