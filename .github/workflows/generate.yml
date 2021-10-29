@@ -119,7 +119,6 @@ jobs:
         with:
           source_file: 'services/examples/curl'
           destination_repo: 'm3o/m3o-go'
-          destination
           destination_branch: 'master'
           github_server: 'github.com'
           user_name: 'm3o-actions'
