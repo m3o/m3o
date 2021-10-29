@@ -96,6 +96,7 @@ jobs:
           # the final imports in m3o/m3o-go differ
           cd clients/go
           grep -rl 'micro/services/clients/go' . | xargs sed -i 's@github.com/micro/services/go@go\.m3o\.com@g'
+          grep -rl 'micro/services/clients/go' . | xargs sed -i 's@github.com/m3o/m3o-go@go\.m3o\.com@g'
           cd ../..
 
           # put the examples into clients
