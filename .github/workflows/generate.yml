@@ -115,7 +115,7 @@ jobs:
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
