@@ -726,7 +726,7 @@ func main() {
 	}
 
 	// add file list to gitignore
-	f, err = os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
 	for _, sname := range tsFileList {
 		_, err := f.Write([]byte(sname + "\n"))
 		if err != nil {
