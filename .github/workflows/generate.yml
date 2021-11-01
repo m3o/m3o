@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - beta
   repository_dispatch:
     types: [micro_services]
 
