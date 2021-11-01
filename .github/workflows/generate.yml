@@ -115,6 +115,12 @@ jobs:
           mkdir clients/ts/examples
           mv examples/js/* clients/ts/examples/
 
+      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
@@ -123,7 +129,7 @@ jobs:
         with:
           source_file: 'services/clients/go/'
           destination_repo: 'm3o/m3o-go'
-          destination_branch: ${{env.GITHUB_REF##*/}}
+          destination_branch: ${{ steps.extract_branch.outputs.branch }}
           github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
