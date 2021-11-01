@@ -137,13 +137,13 @@ jobs:
 
       - name: Push JS files
         uses: dmnemec/copy_file_to_another_repo_action@main
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_file: 'services/clients/ts/'
           destination_repo: 'm3o/m3o-js'
-          destination_branch: 'main'
+          destination_branch: ${{ steps.extract_branch.outputs.branch }}
           github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
