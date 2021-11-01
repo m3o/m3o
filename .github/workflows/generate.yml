@@ -116,13 +116,13 @@ jobs:
 
       - name: Push Go files
         uses: dmnemec/copy_file_to_another_repo_action@main
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_file: 'services/clients/go/'
           destination_repo: 'm3o/m3o-go'
-          destination_branch: 'master'
+          destination_branch: '${GITHUB_HEAD_REF}'
           github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
@@ -141,7 +141,7 @@ jobs:
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
-      
+
       - name: Push shell files
         uses: dmnemec/copy_file_to_another_repo_action@main
         if: github.ref == 'refs/heads/main'
