@@ -123,7 +123,7 @@ jobs:
         with:
           source_file: 'services/clients/go/'
           destination_repo: 'm3o/m3o-go'
-          destination_branch: ${{GITHUB_HEAD_REF}}
+          destination_branch: ${{GITHUB_REF##*/}}
           github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
