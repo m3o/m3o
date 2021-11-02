@@ -35,6 +35,12 @@ $ m3o call helloworld Call '{"name": "Alice"}'
 }
 ```
 
+Stream events
+
+```
+m3o stream notes Subscribe '{}'
+```
+
 List services
 
 ```
