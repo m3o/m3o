@@ -371,7 +371,7 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 
 	// gofmt example
 	cmd := exec.Command("gofmt", "-w", title+".go")
-	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint)
+	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint, title)
 	outp, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
