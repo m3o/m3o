@@ -489,113 +489,58 @@ func curlExample(examplesPath, serviceName, endpoint, title string, service serv
 	}
 }
 
-func main() {
-	files, err := ioutil.ReadDir(os.Args[1])
+func goIndexFile(goPath string, services []service) {
+	templ, err := template.New("goclient").Funcs(funcMap()).Parse(goIndexTemplate)
 	if err != nil {
-		log.Fatal(err)
-	}
-	workDir, _ := os.Getwd()
-	tsPath := filepath.Join(workDir, "clients", "ts")
-	err = os.MkdirAll(tsPath, 0777)
-	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	goPath := filepath.Join(workDir, "clients", "go")
-	err = os.MkdirAll(goPath, 0777)
+	b := bytes.Buffer{}
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"services": services,
+	})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	examplesPath := filepath.Join(workDir, "examples")
-	err = os.MkdirAll(goPath, 0777)
+	f, err := os.OpenFile(filepath.Join(goPath, "m3o.go"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
 	}
-
-	services := []service{}
-	tsFileList := []string{"esm", "index.js", "index.d.ts"}
-	for _, f := range files {
-		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
-			continue
-		}
-		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {
-			serviceName := f.Name()
-			//tsFileList = append(tsFileList, serviceName)
-			serviceDir := filepath.Join(workDir, f.Name())
-			cmd := exec.Command("make", "api")
-			cmd.Dir = serviceDir
-			outp, err := cmd.CombinedOutput()
-			if err != nil {
-				fmt.Println(string(outp))
-			}
-
-			serviceFiles, err := ioutil.ReadDir(serviceDir)
-			if err != nil {
-				fmt.Println("Failed to read service dir", err)
-				os.Exit(1)
-			}
-			skip := false
-
-			spec, skip := apiSpec(serviceFiles, serviceDir)
-			if skip {
-				continue
-			}
-			service := service{
-				Name:       serviceName,
-				ImportName: serviceName,
-				Spec:       spec,
-			}
-			if service.Name == "function" {
-				service.ImportName = "fx"
-			}
-			services = append(services, service)
-
-			nodeServiceClient(serviceName, tsPath, service)
-			nodeTopReadme(serviceName, examplesPath, service)
-
-			goServiceClient(serviceName, goPath, service)
-			goTopReadme(serviceName, examplesPath, service)
-
-			exam, err := ioutil.ReadFile(filepath.Join(workDir, serviceName, "examples.json"))
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-			if err == nil {
-				m := map[string][]example{}
-				err = json.Unmarshal(exam, &m)
-				if err != nil {
-					fmt.Println(string(exam), err)
-					os.Exit(1)
-				}
-				if len(service.Spec.Paths) != len(m) {
-					fmt.Printf("Service has %v endpoints, but only %v examples\n", len(service.Spec.Paths), len(m))
-				}
-				for endpoint, examples := range m {
-					for _, example := range examples {
-						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
-
-						goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						curlExample(examplesPath, serviceName, endpoint, title, service, example)
-					}
-					// only build after each example is generated as old files from
-					// previous generation might not compile
-					cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-					cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint)
-					outp, err = cmd.CombinedOutput()
-					if err != nil {
-						fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
-						os.Exit(1)
-					}
-				}
-			} else {
-				fmt.Println(err)
-			}
-		}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
 	}
+	cmd := exec.Command("gofmt", "-w", "m3o.go")
+	cmd.Dir = filepath.Join(goPath)
+	outp, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem with formatting m3o.go '%v", string(outp)))
+		os.Exit(1)
+	}
+	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
+	cmd.Dir = filepath.Join(goPath)
+	outp, err = cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem building m3o.go '%v'", string(outp)))
+		os.Exit(1)
+	}
+}
+
+func nodeIndexFile(workDir, tsPath string, services []service) {
+	// add file list to gitignore
+	f, err := os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	//for _, sname := range tsFileList {
+	//	_, err := f.Write([]byte(sname + "\n"))
+	//	if err != nil {
+	//		fmt.Println("failed to append service to gitignore", err)
+	//		os.Exit(1)
+	//	}
+	//}
 
 	templ, err := template.New("tsclient").Funcs(funcMap()).Parse(tsIndexTemplate)
 	if err != nil {
@@ -612,7 +557,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	f, err := os.OpenFile(filepath.Join(tsPath, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(filepath.Join(tsPath, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -637,55 +582,16 @@ func main() {
 		filepath.Join(tsFiles, "package-lock.json"), filepath.Join(tsFiles, "tsconfig.json"),
 		filepath.Join(tsFiles, "README.md"), filepath.Join(workDir, "clients", "ts"))
 
-	cmd.Dir = filepath.Join(tsPath)
 	outp, err = cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
 		os.Exit(1)
 	}
+}
 
-	templ, err = template.New("goclient").Funcs(funcMap()).Parse(goIndexTemplate)
-	if err != nil {
-		fmt.Println("Failed to unmarshal", err)
-		os.Exit(1)
-	}
-	b = bytes.Buffer{}
-	buf = bufio.NewWriter(&b)
-	err = templ.Execute(buf, map[string]interface{}{
-		"services": services,
-	})
-	if err != nil {
-		fmt.Println("Failed to unmarshal", err)
-		os.Exit(1)
-	}
-	f, err = os.OpenFile(filepath.Join(goPath, "m3o.go"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
-	if err != nil {
-		fmt.Println("Failed to open schema file", err)
-		os.Exit(1)
-	}
-	buf.Flush()
-	_, err = f.Write(b.Bytes())
-	if err != nil {
-		fmt.Println("Failed to append to schema file", err)
-		os.Exit(1)
-	}
-	cmd = exec.Command("gofmt", "-w", "m3o.go")
-	cmd.Dir = filepath.Join(goPath)
-	outp, err = cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with formatting m3o.go '%v", string(outp)))
-		os.Exit(1)
-	}
-	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-	cmd.Dir = filepath.Join(goPath)
-	outp, err = cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem building m3o.go '%v'", string(outp)))
-		os.Exit(1)
-	}
-
+func publishToNpm(tsPath string, tsFileList []string) {
 	// login to NPM
-	f, err = os.OpenFile(filepath.Join(tsPath, ".npmrc"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0600)
+	f, err := os.OpenFile(filepath.Join(tsPath, ".npmrc"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		fmt.Println("Failed to open npmrc", err)
 		os.Exit(1)
@@ -705,7 +611,7 @@ func main() {
 	getVersions := exec.Command("npm", "show", "m3o", "--time", "--json")
 	getVersions.Dir = tsPath
 
-	outp, err = getVersions.CombinedOutput()
+	outp, err := getVersions.CombinedOutput()
 	if err != nil {
 		fmt.Println("Failed to get versions of NPM package", string(outp))
 		os.Exit(1)
@@ -766,16 +672,6 @@ func main() {
 		newV = latest.IncPatch()
 	}
 
-	// add file list to gitignore
-	f, err = os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
-	for _, sname := range tsFileList {
-		_, err := f.Write([]byte(sname + "\n"))
-		if err != nil {
-			fmt.Println("failed to append service to gitignore", err)
-			os.Exit(1)
-		}
-	}
-
 	// bump package to latest version
 	fmt.Println("Bumping to ", newV.String())
 	repl := exec.Command("sed", "-i", "-e", "s/1.0.1/"+newV.String()+"/g", "package.json")
@@ -814,6 +710,120 @@ func main() {
 		fmt.Println("Failed to write to package.json", err)
 		os.Exit(1)
 	}
+}
+
+func main() {
+	files, err := ioutil.ReadDir(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	workDir, _ := os.Getwd()
+	tsPath := filepath.Join(workDir, "clients", "ts")
+	err = os.MkdirAll(tsPath, 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	goPath := filepath.Join(workDir, "clients", "go")
+	err = os.MkdirAll(goPath, 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	examplesPath := filepath.Join(workDir, "examples")
+	err = os.MkdirAll(goPath, 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	services := []service{}
+	tsFileList := []string{"esm", "index.js", "index.d.ts"}
+	for _, f := range files {
+		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
+			continue
+		}
+		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {
+			serviceName := f.Name()
+			serviceDir := filepath.Join(workDir, f.Name())
+			cmd := exec.Command("make", "api")
+			cmd.Dir = serviceDir
+			outp, err := cmd.CombinedOutput()
+			if err != nil {
+				fmt.Println(string(outp))
+			}
+
+			serviceFiles, err := ioutil.ReadDir(serviceDir)
+			if err != nil {
+				fmt.Println("Failed to read service dir", err)
+				os.Exit(1)
+			}
+			skip := false
+
+			spec, skip := apiSpec(serviceFiles, serviceDir)
+			if skip {
+				continue
+			}
+			tsFileList = append(tsFileList, f.Name())
+			service := service{
+				Name:       serviceName,
+				ImportName: serviceName,
+				Spec:       spec,
+			}
+			if service.Name == "function" {
+				service.ImportName = "fx"
+			}
+			services = append(services, service)
+
+			nodeServiceClient(serviceName, tsPath, service)
+			nodeTopReadme(serviceName, examplesPath, service)
+
+			goServiceClient(serviceName, goPath, service)
+			goTopReadme(serviceName, examplesPath, service)
+
+			exam, err := ioutil.ReadFile(filepath.Join(workDir, serviceName, "examples.json"))
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			if err == nil {
+				m := map[string][]example{}
+				err = json.Unmarshal(exam, &m)
+				if err != nil {
+					fmt.Println(string(exam), err)
+					os.Exit(1)
+				}
+				if len(service.Spec.Paths) != len(m) {
+					fmt.Printf("Service has %v endpoints, but only %v examples\n", len(service.Spec.Paths), len(m))
+				}
+				for endpoint, examples := range m {
+					for _, example := range examples {
+						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
+
+						goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						curlExample(examplesPath, serviceName, endpoint, title, service, example)
+					}
+					// only build after each example is generated as old files from
+					// previous generation might not compile
+					cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
+					cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint)
+					outp, err = cmd.CombinedOutput()
+					if err != nil {
+						fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
+						os.Exit(1)
+					}
+				}
+			} else {
+				fmt.Println(err)
+			}
+		}
+	}
+
+	nodeIndexFile(workDir, tsPath, services)
+	goIndexFile(goPath, services)
+
+	publishToNpm(tsPath, tsFileList)
 }
 
 func incBeta(ver semver.Version) semver.Version {
