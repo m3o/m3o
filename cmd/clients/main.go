@@ -317,12 +317,12 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 	}
 
 	// create go examples directory
-	err = os.MkdirAll(filepath.Join(examplesPath, "go", serviceName, endpoint), 0777)
+	err = os.MkdirAll(filepath.Join(examplesPath, "go", serviceName, endpoint, title), 0777)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	goExampleFile := filepath.Join(examplesPath, "go", serviceName, endpoint, title+".go")
+	goExampleFile := filepath.Join(examplesPath, "go", serviceName, endpoint, title, "main.go")
 	f, err := os.OpenFile(goExampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)

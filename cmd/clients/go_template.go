@@ -54,7 +54,7 @@ type {{ title $typeName }} struct {{ "{" }}
 {{end}}
 `
 
-const goExampleTemplate = `{{ $service := .service }}package example
+const goExampleTemplate = `{{ $service := .service }}package main
 
 import(
 	"fmt"
@@ -63,7 +63,7 @@ import(
 	"github.com/micro/services/clients/go/{{ $service.Name}}"
 )
 
-{{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func {{ .funcName }}() {
+{{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func main() {
 	{{ $service.Name }}Service := {{ $service.Name }}.New{{ title $service.Name }}Service(os.Getenv("M3O_API_TOKEN"))
 	rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
 		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
