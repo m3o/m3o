@@ -382,7 +382,7 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint, title)
 	outp, err = cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem building'%v' example '%v': %v", serviceName, endpoint, string(outp)))
+		fmt.Println(fmt.Sprintf("Problem building '%v' example '%v': %v", serviceName, endpoint, string(outp)))
 		os.Exit(1)
 	}
 }
