@@ -26,7 +26,7 @@ import (
 type service struct {
 	Spec *openapi3.Swagger
 	Name string
-	// overwrite import name of service when it's a keyword ie function in javascript
+	//  overwrite import name of service when it's a keyword ie function in javascript
 	ImportName string
 }
 
