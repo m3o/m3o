@@ -24,9 +24,9 @@ export default async function handler(
 
   try {
     await emailService.send({
-      from: 'noreply@yourwebsite.com',
+      from: '|--- YOUR FROM EMAIL ---|',
       subject: 'Hello from your website',
-      to: 'martin+1@m3o.com',
+      to: '|--- YOUR TO EMAIL ---|',
       htmlBody: `
         <p>Dear Owner,</p>
         <p>You have received a new message on Your Website:</p>
@@ -41,6 +41,10 @@ export default async function handler(
 
     res.json({})
   } catch (e) {
-    console.log(e)
+    sendError({
+      res,
+      statusCode: 500,
+      message: 'Server error',
+    })
   }
 }
