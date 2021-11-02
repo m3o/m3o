@@ -377,6 +377,14 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 		fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
 		os.Exit(1)
 	}
+
+	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
+	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint, title)
+	outp, err = cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem building'%v' example '%v': %v", serviceName, endpoint, string(outp)))
+		os.Exit(1)
+	}
 }
 
 func nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, service service, example example) {
@@ -803,15 +811,6 @@ func main() {
 						goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
 						nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
 						curlExample(examplesPath, serviceName, endpoint, title, service, example)
-					}
-					// only build after each example is generated as old files from
-					// previous generation might not compile
-					cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-					cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint)
-					outp, err = cmd.CombinedOutput()
-					if err != nil {
-						fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
-						os.Exit(1)
 					}
 				}
 			} else {
