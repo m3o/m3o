@@ -41,8 +41,13 @@ func funcMap() map[string]interface{} {
 	isStream := func(spec *openapi3.Swagger, serviceName, requestType string) bool {
 		// eg. "/notes/Notes/Events":
 		path := fmt.Sprintf("/%v/%v/%v", serviceName, strings.Title(serviceName), strings.Replace(requestType, "Request", "", -1))
-		p, ok := spec.Paths[path]
-		if !ok {
+		var p *openapi3.PathItem
+		for k, v := range spec.Paths {
+			if strings.ToLower(k) == strings.ToLower(path) {
+				p = v
+			}
+		}
+		if p == nil {
 			panic("path not found: " + path)
 		}
 		if _, ok := p.Post.Responses["stream"]; ok {
@@ -61,7 +66,7 @@ func funcMap() map[string]interface{} {
 		// strips service name from the request type
 		"requestType": func(requestType string) string {
 			// @todo hack to support examples
-			if strings.ToLower(requestType) == requestType {
+			if strings.ToLower(requestType[0:1]) == requestType[0:1] {
 				return strings.ToTitle(requestType[0:1]) + requestType[1:] + "Request"
 			}
 			parts := camelcase.Split(requestType)
@@ -768,7 +773,7 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	for _, f := range files {
-		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") || f.Name() != "notes" {
+		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
 			continue
 		}
 		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {
