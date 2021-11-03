@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: m3o
-          #ref: main
+          ref: ${{ github.ref }}
 
       - name: Check services repo
         uses: actions/checkout@v2
