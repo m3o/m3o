@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/crufter/nested v0.0.0-20210903145606-dea42c476b37
+	github.com/davecgh/go-spew v1.1.1
 	github.com/fatih/camelcase v1.0.0
 	github.com/getkin/kin-openapi v0.26.0
 	github.com/kr/text v0.2.0 // indirect

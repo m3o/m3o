@@ -38,6 +38,18 @@ type example struct {
 }
 
 func funcMap() map[string]interface{} {
+	isStream := func(spec *openapi3.Swagger, serviceName, requestType string) bool {
+		// eg. "/notes/Notes/Events":
+		path := fmt.Sprintf("/%v/%v/%v", serviceName, strings.Title(serviceName), strings.Replace(requestType, "Request", "", -1))
+		p, ok := spec.Paths[path]
+		if !ok {
+			panic("path not found: " + path)
+		}
+		if _, ok := p.Post.Responses["stream"]; ok {
+			return true
+		}
+		return false
+	}
 	return map[string]interface{}{
 		"recursiveTypeDefinition": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
 			return schemaToType(language, serviceName, typeName, schemas)
@@ -50,6 +62,10 @@ func funcMap() map[string]interface{} {
 		"requestType": func(requestType string) string {
 			parts := camelcase.Split(requestType)
 			return strings.Join(parts[1:], "")
+		},
+		"isStream": isStream,
+		"notIsStream": func(spec *openapi3.Swagger, serviceName, requestType string) bool {
+			return !isStream(spec, serviceName, requestType)
 		},
 		"requestTypeToResponseType": func(requestType string) string {
 			parts := camelcase.Split(requestType)
@@ -748,7 +764,7 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	for _, f := range files {
-		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
+		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") || f.Name() != "notes" {
 			continue
 		}
 		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {

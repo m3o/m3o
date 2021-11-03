@@ -40,11 +40,36 @@ type {{ title $service.Name }}Service struct {
 	client *client.Client
 }
 
-{{ range $key, $req := $service.Spec.Components.RequestBodies }}
-{{ $endpointName := requestTypeToEndpointName $key}}{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{ end }}func (t *{{ title $service.Name }}Service) {{ $endpointName }}(request *{{ requestType $key }}) (*{{ requestTypeToResponseType $key }}, error) {
+{{ range $key, $req := $service.Spec.Components.RequestBodies }}{{ $reqType := requestType $key }}
+{{ $endpointName := requestTypeToEndpointName $key}}{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{ end }}func (t *{{ title $service.Name }}Service) {{ $endpointName }}(request *{{ requestType $key }}) (*{{ requestTypeToResponseType $key }}{{ if isStream $service.Spec $service.Name $reqType }}Stream{{ end }}, error) {
+	{{ if isStream $service.Spec $service.Name $reqType }}
+	stream, err := t.client.Stream("{{ $service.Name }}", "{{ requestTypeToEndpointPath $key}}", request)
+	if err != nil {
+			return nil, err
+	}
+	return &{{ requestTypeToResponseType $key }}Stream{
+			stream: stream,
+	}, nil
+	{{ end }}
+	{{ if notIsStream $service.Spec $service.Name $reqType }}
 	rsp := &{{ requestTypeToResponseType $key }}{}
 	return rsp, t.client.Call("{{ $service.Name }}", "{{ requestTypeToEndpointPath $key}}", request, rsp)
+	{{ end }}
 }
+
+{{ if isStream $service.Spec $service.Name $reqType }}
+type {{ requestTypeToResponseType $key }}Stream struct {
+	stream *client.Stream
+}
+
+func (t *{{ requestTypeToResponseType $key }}Stream) Recv() (*{{ requestTypeToResponseType $key }}, error) {
+	var rsp {{ requestTypeToResponseType $key }}
+	if err := t.stream.Recv(&rsp); err != nil {
+			return nil, err
+	}
+	return &rsp, nil
+}
+{{ end }}
 {{ end }}
 
 
