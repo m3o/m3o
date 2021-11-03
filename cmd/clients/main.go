@@ -768,7 +768,7 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	for _, f := range files {
-		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") || f.Name() != "notes" {
+		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
 			continue
 		}
 		if f.IsDir() && !strings.HasPrefix(f.Name(), ".") {
