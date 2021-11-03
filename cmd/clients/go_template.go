@@ -88,13 +88,13 @@ import(
 
 {{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func main() {
 	{{ $service.Name }}Service := {{ $service.Name }}.New{{ title $service.Name }}Service(os.Getenv("M3O_API_TOKEN"))
-	{{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
+	{{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
 		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
 	})
 	fmt.Println(rsp, err){{ end }}
 	{{ if isStream $service.Spec $service.Name $reqType }}stream, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
 		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
-	}){{ end }}
+	})
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -60,6 +60,10 @@ func funcMap() map[string]interface{} {
 		},
 		// strips service name from the request type
 		"requestType": func(requestType string) string {
+			// @todo hack to support examples
+			if strings.ToLower(requestType) == requestType {
+				return strings.ToTitle(requestType[0:1]) + requestType[1:] + "Request"
+			}
 			parts := camelcase.Split(requestType)
 			return strings.Join(parts[1:], "")
 		},
