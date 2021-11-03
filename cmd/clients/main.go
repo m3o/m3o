@@ -64,7 +64,7 @@ func funcMap() map[string]interface{} {
 			return strings.Join(parts[1:], "")
 		},
 		"isStream": isStream,
-		"notIsStream": func(spec *openapi3.Swagger, serviceName, requestType string) bool {
+		"isNotStream": func(spec *openapi3.Swagger, serviceName, requestType string) bool {
 			return !isStream(spec, serviceName, requestType)
 		},
 		"requestTypeToResponseType": func(requestType string) string {

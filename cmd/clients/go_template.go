@@ -50,7 +50,7 @@ type {{ title $service.Name }}Service struct {
 			stream: stream,
 	}, nil
 	{{ end }}
-	{{ if notIsStream $service.Spec $service.Name $reqType }}rsp := &{{ requestTypeToResponseType $key }}{}
+	{{ if isNotStream $service.Spec $service.Name $reqType }}rsp := &{{ requestTypeToResponseType $key }}{}
 	return rsp, t.client.Call("{{ $service.Name }}", "{{ requestTypeToEndpointPath $key}}", request, rsp)
 	{{ end }}
 }
