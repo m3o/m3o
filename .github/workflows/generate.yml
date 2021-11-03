@@ -199,3 +199,4 @@ jobs:
           npm install
           npm run build
           npm publish --access public --tag beta
+
