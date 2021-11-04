@@ -167,12 +167,38 @@ func main() {
 				publicApi.OpenAPIJson = string(js)
 			}
 
-			// load the examples if they exist
-			if examples, err := ioutil.ReadFile(filepath.Join(serviceDir, "examples.json")); err == nil {
-				if len(examples) > 0 {
-					publicApi.ExamplesJson = string(examples)
+			// load the examples
+			examples, err := ioutil.ReadFile(filepath.Join(serviceDir, "examples.json"))
+			if err != nil || len(examples) == 0 {
+				fmt.Printf("Failed to find examples file for %s\n", serviceDir)
+				os.Exit(1)
+			}
+
+			type example = map[string][]interface{}
+			exjson := example{}
+			if err := json.Unmarshal(examples, &exjson); err != nil {
+				fmt.Printf("Failed to parse examples json for %s\n", serviceDir)
+			}
+			// lowercase for easier search
+			for k, v := range exjson {
+				exjson[strings.ToLower(k)] = v
+			}
+
+			// do the endpoints of open api and examples match?
+			for k, _ := range spec.Paths {
+				// path is /service/Service/Method
+				split := strings.Split(strings.ToLower(k), "/")
+				if len(split) != 4 {
+					fmt.Printf("Error processing path %s %s. Unexpected format\n", k, serviceDir)
+					os.Exit(1)
+				}
+				if _, ok := exjson[split[3]]; !ok {
+					fmt.Printf("Can't find example for endpoint %s %s\n", serviceDir, split[3])
+					os.Exit(1)
 				}
 			}
+
+			publicApi.ExamplesJson = string(examples)
 
 			// load the separate pricing if it exists
 			if pricingRaw, err := ioutil.ReadFile(filepath.Join(serviceDir, "pricing.json")); err == nil {
