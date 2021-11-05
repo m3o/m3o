@@ -23,8 +23,8 @@ export class {{ title $service.Name }}Service{
 	constructor(token: string) {
 		this.client = new m3o.Client({token: token})
 	}
-	{{ range $key, $req := $service.Spec.Components.RequestBodies }}{{ $endpointName := requestTypeToEndpointName $key}}{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{ end }}{{ untitle $endpointName}}(request: {{ requestType $key }}): Promise<{{ requestTypeToResponseType $key }}> {
-		return this.client.call("{{ $service.Name }}", "{{ requestTypeToEndpointPath $key}}", request) as Promise<{{ requestTypeToResponseType $key }}>;
+	{{ range $key, $req := $service.Spec.Components.RequestBodies }}{{ $reqType := requestType $key }}{{ $endpointName := requestTypeToEndpointName $key}}{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{ end }}{{ untitle $endpointName}}(request: {{ requestType $key }}): {{ if isStream $service.Spec $service.Name $reqType }}Promise<Stream<{{ $reqType }}, {{ requestTypeToResponseType $key }}>>{{ end }}{{ if isNotStream $service.Spec $service.Name $reqType }}Promise<{{ requestTypeToResponseType $key }}>{{ end }} {
+		{{ if isStream $service.Spec $service.Name $reqType }}return this.client.stream("{{ $service.Name }}", "{{ requestTypeToEndpointPath $key}}", request);{{ end }}{{ if isNotStream $service.Spec $service.Name $reqType }}{{ end }}
 	};
 	{{ end }}
 }

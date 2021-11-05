@@ -1,7 +1,7 @@
 {
  "author": "",
  "dependencies": {
-  "@m3o/m3o-node": "^0.0.24",
+  "@m3o/m3o-node": "^0.0.26",
   "@types/estree": "^0.0.47",
   "chalk": "^2.4.2",
   "move-file": "^3.0.0",
