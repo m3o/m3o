@@ -35,6 +35,7 @@ type example struct {
 	Description string `json:"description"`
 	Request     map[string]interface{}
 	Response    map[string]interface{}
+	RunCheck    bool `json:"run_check"`
 }
 
 func funcMap() map[string]interface{} {
@@ -361,6 +362,14 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 		os.Exit(1)
 	}
 
+	if example.RunCheck {
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte("This example should be runnable as is"), 0744)
+		if err != nil {
+			fmt.Println("Failed to write run file", err)
+			os.Exit(1)
+		}
+	}
+
 	// per endpoint go readme examples
 	templ, err = template.New("goReadmebottom" + serviceName + endpoint).Funcs(funcMap()).Parse(goReadmeBottomTemplate)
 	if err != nil {
@@ -445,6 +454,14 @@ func nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string,
 	if err != nil {
 		fmt.Println("Failed to append to schema file", err)
 		os.Exit(1)
+	}
+
+	if example.RunCheck {
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+title), []byte("This example should be runnable as is"), 0744)
+		if err != nil {
+			fmt.Println("Failed to write run file", err)
+			os.Exit(1)
+		}
 	}
 
 	// per endpoint readme examples
