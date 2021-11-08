@@ -36,6 +36,7 @@ type example struct {
 	Request     map[string]interface{}
 	Response    map[string]interface{}
 	RunCheck    bool `json:"run_check"`
+	Idempotent  bool `json:"idempotent"`
 }
 
 func funcMap() map[string]interface{} {
@@ -362,7 +363,7 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 		os.Exit(1)
 	}
 
-	if example.RunCheck {
+	if example.RunCheck && example.Idempotent {
 		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte("This example should be runnable as is"), 0744)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
@@ -456,7 +457,7 @@ func nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string,
 		os.Exit(1)
 	}
 
-	if example.RunCheck {
+	if example.RunCheck && example.Idempotent {
 		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+title), []byte("This example should be runnable as is"), 0744)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
