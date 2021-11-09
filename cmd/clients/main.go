@@ -364,7 +364,7 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 	}
 
 	if example.RunCheck && example.Idempotent {
-		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte("This example should be runnable as is"), 0744)
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte{}, 0744)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
 			os.Exit(1)
@@ -458,7 +458,7 @@ func nodeExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string,
 	}
 
 	if example.RunCheck && example.Idempotent {
-		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+strcase.UpperCamelCase(title)), []byte("This example should be runnable as is"), 0744)
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+strcase.UpperCamelCase(title)), []byte{}, 0744)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
 			os.Exit(1)
