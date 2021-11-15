@@ -59,6 +59,9 @@ func funcMap() map[string]interface{} {
 	}
 	return map[string]interface{}{
 		"recursiveTypeDefinition": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+			if language == "php" {
+				return schemaToTypePhp(language, serviceName, typeName, schemas)
+			}
 			return schemaToType(language, serviceName, typeName, schemas)
 		},
 		"requestTypeToEndpointName": func(requestType string) string {
@@ -170,6 +173,41 @@ func nodeServiceClient(serviceName, tsPath string, service service) {
 	outp, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Problem formatting '%v' client: %v %s", serviceName, string(outp), err.Error()))
+		os.Exit(1)
+	}
+}
+
+func phpServiceClient(serviceName, phpPath string, service service) {
+	templ, err := template.New("php" + serviceName).Funcs(funcMap()).Parse(phpServiceTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	var b bytes.Buffer
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service": service,
+	})
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+
+	err = os.MkdirAll(filepath.Join(phpPath, "src", serviceName), 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	f, err := os.OpenFile(filepath.Join(phpPath, "src", strings.Title(serviceName)+".php"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
 		os.Exit(1)
 	}
 }
@@ -781,6 +819,12 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	phpPath := filepath.Join(workDir, "clients", "php")
+	err = os.MkdirAll(tsPath, 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	examplesPath := filepath.Join(workDir, "examples")
 	err = os.MkdirAll(goPath, 0777)
 	if err != nil {
@@ -831,6 +875,8 @@ func main() {
 
 			goServiceClient(serviceName, goPath, service)
 			goTopReadme(serviceName, examplesPath, service)
+
+			phpServiceClient(serviceName, phpPath, service)
 
 			exam, err := ioutil.ReadFile(filepath.Join(workDir, serviceName, "examples.json"))
 			if err != nil {
@@ -1078,6 +1124,199 @@ func schemaToType(language, serviceName, typeName string, schemas map[string]*op
 				ret += k + fieldSeparator + typ + fieldDelimiter
 			case "boolean":
 				ret += k + fieldSeparator + boolType + fieldDelimiter
+			}
+			// go specific hack for lowercase json
+			if language == "go" {
+				ret += " " + "`json:\"" + strcase.LowerCamelCase(k)
+				if typ == int64Type {
+					ret += ",string"
+				}
+				ret += "\"`"
+			}
+
+			if i < len(props) {
+				ret += "\n"
+			}
+			i++
+
+		}
+		return ret
+	}
+	return recurse(spec.Value.Properties, 1)
+}
+
+func schemaToTypePhp(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+	var recurse func(props map[string]*openapi3.SchemaRef, level int) string
+
+	var spec *openapi3.SchemaRef = schemas[typeName]
+	detectType := func(currentType string, properties map[string]*openapi3.SchemaRef) (string, bool) {
+		index := map[string]bool{}
+		for key, prop := range properties {
+			index[key+prop.Value.Title+prop.Value.Description] = true
+		}
+
+		for k, schema := range schemas {
+			// we don't want to return the type matching itself
+			if strings.ToLower(k) == currentType {
+				continue
+			}
+			if strings.HasSuffix(k, "Request") || strings.HasSuffix(k, "Response") {
+				continue
+			}
+			if len(schema.Value.Properties) != len(properties) {
+				continue
+			}
+			found := false
+			for key, prop := range schema.Value.Properties {
+				_, ok := index[key+prop.Value.Title+prop.Value.Description]
+				found = ok
+				if !ok {
+					break
+				}
+			}
+			if found {
+				return schema.Value.Title, true
+			}
+		}
+		return "", false
+	}
+	var fieldDelimiter, stringType, numberType, boolType string
+	var int32Type, int64Type, floatType, doubleType string
+	var fieldUpperCase bool
+	switch language {
+	case "php":
+		fieldUpperCase = false
+
+		fieldDelimiter = ";"
+		stringType = "string"
+		numberType = "float"
+		boolType = "boolean"
+		int32Type = "float"
+		int64Type = "float"
+		floatType = "float"
+		doubleType = "float"
+	}
+
+	valueToType := func(v *openapi3.SchemaRef) string {
+		switch v.Value.Type {
+		case "string":
+			return stringType
+		case "boolean":
+			return boolType
+		case "number":
+			switch v.Value.Format {
+			case "int32":
+				return int32Type
+			case "int64":
+				return int64Type
+			case "float":
+				return floatType
+			case "double":
+				return doubleType
+			}
+		default:
+			return "unrecognized: " + v.Value.Type
+		}
+		return ""
+	}
+
+	recurse = func(props map[string]*openapi3.SchemaRef, level int) string {
+		ret := ""
+
+		i := 0
+		var keys []string
+		for k := range props {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			v := props[k]
+			ret += strings.Repeat("  ", level)
+			if v.Value.Description != "" {
+				for _, commentLine := range strings.Split(v.Value.Description, "\n") {
+					ret += "// " + strings.TrimSpace(commentLine) + "\n" + strings.Repeat("  ", level)
+				}
+
+			}
+
+			if fieldUpperCase {
+				k = strcase.UpperCamelCase(k)
+			}
+			var typ string
+			// @todo clean up this piece of code by
+			// separating out type string marshaling and not
+			// repeating code
+			switch v.Value.Type {
+			case "object":
+				typ, found := detectType(k, v.Value.Properties)
+				if found {
+					ret += "public " + strings.Title(typ) + " " + k + fieldDelimiter
+				} else {
+					// type is a dynamic map
+					// if additional properties is not present, it's an any type,
+					// like the proto struct type
+					if v.Value.AdditionalProperties != nil {
+						ret += "/** @var array<string, " + valueToType(v.Value.AdditionalProperties) + "> */\n"
+						ret += "public array " + k + fieldDelimiter
+					} else {
+						ret += "/** @var array<string, mixed> */\n"
+						ret += "public array " + k + fieldDelimiter
+					}
+				}
+			case "array":
+				typ, found := detectType(k, v.Value.Items.Value.Properties)
+				if found {
+					ret += "/** @var " + strings.Title(typ) + "[] */\n"
+					ret += "public array " + k + fieldDelimiter
+				} else {
+					// @todo php implement type
+					switch v.Value.Items.Value.Type {
+					case "string":
+						ret += "public array " + k + fieldDelimiter
+					case "number":
+						//typ := numberType
+						//switch v.Value.Format {
+						//case "int32":
+						//	typ = int32Type
+						//case "int64":
+						//	typ = int64Type
+						//case "float":
+						//	typ = floatType
+						//case "double":
+						//	typ = doubleType
+						//}
+						//ret += "public array " + k + fieldDelimiter
+					case "boolean":
+						ret += "public array " + k + fieldDelimiter
+					case "object":
+						//// type is a dynamic map
+						//// if additional properties is not present, it's an any type,
+						//// like the proto struct type
+						//if v.Value.AdditionalProperties != nil {
+						//	ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + arrayPostfix + fieldDelimiter
+						//} else {
+						//	ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, anyType) + arrayPostfix + fieldDelimiter
+						//}
+						ret += "public array " + k + fieldDelimiter
+					}
+				}
+			case "string":
+				ret += "public " + stringType + " " + k + fieldDelimiter
+			case "number":
+				typ = numberType
+				switch v.Value.Format {
+				case "int32":
+					typ = int32Type
+				case "int64":
+					typ = int64Type
+				case "float":
+					typ = floatType
+				case "double":
+					typ = doubleType
+				}
+				ret += "public " + typ + " " + k + fieldDelimiter
+			case "boolean":
+				ret += "public " + boolType + " " + k + fieldDelimiter
 			}
 			// go specific hack for lowercase json
 			if language == "go" {
