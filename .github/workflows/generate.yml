@@ -55,7 +55,7 @@ jobs:
           go install
 
       - name: Install openapi plugin
-        working-directory: micro/cmd/protoc-gen-openapi
+        working-directory: m3o/cmd/protoc-gen-openapi
         run: |
           go install
 
