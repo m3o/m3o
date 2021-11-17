@@ -43,10 +43,10 @@ func (c *Converter) defaultSpec() {
 	)
 
 	// Add the Micro auth mechanism:
-	c.openAPISpec.Components.SecuritySchemes["MicroAPIToken"] = &openapi3.SecuritySchemeRef{
+	c.openAPISpec.Components.SecuritySchemes["M3OAPIToken"] = &openapi3.SecuritySchemeRef{
 		Value: &openapi3.SecurityScheme{
-			BearerFormat: "JWT",
-			Description:  "Micro API token",
+			BearerFormat: "token",
+			Description:  "M3O API token",
 			Type:         "http",
 			Scheme:       "bearer",
 		},

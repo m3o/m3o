@@ -358,9 +358,9 @@ const Signup = `{
       }
     },
     "securitySchemes": {
-      "MicroAPIToken": {
-        "bearerFormat": "JWT",
-        "description": "Micro API token",
+      "M3OAPIToken": {
+        "bearerFormat": "token",
+        "description": "M3O API token",
         "scheme": "bearer",
         "type": "http"
       }
