@@ -9,7 +9,7 @@ import (
 func TestSchemaPaths(t *testing.T) {
 
 	// URL path (including service-name, proto-service, and method):
-	assert.Equal(t, "/schemaPaths/urlPath", urlPath("schemaPaths", "urlPath"))
+	assert.Equal(t, "/tests/schemaPaths/urlPath", urlPath("tests", "schemaPaths", "urlPath"))
 
 	// Service name (last word in a dot-delimited string):
 	assert.Equal(t, "schemapaths", protoServiceName("tests.schemapaths"))

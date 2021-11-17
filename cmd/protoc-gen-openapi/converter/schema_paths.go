@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-func urlPath(protoServiceName, methodName string) string {
-	return fmt.Sprintf("/%s/%s", protoServiceName, methodName)
+func urlPath(serviceName, protoServiceName, methodName string) string {
+	return fmt.Sprintf("/%s/%s/%s", serviceName, protoServiceName, methodName)
 }
 
 func protoServiceName(inputType string) string {

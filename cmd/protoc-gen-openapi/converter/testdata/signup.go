@@ -378,7 +378,7 @@ const Signup = `{
   },
   "openapi": "3.0.0",
   "paths": {
-    "/Signup/CompleteSignup": {
+    "/test/Signup/CompleteSignup": {
       "parameters": [
         {
           "in": "header",
@@ -410,7 +410,7 @@ const Signup = `{
         "summary": "Signup.CompleteSignup(CompleteSignupRequest)"
       }
     },
-    "/Signup/HasPaymentMethod": {
+    "/test/Signup/HasPaymentMethod": {
       "parameters": [
         {
           "in": "header",
@@ -442,7 +442,7 @@ const Signup = `{
         "summary": "Signup.HasPaymentMethod(HasPaymentMethodRequest)"
       }
     },
-    "/Signup/Recover": {
+    "/test/Signup/Recover": {
       "parameters": [
         {
           "in": "header",
@@ -474,7 +474,7 @@ const Signup = `{
         "summary": "Signup.Recover(RecoverRequest)"
       }
     },
-    "/Signup/SendVerificationEmail": {
+    "/test/Signup/SendVerificationEmail": {
       "parameters": [
         {
           "in": "header",
@@ -506,7 +506,7 @@ const Signup = `{
         "summary": "Signup.SendVerificationEmail(SendVerificationEmailRequest)"
       }
     },
-    "/Signup/SetPaymentMethod": {
+    "/test/Signup/SetPaymentMethod": {
       "parameters": [
         {
           "in": "header",
@@ -538,7 +538,7 @@ const Signup = `{
         "summary": "Signup.SetPaymentMethod(SetPaymentMethodRequest)"
       }
     },
-    "/Signup/Verify": {
+    "/test/Signup/Verify": {
       "parameters": [
         {
           "in": "header",
