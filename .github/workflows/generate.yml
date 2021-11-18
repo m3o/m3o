@@ -40,6 +40,12 @@ jobs:
           path: 'micro'
           ref: 'master'
 
+      - name: Check m3o-go repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'm3o/m3o-go'
+          path: m3o-go
+
       - name: Enable caching
         uses: actions/cache@v2
         with:
@@ -62,11 +68,15 @@ jobs:
       - name: Install generator
         working-directory: m3o
         run: |
+          # build the client generator
           pwd
           cd cmd/clients;
           go install
-          rm -rf ../../../services/cmd/*
-          cp -r ../* ../../../services/cmd/
+          cd ../../
+          # delete existing cmd directory
+          rm -rf ../services/cmd
+          # copy our command directory in
+          cp -r cmd ../services/
 
       - name: install prettier
         working-directory: services
@@ -96,24 +106,21 @@ jobs:
         working-directory: services
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         run: |
-          # the final imports in m3o/m3o-go differ
-          cd clients/go
-          grep -rl 'github.com/micro/services/clients/go' . | xargs sed -i 's@github.com/micro/services/clients/go@go.m3o.com@g'
-          grep -rl 'github.com/m3o/m3o-go' . | xargs sed -i 's@github.com/m3o/m3o-go@go.m3o.com@g'
-          cd ../..
-
-          # put the examples into clients
-          mkdir clients/go/examples
-          mv examples/go/* clients/go/examples/
-
-          # replace path in go examples
-          cd clients/go/examples
-          grep -rl 'github.com/micro/services/clients/go' . | xargs sed -i 's@github.com/micro/services/clients/go@go.m3o.com@g'
-          cd ../../..
-
-          #  js examples
+          # sync the clients to m3o-go/
+          rsync -avz clients/go/ ../m3o-go/
+          # sync the examples to m3o-go/examples
+          rsync -avz examples/go/ ../m3o-go/examples/
+          #  move the js examples
           mkdir clients/ts/examples
           mv examples/js/* clients/ts/examples/
+
+      - name: Gofmt and test
+        working-directory: m3o-go
+        env:
+          IN_TRAVIS: yes
+        run: |
+          go fmt ./...
+          go test -v ./...
 
       # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       - name: Extract branch name
@@ -127,8 +134,8 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/clients/go/'
-          destination_repo: 'm3o/m3o-go'
+          source_file: 'm3o-go/'
+          destination_repo: 'm3o/m3o-go/'
           destination_branch: ${{ steps.extract_branch.outputs.branch }}
           github_server: 'github.com'
           user_name: 'm3o-actions'

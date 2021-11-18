@@ -3,7 +3,7 @@ package main
 const goIndexTemplate = `package m3o
 
 import(
-	{{ range $service := .services }}"github.com/micro/services/clients/go/{{ $service.Name}}"
+	{{ range $service := .services }}"go.m3o.com/{{ $service.Name}}"
 {{ end }}
 )
 
@@ -25,7 +25,7 @@ type Client struct {
 const goServiceTemplate = `{{ $service := .service }}package {{ $service.Name }}
 
 import(
-	"github.com/m3o/m3o-go/client"
+	"go.m3o.com/client"
 )
 
 func New{{ title $service.Name }}Service(token string) *{{ title $service.Name }}Service {
@@ -83,7 +83,7 @@ import(
 	"fmt"
 	"os"
 
-	"github.com/micro/services/clients/go/{{ $service.Name}}"
+	"go.m3o.com/{{ $service.Name}}"
 )
 
 {{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func main() {
@@ -138,7 +138,7 @@ import(
 	"fmt"
 	"os"
 
-	"github.com/micro/services/clients/go/{{ $service.Name}}"
+	"go.m3o.com/{{ $service.Name}}"
 )
 
 {{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func {{ .funcName }}() {

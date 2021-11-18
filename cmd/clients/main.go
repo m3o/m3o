@@ -39,6 +39,10 @@ type example struct {
 	Idempotent  bool `json:"idempotent"`
 }
 
+var (
+	VanityURL = "go.m3o.com"
+)
+
 func funcMap() map[string]interface{} {
 	isStream := func(spec *openapi3.Swagger, serviceName, requestType string) bool {
 		// eg. "/notes/Notes/Events":
@@ -274,21 +278,6 @@ func goServiceClient(serviceName, goPath string, service service) {
 		fmt.Println("Failed to append to schema file", err)
 		os.Exit(1)
 	}
-
-	cmd := exec.Command("gofmt", "-w", serviceName+".go")
-	cmd.Dir = filepath.Join(goPath, serviceName)
-	outp, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem formatting '%v' client: %v", serviceName, string(outp)))
-		os.Exit(1)
-	}
-	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-	cmd.Dir = filepath.Join(goPath, serviceName)
-	outp, err = cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem building '%v' example: %v", serviceName, string(outp)))
-		os.Exit(1)
-	}
 }
 
 func goTopReadme(serviceName, examplesPath string, service service) {
@@ -401,23 +390,6 @@ func goExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, s
 	_, err = f.Write(b.Bytes())
 	if err != nil {
 		fmt.Println("Failed to append to schema file", err)
-		os.Exit(1)
-	}
-
-	// gofmt example
-	cmd := exec.Command("gofmt", "-w", "main.go")
-	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint, title)
-	outp, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
-		os.Exit(1)
-	}
-
-	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-	cmd.Dir = filepath.Join(examplesPath, "go", serviceName, endpoint, title)
-	outp, err = cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem building '%v' example '%v': %v", serviceName, endpoint, string(outp)))
 		os.Exit(1)
 	}
 }
@@ -564,20 +536,6 @@ func goIndexFile(goPath string, services []service) {
 	_, err = f.Write(b.Bytes())
 	if err != nil {
 		fmt.Println("Failed to append to schema file", err)
-		os.Exit(1)
-	}
-	cmd := exec.Command("gofmt", "-w", "m3o.go")
-	cmd.Dir = filepath.Join(goPath)
-	outp, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with formatting m3o.go '%v", string(outp)))
-		os.Exit(1)
-	}
-	cmd = exec.Command("go", "build", "-o", "/tmp/bin/outputfile")
-	cmd.Dir = filepath.Join(goPath)
-	outp, err = cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem building m3o.go '%v'", string(outp)))
 		os.Exit(1)
 	}
 }
