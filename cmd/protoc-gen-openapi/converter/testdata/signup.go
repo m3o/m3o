@@ -162,7 +162,7 @@ const Signup = `{
       "AuthToken": {
         "description": "lifted from https://github.com/micro/go-micro/blob/master/auth/service/proto/auth.proto",
         "properties": {
-          "accessToken": {
+          "access_token": {
             "type": "string"
           },
           "created": {
@@ -173,7 +173,7 @@ const Signup = `{
             "format": "int64",
             "type": "number"
           },
-          "refreshToken": {
+          "refresh_token": {
             "type": "string"
           }
         },
@@ -209,7 +209,7 @@ const Signup = `{
         "properties": {
           "authToken": {
             "properties": {
-              "accessToken": {
+              "access_token": {
                 "type": "string"
               },
               "created": {
@@ -220,7 +220,7 @@ const Signup = `{
                 "format": "int64",
                 "type": "number"
               },
-              "refreshToken": {
+              "refresh_token": {
                 "type": "string"
               }
             },
@@ -283,7 +283,7 @@ const Signup = `{
           "email": {
             "type": "string"
           },
-          "paymentMethod": {
+          "payment_method": {
             "type": "string"
           }
         },
@@ -312,7 +312,7 @@ const Signup = `{
           "authToken": {
             "description": "Auth token to be saved into '~/.micro'\n For users who are already registered and paid,\n the flow stops here.\n For users who are yet to be registered\n the token will be acquired in the 'FinishSignup' step.",
             "properties": {
-              "accessToken": {
+              "access_token": {
                 "type": "string"
               },
               "created": {
@@ -323,7 +323,7 @@ const Signup = `{
                 "format": "int64",
                 "type": "number"
               },
-              "refreshToken": {
+              "refresh_token": {
                 "type": "string"
               }
             },
@@ -348,7 +348,7 @@ const Signup = `{
             },
             "type": "array"
           },
-          "paymentRequired": {
+          "payment_required": {
             "description": "Whether payment is required or not",
             "type": "boolean"
           }
