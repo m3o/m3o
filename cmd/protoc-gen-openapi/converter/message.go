@@ -377,7 +377,7 @@ func (c *Converter) recursiveConvertMessageType(curPkg *ProtoPackage, msg *descr
 		log.Printf("Converted field: %s => %s", fieldDesc.GetName(), recursedComponentSchema.Type)
 
 		// Add it to the properties (by its JSON name):
-		componentSchema.Properties[fieldDesc.GetJsonName()] = openapi3.NewSchemaRef("", recursedComponentSchema)
+		componentSchema.Properties[fieldDesc.GetName()] = openapi3.NewSchemaRef("", recursedComponentSchema)
 	}
 
 	return componentSchema, nil

@@ -963,9 +963,13 @@ func schemaToType(language, serviceName, typeName string, schemas map[string]*op
 
 			}
 
+			// save k
+			fieldName := k
+
 			if fieldUpperCase {
 				k = strcase.UpperCamelCase(k)
 			}
+
 			var typ string
 			// @todo clean up this piece of code by
 			// separating out type string marshaling and not
@@ -1039,7 +1043,7 @@ func schemaToType(language, serviceName, typeName string, schemas map[string]*op
 			}
 			// go specific hack for lowercase json
 			if language == "go" {
-				ret += " " + "`json:\"" + strcase.LowerCamelCase(k)
+				ret += " " + "`json:\"" + fieldName
 				if typ == int64Type {
 					ret += ",string"
 				}
