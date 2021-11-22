@@ -70,7 +70,7 @@ jobs:
         run: |
           # build the client generator
           pwd
-          cd cmd/clients;
+          cd cmd/client-gen;
           go install
           cd ../../
           # delete existing cmd directory
@@ -90,7 +90,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           rm -rf clients examples
-          clients .
+          client-gen .
 
       - name: Generate beta package
         working-directory: services
@@ -100,7 +100,7 @@ jobs:
           IS_BETA: yup
         run: |
           rm -rf clients examples
-          clients .
+          client-gen .
 
       - name: Adjust generated things before pushing
         working-directory: services
@@ -183,7 +183,7 @@ jobs:
         working-directory: services
         if: github.ref == 'refs/heads/main'
         run: |
-          go run cmd/publisher/main.go .
+          go run cmd/api-publisher/main.go .
         env:
           MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
 

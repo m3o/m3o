@@ -4,7 +4,7 @@ To run the code generation, from the repo root issue:
 
 
 ```sh
-go install ./cmd/clients; clients .
+go install ./cmd/client-gen; client-gen .
 ```
 
 The general flow is that protos get turned to an openapi json and this generator takes the JSON and creates go and typescript clients.
