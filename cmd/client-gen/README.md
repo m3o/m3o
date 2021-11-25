@@ -1,4 +1,4 @@
-# Client and example generation
+# Client and Example Generator
 
 To run the code generation, from the repo root issue:
 

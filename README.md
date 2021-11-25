@@ -13,16 +13,16 @@ AWS was a first generation public cloud provider started in 2006. Its infrastruc
 compelling choice for a previous generation of developers. But what about the future? 
 
 M3O is an attempt to build a new public cloud platform with higher level building blocks for the Next generation of developers. 
-M3O is powered by the open source [Micro](https://github.com/micro/micro) platform and programmable real world [Micro Services](https://github.com/micro/services).
+M3O is powered by the open source distributed cloud operating system [Micro](https://github.com/micro/micro) and programmable real world [Micro Services](https://github.com/micro/services).
 
 ## Features
 
 M3O is host to 40+ [services](#services) and counting. Below are the platform features:
 
-- **🔥 Dev UX** - The developer experience is first priority. A slick new UX for the next generation of developers.
+- **🔥 Dev UX** - The developer experience is first priority. A slick new UX and code generated clients for the next generation of developers.
 - **☝️ One Token** - Use one Micro API token to fulfill all your API needs. Access multiple public APIs with a single token.
 - **⚡ Fast Access** - Using a new API is easy - no need to learn yet another API, it's all the same Micro developer experience.
-- **🆓 Free to start** - It's a simple pay as you go model and everything is priced per request. Top up your account and start making calls.
+- **🆓 Free to start** - It's a simple pay as you grow model and everything is priced per request. Top up your account and start making calls.
 - **🚫 Anti AWS Billing** - Don't get lost in a sea of infinite cloud billing. We show you exactly what you use and don't hide any of the costs.
 - **✔️ Open Source Software** - Built on an open source foundation and services which anyone can contribute to with a simple PR.
 
@@ -81,42 +81,35 @@ See the full list at [m3o.com/explore](https://m3o.com/explore).
 
 ## How it Works
 
+Read below to learn more about how it all works
+
+### Infrastructure
+
 M3O is built on existing public cloud infrastructure using managed kubernetes along with our own [infrastructure automation](https://github.com/m3o/platform) 
 and abstraction layer for existing third party public APIs. We host the open source [Micro](https://github.com/micro/micro) project as our base OS and 
 use it to power all the [Micro Services](https://github.com/micro/services), which provide simpler building blocks for existing cloud primitives.
 
-### UX
+### Control Plane
 
 We host our own custom dev UX ([m3o/cloud](https://github.com/m3o/cloud)) on top of the infrastructure stack and a [backend](https://github.com/m3o/backend) 
-which acts as the management control plane.
+which acts as the management control plane. This productizes the entire offering and allows for publishing of services with configurable pricing.
 
 ### Services
 
 Developers build and contribute to services in [github.com/micro/services](https://github.com/micro/services), a vendor neutral home. We then automate the 
 building and publishing of those services and generate client libraries for them all. This creates a shared and fully managed platform for everyone to leverage.
 
-### Infrastructure
-
-We primarily use existing open source software, fully managed services and third party public APIs as the backing infrastructure then layer a standard interface 
-on top. With all the services on one platform, accessible with one API token, we drastically improve the Dev UX.
-
 ## Development
 
 This project is a combination of open source projects and a platform managed by the Micro team. Our goal is to enable any developer to 
 contribute to the open source while benefiting from the platform as a shared resource.
-
-### Cloud Hosting
-
-The cloud hosted providers of Micro services:
-
-- [m3o.com](https://m3o.com) - a fully managed offering of micro services
 
 ### Open Source
 
 The core OS and services are all open sourced in a vendor neutral org:
 
 - [micro/micro](https://github.com/micro/micro) - an open source operating system for the cloud
-- [micro/services](https://github.com/micro/services) - open source micro services powering m3o.com
+- [micro/services](https://github.com/micro/services) - open source micro services offered by m3o.com
 
 ### M3O Dev UX
 
@@ -127,6 +120,12 @@ We provide the following dev UX for the consumption of Micro services:
 - [m3o/m3o-go](https://github.com/m3o/m3o-go) - Go client library with code generated functions and examples
 - [m3o/platform](https://github.com/m3o/platform) - the infrastructure automation for cloud hosted stack
 - [m3o/backend](https://github.com/m3o/backend) - the services which power the m3o.com product backend
+
+### Cloud Hosting
+
+The cloud hosting providers of Micro services:
+
+- [m3o.com](https://m3o.com) - a fully managed offering of micro services
 
 ## Publish APIs
 
