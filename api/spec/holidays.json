@@ -120,7 +120,7 @@
       },
       "Holiday": {
         "properties": {
-          "countryCode": {
+          "country_code": {
             "description": "the country this holiday occurs in",
             "type": "string"
           },
@@ -128,7 +128,7 @@
             "description": "date of the holiday in yyyy-mm-dd format",
             "type": "string"
           },
-          "localName": {
+          "local_name": {
             "description": "the local name of the holiday",
             "type": "string"
           },
@@ -157,7 +157,7 @@
       "ListRequest": {
         "description": "List the holiday dates for a given country and year",
         "properties": {
-          "countryCode": {
+          "country_code": {
             "description": "The 2 letter country code (as defined in ISO 3166-1 alpha-2)",
             "type": "string"
           },
@@ -175,7 +175,7 @@
           "holidays": {
             "items": {
               "properties": {
-                "countryCode": {
+                "country_code": {
                   "description": "the country this holiday occurs in",
                   "type": "string"
                 },
@@ -183,7 +183,7 @@
                   "description": "date of the holiday in yyyy-mm-dd format",
                   "type": "string"
                 },
-                "localName": {
+                "local_name": {
                   "description": "the local name of the holiday",
                   "type": "string"
                 },

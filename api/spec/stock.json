@@ -173,22 +173,22 @@
       },
       "Order": {
         "properties": {
-          "askPrice": {
+          "ask_price": {
             "description": "the asking price",
             "format": "double",
             "type": "number"
           },
-          "askSize": {
+          "ask_size": {
             "description": "the ask size",
             "format": "int32",
             "type": "number"
           },
-          "bidPrice": {
+          "bid_price": {
             "description": "the bidding price",
             "format": "double",
             "type": "number"
           },
-          "bidSize": {
+          "bid_size": {
             "description": "the bid size",
             "format": "int32",
             "type": "number"
@@ -239,22 +239,22 @@
             "description": "list of orders",
             "items": {
               "properties": {
-                "askPrice": {
+                "ask_price": {
                   "description": "the asking price",
                   "format": "double",
                   "type": "number"
                 },
-                "askSize": {
+                "ask_size": {
                   "description": "the ask size",
                   "format": "int32",
                   "type": "number"
                 },
-                "bidPrice": {
+                "bid_price": {
                   "description": "the bidding price",
                   "format": "double",
                   "type": "number"
                 },
-                "bidSize": {
+                "bid_size": {
                   "description": "the bid size",
                   "format": "int32",
                   "type": "number"
@@ -315,22 +315,22 @@
       },
       "QuoteResponse": {
         "properties": {
-          "askPrice": {
+          "ask_price": {
             "description": "the asking price",
             "format": "double",
             "type": "number"
           },
-          "askSize": {
+          "ask_size": {
             "description": "the ask size",
             "format": "int32",
             "type": "number"
           },
-          "bidPrice": {
+          "bid_price": {
             "description": "the bidding price",
             "format": "double",
             "type": "number"
           },
-          "bidSize": {
+          "bid_size": {
             "description": "the bid size",
             "format": "int32",
             "type": "number"

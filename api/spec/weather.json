@@ -79,17 +79,17 @@
     "schemas": {
       "Forecast": {
         "properties": {
-          "avgTempC": {
+          "avg_temp_c": {
             "description": "the average temp in celsius",
             "format": "double",
             "type": "number"
           },
-          "avgTempF": {
+          "avg_temp_f": {
             "description": "the average temp in fahrenheit",
             "format": "double",
             "type": "number"
           },
-          "chanceOfRain": {
+          "chance_of_rain": {
             "description": "chance of rain (percentage)",
             "format": "int32",
             "type": "number"
@@ -102,26 +102,26 @@
             "description": "date of the forecast",
             "type": "string"
           },
-          "iconUrl": {
+          "icon_url": {
             "description": "the URL of forecast condition icon. Simply prefix with either http or https to use it",
             "type": "string"
           },
-          "maxTempC": {
+          "max_temp_c": {
             "description": "max temp in celsius",
             "format": "double",
             "type": "number"
           },
-          "maxTempF": {
+          "max_temp_f": {
             "description": "max temp in fahrenheit",
             "format": "double",
             "type": "number"
           },
-          "minTempC": {
+          "min_temp_c": {
             "description": "minimum temp in celsius",
             "format": "double",
             "type": "number"
           },
-          "minTempF": {
+          "min_temp_f": {
             "description": "minimum temp in fahrenheit",
             "format": "double",
             "type": "number"
@@ -134,7 +134,7 @@
             "description": "time of sunset",
             "type": "string"
           },
-          "willItRain": {
+          "will_it_rain": {
             "description": "will it rain",
             "type": "boolean"
           }
@@ -168,17 +168,17 @@
             "description": "forecast for the next number of days",
             "items": {
               "properties": {
-                "avgTempC": {
+                "avg_temp_c": {
                   "description": "the average temp in celsius",
                   "format": "double",
                   "type": "number"
                 },
-                "avgTempF": {
+                "avg_temp_f": {
                   "description": "the average temp in fahrenheit",
                   "format": "double",
                   "type": "number"
                 },
-                "chanceOfRain": {
+                "chance_of_rain": {
                   "description": "chance of rain (percentage)",
                   "format": "int32",
                   "type": "number"
@@ -191,26 +191,26 @@
                   "description": "date of the forecast",
                   "type": "string"
                 },
-                "iconUrl": {
+                "icon_url": {
                   "description": "the URL of forecast condition icon. Simply prefix with either http or https to use it",
                   "type": "string"
                 },
-                "maxTempC": {
+                "max_temp_c": {
                   "description": "max temp in celsius",
                   "format": "double",
                   "type": "number"
                 },
-                "maxTempF": {
+                "max_temp_f": {
                   "description": "max temp in fahrenheit",
                   "format": "double",
                   "type": "number"
                 },
-                "minTempC": {
+                "min_temp_c": {
                   "description": "minimum temp in celsius",
                   "format": "double",
                   "type": "number"
                 },
-                "minTempF": {
+                "min_temp_f": {
                   "description": "minimum temp in fahrenheit",
                   "format": "double",
                   "type": "number"
@@ -223,7 +223,7 @@
                   "description": "time of sunset",
                   "type": "string"
                 },
-                "willItRain": {
+                "will_it_rain": {
                   "description": "will it rain",
                   "type": "boolean"
                 }
@@ -237,7 +237,7 @@
             "format": "double",
             "type": "number"
           },
-          "localTime": {
+          "local_time": {
             "description": "the local time",
             "type": "string"
           },
@@ -292,12 +292,12 @@
             "description": "whether its daytime",
             "type": "boolean"
           },
-          "feelsLikeC": {
+          "feels_like_c": {
             "description": "feels like in celsius",
             "format": "double",
             "type": "number"
           },
-          "feelsLikeF": {
+          "feels_like_f": {
             "description": "feels like in fahrenheit",
             "format": "double",
             "type": "number"
@@ -307,7 +307,7 @@
             "format": "int32",
             "type": "number"
           },
-          "iconUrl": {
+          "icon_url": {
             "description": "the URL of the related icon. Simply prefix with either http or https to use it",
             "type": "string"
           },
@@ -316,7 +316,7 @@
             "format": "double",
             "type": "number"
           },
-          "localTime": {
+          "local_time": {
             "description": "the local time",
             "type": "string"
           },
@@ -333,12 +333,12 @@
             "description": "region related to the location",
             "type": "string"
           },
-          "tempC": {
+          "temp_c": {
             "description": "temperature in celsius",
             "format": "double",
             "type": "number"
           },
-          "tempF": {
+          "temp_f": {
             "description": "temperature in fahrenheit",
             "format": "double",
             "type": "number"
@@ -347,21 +347,21 @@
             "description": "timezone of the location",
             "type": "string"
           },
-          "windDegree": {
+          "wind_degree": {
             "description": "wind degree",
             "format": "int32",
             "type": "number"
           },
-          "windDirection": {
+          "wind_direction": {
             "description": "wind direction",
             "type": "string"
           },
-          "windKph": {
+          "wind_kph": {
             "description": "wind in kph",
             "format": "double",
             "type": "number"
           },
-          "windMph": {
+          "wind_mph": {
             "description": "wind in mph",
             "format": "double",
             "type": "number"

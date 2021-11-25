@@ -188,7 +188,7 @@
             "description": "entry point, ie. handler name in the source code \n if not provided, defaults to the name parameter",
             "type": "string"
           },
-          "envVars": {
+          "env_vars": {
             "additionalProperties": {
               "type": "string"
             },
@@ -278,7 +278,7 @@
             "description": "The timeout for requests to the function",
             "type": "string"
           },
-          "updatedAt": {
+          "updated_at": {
             "description": "The time at which the function was updated",
             "type": "string"
           }

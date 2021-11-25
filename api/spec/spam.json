@@ -60,7 +60,7 @@
       "ClassifyRequest": {
         "description": "Check whether an email is likely to be spam based on its attributes",
         "properties": {
-          "emailBody": {
+          "email_body": {
             "description": "The raw body of the email including headers etc per RFC 822. Alternatively, use the other parameters to correctly format the message",
             "type": "string"
           },
@@ -68,7 +68,7 @@
             "description": "The email address it has been sent from",
             "type": "string"
           },
-          "htmlBody": {
+          "html_body": {
             "description": "the HTML version of the email body",
             "type": "string"
           },
@@ -76,7 +76,7 @@
             "description": "The subject of the email",
             "type": "string"
           },
-          "textBody": {
+          "text_body": {
             "description": "the plain text version of the email body",
             "type": "string"
           },
@@ -97,7 +97,7 @@
             },
             "type": "array"
           },
-          "isSpam": {
+          "is_spam": {
             "description": "Is it spam? Returns true if its score is \u003e 5",
             "type": "boolean"
           },

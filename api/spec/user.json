@@ -21,6 +21,16 @@
         },
         "description": "UserDeleteRequest"
       },
+      "UserListRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListRequest"
+            }
+          }
+        },
+        "description": "UserListRequest"
+      },
       "UserLoginRequest": {
         "content": {
           "application/json": {
@@ -174,6 +184,16 @@
           }
         },
         "description": "UserDeleteResponse"
+      },
+      "UserListResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListResponse"
+            }
+          }
+        },
+        "description": "UserListResponse"
       },
       "UserLoginResponse": {
         "content": {
@@ -413,6 +433,74 @@
       },
       "DeleteResponse": {
         "title": "DeleteResponse",
+        "type": "object"
+      },
+      "ListRequest": {
+        "description": "List all users. Returns a paged list of results",
+        "properties": {
+          "limit": {
+            "description": "Maximum number of records to return. Default limit is 25.\n Maximum limit is 1000. Anything higher will return an error.",
+            "format": "int32",
+            "type": "number"
+          },
+          "offset": {
+            "format": "int32",
+            "type": "number"
+          }
+        },
+        "title": "ListRequest",
+        "type": "object"
+      },
+      "ListResponse": {
+        "properties": {
+          "users": {
+            "items": {
+              "properties": {
+                "created": {
+                  "description": "unix timestamp",
+                  "format": "int64",
+                  "type": "number"
+                },
+                "email": {
+                  "description": "an email address",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "unique account id",
+                  "type": "string"
+                },
+                "profile": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Store any custom data you want about your users in this fields.",
+                  "type": "object"
+                },
+                "updated": {
+                  "description": "unix timestamp",
+                  "format": "int64",
+                  "type": "number"
+                },
+                "username": {
+                  "description": "alphanumeric username",
+                  "type": "string"
+                },
+                "verificationDate": {
+                  "description": "date of verification",
+                  "format": "int64",
+                  "type": "number"
+                },
+                "verified": {
+                  "description": "if the account is verified",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListResponse",
         "type": "object"
       },
       "LoginRequest": {
@@ -702,7 +790,7 @@
       "UpdatePasswordRequest": {
         "description": "Update the account password",
         "properties": {
-          "confirmPassword": {
+          "confirm_password": {
             "description": "confirm new password",
             "type": "string"
           },
@@ -859,6 +947,38 @@
           }
         ],
         "summary": "User.Delete(DeleteRequest)"
+      }
+    },
+    "/user/User/List": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserListRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "User.List(ListRequest)"
       }
     },
     "/user/User/Login": {

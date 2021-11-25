@@ -59,7 +59,7 @@
     "schemas": {
       "Gif": {
         "properties": {
-          "embedUrl": {
+          "embed_url": {
             "description": "URL used for embedding the GIF",
             "type": "string"
           },
@@ -78,12 +78,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -96,12 +96,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -113,7 +113,7 @@
                 },
                 "type": "object"
               },
-              "downsizedLarge": {
+              "downsized_large": {
                 "description": "A downsized version of the GIF \u003c 8MB",
                 "properties": {
                   "height": {
@@ -121,12 +121,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -139,12 +139,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -156,7 +156,7 @@
                 },
                 "type": "object"
               },
-              "downsizedMedium": {
+              "downsized_medium": {
                 "description": "A downsized version of the GIF \u003c 5MB",
                 "properties": {
                   "height": {
@@ -164,12 +164,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -182,12 +182,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -199,7 +199,7 @@
                 },
                 "type": "object"
               },
-              "downsizedSmall": {
+              "downsized_small": {
                 "description": "A downsized version of the GIF \u003c 200kb",
                 "properties": {
                   "height": {
@@ -207,12 +207,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -225,12 +225,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -242,7 +242,7 @@
                 },
                 "type": "object"
               },
-              "downsizedStill": {
+              "downsized_still": {
                 "description": "Static image of the downsized version of the GIF",
                 "properties": {
                   "height": {
@@ -250,12 +250,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -268,12 +268,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -285,7 +285,7 @@
                 },
                 "type": "object"
               },
-              "fixedHeight": {
+              "fixed_height": {
                 "description": "Version of the GIF with fixed height of 200 pixels. Good for mobile use",
                 "properties": {
                   "height": {
@@ -293,12 +293,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -311,12 +311,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -328,7 +328,7 @@
                 },
                 "type": "object"
               },
-              "fixedHeightDownsampled": {
+              "fixed_height_downsampled": {
                 "description": "Version of the GIF with fixed height of 200 pixels and number of frames reduced to 6",
                 "properties": {
                   "height": {
@@ -336,12 +336,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -354,12 +354,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -371,7 +371,7 @@
                 },
                 "type": "object"
               },
-              "fixedHeightSmall": {
+              "fixed_height_small": {
                 "description": "Version of the GIF with fixed height of 100 pixels. Good for mobile keyboards",
                 "properties": {
                   "height": {
@@ -379,12 +379,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -397,12 +397,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -414,7 +414,7 @@
                 },
                 "type": "object"
               },
-              "fixedHeightSmallStill": {
+              "fixed_height_small_still": {
                 "description": "Static image of the GIF with fixed height of 100 pixels",
                 "properties": {
                   "height": {
@@ -422,12 +422,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -440,12 +440,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -457,7 +457,7 @@
                 },
                 "type": "object"
               },
-              "fixedHeightStill": {
+              "fixed_height_still": {
                 "description": "Static image of the GIF with fixed height of 200 pixels",
                 "properties": {
                   "height": {
@@ -465,12 +465,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -483,12 +483,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -500,7 +500,7 @@
                 },
                 "type": "object"
               },
-              "fixedWidth": {
+              "fixed_width": {
                 "description": "Version of the GIF with fixed width of 200 pixels. Good for mobile use",
                 "properties": {
                   "height": {
@@ -508,12 +508,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -526,12 +526,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -543,7 +543,7 @@
                 },
                 "type": "object"
               },
-              "fixedWidthDownsampled": {
+              "fixed_width_downsampled": {
                 "description": "Version of the GIF with fixed width of 200 pixels and number of frames reduced to 6",
                 "properties": {
                   "height": {
@@ -551,12 +551,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -569,12 +569,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -586,7 +586,7 @@
                 },
                 "type": "object"
               },
-              "fixedWidthSmall": {
+              "fixed_width_small": {
                 "description": "Version of the GIF with fixed width of 100 pixels. Good for mobile keyboards",
                 "properties": {
                   "height": {
@@ -594,12 +594,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -612,12 +612,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -629,7 +629,7 @@
                 },
                 "type": "object"
               },
-              "fixedWidthSmallStill": {
+              "fixed_width_small_still": {
                 "description": "Static image of the GIF with fixed width of 100 pixels",
                 "properties": {
                   "height": {
@@ -637,12 +637,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -655,12 +655,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -672,7 +672,7 @@
                 },
                 "type": "object"
               },
-              "fixedWidthStill": {
+              "fixed_width_still": {
                 "description": "Static image of the GIF with fixed width of 200 pixels",
                 "properties": {
                   "height": {
@@ -680,12 +680,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -698,12 +698,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -723,12 +723,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -741,12 +741,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -766,12 +766,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -784,12 +784,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -801,7 +801,7 @@
                 },
                 "type": "object"
               },
-              "originalStill": {
+              "original_still": {
                 "description": "Static image of the original version of the GIF",
                 "properties": {
                   "height": {
@@ -809,12 +809,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -827,12 +827,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -852,12 +852,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -870,12 +870,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -887,7 +887,7 @@
                 },
                 "type": "object"
               },
-              "previewGif": {
+              "preview_gif": {
                 "description": "Version of the GIF \u003c50kb displaying first 1-2 secs",
                 "properties": {
                   "height": {
@@ -895,12 +895,12 @@
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Size": {
+                  "mp4_size": {
                     "description": "size of the MP4 version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "mp4Url": {
+                  "mp4_url": {
                     "description": "URL to an MP4 version of the gif",
                     "type": "string"
                   },
@@ -913,12 +913,12 @@
                     "description": "URL of the gif",
                     "type": "string"
                   },
-                  "webpSize": {
+                  "webp_size": {
                     "description": "size of the webp version",
                     "format": "int32",
                     "type": "number"
                   },
-                  "webpUrl": {
+                  "webp_url": {
                     "description": "URL to a webp version of the gif",
                     "type": "string"
                   },
@@ -937,7 +937,7 @@
             "description": "The content rating for the GIF",
             "type": "string"
           },
-          "shortUrl": {
+          "short_url": {
             "description": "A short URL for this GIF",
             "type": "string"
           },
@@ -968,12 +968,12 @@
             "format": "int32",
             "type": "number"
           },
-          "mp4Size": {
+          "mp4_size": {
             "description": "size of the MP4 version",
             "format": "int32",
             "type": "number"
           },
-          "mp4Url": {
+          "mp4_url": {
             "description": "URL to an MP4 version of the gif",
             "type": "string"
           },
@@ -986,12 +986,12 @@
             "description": "URL of the gif",
             "type": "string"
           },
-          "webpSize": {
+          "webp_size": {
             "description": "size of the webp version",
             "format": "int32",
             "type": "number"
           },
-          "webpUrl": {
+          "webp_url": {
             "description": "URL to a webp version of the gif",
             "type": "string"
           },
@@ -1015,12 +1015,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1033,12 +1033,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1050,7 +1050,7 @@
             },
             "type": "object"
           },
-          "downsizedLarge": {
+          "downsized_large": {
             "description": "A downsized version of the GIF \u003c 8MB",
             "properties": {
               "height": {
@@ -1058,12 +1058,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1076,12 +1076,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1093,7 +1093,7 @@
             },
             "type": "object"
           },
-          "downsizedMedium": {
+          "downsized_medium": {
             "description": "A downsized version of the GIF \u003c 5MB",
             "properties": {
               "height": {
@@ -1101,12 +1101,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1119,12 +1119,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1136,7 +1136,7 @@
             },
             "type": "object"
           },
-          "downsizedSmall": {
+          "downsized_small": {
             "description": "A downsized version of the GIF \u003c 200kb",
             "properties": {
               "height": {
@@ -1144,12 +1144,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1162,12 +1162,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1179,7 +1179,7 @@
             },
             "type": "object"
           },
-          "downsizedStill": {
+          "downsized_still": {
             "description": "Static image of the downsized version of the GIF",
             "properties": {
               "height": {
@@ -1187,12 +1187,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1205,12 +1205,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1222,7 +1222,7 @@
             },
             "type": "object"
           },
-          "fixedHeight": {
+          "fixed_height": {
             "description": "Version of the GIF with fixed height of 200 pixels. Good for mobile use",
             "properties": {
               "height": {
@@ -1230,12 +1230,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1248,12 +1248,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1265,7 +1265,7 @@
             },
             "type": "object"
           },
-          "fixedHeightDownsampled": {
+          "fixed_height_downsampled": {
             "description": "Version of the GIF with fixed height of 200 pixels and number of frames reduced to 6",
             "properties": {
               "height": {
@@ -1273,12 +1273,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1291,12 +1291,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1308,7 +1308,7 @@
             },
             "type": "object"
           },
-          "fixedHeightSmall": {
+          "fixed_height_small": {
             "description": "Version of the GIF with fixed height of 100 pixels. Good for mobile keyboards",
             "properties": {
               "height": {
@@ -1316,12 +1316,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1334,12 +1334,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1351,7 +1351,7 @@
             },
             "type": "object"
           },
-          "fixedHeightSmallStill": {
+          "fixed_height_small_still": {
             "description": "Static image of the GIF with fixed height of 100 pixels",
             "properties": {
               "height": {
@@ -1359,12 +1359,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1377,12 +1377,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1394,7 +1394,7 @@
             },
             "type": "object"
           },
-          "fixedHeightStill": {
+          "fixed_height_still": {
             "description": "Static image of the GIF with fixed height of 200 pixels",
             "properties": {
               "height": {
@@ -1402,12 +1402,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1420,12 +1420,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1437,7 +1437,7 @@
             },
             "type": "object"
           },
-          "fixedWidth": {
+          "fixed_width": {
             "description": "Version of the GIF with fixed width of 200 pixels. Good for mobile use",
             "properties": {
               "height": {
@@ -1445,12 +1445,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1463,12 +1463,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1480,7 +1480,7 @@
             },
             "type": "object"
           },
-          "fixedWidthDownsampled": {
+          "fixed_width_downsampled": {
             "description": "Version of the GIF with fixed width of 200 pixels and number of frames reduced to 6",
             "properties": {
               "height": {
@@ -1488,12 +1488,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1506,12 +1506,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1523,7 +1523,7 @@
             },
             "type": "object"
           },
-          "fixedWidthSmall": {
+          "fixed_width_small": {
             "description": "Version of the GIF with fixed width of 100 pixels. Good for mobile keyboards",
             "properties": {
               "height": {
@@ -1531,12 +1531,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1549,12 +1549,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1566,7 +1566,7 @@
             },
             "type": "object"
           },
-          "fixedWidthSmallStill": {
+          "fixed_width_small_still": {
             "description": "Static image of the GIF with fixed width of 100 pixels",
             "properties": {
               "height": {
@@ -1574,12 +1574,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1592,12 +1592,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1609,7 +1609,7 @@
             },
             "type": "object"
           },
-          "fixedWidthStill": {
+          "fixed_width_still": {
             "description": "Static image of the GIF with fixed width of 200 pixels",
             "properties": {
               "height": {
@@ -1617,12 +1617,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1635,12 +1635,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1660,12 +1660,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1678,12 +1678,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1703,12 +1703,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1721,12 +1721,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1738,7 +1738,7 @@
             },
             "type": "object"
           },
-          "originalStill": {
+          "original_still": {
             "description": "Static image of the original version of the GIF",
             "properties": {
               "height": {
@@ -1746,12 +1746,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1764,12 +1764,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1789,12 +1789,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1807,12 +1807,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1824,7 +1824,7 @@
             },
             "type": "object"
           },
-          "previewGif": {
+          "preview_gif": {
             "description": "Version of the GIF \u003c50kb displaying first 1-2 secs",
             "properties": {
               "height": {
@@ -1832,12 +1832,12 @@
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Size": {
+              "mp4_size": {
                 "description": "size of the MP4 version",
                 "format": "int32",
                 "type": "number"
               },
-              "mp4Url": {
+              "mp4_url": {
                 "description": "URL to an MP4 version of the gif",
                 "type": "string"
               },
@@ -1850,12 +1850,12 @@
                 "description": "URL of the gif",
                 "type": "string"
               },
-              "webpSize": {
+              "webp_size": {
                 "description": "size of the webp version",
                 "format": "int32",
                 "type": "number"
               },
-              "webpUrl": {
+              "webp_url": {
                 "description": "URL to a webp version of the gif",
                 "type": "string"
               },
@@ -1883,7 +1883,7 @@
             "format": "int32",
             "type": "number"
           },
-          "totalCount": {
+          "total_count": {
             "description": "total number of results available",
             "format": "int32",
             "type": "number"
@@ -1927,7 +1927,7 @@
             "description": "list of results",
             "items": {
               "properties": {
-                "embedUrl": {
+                "embed_url": {
                   "description": "URL used for embedding the GIF",
                   "type": "string"
                 },
@@ -1946,12 +1946,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -1964,12 +1964,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -1981,7 +1981,7 @@
                       },
                       "type": "object"
                     },
-                    "downsizedLarge": {
+                    "downsized_large": {
                       "description": "A downsized version of the GIF \u003c 8MB",
                       "properties": {
                         "height": {
@@ -1989,12 +1989,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2007,12 +2007,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2024,7 +2024,7 @@
                       },
                       "type": "object"
                     },
-                    "downsizedMedium": {
+                    "downsized_medium": {
                       "description": "A downsized version of the GIF \u003c 5MB",
                       "properties": {
                         "height": {
@@ -2032,12 +2032,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2050,12 +2050,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2067,7 +2067,7 @@
                       },
                       "type": "object"
                     },
-                    "downsizedSmall": {
+                    "downsized_small": {
                       "description": "A downsized version of the GIF \u003c 200kb",
                       "properties": {
                         "height": {
@@ -2075,12 +2075,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2093,12 +2093,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2110,7 +2110,7 @@
                       },
                       "type": "object"
                     },
-                    "downsizedStill": {
+                    "downsized_still": {
                       "description": "Static image of the downsized version of the GIF",
                       "properties": {
                         "height": {
@@ -2118,12 +2118,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2136,12 +2136,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2153,7 +2153,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedHeight": {
+                    "fixed_height": {
                       "description": "Version of the GIF with fixed height of 200 pixels. Good for mobile use",
                       "properties": {
                         "height": {
@@ -2161,12 +2161,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2179,12 +2179,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2196,7 +2196,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedHeightDownsampled": {
+                    "fixed_height_downsampled": {
                       "description": "Version of the GIF with fixed height of 200 pixels and number of frames reduced to 6",
                       "properties": {
                         "height": {
@@ -2204,12 +2204,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2222,12 +2222,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2239,7 +2239,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedHeightSmall": {
+                    "fixed_height_small": {
                       "description": "Version of the GIF with fixed height of 100 pixels. Good for mobile keyboards",
                       "properties": {
                         "height": {
@@ -2247,12 +2247,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2265,12 +2265,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2282,7 +2282,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedHeightSmallStill": {
+                    "fixed_height_small_still": {
                       "description": "Static image of the GIF with fixed height of 100 pixels",
                       "properties": {
                         "height": {
@@ -2290,12 +2290,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2308,12 +2308,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2325,7 +2325,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedHeightStill": {
+                    "fixed_height_still": {
                       "description": "Static image of the GIF with fixed height of 200 pixels",
                       "properties": {
                         "height": {
@@ -2333,12 +2333,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2351,12 +2351,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2368,7 +2368,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedWidth": {
+                    "fixed_width": {
                       "description": "Version of the GIF with fixed width of 200 pixels. Good for mobile use",
                       "properties": {
                         "height": {
@@ -2376,12 +2376,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2394,12 +2394,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2411,7 +2411,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedWidthDownsampled": {
+                    "fixed_width_downsampled": {
                       "description": "Version of the GIF with fixed width of 200 pixels and number of frames reduced to 6",
                       "properties": {
                         "height": {
@@ -2419,12 +2419,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2437,12 +2437,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2454,7 +2454,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedWidthSmall": {
+                    "fixed_width_small": {
                       "description": "Version of the GIF with fixed width of 100 pixels. Good for mobile keyboards",
                       "properties": {
                         "height": {
@@ -2462,12 +2462,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2480,12 +2480,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2497,7 +2497,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedWidthSmallStill": {
+                    "fixed_width_small_still": {
                       "description": "Static image of the GIF with fixed width of 100 pixels",
                       "properties": {
                         "height": {
@@ -2505,12 +2505,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2523,12 +2523,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2540,7 +2540,7 @@
                       },
                       "type": "object"
                     },
-                    "fixedWidthStill": {
+                    "fixed_width_still": {
                       "description": "Static image of the GIF with fixed width of 200 pixels",
                       "properties": {
                         "height": {
@@ -2548,12 +2548,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2566,12 +2566,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2591,12 +2591,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2609,12 +2609,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2634,12 +2634,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2652,12 +2652,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2669,7 +2669,7 @@
                       },
                       "type": "object"
                     },
-                    "originalStill": {
+                    "original_still": {
                       "description": "Static image of the original version of the GIF",
                       "properties": {
                         "height": {
@@ -2677,12 +2677,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2695,12 +2695,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2720,12 +2720,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2738,12 +2738,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2755,7 +2755,7 @@
                       },
                       "type": "object"
                     },
-                    "previewGif": {
+                    "preview_gif": {
                       "description": "Version of the GIF \u003c50kb displaying first 1-2 secs",
                       "properties": {
                         "height": {
@@ -2763,12 +2763,12 @@
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Size": {
+                        "mp4_size": {
                           "description": "size of the MP4 version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "mp4Url": {
+                        "mp4_url": {
                           "description": "URL to an MP4 version of the gif",
                           "type": "string"
                         },
@@ -2781,12 +2781,12 @@
                           "description": "URL of the gif",
                           "type": "string"
                         },
-                        "webpSize": {
+                        "webp_size": {
                           "description": "size of the webp version",
                           "format": "int32",
                           "type": "number"
                         },
-                        "webpUrl": {
+                        "webp_url": {
                           "description": "URL to a webp version of the gif",
                           "type": "string"
                         },
@@ -2805,7 +2805,7 @@
                   "description": "The content rating for the GIF",
                   "type": "string"
                 },
-                "shortUrl": {
+                "short_url": {
                   "description": "A short URL for this GIF",
                   "type": "string"
                 },
@@ -2843,7 +2843,7 @@
                 "format": "int32",
                 "type": "number"
               },
-              "totalCount": {
+              "total_count": {
                 "description": "total number of results available",
                 "format": "int32",
                 "type": "number"

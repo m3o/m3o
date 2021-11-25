@@ -70,7 +70,7 @@
       },
       "LookupResponse": {
         "properties": {
-          "co2Emissions": {
+          "co2_emissions": {
             "description": "co2 emmissions",
             "format": "double",
             "type": "number"
@@ -79,16 +79,16 @@
             "description": "colour of vehicle",
             "type": "string"
           },
-          "engineCapacity": {
+          "engine_capacity": {
             "description": "engine capacity",
             "format": "int32",
             "type": "number"
           },
-          "fuelType": {
+          "fuel_type": {
             "description": "fuel type e.g petrol, diesel",
             "type": "string"
           },
-          "lastV5Issued": {
+          "last_v5_issued": {
             "description": "date of last v5 issue",
             "type": "string"
           },
@@ -96,15 +96,15 @@
             "description": "make of vehicle",
             "type": "string"
           },
-          "monthOfFirstRegistration": {
+          "month_of_first_registration": {
             "description": "month of first registration",
             "type": "string"
           },
-          "motExpiry": {
+          "mot_expiry": {
             "description": "mot expiry",
             "type": "string"
           },
-          "motStatus": {
+          "mot_status": {
             "description": "mot status",
             "type": "string"
           },
@@ -112,15 +112,15 @@
             "description": "registration number",
             "type": "string"
           },
-          "taxDueDate": {
+          "tax_due_date": {
             "description": "tax due data",
             "type": "string"
           },
-          "taxStatus": {
+          "tax_status": {
             "description": "tax status",
             "type": "string"
           },
-          "typeApproval": {
+          "type_approval": {
             "description": "type approvale",
             "type": "string"
           },
@@ -128,7 +128,7 @@
             "description": "wheel plan",
             "type": "string"
           },
-          "yearOfManufacture": {
+          "year_of_manufacture": {
             "description": "year of manufacture",
             "format": "int32",
             "type": "number"

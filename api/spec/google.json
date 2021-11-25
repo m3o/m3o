@@ -74,7 +74,7 @@
             "description": "List of results for the query",
             "items": {
               "properties": {
-                "displayUrl": {
+                "display_url": {
                   "description": "abridged version of this search result’s URL, e.g. www.exampe.com",
                   "type": "string"
                 },
@@ -109,7 +109,7 @@
       },
       "SearchResult": {
         "properties": {
-          "displayUrl": {
+          "display_url": {
             "description": "abridged version of this search result’s URL, e.g. www.exampe.com",
             "type": "string"
           },

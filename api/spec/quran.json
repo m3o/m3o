@@ -119,11 +119,11 @@
     "schemas": {
       "Chapter": {
         "properties": {
-          "arabicName": {
+          "arabic_name": {
             "description": "The arabic name of the chapter",
             "type": "string"
           },
-          "complexName": {
+          "complex_name": {
             "description": "The complex name of the chapter",
             "type": "string"
           },
@@ -144,20 +144,20 @@
             },
             "type": "array"
           },
-          "prefixBismillah": {
+          "prefix_bismillah": {
             "description": "Should the chapter start with bismillah",
             "type": "boolean"
           },
-          "revelationOrder": {
+          "revelation_order": {
             "description": "The order in which it was revealed",
             "format": "int32",
             "type": "number"
           },
-          "revelationPlace": {
+          "revelation_place": {
             "description": "The place of revelation",
             "type": "string"
           },
-          "translatedName": {
+          "translated_name": {
             "description": "The translated name",
             "type": "string"
           },
@@ -186,11 +186,11 @@
           "chapters": {
             "items": {
               "properties": {
-                "arabicName": {
+                "arabic_name": {
                   "description": "The arabic name of the chapter",
                   "type": "string"
                 },
-                "complexName": {
+                "complex_name": {
                   "description": "The complex name of the chapter",
                   "type": "string"
                 },
@@ -211,20 +211,20 @@
                   },
                   "type": "array"
                 },
-                "prefixBismillah": {
+                "prefix_bismillah": {
                   "description": "Should the chapter start with bismillah",
                   "type": "boolean"
                 },
-                "revelationOrder": {
+                "revelation_order": {
                   "description": "The order in which it was revealed",
                   "format": "int32",
                   "type": "number"
                 },
-                "revelationPlace": {
+                "revelation_place": {
                   "description": "The place of revelation",
                   "type": "string"
                 },
-                "translatedName": {
+                "translated_name": {
                   "description": "The translated name",
                   "type": "string"
                 },
@@ -289,12 +289,12 @@
             },
             "type": "array"
           },
-          "verseId": {
+          "verse_id": {
             "description": "The unique verse id across the Quran",
             "format": "int32",
             "type": "number"
           },
-          "verseKey": {
+          "verse_key": {
             "description": "The verse key e.g 1:1",
             "type": "string"
           }
@@ -368,12 +368,12 @@
                   },
                   "type": "array"
                 },
-                "verseId": {
+                "verse_id": {
                   "description": "The unique verse id across the Quran",
                   "format": "int32",
                   "type": "number"
                 },
-                "verseKey": {
+                "verse_key": {
                   "description": "The verse key e.g 1:1",
                   "type": "string"
                 }
@@ -382,12 +382,12 @@
             },
             "type": "array"
           },
-          "totalPages": {
+          "total_pages": {
             "description": "The total pages",
             "format": "int32",
             "type": "number"
           },
-          "totalResults": {
+          "total_results": {
             "description": "The total results returned",
             "format": "int32",
             "type": "number"
@@ -501,7 +501,7 @@
             "description": "The arabic text for this verse",
             "type": "string"
           },
-          "translatedText": {
+          "translated_text": {
             "description": "The basic translation of the verse",
             "type": "string"
           },
@@ -535,7 +535,7 @@
             "description": "The individual words within the verse (Ayah)",
             "items": {
               "properties": {
-                "charType": {
+                "char_type": {
                   "description": "The character type e.g word, end",
                   "type": "string"
                 },
@@ -634,7 +634,7 @@
             "format": "int32",
             "type": "number"
           },
-          "totalPages": {
+          "total_pages": {
             "description": "The total pages",
             "format": "int32",
             "type": "number"
@@ -688,7 +688,7 @@
                   "description": "The arabic text for this verse",
                   "type": "string"
                 },
-                "translatedText": {
+                "translated_text": {
                   "description": "The basic translation of the verse",
                   "type": "string"
                 },
@@ -722,7 +722,7 @@
                   "description": "The individual words within the verse (Ayah)",
                   "items": {
                     "properties": {
-                      "charType": {
+                      "char_type": {
                         "description": "The character type e.g word, end",
                         "type": "string"
                       },
@@ -778,7 +778,7 @@
       },
       "Word": {
         "properties": {
-          "charType": {
+          "char_type": {
             "description": "The character type e.g word, end",
             "type": "string"
           },

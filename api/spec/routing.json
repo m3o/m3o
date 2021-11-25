@@ -150,11 +150,11 @@
               "action": {
                 "type": "string"
               },
-              "bearingAfter": {
+              "bearing_after": {
                 "format": "double",
                 "type": "number"
               },
-              "bearingBefore": {
+              "bearing_before": {
                 "format": "double",
                 "type": "number"
               },
@@ -287,11 +287,11 @@
                     "action": {
                       "type": "string"
                     },
-                    "bearingAfter": {
+                    "bearing_after": {
                       "format": "double",
                       "type": "number"
                     },
-                    "bearingBefore": {
+                    "bearing_before": {
                       "format": "double",
                       "type": "number"
                     },
@@ -464,11 +464,11 @@
           "action": {
             "type": "string"
           },
-          "bearingAfter": {
+          "bearing_after": {
             "format": "double",
             "type": "number"
           },
-          "bearingBefore": {
+          "bearing_before": {
             "format": "double",
             "type": "number"
           },

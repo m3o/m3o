@@ -123,7 +123,7 @@
             "description": "description for the channel",
             "type": "string"
           },
-          "lastActive": {
+          "last_active": {
             "description": "last activity time",
             "type": "string"
           },
@@ -168,7 +168,7 @@
                   "description": "description for the channel",
                   "type": "string"
                 },
-                "lastActive": {
+                "last_active": {
                   "description": "last activity time",
                   "type": "string"
                 },

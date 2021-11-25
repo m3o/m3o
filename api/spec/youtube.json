@@ -78,11 +78,11 @@
                   "description": "if live broadcast then indicates activity. \n none, upcoming, live, completed",
                   "type": "string"
                 },
-                "channelId": {
+                "channel_id": {
                   "description": "the channel id",
                   "type": "string"
                 },
-                "channelTitle": {
+                "channel_title": {
                   "description": "the channel title",
                   "type": "string"
                 },
@@ -98,7 +98,7 @@
                   "description": "kind of result; \"video\", \"channel\", \"playlist\"",
                   "type": "string"
                 },
-                "publishedAt": {
+                "published_at": {
                   "description": "published at time",
                   "type": "string"
                 },
@@ -125,11 +125,11 @@
             "description": "if live broadcast then indicates activity. \n none, upcoming, live, completed",
             "type": "string"
           },
-          "channelId": {
+          "channel_id": {
             "description": "the channel id",
             "type": "string"
           },
-          "channelTitle": {
+          "channel_title": {
             "description": "the channel title",
             "type": "string"
           },
@@ -145,7 +145,7 @@
             "description": "kind of result; \"video\", \"channel\", \"playlist\"",
             "type": "string"
           },
-          "publishedAt": {
+          "published_at": {
             "description": "published at time",
             "type": "string"
           },

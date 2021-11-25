@@ -119,7 +119,7 @@
     "schemas": {
       "Profile": {
         "properties": {
-          "createdAt": {
+          "created_at": {
             "description": "the account creation date",
             "type": "string"
           },
@@ -137,7 +137,7 @@
             "format": "int64",
             "type": "number"
           },
-          "imageUrl": {
+          "image_url": {
             "description": "The user's profile picture",
             "type": "string"
           },
@@ -187,11 +187,11 @@
             "description": "the related tweets for the search",
             "items": {
               "properties": {
-                "createdAt": {
+                "created_at": {
                   "description": "time of tweet",
                   "type": "string"
                 },
-                "favouritedCount": {
+                "favourited_count": {
                   "description": "number of times favourited",
                   "format": "int64",
                   "type": "number"
@@ -201,7 +201,7 @@
                   "format": "int64",
                   "type": "number"
                 },
-                "retweetedCount": {
+                "retweeted_count": {
                   "description": "number of times retweeted",
                   "format": "int64",
                   "type": "number"
@@ -245,11 +245,11 @@
             "description": "The recent tweets for the user",
             "items": {
               "properties": {
-                "createdAt": {
+                "created_at": {
                   "description": "time of tweet",
                   "type": "string"
                 },
-                "favouritedCount": {
+                "favourited_count": {
                   "description": "number of times favourited",
                   "format": "int64",
                   "type": "number"
@@ -259,7 +259,7 @@
                   "format": "int64",
                   "type": "number"
                 },
-                "retweetedCount": {
+                "retweeted_count": {
                   "description": "number of times retweeted",
                   "format": "int64",
                   "type": "number"
@@ -287,7 +287,7 @@
             "description": "name of the trend",
             "type": "string"
           },
-          "tweetVolume": {
+          "tweet_volume": {
             "description": "the volume of tweets in last 24 hours",
             "format": "int64",
             "type": "number"
@@ -315,7 +315,7 @@
                   "description": "name of the trend",
                   "type": "string"
                 },
-                "tweetVolume": {
+                "tweet_volume": {
                   "description": "the volume of tweets in last 24 hours",
                   "format": "int64",
                   "type": "number"
@@ -335,11 +335,11 @@
       },
       "Tweet": {
         "properties": {
-          "createdAt": {
+          "created_at": {
             "description": "time of tweet",
             "type": "string"
           },
-          "favouritedCount": {
+          "favourited_count": {
             "description": "number of times favourited",
             "format": "int64",
             "type": "number"
@@ -349,7 +349,7 @@
             "format": "int64",
             "type": "number"
           },
-          "retweetedCount": {
+          "retweeted_count": {
             "description": "number of times retweeted",
             "format": "int64",
             "type": "number"
@@ -382,7 +382,7 @@
           "profile": {
             "description": "The requested user profile",
             "properties": {
-              "createdAt": {
+              "created_at": {
                 "description": "the account creation date",
                 "type": "string"
               },
@@ -400,7 +400,7 @@
                 "format": "int64",
                 "type": "number"
               },
-              "imageUrl": {
+              "image_url": {
                 "description": "The user's profile picture",
                 "type": "string"
               },
@@ -430,11 +430,11 @@
           "status": {
             "description": "the current user status",
             "properties": {
-              "createdAt": {
+              "created_at": {
                 "description": "time of tweet",
                 "type": "string"
               },
-              "favouritedCount": {
+              "favourited_count": {
                 "description": "number of times favourited",
                 "format": "int64",
                 "type": "number"
@@ -444,7 +444,7 @@
                 "format": "int64",
                 "type": "number"
               },
-              "retweetedCount": {
+              "retweeted_count": {
                 "description": "number of times retweeted",
                 "format": "int64",
                 "type": "number"

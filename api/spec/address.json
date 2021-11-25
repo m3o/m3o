@@ -73,7 +73,7 @@
           "addresses": {
             "items": {
               "properties": {
-                "buildingName": {
+                "building_name": {
                   "description": "building name",
                   "type": "string"
                 },
@@ -81,11 +81,11 @@
                   "description": "the county",
                   "type": "string"
                 },
-                "lineOne": {
+                "line_one": {
                   "description": "line one of address",
                   "type": "string"
                 },
-                "lineTwo": {
+                "line_two": {
                   "description": "line two of address",
                   "type": "string"
                 },
@@ -128,7 +128,7 @@
       },
       "Record": {
         "properties": {
-          "buildingName": {
+          "building_name": {
             "description": "building name",
             "type": "string"
           },
@@ -136,11 +136,11 @@
             "description": "the county",
             "type": "string"
           },
-          "lineOne": {
+          "line_one": {
             "description": "line one of address",
             "type": "string"
           },
-          "lineTwo": {
+          "line_two": {
             "description": "line two of address",
             "type": "string"
           },

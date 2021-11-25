@@ -85,10 +85,10 @@
           "country": {
             "type": "string"
           },
-          "lineOne": {
+          "line_one": {
             "type": "string"
           },
-          "lineTwo": {
+          "line_two": {
             "type": "string"
           },
           "postcode": {
@@ -141,10 +141,10 @@
               "country": {
                 "type": "string"
               },
-              "lineOne": {
+              "line_one": {
                 "type": "string"
               },
-              "lineTwo": {
+              "line_two": {
                 "type": "string"
               },
               "postcode": {
@@ -195,10 +195,10 @@
               "country": {
                 "type": "string"
               },
-              "lineOne": {
+              "line_one": {
                 "type": "string"
               },
-              "lineTwo": {
+              "line_two": {
                 "type": "string"
               },
               "postcode": {

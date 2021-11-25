@@ -64,11 +64,11 @@
             "description": "the display name of the sender",
             "type": "string"
           },
-          "htmlBody": {
+          "html_body": {
             "description": "the html body",
             "type": "string"
           },
-          "replyTo": {
+          "reply_to": {
             "description": "an optional reply to email address",
             "type": "string"
           },
@@ -76,7 +76,7 @@
             "description": "the email subject",
             "type": "string"
           },
-          "textBody": {
+          "text_body": {
             "description": "the text body",
             "type": "string"
           },

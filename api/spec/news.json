@@ -1,0 +1,262 @@
+{
+  "components": {
+    "requestBodies": {
+      "NewsHeadlinesRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HeadlinesRequest"
+            }
+          }
+        },
+        "description": "NewsHeadlinesRequest"
+      }
+    },
+    "responses": {
+      "MicroAPIError": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "Code": {
+                  "description": "Error code",
+                  "example": 500,
+                  "type": "number"
+                },
+                "Detail": {
+                  "description": "Error detail",
+                  "example": "service not found",
+                  "type": "string"
+                },
+                "Id": {
+                  "description": "Error ID",
+                  "type": "string"
+                },
+                "Status": {
+                  "description": "Error status message",
+                  "example": "Internal Server Error",
+                  "type": "string"
+                }
+              },
+              "title": "MicroAPIError",
+              "type": "object"
+            }
+          }
+        },
+        "description": "Error from the Micro API"
+      },
+      "NewsHeadlinesResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HeadlinesResponse"
+            }
+          }
+        },
+        "description": "NewsHeadlinesResponse"
+      }
+    },
+    "schemas": {
+      "Article": {
+        "properties": {
+          "categories": {
+            "description": "categories",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": {
+            "description": "article description",
+            "type": "string"
+          },
+          "id": {
+            "description": "article id",
+            "type": "string"
+          },
+          "image_url": {
+            "description": "image url",
+            "type": "string"
+          },
+          "keywords": {
+            "description": "related keywords",
+            "type": "string"
+          },
+          "language": {
+            "description": "the article language",
+            "type": "string"
+          },
+          "locale": {
+            "description": "the locale",
+            "type": "string"
+          },
+          "published_at": {
+            "description": "time it was published",
+            "type": "string"
+          },
+          "snippet": {
+            "description": "first 60 characters of article body",
+            "type": "string"
+          },
+          "source": {
+            "description": "source of news",
+            "type": "string"
+          },
+          "title": {
+            "description": "article title",
+            "type": "string"
+          },
+          "url": {
+            "description": "url of the article",
+            "type": "string"
+          }
+        },
+        "title": "Article",
+        "type": "object"
+      },
+      "HeadlinesRequest": {
+        "description": "Get the latest news headlines",
+        "properties": {
+          "date": {
+            "description": "date published on in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "language": {
+            "description": "comma separated list of languages to retrieve in e.g en,es",
+            "type": "string"
+          },
+          "locale": {
+            "description": "comma separated list of countries to include e.g us,ca",
+            "type": "string"
+          }
+        },
+        "title": "HeadlinesRequest",
+        "type": "object"
+      },
+      "HeadlinesResponse": {
+        "properties": {
+          "articles": {
+            "items": {
+              "properties": {
+                "categories": {
+                  "description": "categories",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "description": {
+                  "description": "article description",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "article id",
+                  "type": "string"
+                },
+                "image_url": {
+                  "description": "image url",
+                  "type": "string"
+                },
+                "keywords": {
+                  "description": "related keywords",
+                  "type": "string"
+                },
+                "language": {
+                  "description": "the article language",
+                  "type": "string"
+                },
+                "locale": {
+                  "description": "the locale",
+                  "type": "string"
+                },
+                "published_at": {
+                  "description": "time it was published",
+                  "type": "string"
+                },
+                "snippet": {
+                  "description": "first 60 characters of article body",
+                  "type": "string"
+                },
+                "source": {
+                  "description": "source of news",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "article title",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "url of the article",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "HeadlinesResponse",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "M3OAPIToken": {
+        "bearerFormat": "token",
+        "description": "M3O API token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Generated by protoc-gen-openapi",
+    "title": "News",
+    "version": "1",
+    "x-logo": {
+      "altText": "M3O logo",
+      "backgroundColor": "#000000",
+      "url": "https://raw.githubusercontent.com/m3o/m3o/main/images/logo.png"
+    }
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/news/News/Headlines": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewsHeadlinesRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NewsHeadlinesResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "News.Headlines(HeadlinesRequest)"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.m3o.com/v1",
+      "description": "M3O platform"
+    }
+  ]
+}

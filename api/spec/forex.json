@@ -186,12 +186,12 @@
       },
       "QuoteResponse": {
         "properties": {
-          "askPrice": {
+          "ask_price": {
             "description": "the asking price",
             "format": "double",
             "type": "number"
           },
-          "bidPrice": {
+          "bid_price": {
             "description": "the bidding price",
             "format": "double",
             "type": "number"
