@@ -15,12 +15,11 @@ import (
 )
 
 type dartG struct {
-	// add something here
-	langauge string
+	// add appropriate fields
 }
 
 func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
-	templ, err := template.New(d.langauge + serviceName).Funcs(funcMap()).Parse(dartServiceTemplate)
+	templ, err := template.New("dart" + serviceName).Funcs(funcMap()).Parse(dartServiceTemplate)
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
@@ -41,7 +40,7 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 		os.Exit(1)
 	}
 
-	clientFile := filepath.Join(dartPath, serviceName, fmt.Sprint(serviceName, ".", d.langauge))
+	clientFile := filepath.Join(dartPath, serviceName, fmt.Sprint(serviceName, ".dart"))
 	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)

@@ -31,7 +31,7 @@ export class {{ title $service.Name }}Service{
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
 export interface {{ title $typeName }}{{ "{" }}
-{{ recursiveTypeDefinition "typescript" $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
+{{ recursiveTypeDefinitionTs $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
 {{end}}
 `
 

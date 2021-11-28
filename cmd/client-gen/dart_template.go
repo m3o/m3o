@@ -50,6 +50,6 @@ class {{title $service.Name}}Service {
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
 class {{ title $typeName }} {
-{{ recursiveTypeDefinition "dart" $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
+{{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
 {{end}}
 `

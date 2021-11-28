@@ -13,18 +13,61 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/stoewer/go-strcase"
 )
 
 type tsG struct {
-	// add something here
-	langauge string
+	// add appropriate fields
 }
 
-func (ts *tsG) ServiceClient(serviceName, tsPath string, service service) {
-	templ, err := template.New(ts.langauge + serviceName).Funcs(funcMap()).Parse(dartServiceTemplate)
+func (n *tsG) ServiceClient(serviceName, tsPath string, service service) {
+	templ, err := template.New("ts" + serviceName).Funcs(funcMap()).Parse(tsServiceTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	var b bytes.Buffer
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service": service,
+	})
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+
+	err = os.MkdirAll(filepath.Join(tsPath, "src", serviceName), 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	f, err := os.OpenFile(filepath.Join(tsPath, "src", serviceName, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+
+	cmd := exec.Command("prettier", "-w", "index.ts")
+	cmd.Dir = filepath.Join(tsPath, "src", serviceName)
+	outp, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem formatting '%v' client: %v %s", serviceName, string(outp), err.Error()))
+		os.Exit(1)
+	}
+}
+
+func (n *tsG) TopReadme(serviceName, examplesPath string, service service) {
+	// node client service readmes
+	templ, err := template.New("tsTopReadme" + serviceName).Funcs(funcMap()).Parse(tsReadmeTopTemplate)
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
@@ -36,17 +79,14 @@ func (ts *tsG) ServiceClient(serviceName, tsPath string, service service) {
 	})
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
-		fmt.Println("this is london")
 		os.Exit(1)
 	}
-	err = os.MkdirAll(filepath.Join(tsPath, serviceName), 0777)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	clientFile := filepath.Join(tsPath, serviceName, fmt.Sprint(serviceName, ".", ts.langauge))
-	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	os.MkdirAll(filepath.Join(examplesPath, "js", serviceName), 0744)
+	f, err := os.OpenFile(filepath.Join(examplesPath, "js", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -59,7 +99,146 @@ func (ts *tsG) ServiceClient(serviceName, tsPath string, service service) {
 	}
 }
 
-func (ts *tsG) schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+func (n *tsG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, service service, example example) {
+	// node example
+	templ, err := template.New("ts" + serviceName + endpoint).Funcs(funcMap()).Parse(tsExampleTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	b := bytes.Buffer{}
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service":  service,
+		"example":  example,
+		"endpoint": endpoint,
+		"funcName": strcase.UpperCamelCase(title),
+	})
+
+	err = os.MkdirAll(filepath.Join(examplesPath, "js", serviceName, endpoint), 0777)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	tsExampleFile := filepath.Join(examplesPath, "js", serviceName, endpoint, title+".js")
+	f, err := os.OpenFile(tsExampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+
+	if example.RunCheck && example.Idempotent {
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+strcase.UpperCamelCase(title)), []byte{}, 0744)
+		if err != nil {
+			fmt.Println("Failed to write run file", err)
+			os.Exit(1)
+		}
+	}
+
+	// per endpoint readme examples
+	templ, err = template.New("tsBottomReadme" + serviceName + endpoint).Funcs(funcMap()).Parse(tsReadmeBottomTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	b = bytes.Buffer{}
+	buf = bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service":  service,
+		"example":  example,
+		"endpoint": endpoint,
+		"funcName": strcase.UpperCamelCase(title),
+	})
+
+	tsReadmeAppend := filepath.Join(examplesPath, "js", serviceName, "README.md")
+	f, err = os.OpenFile(tsReadmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+
+	cmd := exec.Command("prettier", "-w", title+".js")
+	cmd.Dir = filepath.Join(examplesPath, "js", serviceName, endpoint)
+	outp, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
+		os.Exit(1)
+	}
+}
+
+func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
+	// add file list to gitignore
+	f, err := os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	//for _, sname := range tsFileList {
+	//	_, err := f.Write([]byte(sname + "\n"))
+	//	if err != nil {
+	//		fmt.Println("failed to append service to gitignore", err)
+	//		os.Exit(1)
+	//	}
+	//}
+
+	templ, err := template.New("tsclient").Funcs(funcMap()).Parse(tsIndexTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	var b bytes.Buffer
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"services": services,
+	})
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+
+	f, err = os.OpenFile(filepath.Join(tsPath, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+	cmd := exec.Command("prettier", "-w", "index.ts")
+	cmd.Dir = filepath.Join(tsPath)
+	outp, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
+		os.Exit(1)
+	}
+	tsFiles := filepath.Join(workDir, "cmd", "client-gen", "ts")
+	cmd = exec.Command("cp", filepath.Join(tsFiles, "package.json"), filepath.Join(tsFiles, ".gitignore"),
+		filepath.Join(tsFiles, "package-lock.json"), filepath.Join(tsFiles, "package-lock.json"),
+		filepath.Join(tsFiles, "build.js"), filepath.Join(tsFiles, "tsconfig.es.json"),
+		filepath.Join(tsFiles, "package-lock.json"), filepath.Join(tsFiles, "tsconfig.json"),
+		filepath.Join(tsFiles, "README.md"), filepath.Join(workDir, "clients", "ts"))
+
+	outp, err = cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
+		os.Exit(1)
+	}
+}
+
+func (n *tsG) schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
 	var recurse func(props map[string]*openapi3.SchemaRef, level int) string
 
 	var spec *openapi3.SchemaRef = schemas[typeName]

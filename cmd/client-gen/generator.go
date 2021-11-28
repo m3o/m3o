@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 	"github.com/fatih/camelcase"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/stoewer/go-strcase"
@@ -43,16 +43,16 @@ func funcMap() map[string]interface{} {
 		return false
 	}
 	return map[string]interface{}{
-		"recursiveTypeDefinitionGo": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
-			gog := &goG{langauge: "go"}
+		"recursiveTypeDefinitionGo": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+			gog := &goG{}
 			return gog.schemaToType(serviceName, typeName, schemas)
 		},
-		"recursiveTypeDefinitionTs": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
-			tsg := &tsG{langauge: "typescript"}
+		"recursiveTypeDefinitionTs": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+			tsg := &tsG{}
 			return tsg.schemaToType(serviceName, typeName, schemas)
 		},
-		"recursiveTypeDefinitionDart": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
-			dartg := &dartG{langauge: "dart"}
+		"recursiveTypeDefinitionDart": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+			dartg := &dartG{}
 			return dartg.schemaToType(serviceName, typeName, schemas)
 		},
 		"requestTypeToEndpointName": func(requestType string) string {
