@@ -19,6 +19,7 @@ import (
 )
 
 type tsG struct {
+	generator
 	// add appropriate fields
 }
 

@@ -114,9 +114,9 @@ func main() {
 
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
-	dartG := &dartG{}
+	// dartG := &dartG{}
 	goG := &goG{}
-	// tsG := &tsG{}
+	tsG := &tsG{}
 
 	for _, f := range files {
 		if len(*serviceFlag) > 0 && f.Name() != *serviceFlag {
@@ -156,9 +156,9 @@ func main() {
 			}
 			services = append(services, service)
 
-			// tsG.ServiceClient(serviceName, tsPath, service)
-			// tsG.TopReadme(serviceName, examplesPath, service)
-			dartG.ServiceClient(serviceName, dartPath, service)
+			tsG.ServiceClient(serviceName, tsPath, service)
+			tsG.TopReadme(serviceName, examplesPath, service)
+			// dartG.ServiceClient(serviceName, dartPath, service)
 			goG.ServiceClient(serviceName, goPath, service)
 			goG.TopReadme(serviceName, examplesPath, service)
 
@@ -182,7 +182,7 @@ func main() {
 						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
 
 						goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
 						curlExample(examplesPath, serviceName, endpoint, title, service, example)
 					}
 				}
@@ -192,8 +192,8 @@ func main() {
 		}
 	}
 
-	// tsG.IndexFile(workDir, tsPath, services)
+	tsG.IndexFile(workDir, tsPath, services)
 	goG.IndexFile(goPath, services)
 
-	// publishToNpm(tsPath, tsFileList)
+	publishToNpm(tsPath, tsFileList)
 }

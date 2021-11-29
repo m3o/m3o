@@ -16,6 +16,7 @@ import (
 )
 
 type goG struct {
+	generator
 	// add appropriate fields
 }
 

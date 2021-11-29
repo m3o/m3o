@@ -15,6 +15,7 @@ import (
 )
 
 type dartG struct {
+	generator
 	// add appropriate fields
 }
 
