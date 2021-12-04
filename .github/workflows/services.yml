@@ -40,4 +40,6 @@ jobs:
         env:
           IN_TRAVIS_CI: yes
           POSTGRES_URL: postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable
-        run: go test -v -p 1 ./...
+        run: |
+          cd services
+          go test -v -p 1 ./...
