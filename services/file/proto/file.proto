@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package file;
+
+option go_package = "./proto;file";
+
+service File {
+	rpc Read(ReadRequest) returns (ReadResponse) {}
+	rpc List(ListRequest) returns (ListResponse) {}
+	rpc Save(SaveRequest) returns (SaveResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
+
+message Record {
+	// A custom project to group files
+	// eg. file-of-mywebsite.com
+	string project = 1;
+	// Path to file or folder eg. '/documents/text-files/file.txt'.
+	string path = 2;
+	// File contents
+	string content = 3;
+	// Time the file was created e.g 2021-05-20T13:37:21Z
+	string created = 4;
+	// Time the file was updated e.g 2021-05-20T13:37:21Z
+	string updated = 5;
+	// Any other associated metadata as a map of key-value pairs
+	map<string,string> metadata = 6;
+}
+
+// Batch save multiple files in one call
+message BatchSaveRequest {
+	repeated Record files = 1;
+}
+
+message BatchSaveResponse {
+}
+
+// Read a file by path
+message ReadRequest {
+	// Project name
+	string project = 1;
+	// Path to the file
+	string path = 2;
+}
+
+message ReadResponse {
+	// Returns the file
+	Record file = 1;
+}
+
+// Save a file
+message SaveRequest {
+	Record file = 1;
+}
+
+message SaveResponse {
+}
+
+// List files by their project and optionally a path.
+message ListRequest {
+	// Project, required for listing.
+	string project = 1;
+	// Defaults to '/', ie. lists all files in a project.
+	// Supply path to a folder if you want to list
+	// files inside that folder
+	// eg. '/docs'
+	string path = 2;
+}
+
+message ListResponse {
+	repeated Record files = 1;
+}
+
+// Delete a file by project name/path
+message DeleteRequest {
+	// The project name
+	string project = 1;
+	// Path to the file
+	string path = 2;
+}
+
+message DeleteResponse {}
+

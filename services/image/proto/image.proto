@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package image;
+
+option go_package = "./proto;image";
+
+service Image {
+	rpc Upload(UploadRequest) returns (UploadResponse) {}
+	rpc Resize(ResizeRequest) returns (ResizeResponse) {}
+	rpc Convert(ConvertRequest) returns (ConvertResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
+
+// Upload an image by either sending a base64 encoded image to this endpoint or a URL.
+// To resize an image before uploading, see the Resize endpoint.
+// To use the file parameter you need to send the request as a multipart/form-data rather than the usual application/json
+// with each parameter as a form field.
+message UploadRequest {
+	// Base64 encoded image to upload,
+	string base64 = 1;
+	// URL of the image to upload
+	string url = 2;
+	// Output name of the image including extension, ie. "cat.png"
+	string name = 3;
+	// The image file to upload
+	bytes file = 4;
+}
+
+message UploadResponse {
+	string url = 1;
+}
+
+message Point {
+	int32 x = 1;
+	int32 y = 2;
+}
+
+message Rectangle {
+	Point min = 1;
+	Point max = 2;
+}
+
+message CropOptions {
+	// width to crop to
+	int32 width = 1;
+	// height to crop to
+	int32 height = 2;
+	// Crop anchor point: "top", "top left", "top right",
+	// "left", "center", "right"
+	// "bottom left", "bottom", "bottom right".
+	// Optional. Defaults to center.
+	string anchor = 3;
+}
+
+// Resize an image on the fly without storing it (by sending and receiving a base64 encoded image), or resize and upload depending on parameters.
+// If one of width or height is 0, the image aspect ratio is preserved.
+// Optional cropping.
+// To use the file parameter you need to send the request as a multipart/form-data rather than the usual application/json
+// with each parameter as a form field.
+message ResizeRequest {
+	// base64 encoded image to resize,
+	string base64 = 1;
+	// url of the image to resize
+	string url = 2;
+	// output name of the image including extension, ie. "cat.png"
+	string name = 3;
+	// make output a URL and not a base64 response
+	bool outputURL = 4;
+	int64 width = 5;
+	int64 height = 6;
+	// optional crop options
+	// if provided, after resize, the image
+	// will be cropped
+	CropOptions cropOptions = 7;
+	// The image file to resize
+	bytes file = 8;
+}
+
+message ResizeResponse {
+	string base64 = 1;
+	string url = 2;
+}
+
+// Convert an image from one format (jpeg, png etc.) to an other either on the fly (from base64 to base64),
+// or by uploading the conversion result.
+// To use the file parameter you need to send the request as a multipart/form-data rather than the usual application/json
+// with each parameter as a form field.
+message ConvertRequest {
+	// base64 encoded image to resize,
+	string base64 = 1;
+	// url of the image to resize
+	string url = 2;
+	// output name of the image including extension, ie. "cat.png"
+	string name = 3;
+	// make output a URL and not a base64 response
+	bool outputURL = 4;
+	// The image file to convert
+	bytes file = 5;
+}
+
+message ConvertResponse {
+	string base64 = 1;
+	string url = 2;
+}
+
+// Delete an image previously uploaded.
+message DeleteRequest {
+	// url of the image to delete e.g. https://cdn.m3ocontent.com/micro/images/micro/41e23b39-48dd-42b6-9738-79a313414bb8/cat.jpeg
+	string url = 1;
+}
+
+message DeleteResponse {
+}

@@ -1,0 +1,13 @@
+{
+    "generate": [{
+        "title": "Generate a QR code",
+        "run_check": false,
+        "request": {
+          "text": "https://m3o.com/qr",
+          "size": 300
+        },
+        "response": {
+          "qr": "http://cdn.m3ocontent.com/micro/qr/micro/dom/1799e942-35cb-414f-845f-58dd625e6f0f.png"
+        }
+    }]
+}

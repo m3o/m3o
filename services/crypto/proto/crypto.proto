@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package crypto;
+
+option go_package = "./proto;crypto";
+
+service Crypto {
+	rpc News(NewsRequest) returns (NewsResponse) {}
+	rpc Quote(QuoteRequest) returns (QuoteResponse) {}
+	rpc Price(PriceRequest) returns (PriceResponse) {}
+	rpc History(HistoryRequest) returns (HistoryResponse) {}
+}
+
+message Article {
+	// title of the article
+	string title = 1;
+	// its description	
+	string description = 2;
+	// the source url
+	string url = 3;
+	// the date published
+	string date = 4;
+	// the source
+	string source = 5;
+}
+
+// Get news related to a currency
+message NewsRequest {
+	// cryptocurrency ticker to request news for e.g BTC
+	string symbol = 1;
+}
+
+message NewsResponse {
+	// symbol requested for
+	string symbol = 1;
+	// list of articles
+	repeated Article articles = 2;
+}
+
+// Get the last price for a given crypto ticker
+message PriceRequest {
+	// the crypto symbol e.g BTCUSD
+	string symbol = 1;
+}
+
+message PriceResponse {
+	// the crypto symbol e.g BTCUSD
+	string symbol = 1;
+	// the last price
+	double price = 2;
+}
+
+// Get the last quote for a given crypto ticker
+message QuoteRequest {
+	// the crypto symbol e.g BTCUSD
+	string symbol = 1;
+}
+
+message QuoteResponse {
+	// the crypto symbol
+	string symbol = 1;
+	// the asking price
+	double ask_price = 2;
+	// the bidding price
+	double bid_price = 3;
+	// the ask size
+	double ask_size = 4;
+	// the bid size
+	double bid_size = 5;
+	// the UTC timestamp of the quote
+	string timestamp = 6;
+}
+
+
+// Returns the history for the previous close
+message HistoryRequest {
+	// the crypto symbol e.g BTCUSD
+	string symbol = 1;
+}
+
+message HistoryResponse {
+	// the crypto symbol
+	string symbol = 1;
+	// the open price
+	double open = 2;
+	// the close price
+	double close = 3;
+	// the peak price
+	double high = 4;
+	// the low price
+	double low = 5;
+	// the volume
+	double volume = 6;
+	// the date
+	string date = 7;
+}

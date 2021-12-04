@@ -1,0 +1,11 @@
+{
+  "name": "forex",
+  "icon": "💲",
+  "category": "money",
+  "pricing": {
+    "Forex.Price": 2000,
+    "Forex.Quote": 2000,
+    "Forex.History": 3500
+  },
+  "display_name": "Forex"
+}

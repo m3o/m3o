@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package emoji;
+
+option go_package = "./proto;emoji";
+
+service Emoji {
+	rpc Find(FindRequest) returns (FindResponse) {}
+	rpc Flag(FlagRequest) returns (FlagResponse) {}
+	rpc Print(PrintRequest) returns (PrintResponse) {}
+	rpc Send(SendRequest) returns (SendResponse) {}
+}
+
+// Find an emoji by its alias e.g :beer:
+message FindRequest {
+	// the alias code e.g :beer:
+	string alias = 1;
+}
+
+message FindResponse {
+	// the unicode emoji 🍺
+	string emoji = 2;
+}
+
+// Get the flag for a country. Requires country code e.g GB for great britain
+message FlagRequest {
+	// country code e.g GB
+	string code = 1;
+}
+
+message FlagResponse {
+	// the emoji flag
+	string flag = 2;
+}
+
+// Print text and renders the emojis with aliases e.g 
+// let's grab a :beer: becomes let's grab a 🍺
+message PrintRequest {
+	// text including any alias e.g let's grab a :beer:
+	string text = 1;
+}
+
+message PrintResponse {
+	// text with rendered emojis
+	string text = 1;
+}
+
+// Send an emoji to anyone via SMS. Messages are sent in the form '<message> Sent from <from>'
+message SendRequest {
+	// the name of the sender from e.g Alice
+	string from = 1;
+	// phone number to send to (including international dialing code)
+	string to = 2;
+	// message to send including emoji aliases
+	string message = 3;
+}
+
+message SendResponse {
+	// whether or not it succeeded
+	bool success = 1;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package helloworld;
+
+option go_package = "./proto;helloworld";
+
+service Helloworld {
+	rpc Call(CallRequest) returns (CallResponse) {};
+	rpc Stream(StreamRequest) returns (stream StreamResponse) {};
+}
+
+// Call returns a personalised "Hello $name" response
+message CallRequest {
+	string name = 1;
+}
+
+message CallResponse {
+	string message = 1;
+}
+
+// Stream returns a stream of "Hello $name" responses
+message StreamRequest {
+	string name = 1;
+	// the number of messages to send back
+	int64 messages = 2;
+}
+
+message StreamResponse {
+	string message = 1;
+}

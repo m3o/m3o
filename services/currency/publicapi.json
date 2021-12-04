@@ -1,0 +1,9 @@
+{
+  "name": "currency",
+  "icon": "💱",
+  "category": "money",
+  "display_name": "Currency",
+  "pricing": {
+    "Currency.History": 1000
+  }
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package email;
+
+option go_package = "./proto;email";
+
+service Email {
+	rpc Send(SendRequest) returns (SendResponse) {}
+}
+
+// Send an email by passing in from, to, subject, and a text or html body
+message SendRequest {
+	// the display name of the sender
+	string from = 1;
+	// the email address of the recipient
+	string to = 2;
+	// an optional reply to email address
+	string reply_to = 3;
+	// the email subject
+	string subject = 4;
+	// the text body
+	string text_body = 5;
+	// the html body
+	string html_body = 6;
+}
+
+message SendResponse {
+}
+

@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package url;
+
+option go_package = "github.com/m3o/m3o/services/url/proto;url";
+
+service Url {
+	rpc Shorten(ShortenRequest) returns (ShortenResponse) {}
+	rpc List(ListRequest) returns (ListResponse) {}
+	rpc Proxy(ProxyRequest) returns (ProxyResponse) {}
+}
+
+// Shortens a destination URL and returns a full short URL.
+message ShortenRequest {
+	string destinationURL = 1;
+}
+
+message ShortenResponse {
+	string shortURL = 1;
+}
+
+message URLPair {
+	string destinationURL = 1;
+	string shortURL = 2;
+	string owner = 3;
+	int64 created = 4;
+	// HitCount keeps track many times the short URL has been resolved.
+	// Hitcount only gets saved to disk (database) after every 10th hit, so
+	// its not intended to be 100% accurate, more like an almost correct estimate.
+	int64 hitCount = 5;
+}
+
+// List information on all the shortened URLs that you have created
+message ListRequest {
+	// filter by short URL, optional
+	string shortURL = 2;
+}
+
+message ListResponse {
+	repeated URLPair urlPairs = 1;
+}
+
+// Proxy returns the destination URL of a short URL.
+message ProxyRequest {
+	// short url ID, without the domain, eg. if your short URL is
+	// `m3o.one/u/someshorturlid` then pass in `someshorturlid`
+	string shortURL = 1;
+}
+
+message ProxyResponse {
+	string destinationURL = 1;
+}

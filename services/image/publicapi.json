@@ -1,0 +1,9 @@
+{
+  "name": "image",
+  "icon": "🖼️",
+  "category": "web",
+  "display_name": "Image",
+  "pricing": {
+    "Image.Upload": 1000
+  }
+}

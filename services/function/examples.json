@@ -1,0 +1,75 @@
+{
+  "deploy": [
+    {
+      "title": "Deploy a function",
+      "request": {
+        "repo": "github.com/m3o/nodejs-function-example",
+        "name": "helloworld",
+        "entrypoint": "helloworld",
+        "runtime": "nodejs14"
+      },
+      "response": {}
+    }
+  ],
+  "call": [
+    {
+      "title": "Call a function",
+      "request": {
+        "name": "helloworld",
+        "request": {}
+      },
+      "response": {
+        "response": {
+          "message": "Hello World!"
+        }
+      }
+    }
+  ],
+  "list": [
+    {
+      "title": "List functions",
+      "request": {},
+      "response": {
+        "functions": [
+          {
+            "name": "helloworld",
+            "entrypoint": "helloworld",
+            "repo": "github.com/m3o/nodejs-function-example",
+            "subfolder": "",
+            "runtime": "nodejs14",
+            "status": "DEPLOY_IN_PROGRESS"
+          }
+        ]
+      }
+    }
+  ],
+  "delete": [
+    {
+      "title": "Delete a function",
+      "request": {
+        "name": "helloworld"
+      },
+      "response": {}
+    }
+  ],
+  "describe": [
+    {
+      "title": "Describe function status",
+      "request": {
+        "name": "helloworld"
+      },
+      "response": {
+        "function": {
+            "name": "helloworld",
+            "entrypoint": "helloworld",
+            "repo": "github.com/m3o/nodejs-function-example",
+            "subfolder": "",
+            "runtime": "nodejs14",
+            "status": "ACTIVE"
+        },
+        "updated_at": "2021-10-08T10:17:34.914Z",
+        "timeout": "60s"
+      }
+    }
+  ]
+}
