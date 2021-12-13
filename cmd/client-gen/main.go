@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -31,12 +32,13 @@ type service struct {
 }
 
 type example struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Request     map[string]interface{}
-	Response    map[string]interface{}
-	RunCheck    bool `json:"run_check"`
-	Idempotent  bool `json:"idempotent"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	Request      map[string]interface{}
+	Response     map[string]interface{}
+	RunCheck     bool   `json:"run_check"`
+	Idempotent   bool   `json:"idempotent"`
+	ShellRequest string `json:"shell_request"`
 }
 
 var (
@@ -62,6 +64,9 @@ func funcMap() map[string]interface{} {
 		return false
 	}
 	return map[string]interface{}{
+		"isCustomShell": func(ex example) bool {
+			return len(ex.ShellRequest) > 0
+		},
 		"recursiveTypeDefinition": func(language, serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
 			return schemaToType(language, serviceName, typeName, schemas)
 		},
@@ -722,7 +727,11 @@ func publishToNpm(tsPath string, tsFileList []string) {
 }
 
 func main() {
-	files, err := ioutil.ReadDir(os.Args[1])
+
+	serviceFlag := flag.String("service", "", "the service dir to process")
+	flag.Parse()
+
+	files, err := ioutil.ReadDir(flag.Arg(0))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -749,6 +758,9 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	for _, f := range files {
+		if len(*serviceFlag) > 0 && f.Name() != *serviceFlag {
+			continue
+		}
 		if strings.Contains(f.Name(), "clients") || strings.Contains(f.Name(), "examples") {
 			continue
 		}
