@@ -8,9 +8,5 @@
   "reporter": "junit",
   "retries": {
     "runMode": 3
-  },
-  "env": {
-    "USER_EMAIL": "hello@mvirando.com",
-    "USER_PASSWORD": "password"
   }
 }
