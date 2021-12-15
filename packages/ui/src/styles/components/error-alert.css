@@ -1,0 +1,14 @@
+.m3o-error-alert {
+  --m3o-error-alert-bg: rgba(var(--m3o-error-red), 0.3);
+  --m3o-error-alert-rounded: 3px;
+  --m3o-text-size: 0.9rem;
+
+  padding: var(--m3o-spacing);
+  font-family: var(--m3o-font-family);
+  border: 1px solid rgb(var(--m3o-error-red));
+  color: rgb(var(--m3o-error-red));
+  background-color: var(--m3o-error-alert-bg);
+  border-radius: var(--m3o-error-alert-rounded);
+  font-size: var(--m3o-text-size);
+  margin-bottom: var(--m3o-spacing);
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@m3o/types",
+  "version": "1.0.5",
+  "main": "types.ts",
+  "files": [
+    "types.ts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

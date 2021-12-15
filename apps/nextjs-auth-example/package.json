@@ -1,0 +1,26 @@
+{
+  "name": "m3o-ui-nextjs-auth-example",
+  "version": "1.0.4",
+  "private": true,
+  "scripts": {
+    "dev:next": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "cypress:open": "cypress open",
+    "dev": "start-server-and-test dev:next 3000 cypress:open"
+  },
+  "dependencies": {
+    "@m3o/auth": "^1.0.6",
+    "next": "12.0.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/chance": "^1.1.3",
+    "chance": "^1.1.8",
+    "cypress": "^9.0.0",
+    "next-transpile-modules": "9.0.0",
+    "start-server-and-test": "^1.14.0",
+    "tsconfig": "*"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "tsconfig",
+  "version": "1.0.1",
+  "private": true,
+  "main": "index.js",
+  "files": [
+    "base.json",
+    "nextjs.json"
+  ]
+}

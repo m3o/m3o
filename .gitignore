@@ -5,3 +5,7 @@ redoc-static.html
 node_modules
 postman.json
 .npmrc
+.turbo
+.next
+.env.local
+dist

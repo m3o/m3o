@@ -1,0 +1,27 @@
+:root {
+  /* Spacing */
+  --m3o-xs-spacing: 0.75rem;
+  --m3o-sm-spacing: 1rem;
+  --m3o-spacing: 1.25rem;
+  --m3o-lg-spacing: 1.5rem;
+  --m3o-xl-spacing: 1.75rem;
+
+  /* Colors */
+  --m3o-gray: rgb(209, 213, 219);
+  --m3o-white: rgb(255, 255, 255);
+  --m3o-primary: rgb(79, 70, 229);
+  --m3o-error-red: 197, 48, 48;
+
+  /* Borders */
+  --m3o-border-opacity: 1;
+  --m3o-border-gray: rgba(209, 213, 219, var(--m3o-border-opacity));
+  --m3o-border-error-red: rgba(197, 48, 48, var(--m3o-border-opacity));
+  --m3o-border: 1px solid var(--m3o-border-gray);
+
+  /* Fonts */
+  --m3o-font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+
+  /* Components */
+  --m3o-form-input-border-radius: 5px;
+}
