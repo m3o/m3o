@@ -37,19 +37,17 @@ So far there are over 40+ services. Here are some of the highlights:
 
 ### Coming soon
 
-- [**Apps**](https://m3o.com/app) - Global app deployment
-- [**NFTs**](https://m3o.com/nft) - Explore, buy and sell NFTs
-- [**Space**](https://m3o.com/space) - Infinite cloud storage
 - [**Search**](https://m3o.com/search) - Indexing and full text search
 
 ### Backend
 
+- [**Apps**](https://m3o.com/app) - Global app deployment
 - [**Cache**](https://m3o.com/cache) - Quick access key-value storage
 - [**DB**](https://m3o.com/db) - Simple database service
 - [**Events**](https://m3o.com/event) - Publish and subscribe to messages
 - [**Functions**](https://m3o.com/function) - Serverless compute as a service
 - [**User**](https://m3o.com/user) - User management and authentication
-- [**Files**](https://m3o.com/file) - Store, list, and retrieve text files
+- [**Space**](https://m3o.com/space) - Infinite cloud storage
 
 ### Logistics
 
@@ -63,6 +61,7 @@ So far there are over 40+ services. Here are some of the highlights:
 
 - [**Email**](https://m3o.com/email) - Send emails in a flash
 - [**Image**](https://m3o.com/image) - Quickly upload, resize, and convert images
+- [**NFTs**](https://m3o.com/nft) - Explore NFT assets and collections
 - [**OTP**](https://m3o.com/otp) - One time password generation
 - [**QR Codes**](https://m3o.com/qr) - QR code generator
 - [**SMS**](https://m3o.com/sms) - Send an SMS message
