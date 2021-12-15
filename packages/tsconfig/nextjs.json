@@ -18,6 +18,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["src", "next-env.d.ts"],
+  "include": ["next-env.d.ts"],
   "exclude": ["node_modules"]
 }

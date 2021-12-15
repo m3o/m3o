@@ -3,19 +3,8 @@ import Head from 'next/head'
 import { withAuth } from '@m3o/auth'
 import { Layout } from '@/components/Layout'
 
-type Props = {
-  test: string
-}
-
-export const getServerSideProps = withAuth<Props>({
-  redirectOnAuthFailure: true,
-  onAuthentication() {
-    return {
-      props: {
-        test: 'test'
-      }
-    }
-  }
+export const getServerSideProps = withAuth({
+  redirectOnAuthFailure: true
 })
 
 const PrivateServerProtected: NextPage = () => {

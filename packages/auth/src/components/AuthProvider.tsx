@@ -10,16 +10,16 @@ import React, {
 import cookies from 'js-cookie'
 import { CONFIG } from '../config'
 
-type UserProviderProps = PropsWithChildren<{ user?: Account }>
+type AuthProviderProps = PropsWithChildren<{ user?: Account }>
 
-type UserContext = {
+export type AuthContext = {
   isAuthenticating: boolean
   error?: string
   user?: Account
   setUser: (user?: Account) => void
 }
 
-interface UserProviderState {
+interface AuthProviderState {
   isAuthenticating: boolean
   error?: string
   user?: Account
@@ -29,24 +29,24 @@ interface UserAuthenticateResponse {
   account: Account
 }
 
-const AuthContext = createContext({} as UserContext)
+const AuthContext = createContext({} as AuthContext)
 
 async function fetchUser(): Promise<UserAuthenticateResponse | undefined> {
   const response = await fetch(`/api/${CONFIG.API_FOLDER_NAME}/me`)
   return response.ok ? response.json() : undefined
 }
 
-export function UserProvider({
+export function AuthProvider({
   children,
   user: initialUser
-}: UserProviderProps): ReactElement {
-  const [state, setState] = useState<UserProviderState>({
+}: AuthProviderProps): ReactElement {
+  const [state, setState] = useState<AuthProviderState>({
     isAuthenticating: !initialUser,
     user: initialUser
   })
 
   const setUser = useCallback((user?: Account) => {
-    setState(prev => ({ ...prev, user, isAuthenticating: false }))
+    setState((prev) => ({ ...prev, user, isAuthenticating: false }))
   }, [])
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export function UserProvider({
 
     ;(async (): Promise<void> => {
       if (!sessionCookie) {
-        setState(prev => ({ ...prev, isAuthenticating: false }))
+        setState((prev) => ({ ...prev, isAuthenticating: false }))
         return
       }
 
@@ -73,12 +73,8 @@ export function UserProvider({
   )
 }
 
-export function useUser() {
+export function useAuthContext() {
   const context = useContext(AuthContext)
-
-  if (context === undefined) {
-    throw new Error('useUser must be used within a <UserProvider>')
-  }
 
   return context
 }

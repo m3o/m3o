@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useUser, useLogout } from '@m3o/auth'
+import { useAuthContext, useLogout } from '@m3o/auth'
 
 export function Header() {
-  const { user, isAuthenticating } = useUser()
+  const { user, isAuthenticating } = useAuthContext()
   const router = useRouter()
 
   const { logout } = useLogout({

@@ -22,7 +22,7 @@
     "cookie": "^0.4.1",
     "js-cookie": "^3.0.1",
     "m3o": "^1.0.826",
-    "next": "^12.0.3",
+    "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2"
@@ -35,9 +35,7 @@
     "@types/js-cookie": "^3.0.0",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
-    "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
-    "cssnano": "^5.0.11",
     "jest": "^27.3.1",
     "storybook-css-modules-preset": "^1.1.1",
     "ts-jest": "^27.0.7",

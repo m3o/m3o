@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useUser } from '@m3o/auth'
+import { useAuthContext } from '@m3o/auth'
 import { Layout } from '@/components/Layout'
 
 const Home: NextPage = () => {
-  const { user } = useUser()
+  const { user } = useAuthContext()
 
   return (
     <>

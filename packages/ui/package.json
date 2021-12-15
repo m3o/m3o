@@ -11,10 +11,13 @@
     "build:css": "postcss --config postcss.config.css src/styles/m3o-next.css --dir ./"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^5.0.12",
     "postcss": "^8.3.11",
     "postcss-cli": "^9.0.2",
     "postcss-import": "^14.0.2",
-    "postcss-nested": "^5.0.6"
+    "postcss-nested": "^5.0.6",
+    "source-map-js": "^1.0.1"
   },
   "publishConfig": {
     "access": "public"

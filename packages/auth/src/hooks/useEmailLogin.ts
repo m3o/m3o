@@ -2,7 +2,7 @@ import type { LoginRequest, Account } from 'm3o/user'
 import type { ApiError, ApiHookProps } from '@m3o/types'
 import { useCallback } from 'react'
 import { post, useApiState } from '@m3o/ui'
-import { useUser } from '../components/UserProvider'
+import { useAuthContext } from '../components/AuthProvider'
 import { CONFIG } from '../config'
 
 type LoginFields = Pick<LoginRequest, 'email' | 'password'>
@@ -12,7 +12,7 @@ interface LoginResponse {
 }
 
 export function useEmailLogin({ onSuccess, onError }: ApiHookProps = {}) {
-  const { setUser } = useUser()
+  const { setUser } = useAuthContext()
   const { setStatus, setError, ...apiState } = useApiState()
 
   const login = useCallback(async (payload: LoginFields) => {

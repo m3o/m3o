@@ -1,4 +1,4 @@
-export * from './components/UserProvider'
+export * from './components/AuthProvider'
 export * from './hooks'
 export * from './handle-auth'
 export * from './handle-auth/utils'

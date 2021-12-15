@@ -1,12 +1,12 @@
 import type { ApiHookProps, ApiError } from '@m3o/types'
 import { useCallback } from 'react'
 import { post, useApiState } from '@m3o/ui'
-import { useUser } from '../components/UserProvider'
+import { useAuthContext } from '../components/AuthProvider'
 import { CONFIG } from '../config'
 
 export function useLogout({ onSuccess, onError }: ApiHookProps = {}) {
   const { setStatus, setError, ...apiState } = useApiState()
-  const { setUser } = useUser()
+  const { setUser } = useAuthContext()
 
   const logout = useCallback(async () => {
     setStatus('loading')

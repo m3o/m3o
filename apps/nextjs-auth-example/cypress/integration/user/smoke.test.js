@@ -66,26 +66,26 @@ describe('smoke tests', () => {
     cy.get('.error-alert').contains('Incorrect password')
   })
 
-  it('should not allow unauthorized users to view the "private-server" page', () => {
-    cy.visit('/private-server')
+  it('should not allow unauthorized users to view the "private-ssr" page', () => {
+    cy.visit('/private-ssr')
     cy.url().should('eq', `${Cypress.config().baseUrl}/`)
   })
 
   it('should not allow unauthorized users to view the "private-client" page', () => {
-    cy.visit('/private-client')
+    cy.visit('/private-ssg')
     cy.url().should('eq', `${Cypress.config().baseUrl}/`)
   })
 
-  it('should allow authorized users to view the "private-server" page', () => {
+  it('should allow authorized users to view the "private-ssr" page', () => {
     login()
-    cy.visit('/private-server')
-    cy.url().should('eq', `${Cypress.config().baseUrl}/private-server`)
+    cy.visit('/private-ssr')
+    cy.url().should('eq', `${Cypress.config().baseUrl}/private-ssr`)
   })
 
-  it('should allow authorized users to view the "private-client" page', () => {
+  it('should allow authorized users to view the "private-ssg" page', () => {
     cy.visit('/')
     login()
-    cy.visit('/private-client')
+    cy.visit('/private-ssg')
     cy.url().should('eq', `${Cypress.config().baseUrl}/private-client`)
   })
 })

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
-    "types": ["jest", "node", "@testing-library/jest-dom"],
+    "types": ["node"],
     "jsx": "react"
   },
   "include": ["src/*.ts"],

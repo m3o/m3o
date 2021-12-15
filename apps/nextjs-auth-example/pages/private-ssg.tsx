@@ -1,19 +1,10 @@
 import type { NextPage } from 'next'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { useUser } from '@m3o/auth'
+import { useAuthNextSSG } from '@m3o/auth'
 import { Layout } from '@/components/Layout'
 
 const PrivateClient: NextPage = () => {
-  const { user, isAuthenticating } = useUser()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!isAuthenticating && !user) {
-      router.push('/')
-    }
-  }, [isAuthenticating, user])
+  const { user, isAuthenticating } = useAuthNextSSG({ redirectTo: '/' })
 
   return (
     <div>

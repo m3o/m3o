@@ -10,8 +10,8 @@
     "dev": "start-server-and-test dev:next 3000 cypress:open"
   },
   "dependencies": {
-    "@m3o/auth": "*",
-    "next": "12.0.3",
+    "@m3o/auth": "1.0.6",
+    "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.20.5",
