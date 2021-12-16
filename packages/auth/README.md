@@ -22,7 +22,7 @@ Once created, you will need to provide this key as an environment variable. You 
 
 ### API routes / handlers
 
-This authentication package works by first setting up your server via the `pages/api` folder, then connecting to the server via provided hooks and providers (optional).
+This package works by setting up your server routing via the `pages/api` folder, then interacting to this server via our provided hooks and providers (optional).
 
 #### Server installation
 
