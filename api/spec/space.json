@@ -198,14 +198,14 @@
     },
     "schemas": {
       "CreateRequest": {
-        "description": "Create an object. Returns error if object with this name already exists. Max object size of 10MB, see Upload endpoint for larger objects. If you want to update an existing object use the `Update` endpoint\n You need to send the request as a multipart/form-data rather than the usual application/json\n with each parameter as a form field.",
+        "description": "Create an object. Returns error if object with this name already exists. Max object size of 10MB, see Upload endpoint for larger objects. If you want to update an existing object use the `Update` endpoint",
         "properties": {
           "name": {
             "description": "The name of the object. Use forward slash delimiter to implement a nested directory-like structure e.g. images/foo.jpg",
             "type": "string"
           },
           "object": {
-            "description": "The contents of the object",
+            "description": "The contents of the object. Either base64 encoded if sending request as application/json or raw bytes if using multipart/form-data format",
             "format": "byte",
             "type": "string"
           },
@@ -473,14 +473,14 @@
         "type": "object"
       },
       "UpdateRequest": {
-        "description": "Update an object. If an object with this name does not exist, creates a new one.\n You need to send the request as a multipart/form-data rather than the usual application/json\n with each parameter as a form field.",
+        "description": "Update an object. If an object with this name does not exist, creates a new one.",
         "properties": {
           "name": {
             "description": "The name of the object. Use forward slash delimiter to implement a nested directory-like structure e.g. images/foo.jpg",
             "type": "string"
           },
           "object": {
-            "description": "The contents of the object",
+            "description": "The contents of the object. Either base64 encoded if sending request as application/json or raw bytes if using multipart/form-data format",
             "format": "byte",
             "type": "string"
           },

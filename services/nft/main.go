@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/m3o/m3o/services/nft/handler"
-	pb "github.com/m3o/m3o/services/nft/proto"
 	"github.com/micro/micro/v3/service"
 	"github.com/micro/micro/v3/service/logger"
+	"github.com/m3o/m3o/services/nft/handler"
+	pb "github.com/m3o/m3o/services/nft/proto"
 )
 
 func main() {

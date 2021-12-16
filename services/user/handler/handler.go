@@ -404,7 +404,7 @@ func (s *User) SendMagicLink(ctx context.Context, req *pb.SendMagicLinkRequest, 
 
 	// check if the email exist in the DB
 	users, err := s.domain.Search(ctx, "", req.Email)
-	if err.Error() == "not found" {
+	if err != nil && err.Error() == "not found" {
 		return errors.BadRequest("SendMagicLink.email-check", "email doesn't exist")
 	} else if err != nil {
 		return errors.BadRequest("SendMagicLink.email-check", err.Error())
@@ -437,15 +437,15 @@ func (s *User) VerifyToken(ctx context.Context, req *pb.VerifyTokenRequest, rsp 
 
 	// check if token is valid
 	email, err := s.domain.CacheReadToken(ctx, token)
-	if err.Error() == "token not found" {
+	if err != nil && err.Error() == "token not found" {
 		rsp.IsValid = false
 		rsp.Message = err.Error()
 		return nil
-	} else if err.Error() == "token expired" {
+	} else if err != nil && err.Error() == "token expired" {
 		rsp.IsValid = false
 		rsp.Message = err.Error()
 		return nil
-	} else if err.Error() == "token empty" {
+	} else if err != nil && err.Error() == "token empty" {
 		rsp.IsValid = false
 		rsp.Message = err.Error()
 		return nil

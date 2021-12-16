@@ -416,6 +416,7 @@
         "type": "object"
       },
       "UpdateRequest": {
+        "description": "Update a function",
         "properties": {
           "entrypoint": {
             "description": "entry point, ie. handler name in the source code \n if not provided, defaults to the name parameter",

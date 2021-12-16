@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/m3o/m3o/services/search/handler"
-	pb "github.com/m3o/m3o/services/search/proto"
 	"github.com/micro/micro/v3/service"
 	"github.com/micro/micro/v3/service/logger"
+	"github.com/m3o/m3o/services/search/handler"
+	pb "github.com/m3o/m3o/services/search/proto"
 )
 
 func main() {

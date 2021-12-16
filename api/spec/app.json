@@ -1,6 +1,36 @@
 {
   "components": {
     "requestBodies": {
+      "AppDeleteRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteRequest"
+            }
+          }
+        },
+        "description": "AppDeleteRequest"
+      },
+      "AppListRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListRequest"
+            }
+          }
+        },
+        "description": "AppListRequest"
+      },
+      "AppRegionsRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RegionsRequest"
+            }
+          }
+        },
+        "description": "AppRegionsRequest"
+      },
       "AppReserveRequest": {
         "content": {
           "application/json": {
@@ -11,18 +41,78 @@
         },
         "description": "AppReserveRequest"
       },
-      "AppVoteRequest": {
+      "AppResolveRequest": {
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/VoteRequest"
+              "$ref": "#/components/schemas/ResolveRequest"
             }
           }
         },
-        "description": "AppVoteRequest"
+        "description": "AppResolveRequest"
+      },
+      "AppRunRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RunRequest"
+            }
+          }
+        },
+        "description": "AppRunRequest"
+      },
+      "AppStatusRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatusRequest"
+            }
+          }
+        },
+        "description": "AppStatusRequest"
+      },
+      "AppUpdateRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateRequest"
+            }
+          }
+        },
+        "description": "AppUpdateRequest"
       }
     },
     "responses": {
+      "AppDeleteResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteResponse"
+            }
+          }
+        },
+        "description": "AppDeleteResponse"
+      },
+      "AppListResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListResponse"
+            }
+          }
+        },
+        "description": "AppListResponse"
+      },
+      "AppRegionsResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RegionsResponse"
+            }
+          }
+        },
+        "description": "AppRegionsResponse"
+      },
       "AppReserveResponse": {
         "content": {
           "application/json": {
@@ -33,15 +123,45 @@
         },
         "description": "AppReserveResponse"
       },
-      "AppVoteResponse": {
+      "AppResolveResponse": {
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/VoteResponse"
+              "$ref": "#/components/schemas/ResolveResponse"
             }
           }
         },
-        "description": "AppVoteResponse"
+        "description": "AppResolveResponse"
+      },
+      "AppRunResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RunResponse"
+            }
+          }
+        },
+        "description": "AppRunResponse"
+      },
+      "AppStatusResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatusResponse"
+            }
+          }
+        },
+        "description": "AppStatusResponse"
+      },
+      "AppUpdateResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateResponse"
+            }
+          }
+        },
+        "description": "AppUpdateResponse"
       },
       "MicroAPIError": {
         "content": {
@@ -77,7 +197,112 @@
       }
     },
     "schemas": {
+      "DeleteRequest": {
+        "description": "Delete an app",
+        "properties": {
+          "name": {
+            "description": "name of the app",
+            "type": "string"
+          }
+        },
+        "title": "DeleteRequest",
+        "type": "object"
+      },
+      "DeleteResponse": {
+        "title": "DeleteResponse",
+        "type": "object"
+      },
+      "ListRequest": {
+        "description": "List all the apps",
+        "title": "ListRequest",
+        "type": "object"
+      },
+      "ListResponse": {
+        "properties": {
+          "services": {
+            "description": "all the apps",
+            "items": {
+              "properties": {
+                "branch": {
+                  "description": "branch of code",
+                  "type": "string"
+                },
+                "created": {
+                  "description": "time of creation",
+                  "type": "string"
+                },
+                "custom_domains": {
+                  "description": "custom domains",
+                  "type": "string"
+                },
+                "env_vars": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "associated env vars",
+                  "type": "object"
+                },
+                "id": {
+                  "description": "unique id",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "name of the app",
+                  "type": "string"
+                },
+                "port": {
+                  "description": "port running on",
+                  "format": "int32",
+                  "type": "number"
+                },
+                "region": {
+                  "description": "region running in",
+                  "type": "string"
+                },
+                "repo": {
+                  "description": "source repository",
+                  "type": "string"
+                },
+                "status": {
+                  "description": "status of the app",
+                  "type": "string"
+                },
+                "updated": {
+                  "description": "last updated",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "app url",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListResponse",
+        "type": "object"
+      },
+      "RegionsRequest": {
+        "description": "Return the support regions",
+        "title": "RegionsRequest",
+        "type": "object"
+      },
+      "RegionsResponse": {
+        "properties": {
+          "regions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "RegionsResponse",
+        "type": "object"
+      },
       "Reservation": {
+        "description": "Reservation represents a reserved app instance",
         "properties": {
           "created": {
             "description": "time of reservation",
@@ -104,7 +329,7 @@
         "type": "object"
       },
       "ReserveRequest": {
-        "description": "Reserve your app name",
+        "description": "Reserve apps beyond the free quota. Call Run after.",
         "properties": {
           "name": {
             "description": "name of your app e.g helloworld",
@@ -117,6 +342,7 @@
       "ReserveResponse": {
         "properties": {
           "reservation": {
+            "description": "The app reservation",
             "properties": {
               "created": {
                 "description": "time of reservation",
@@ -145,25 +371,272 @@
         "title": "ReserveResponse",
         "type": "object"
       },
-      "VoteRequest": {
-        "description": "Vote to have the App api launched faster!",
+      "ResolveRequest": {
+        "description": "Resolve an app by id to its raw backend endpoint",
         "properties": {
-          "message": {
-            "description": "optional message",
+          "id": {
+            "description": "the service id",
             "type": "string"
           }
         },
-        "title": "VoteRequest",
+        "title": "ResolveRequest",
         "type": "object"
       },
-      "VoteResponse": {
+      "ResolveResponse": {
         "properties": {
-          "message": {
-            "description": "response message",
+          "url": {
+            "description": "the end provider url",
             "type": "string"
           }
         },
-        "title": "VoteResponse",
+        "title": "ResolveResponse",
+        "type": "object"
+      },
+      "RunRequest": {
+        "description": "Run an app from a source repo. Specify region etc.",
+        "properties": {
+          "branch": {
+            "description": "branch. defaults to master",
+            "type": "string"
+          },
+          "env_vars": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "associatede env vars to pass in",
+            "type": "object"
+          },
+          "name": {
+            "description": "name of the app",
+            "type": "string"
+          },
+          "port": {
+            "description": "port to run on",
+            "format": "int32",
+            "type": "number"
+          },
+          "region": {
+            "description": "region to run in",
+            "type": "string"
+          },
+          "repo": {
+            "description": "source repository",
+            "type": "string"
+          }
+        },
+        "title": "RunRequest",
+        "type": "object"
+      },
+      "RunResponse": {
+        "properties": {
+          "service": {
+            "description": "The running service",
+            "properties": {
+              "branch": {
+                "description": "branch of code",
+                "type": "string"
+              },
+              "created": {
+                "description": "time of creation",
+                "type": "string"
+              },
+              "custom_domains": {
+                "description": "custom domains",
+                "type": "string"
+              },
+              "env_vars": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "associated env vars",
+                "type": "object"
+              },
+              "id": {
+                "description": "unique id",
+                "type": "string"
+              },
+              "name": {
+                "description": "name of the app",
+                "type": "string"
+              },
+              "port": {
+                "description": "port running on",
+                "format": "int32",
+                "type": "number"
+              },
+              "region": {
+                "description": "region running in",
+                "type": "string"
+              },
+              "repo": {
+                "description": "source repository",
+                "type": "string"
+              },
+              "status": {
+                "description": "status of the app",
+                "type": "string"
+              },
+              "updated": {
+                "description": "last updated",
+                "type": "string"
+              },
+              "url": {
+                "description": "app url",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "title": "RunResponse",
+        "type": "object"
+      },
+      "Service": {
+        "properties": {
+          "branch": {
+            "description": "branch of code",
+            "type": "string"
+          },
+          "created": {
+            "description": "time of creation",
+            "type": "string"
+          },
+          "custom_domains": {
+            "description": "custom domains",
+            "type": "string"
+          },
+          "env_vars": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "associated env vars",
+            "type": "object"
+          },
+          "id": {
+            "description": "unique id",
+            "type": "string"
+          },
+          "name": {
+            "description": "name of the app",
+            "type": "string"
+          },
+          "port": {
+            "description": "port running on",
+            "format": "int32",
+            "type": "number"
+          },
+          "region": {
+            "description": "region running in",
+            "type": "string"
+          },
+          "repo": {
+            "description": "source repository",
+            "type": "string"
+          },
+          "status": {
+            "description": "status of the app",
+            "type": "string"
+          },
+          "updated": {
+            "description": "last updated",
+            "type": "string"
+          },
+          "url": {
+            "description": "app url",
+            "type": "string"
+          }
+        },
+        "title": "Service",
+        "type": "object"
+      },
+      "StatusRequest": {
+        "description": "Get the status of an app",
+        "properties": {
+          "name": {
+            "description": "name of the app",
+            "type": "string"
+          }
+        },
+        "title": "StatusRequest",
+        "type": "object"
+      },
+      "StatusResponse": {
+        "properties": {
+          "service": {
+            "description": "running service info",
+            "properties": {
+              "branch": {
+                "description": "branch of code",
+                "type": "string"
+              },
+              "created": {
+                "description": "time of creation",
+                "type": "string"
+              },
+              "custom_domains": {
+                "description": "custom domains",
+                "type": "string"
+              },
+              "env_vars": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "associated env vars",
+                "type": "object"
+              },
+              "id": {
+                "description": "unique id",
+                "type": "string"
+              },
+              "name": {
+                "description": "name of the app",
+                "type": "string"
+              },
+              "port": {
+                "description": "port running on",
+                "format": "int32",
+                "type": "number"
+              },
+              "region": {
+                "description": "region running in",
+                "type": "string"
+              },
+              "repo": {
+                "description": "source repository",
+                "type": "string"
+              },
+              "status": {
+                "description": "status of the app",
+                "type": "string"
+              },
+              "updated": {
+                "description": "last updated",
+                "type": "string"
+              },
+              "url": {
+                "description": "app url",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "title": "StatusResponse",
+        "type": "object"
+      },
+      "UpdateRequest": {
+        "description": "Update the app. The latest source code will be downloaded, built and deployed.",
+        "properties": {
+          "name": {
+            "description": "name of the app",
+            "type": "string"
+          }
+        },
+        "title": "UpdateRequest",
+        "type": "object"
+      },
+      "UpdateResponse": {
+        "title": "UpdateResponse",
         "type": "object"
       }
     },
@@ -188,6 +661,102 @@
   },
   "openapi": "3.0.0",
   "paths": {
+    "/app/App/Delete": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppDeleteRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppDeleteResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.Delete(DeleteRequest)"
+      }
+    },
+    "/app/App/List": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppListRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.List(ListRequest)"
+      }
+    },
+    "/app/App/Regions": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppRegionsRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppRegionsResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.Regions(RegionsRequest)"
+      }
+    },
     "/app/App/Reserve": {
       "parameters": [
         {
@@ -220,7 +789,7 @@
         "summary": "App.Reserve(ReserveRequest)"
       }
     },
-    "/app/App/Vote": {
+    "/app/App/Resolve": {
       "parameters": [
         {
           "in": "header",
@@ -234,11 +803,11 @@
       ],
       "post": {
         "requestBody": {
-          "$ref": "#/components/requestBodies/AppVoteRequest"
+          "$ref": "#/components/requestBodies/AppResolveRequest"
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AppVoteResponse"
+            "$ref": "#/components/responses/AppResolveResponse"
           },
           "default": {
             "$ref": "#/components/responses/MicroAPIError"
@@ -249,7 +818,103 @@
             "MicroAPIToken": []
           }
         ],
-        "summary": "App.Vote(VoteRequest)"
+        "summary": "App.Resolve(ResolveRequest)"
+      }
+    },
+    "/app/App/Run": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppRunRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppRunResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.Run(RunRequest)"
+      }
+    },
+    "/app/App/Status": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppStatusRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppStatusResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.Status(StatusRequest)"
+      }
+    },
+    "/app/App/Update": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AppUpdateRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AppUpdateResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "App.Update(UpdateRequest)"
       }
     }
   },

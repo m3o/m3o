@@ -774,31 +774,6 @@
         "type": "object"
       },
       "SendMagicLinkResponse": {
-        "properties": {
-          "session": {
-            "properties": {
-              "created": {
-                "description": "unix timestamp",
-                "format": "int64",
-                "type": "number"
-              },
-              "expires": {
-                "description": "unix timestamp",
-                "format": "int64",
-                "type": "number"
-              },
-              "id": {
-                "description": "the session id",
-                "type": "string"
-              },
-              "userId": {
-                "description": "the associated user id",
-                "type": "string"
-              }
-            },
-            "type": "object"
-          }
-        },
         "title": "SendMagicLinkResponse",
         "type": "object"
       },
@@ -979,6 +954,29 @@
           },
           "message": {
             "type": "string"
+          },
+          "session": {
+            "properties": {
+              "created": {
+                "description": "unix timestamp",
+                "format": "int64",
+                "type": "number"
+              },
+              "expires": {
+                "description": "unix timestamp",
+                "format": "int64",
+                "type": "number"
+              },
+              "id": {
+                "description": "the session id",
+                "type": "string"
+              },
+              "userId": {
+                "description": "the associated user id",
+                "type": "string"
+              }
+            },
+            "type": "object"
           }
         },
         "title": "VerifyTokenResponse",
@@ -1284,9 +1282,6 @@
           },
           "default": {
             "$ref": "#/components/responses/MicroAPIError"
-          },
-          "stream": {
-            "$ref": "#/components/responses/UserSendMagicLinkResponse"
           }
         },
         "security": [
