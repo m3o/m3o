@@ -24,11 +24,11 @@ Once created, you will need to provide this key as an environment variable. You 
 
 This package works by setting up your server routing via the `pages/api` folder, then interacting to this server via our provided hooks and providers (optional).
 
-#### Server installation
+## Server installation
 
 Firstly, create the a file called `[...m3oUser].(js|ts)` under this folder `pages/api/user/`.
 
-Once this is setup, you now need to import the `handleAuth` function which will setup all your API routing for user authentication.
+Once setup, you now need to import the `handleAuth` function which will setup all your API routing for user authentication.
 
 ```javascript
 import { handleAuth } from '@m3o/auth'
@@ -46,7 +46,7 @@ This will setup these routes for your UI to call:
 
 These routes will now handle all your session authentication against the M3O User service.
 
-### Client installation
+## Client installation
 
 On the client we provide useful hooks and providers to integrate with your newly setup API. This will help you with authentication state management.
 
