@@ -20,7 +20,7 @@ Once created, you will need to provide this key as an environment variable. You 
 
 `M3O_KEY=xxxxx`
 
-### API routes / handlers
+### How it works
 
 This package works by setting up your server routing via the `pages/api` folder, then interacting to this server via our provided hooks and providers (optional).
 
