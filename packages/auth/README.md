@@ -26,9 +26,9 @@ This authentication package works by first setting up your server via the `pages
 
 #### Server installation
 
-Firstly we need to create the a file that will bootstrap all your `auth` API handling. Within the `pages/api` folder create a folder called `user`. Under this folder we then create a file called: `[...m3oUser].js`. If all is done correct we should have this `pages/api/user/[...m3oUser].js`. For Typescript users swap `.js` for `.ts`.
+Firstly, create the a file called `[...m3oUser].(js|ts)` under this folder `pages/api/user/`.
 
-Setting up the API routing is as easy as importing one function and calling it:
+Once this is setup, you now need to import the `handleAuth` function which will setup all your API routing for user authentication.
 
 ```javascript
 import { handleAuth } from '@m3o/nextjs'
@@ -43,6 +43,8 @@ This will setup these routes for your UI to call:
 - `POST: api/user/sign-up`
 - `GET: api/user/me`
 - `POST: api/user/reset-password`
+
+These routes will now handle all your session authentication against the M3O User service.
 
 #### Client installation
 
