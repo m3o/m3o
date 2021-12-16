@@ -31,7 +31,7 @@ Firstly, create the a file called `[...m3oUser].(js|ts)` under this folder `page
 Once this is setup, you now need to import the `handleAuth` function which will setup all your API routing for user authentication.
 
 ```javascript
-import { handleAuth } from '@m3o/nextjs'
+import { handleAuth } from '@m3o/auth'
 
 export default handleAuth()
 ```
@@ -46,13 +46,38 @@ This will setup these routes for your UI to call:
 
 These routes will now handle all your session authentication against the M3O User service.
 
-#### Client installation
+### Client installation
 
 On the client we provide useful hooks and providers to integrate with your newly setup API. This will help you with authentication state management.
 
-Within your `_app.(tsx|jsx)` we will need to import our `<AuthProvider />` component. This will handle our authentication state:
+### Auth Provider
 
-```javascript
+The `<AuthProvider>` provides the current state of the user based on the session cookie set via your created API.
+
+#### Usage
+
+Within your `_app.(tsx|jsx)` you will need to import the `<AuthProvider />` component. This will handle your authentication state:
+
+```typescript
+import { AuthProvider } from '@m3o/auth'
+import '../styles/globals.css'
+
+function MyApp({ Component }) {
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
+}
+
+export default MyApp
+```
+
+##### Authentication state with SSR
+
+Routes that use our `withAuth` SSR wrapper can import the user straight into the `<AuthProvider />` to ensure the user is available on first load. Please see below for an example:
+
+```typescript
 import { AuthProvider } from '@m3o/auth'
 import '../styles/globals.css'
 
@@ -106,13 +131,13 @@ export function App() {
 
 #### Usage
 
-When the hook is called
+When the hook is called:
 
 ```typescript
 const result = useEmailLogin()
 ```
 
-The result object contains these properties:
+The `result` object contains these properties:
 
 - `isLoading: boolean` - This will return `true` when `login` has been called and is logging in against the user service. When the call is complete (either on error or success), this will return `false`.
 - `isError: boolean` - This will return `true` when there has been an error when logging in. Usually when incorrect data is sent or returned from your server.
@@ -123,7 +148,7 @@ This hook also can receive two methods:
 
 ##### onSuccess
 
-This method is called once the user has been logged in. Please note that on login the `user` will now be available via the `AuthProvider`.
+This method is called once the user has been logged in. Please note that on successful login the `user` will now be available via the `AuthProvider` state.
 
 ```typescript
 const result = useEmailLogin({
@@ -133,7 +158,7 @@ const result = useEmailLogin({
 })
 ```
 
-The `onSuccess` method is great for times where you need to redirect after the user has logged in:
+The `onSuccess` method is great for times where you need to redirect after the user has successfully logged in:
 
 ```typescript
 import { useRouter } from 'next/router'
