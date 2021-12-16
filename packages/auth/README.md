@@ -14,7 +14,7 @@ or
 
 ## Getting Started
 
-Our are first required to create an API key via the [M3O.com](https://m3o.com) website. Once logged in / signed up, head to the [keys](https://m3o.com/account/keys) page and create your API key.
+This package (and all M3O packages) require you to create an API key via the [M3O.com](https://m3o.com) website. Once logged in / signed up, head to the [keys](https://m3o.com/account/keys) page and create your API key.
 
 Once you have created this key please create a `.env.local` file within your project and add the key:
 
