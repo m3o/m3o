@@ -1,10 +1,10 @@
-# M3O Authentication (@m3o/auth)
+# @m3o/auth
 
-This project provides quick and easy authentication for Next.js by leveraging the [M3O User API](https://m3o.com/user). The package provides the server routing and user state management for the UI. This packages works for both SSR and SSG rendered applications
+This package provides quick and easy authentication for Next.js by leveraging the [M3O User API](https://m3o.com/user). It provides both server routing and user state management for the UI.
 
 ## Installation
 
-Firstly we need to install the package. You can do so by the usual commands:
+Firstly we need to install the package:
 
 `npm install @m3o/auth`
 
@@ -14,7 +14,7 @@ or
 
 ## Getting Started
 
-The auth package requires that you first create an API key via the [M3O.com](https://m3o.com) website. This can be created by logging in / signing up and creating a key on the [keys](https://m3o.com/account/keys) page.
+Our are first required to create an API key via the [M3O.com](https://m3o.com) website. Once logged in / signed up, head to the [keys](https://m3o.com/account/keys) page and create your API key.
 
 Once you have created this key please create a `.env.local` file within your project and add the key:
 
