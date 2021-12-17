@@ -46,6 +46,34 @@ fmt.Println(rsp.Message)
 
 Find all the Go examples in [m3o-go](https://github.com/m3o/m3o-go)
 
+### JS
+
+Install the m3o package
+
+```
+npm install m3o
+```
+
+Call helloworld like so
+
+```javascript
+const { HelloworldService } = require("m3o/helloworld");
+
+const helloworldService = new HelloworldService(process.env.M3O_API_TOKEN);
+
+// Call returns a personalised "Hello $name" response
+async function callTheHelloworldService() {
+  const rsp = await helloworldService.call({
+    name: "John",
+  });
+  console.log(rsp);
+}
+
+callTheHelloworldService();
+```
+
+Find more JS examples in [m3o-js](https://github.com/m3o/m3o-js)
+
 See the [examples](../examples) for more use cases.
 
 ## API Endpoint
