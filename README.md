@@ -26,11 +26,6 @@ Here are the main features of M3O
 - **🆓 Free to start** - It's a simple pay as you grow model and everything is priced per request. Top up your account and start making calls.
 - **🚫 Anti AWS Billing** - Don't get lost in a sea of infinite cloud billing. We show you exactly what you use and don't hide any of the costs.
 
-## Rationale
-
-Cloud is a fairly complex beast which makes it hard for new developers to get started. In the past we needed VMs and file storage, but today with the Jamstack 
-and other modern development tools, the building blocks we're looking for are changing. We're mostly now consuming third party public APIs. M3O wants to aggregate all those APIs onto one platform as simpler programmable building blocks for a 10x developer experience.
-
 ## Services
 
 So far there are over 50+ services. Here are some of the highlights:
@@ -149,6 +144,11 @@ See the [examples](../examples) for more use cases.
 - Follow us on [Twitter](https://twitter.com/m3oservices) for updates
 - Join the [Discord](https://discord.gg/TBR9bRjd6Z) server
 - Read the [Blog](https://blog.m3o.com)
+
+## Rationale
+
+Cloud is a fairly complex beast which makes it hard for new developers to get started. In the past we needed VMs and file storage, but today with the Jamstack 
+and other modern development tools, the building blocks we're looking for are changing. We're mostly now consuming third party public APIs. M3O wants to aggregate all those APIs onto one platform as simpler programmable building blocks for a 10x developer experience.
 
 ## How it Works
 
