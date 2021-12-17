@@ -77,6 +77,73 @@ See the full list at [m3o.com/explore](https://m3o.com/explore).
 - Call any API using your token in the `Authorization: Bearer [Token]` header and `https://api.m3o.com/v1/[service]/[endpoint]` url.
 - See the [m3o-cli](https://github.com/m3o/m3o-cli) for command line usage.
 
+## Examples
+
+Here's a simple helloworld
+
+### Curl
+
+```
+curl -H "Authorization: Bearer $M3O_API_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{"name": "John"}' \
+     https://api.m3o.com/v1/helloworld/call
+```
+
+Find all the shell examples in [m3o-sh](https://github.com/m3o/m3o-sh)
+
+### Go
+
+Import packages from `go.m3o.com`
+
+```go
+import "go.m3o.com/helloworld"
+```
+
+Create a new client with your API token and call it
+
+```go
+helloworldService := helloworld.NewHelloworldService(os.Getenv("M3O_API_TOKEN"))
+
+rsp, err := helloworldService.Call(&helloworld.CallRequest{
+	"Name": "Alice",
+})
+
+fmt.Println(rsp.Message)
+```
+
+Find all the Go examples in [m3o-go](https://github.com/m3o/m3o-go)
+
+### JS
+
+Install the m3o package
+
+```
+npm install m3o
+```
+
+Call helloworld like so
+
+```javascript
+const { HelloworldService } = require("m3o/helloworld");
+
+const helloworldService = new HelloworldService(process.env.M3O_API_TOKEN);
+
+// Call returns a personalised "Hello $name" response
+async function callTheHelloworldService() {
+  const rsp = await helloworldService.call({
+    name: "John",
+  });
+  console.log(rsp);
+}
+
+callTheHelloworldService();
+```
+
+Find more JS examples in [m3o-js](https://github.com/m3o/m3o-js)
+
+See the [examples](../examples) for more use cases.
+
 ## Learn More
 
 - Follow us on [Twitter](https://twitter.com/m3oservices) for updates
