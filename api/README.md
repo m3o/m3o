@@ -13,7 +13,7 @@ hosted versions of [github.com/micro/services](https://github.com/micro/services
 
 Here's a simple helloworld
 
-Curl
+### Curl
 
 ```
 curl -H "Authorization: Bearer $M3O_API_TOKEN" \
@@ -22,22 +22,29 @@ curl -H "Authorization: Bearer $M3O_API_TOKEN" \
      https://api.m3o.com/v1/helloworld/call
 ```
 
-Go
+Find all the shell examples in [m3o-sh](https://github.com/m3o/m3o-sh)
+
+### Go
+
+Import packages from `go.m3o.com`
 
 ```go
-token := os.Getenv("M3O_API_TOKEN")
-
-query := map[string]interface{}{
-	"name": "John",
-}
-b, _ := json.Marshal(query)
-
-req, _ := http.NewRequest("POST", "https://api.m3o.com/v1/helloworld/call", bytes.NewReader(b))
-req.Header.Set("Content-Type", "application/json")
-req.Header.Set("Authorization", "Bearer "+token)
-
-rsp, err := http.DefaultClient.Do(req)
+import "go.m3o.com/helloworld"
 ```
+
+Create a new client with your API token and call it
+
+```go
+helloworldService := helloworld.NewHelloworldService(os.Getenv("M3O_API_TOKEN"))
+
+rsp, err := helloworldService.Call(&helloworld.CallRequest{
+	"Name": "Alice",
+})
+
+fmt.Println(rsp.Message)
+```
+
+Find all the Go examples in [m3o-go](https://github.com/m3o/m3o-go)
 
 See the [examples](../examples) for more use cases.
 
