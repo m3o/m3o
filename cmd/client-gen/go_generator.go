@@ -33,7 +33,6 @@ func (g *goG) ServiceClient(serviceName, goPath string, service service) {
 	})
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
-		fmt.Println("this is london")
 		os.Exit(1)
 	}
 	err = os.MkdirAll(filepath.Join(goPath, serviceName), 0777)

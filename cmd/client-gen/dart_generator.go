@@ -32,7 +32,6 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 	})
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
-		fmt.Println("this is london")
 		os.Exit(1)
 	}
 	err = os.MkdirAll(filepath.Join(dartPath, serviceName), 0777)
@@ -107,7 +106,7 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 	doubleType := "double"
 	mapType := "Map<String,%v>"
 	anyType := "dynamic"
-	typePrefix := ""
+	typeSuffix := "?"
 	varDecl := "final"
 
 	valueToType := func(v *openapi3.SchemaRef) string {
@@ -164,25 +163,25 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 			case "object":
 				typ, found := detectType(k, v.Value.Properties)
 				if found {
-					ret += varDecl + fieldSeparator + typePrefix + strings.Title(typ) + fieldSeparator + k + fieldDelimiter
+					ret += varDecl + fieldSeparator + strings.Title(typ) + typeSuffix + fieldSeparator + k + fieldDelimiter
 				} else {
 					// type is a dynamic map
 					// if additional properties is not present, it's an any type,
 					// like the proto struct type
 					if v.Value.AdditionalProperties != nil {
-						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + fieldSeparator + k + fieldDelimiter
+						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + typeSuffix + fieldSeparator + k + fieldDelimiter
 					} else {
-						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, anyType) + fieldSeparator + k + fieldDelimiter
+						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, anyType) + typeSuffix + fieldSeparator + k + fieldDelimiter
 					}
 				}
 			case "array":
 				typ, found := detectType(k, v.Value.Items.Value.Properties)
 				if found {
-					ret += varDecl + fieldSeparator + arrayPrefix + strings.Title(typ) + arrayPostfix + fieldSeparator + k + fieldDelimiter
+					ret += varDecl + fieldSeparator + arrayPrefix + strings.Title(typ) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 				} else {
 					switch v.Value.Items.Value.Type {
 					case "string":
-						ret += varDecl + fieldSeparator + arrayPrefix + stringType + arrayPostfix + fieldSeparator + k + fieldDelimiter
+						ret += varDecl + fieldSeparator + arrayPrefix + stringType + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 					case "number":
 						typ := numberType
 						switch v.Value.Format {
@@ -195,22 +194,22 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 						case "double":
 							typ = doubleType
 						}
-						ret += varDecl + fieldSeparator + arrayPrefix + typ + arrayPostfix + fieldSeparator + k + fieldDelimiter
+						ret += varDecl + fieldSeparator + arrayPrefix + typ + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 					case "boolean":
-						ret += varDecl + fieldSeparator + arrayPrefix + boolType + arrayPostfix + fieldSeparator + k + fieldDelimiter
+						ret += varDecl + fieldSeparator + arrayPrefix + boolType + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 					case "object":
 						// type is a dynamic map
 						// if additional properties is not present, it's an any type,
 						// like the proto struct type
 						if v.Value.AdditionalProperties != nil {
-							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + arrayPostfix + fieldSeparator + k + fieldDelimiter
+							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 						} else {
-							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, anyType) + arrayPostfix + fieldSeparator + k + fieldDelimiter
+							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, anyType) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 						}
 					}
 				}
 			case "string":
-				ret += varDecl + fieldSeparator + stringType + fieldSeparator + k + fieldDelimiter
+				ret += varDecl + fieldSeparator + stringType + typeSuffix + fieldSeparator + k + fieldDelimiter
 			case "number":
 				typ = numberType
 				switch v.Value.Format {
@@ -223,9 +222,9 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 				case "double":
 					typ = doubleType
 				}
-				ret += varDecl + fieldSeparator + typ + fieldSeparator + k + fieldDelimiter
+				ret += varDecl + fieldSeparator + typ + typeSuffix + fieldSeparator + k + fieldDelimiter
 			case "boolean":
-				ret += varDecl + fieldSeparator + boolType + fieldSeparator + k + fieldDelimiter
+				ret += varDecl + fieldSeparator + boolType + typeSuffix + fieldSeparator + k + fieldDelimiter
 			}
 			if i < len(props) {
 				ret += "\n"
@@ -236,4 +235,32 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 		return ret
 	}
 	return recurse(spec.Value.Properties, 1)
+}
+
+func (d *dartG) dartCollector(dartPath string, services []service) {
+	templ, err := template.New("dartCollector").Funcs(funcMap()).Parse(dartCollectorTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	b := bytes.Buffer{}
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"services": services,
+	})
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	f, err := os.OpenFile(filepath.Join(dartPath, "m3o.dart"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	if err != nil {
+		fmt.Println("Failed to open collector file", err)
+		os.Exit(1)
+	}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to collector file", err)
+		os.Exit(1)
+	}
 }

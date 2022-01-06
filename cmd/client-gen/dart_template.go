@@ -1,5 +1,12 @@
 package main
 
+const dartCollectorTemplate = `library m3o;
+  
+export 'src/client.dart';
+{{ range $service := .services }}export 'src/{{ $service.Name}}.dart';
+{{ end }}
+`
+
 const dartServiceTemplate = `{{ $service := .service }}import 'dart:convert';
 
 import 'package:m3o/m3o.dart';
@@ -50,6 +57,8 @@ class {{title $service.Name}}Service {
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
 class {{ title $typeName }} {
-{{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
+	{{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}
+	{{ title $typeName }}{{"({"}}{{ range $field, $meta := $schema.Value.Properties }}this.{{$field}},{{end}}{{"});"}}
+}
 {{end}}
 `
