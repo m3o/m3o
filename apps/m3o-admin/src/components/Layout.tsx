@@ -20,7 +20,7 @@ export const Layout: FC = () => {
           <ul>
             <li>
               <Link to="/database" className="px-6 py-2 block text-white">
-                Db
+                DB
               </Link>
             </li>
             <li>
