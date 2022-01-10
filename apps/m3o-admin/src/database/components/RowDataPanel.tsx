@@ -1,6 +1,7 @@
 import type { FC } from 'react'
-import { TrashIcon } from '@heroicons/react/outline'
+import { Fragment } from 'react'
 import { ExpectedRecord } from '../types'
+import { DeleteButton } from '../../components/DeleteButton'
 
 interface Props {
   data: ExpectedRecord
@@ -14,29 +15,23 @@ const keysWithoutIdKey = (data: ExpectedRecord) => {
 export const RowDataPanel: FC<Props> = ({ data, onDeleteClick }) => {
   return (
     <div>
-      <div className="border-b mb-4 pb-4 grid">
-        <button
-          className="flex items-center text-sm bg-red-600 py-2 px-4 rounded-md text-white ml-auto font-bold"
-          onClick={onDeleteClick}
-        >
-          <TrashIcon className="w-6 mr-2" />
-          Delete
-        </button>
-      </div>
       <h1 className="font-bold mb-6">
         <span className="block text-gray-400">ID:</span>
         {data.id}
       </h1>
       {keysWithoutIdKey(data).map((key) => (
-        <div key={key}>
+        <Fragment key={key}>
           <h2 className="mb-1 text-sm pb-1 font-medium">{key}</h2>
           <p className="mb-6 text-gray-500 text-sm">
             {typeof data[key] === 'object'
               ? JSON.stringify(data[key])
               : data[key]}
           </p>
-        </div>
+        </Fragment>
       ))}
+      <div className="border-t border-gray-700 mt-4 pt-4 grid">
+        <DeleteButton onClick={onDeleteClick} />
+      </div>
     </div>
   )
 }

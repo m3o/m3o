@@ -2,13 +2,14 @@
 import type { FC } from 'react'
 import { useCallback, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { TrashIcon } from '@heroicons/react/outline'
 import { Table } from '../../components/Table'
+import { Spinner } from '../../components/Spinner'
 import { useFetchTableData } from '../../hooks/db/useFetchTableData'
 import { useDeleteTableRow } from '../../hooks/db/useDeleteTableRow'
 import { useDbDropTable } from '../../hooks/db/useDbDropTable'
 import { Panel } from '../../components/Panel'
 import { RowDataPanel } from '../../database/components/RowDataPanel'
+import { DeleteButton } from '../../components/DeleteButton'
 
 export const TableScreen: FC = () => {
   const [openRowDataId, setOpenRowDataId] = useState('')
@@ -42,18 +43,12 @@ export const TableScreen: FC = () => {
       <header className="p-4 border-b border-gray-700 flex justify-between w-full items-center">
         <h1 className="font-bold text-white">{tableName}</h1>
         <div className="">
-          <button
-            className="flex items-center bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white text-sm font-bold transition-colors"
-            onClick={onDropTableClick}
-          >
-            <TrashIcon className="w-4 mr-2" /> Drop Table
-          </button>
+          <DeleteButton onClick={onDropTableClick}>Drop Table</DeleteButton>
         </div>
       </header>
       {isLoading ? (
         <div className="flex items-center  h-full justify-center">
-          <p>Loading...</p>
-          {/* <Spinner /> */}
+          <Spinner />
         </div>
       ) : (
         <Table

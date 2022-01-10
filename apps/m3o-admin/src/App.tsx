@@ -6,7 +6,6 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { LandingScreen } from './screens/LandingScreen'
 import { TableScreen } from './database/screens/TableScreen'
 import { UsersScreen } from './users/screens/UsersScreen'
-import { UserScreen } from './users/screens/UserScreen'
 import { DatabaseLayout } from './database/components/DatabaseLayout'
 import { Layout } from './components/Layout'
 
@@ -42,7 +41,6 @@ function App() {
                 <Route path=":tableName" element={<TableScreen />} />
               </Route>
               <Route path="users" element={<UsersScreen />} />
-              <Route path="users/:id" element={<UserScreen />} />
             </Route>
           </Routes>
         </div>

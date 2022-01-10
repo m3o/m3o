@@ -15,7 +15,7 @@ export const Panel: FC<Props> = ({ children, open, onCloseClick }) => {
   )
 
   const panelClasses = classnames(
-    'fixed right-0 top-0 bottom-0 bg-white z-20 p-6 transition-transform max-w-xl',
+    'fixed right-0 top-0 bottom-0 bg-gray-900 z-20 p-6 transition-transform max-w-xl text-white overflow-y-scroll',
     {
       'translate-x-full': !open
     }
