@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { LandingScreen } from './screens/LandingScreen'
-import { DatabaseScreen } from './database/screens/DatabaseScreen'
 import { TableScreen } from './database/screens/TableScreen'
 import { UsersScreen } from './users/screens/UsersScreen'
 import { UserScreen } from './users/screens/UserScreen'
@@ -35,17 +34,18 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<LandingScreen />} />
-            <Route path="database" element={<DatabaseLayout />}>
-              <Route index element={<DatabaseScreen />} />
-              <Route path=":tableName" element={<TableScreen />} />
+        <div className="min-h-screen bg-gray-900">
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<LandingScreen />} />
+              <Route path="database" element={<DatabaseLayout />}>
+                <Route path=":tableName" element={<TableScreen />} />
+              </Route>
+              <Route path="users" element={<UsersScreen />} />
+              <Route path="users/:id" element={<UserScreen />} />
             </Route>
-            <Route path="users" element={<UsersScreen />} />
-            <Route path="users/:id" element={<UserScreen />} />
-          </Route>
-        </Routes>
+          </Routes>
+        </div>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

@@ -38,7 +38,7 @@ export const TableScreen: FC = () => {
   }, [openRowDataId, data])
 
   return (
-    <div className="bg-gray-900">
+    <>
       <header className="p-4 border-b border-gray-700 flex justify-between w-full items-center">
         <h1 className="font-bold text-white">{tableName}</h1>
         <div className="">
@@ -67,6 +67,6 @@ export const TableScreen: FC = () => {
           <RowDataPanel data={openRowData} onDeleteClick={onDeleteClick} />
         )}
       </Panel>
-    </div>
+    </>
   )
 }
