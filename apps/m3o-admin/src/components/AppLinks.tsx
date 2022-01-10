@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react'
 import type { LinkProps } from 'react-router-dom'
-import { useResolvedPath, useMatch, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { DatabaseIcon, UserIcon } from '@heroicons/react/outline'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
