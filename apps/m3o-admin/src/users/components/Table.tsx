@@ -1,11 +1,9 @@
 /* eslint react/jsx-key: 0,react/display-name:0 */
 import type { FC, ChangeEvent } from 'react'
 import type { Account } from 'm3o/user'
-import type { Column, CellProps } from 'react-table'
-import { ArrowRightIcon } from '@heroicons/react/outline'
-import { Link } from 'react-router-dom'
+import type { Column } from 'react-table'
 import format from 'date-fns/format'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import {
   useTable,
   useFlexLayout,
@@ -17,12 +15,10 @@ import { TableSearch } from '../../components/TableSearch'
 interface Props {
   data: Account[]
   tableName: string
-  onRowDelete: (id: string) => void
+  onRowClick: (id: string) => void
 }
 
-export const Table: FC<Props> = ({ data, tableName, onRowDelete }) => {
-  const [setOpenActionMenuId] = useState('')
-
+export const Table: FC<Props> = ({ data, tableName, onRowClick }) => {
   const defaultColumn = useMemo(
     () => ({
       minWidth: 30,
@@ -67,25 +63,6 @@ export const Table: FC<Props> = ({ data, tableName, onRowDelete }) => {
         Cell: ({ value }) => {
           return value ? '✅' : '❌'
         }
-      },
-      {
-        Header: '',
-        width: 75,
-        id: 'actions-column',
-        Cell: ({
-          row: {
-            original: { id }
-          }
-        }: CellProps<Account>) => {
-          return (
-            <Link
-              to={`/users/${id}`}
-              className="flex items-center bg-indigo-600 py-2 px-4 rounded-md text-white text-sm hover:bg-indigo-900 transition-colors"
-            >
-              View <ArrowRightIcon className="w-4 ml-2" />
-            </Link>
-          )
-        }
       }
     ]
   }, [])
@@ -114,11 +91,11 @@ export const Table: FC<Props> = ({ data, tableName, onRowDelete }) => {
   )
 
   return (
-    <>
+    <div className="bg-gray-900 text-white">
       <TableSearch tableName={tableName} onChange={onSearchChange} />
-      <div className="p-4 pt-2">
+      <div>
         <div {...getTableProps()}>
-          <div className="bg-gray-50 mb-4 rounded-md font-medium text-sm">
+          <div className="bg-gray-800 font-medium text-sm text-white">
             {headerGroups.map((headerGroup) => (
               <div {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
@@ -136,14 +113,16 @@ export const Table: FC<Props> = ({ data, tableName, onRowDelete }) => {
             {rows.map((row, i) => {
               prepareRow(row)
               return (
-                <div {...row.getRowProps()}>
+                <div
+                  {...row.getRowProps()}
+                  className="cursor-pointer hover:bg-gray-800"
+                  onClick={() => onRowClick(row.original.id!)}
+                >
                   {row.cells.map((cell) => {
                     return (
                       <div
                         {...cell.getCellProps()}
-                        className={`p-4 ${
-                          i % 2 === 0 ? 'bg-gray-50' : ''
-                        } text-sm overflow-hidden overflow-ellipsis flex items-center`}
+                        className="border-b border-gray-700 p-4 text-sm overflow-hidden overflow-ellipsis whitespace-nowrap"
                       >
                         {cell.render('Cell')}
                       </div>
@@ -155,6 +134,6 @@ export const Table: FC<Props> = ({ data, tableName, onRowDelete }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

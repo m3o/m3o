@@ -8,6 +8,7 @@ import { DatabaseScreen } from './database/screens/DatabaseScreen'
 import { TableScreen } from './database/screens/TableScreen'
 import { UsersScreen } from './users/screens/UsersScreen'
 import { UserScreen } from './users/screens/UserScreen'
+import { DatabaseLayout } from './database/components/DatabaseLayout'
 import { Layout } from './components/Layout'
 
 const queryClient = new QueryClient()
@@ -37,8 +38,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<LandingScreen />} />
-            <Route path="database" element={<DatabaseScreen />} />
-            <Route path="database/:tableName" element={<TableScreen />} />
+            <Route path="database" element={<DatabaseLayout />}>
+              <Route index element={<DatabaseScreen />} />
+              <Route path=":tableName" element={<TableScreen />} />
+            </Route>
             <Route path="users" element={<UsersScreen />} />
             <Route path="users/:id" element={<UserScreen />} />
           </Route>

@@ -2,8 +2,7 @@
 import type { FC } from 'react'
 import { useCallback, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/outline'
-import { Link } from 'react-router-dom'
+import { TrashIcon } from '@heroicons/react/outline'
 import { Table } from '../../components/Table'
 import { useFetchTableData } from '../../hooks/db/useFetchTableData'
 import { useDeleteTableRow } from '../../hooks/db/useDeleteTableRow'
@@ -39,14 +38,9 @@ export const TableScreen: FC = () => {
   }, [openRowDataId, data])
 
   return (
-    <>
-      <header className="p-4 border-b flex justify-between">
-        <h1 className="font-bold text-black flex items-center">
-          <Link to="/database" className="border-r mr-4">
-            <ArrowLeftIcon className="w-4 mr-4" />
-          </Link>
-          {tableName}
-        </h1>
+    <div className="bg-gray-900">
+      <header className="p-4 border-b border-gray-700 flex justify-between w-full items-center">
+        <h1 className="font-bold text-white">{tableName}</h1>
         <div className="">
           <button
             className="flex items-center bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white text-sm font-bold transition-colors"
@@ -73,6 +67,6 @@ export const TableScreen: FC = () => {
           <RowDataPanel data={openRowData} onDeleteClick={onDeleteClick} />
         )}
       </Panel>
-    </>
+    </div>
   )
 }
