@@ -79,13 +79,13 @@ export const Table: FC<Props> = ({ data, tableName, onRowClick }) => {
       <TableSearch tableName={tableName} onChange={onSearchChange} />
       <div className="overflow-x-scroll">
         <div {...getTableProps()}>
-          <div className="bg-gray-800 font-medium text-sm text-white border-b border-gray-700">
+          <div className="font-medium text-sm text-white">
             {headerGroups.map((headerGroup) => (
               <div {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <div
                     {...column.getHeaderProps()}
-                    className="text-left p-4 text-sm"
+                    className="text-left p-4 text-sm bg-gray-800 border-b border-gray-700"
                   >
                     {column.render('Header')}
                   </div>
