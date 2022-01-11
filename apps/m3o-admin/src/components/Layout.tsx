@@ -4,7 +4,7 @@ import { AppLinks } from './AppLinks'
 
 export const Layout: FC = () => {
   return (
-    <section className="pl-16">
+    <div className="pl-16">
       <aside className="bg-gray-900 h-screen fixed top-0 left-0 w-16 border-r border-gray-700">
         <div className="p-4">
           <Link
@@ -21,6 +21,6 @@ export const Layout: FC = () => {
       <div className="min-h-screen">
         <Outlet />
       </div>
-    </section>
+    </div>
   )
 }
