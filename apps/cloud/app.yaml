@@ -1,0 +1,20 @@
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+domains:
+  - domain: cloud.m3o.com
+    type: PRIMARY
+name: m3o-cloud
+region: lon
+catchall_document: index.html
+static_sites:
+  - build_command: npm run build
+    environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: m3o/m3o
+    name: m3o-cloud
+    routes:
+      - path: /
+    source_dir: /apps/cloud
