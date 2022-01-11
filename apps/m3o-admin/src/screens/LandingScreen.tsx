@@ -12,13 +12,13 @@ export const LandingScreen: FC = () => {
       <div className="mt-10 grid grid-cols-4 gap-4">
         <ApiBox
           title="Users"
-          subTitle="View and administer your users"
+          subTitle="Manage your users"
           icon={<UserIcon className="w-6" />}
           linkTo="/users"
         />
         <ApiBox
           title="DB"
-          subTitle="View and administer your databases"
+          subTitle="Manage your data"
           icon={<DatabaseIcon className="w-6" />}
           linkTo="/database"
         />

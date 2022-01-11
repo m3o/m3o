@@ -5,6 +5,7 @@ import { Table } from '../components/Table'
 import { Panel } from '../../components/Panel'
 import { UserPanel } from '../components/UserPanel'
 import { useDeleteUser } from '../hooks/useDeleteUser'
+import { NoData } from '../../components/NoData'
 
 export const UsersScreen: FC = () => {
   const [openUserId, setOpenUserId] = useState('')
@@ -32,7 +33,12 @@ export const UsersScreen: FC = () => {
 
   return (
     <div>
-      <Table data={data} tableName="Users" onRowClick={setOpenUserId} />
+      {data.length ? (
+        <Table data={data} tableName="Users" onRowClick={setOpenUserId} />
+      ) : (
+        <NoData />
+      )}
+
       <Panel open={!!openUserId} onCloseClick={() => setOpenUserId('')}>
         {openPanelUserData && (
           <UserPanel data={openPanelUserData} onDeleteClick={onDeleteClick} />

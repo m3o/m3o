@@ -10,6 +10,7 @@ import { useDbDropTable } from '../../hooks/db/useDbDropTable'
 import { Panel } from '../../components/Panel'
 import { RowDataPanel } from '../../database/components/RowDataPanel'
 import { DeleteButton } from '../../components/DeleteButton'
+import { NoData } from '../../components/NoData'
 
 export const TableScreen: FC = () => {
   const [openRowDataId, setOpenRowDataId] = useState('')
@@ -50,12 +51,14 @@ export const TableScreen: FC = () => {
         <div className="flex items-center  h-full justify-center">
           <Spinner />
         </div>
-      ) : (
+      ) : data.length ? (
         <Table
           tableName={tableName!}
           data={data}
           onRowClick={(id: string) => setOpenRowDataId(id)}
         />
+      ) : (
+        <NoData />
       )}
       <Panel open={!!openRowDataId} onCloseClick={() => setOpenRowDataId('')}>
         {openRowData && (
