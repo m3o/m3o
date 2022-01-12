@@ -13,8 +13,25 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/fatih/camelcase"
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/jhump/protoreflect/desc/protoparse"
 	"github.com/stoewer/go-strcase"
 )
+
+type service struct {
+	Spec *openapi3.Swagger
+	Name string
+	//  overwrite import name of service when it's a keyword ie function in javascript
+	ImportName string
+}
+
+type example struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Request     map[string]interface{}
+	Response    map[string]interface{}
+	RunCheck    bool `json:"run_check"`
+	Idempotent  bool `json:"idempotent"`
+}
 
 type generator interface {
 	ServiceClient(serviceName, dartPath string, service service)
@@ -22,6 +39,7 @@ type generator interface {
 	ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, service service, example example)
 	IndexFile(goPath string, services []service)
 	schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string
+	// schemaToType(schema *openapi3.SchemaRef) string
 }
 
 func funcMap() map[string]interface{} {
@@ -52,8 +70,10 @@ func funcMap() map[string]interface{} {
 			return tsg.schemaToType(serviceName, typeName, schemas)
 		},
 		"recursiveTypeDefinitionDart": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+			// "recursiveTypeDefinitionDart": func(schema *openapi3.SchemaRef) string {
 			dartg := &dartG{}
 			return dartg.schemaToType(serviceName, typeName, schemas)
+			// return dartg.schemaToType(schema)
 		},
 		"requestTypeToEndpointName": func(requestType string) string {
 			parts := camelcase.Split(requestType)
@@ -237,6 +257,82 @@ func copyFileContents(src, dst string) (err error) {
 	return
 }
 
-func schemaToMethods(title string, spec *openapi3.RequestBodyRef) string {
-	return ""
+func detectType(currentType string, properties, schemas map[string]*openapi3.SchemaRef) (string, bool) {
+	index := map[string]bool{}
+	for key, prop := range properties {
+		index[key+prop.Value.Title+prop.Value.Description] = true
+	}
+
+	for k, schema := range schemas {
+		// we don't want to return the type matching itself
+		if strings.ToLower(k) == currentType {
+			continue
+		}
+		if strings.HasSuffix(k, "Request") || strings.HasSuffix(k, "Response") {
+			continue
+		}
+		if len(schema.Value.Properties) != len(properties) {
+			continue
+		}
+		found := false
+		for key, prop := range schema.Value.Properties {
+			_, ok := index[key+prop.Value.Title+prop.Value.Description]
+			found = ok
+			if !ok {
+				break
+			}
+		}
+		if found {
+			return schema.Value.Title, true
+		}
+	}
+	return "", false
 }
+
+// detectType detects the type of a field directly from the proto file
+// for the specified service and message
+func detectType2(service, message, field string) string {
+	// fmt.Printf("service: %v | message: %v | field: %v\n", service, message, field)
+
+	workDir, _ := os.Getwd()
+	filePath := filepath.Join(workDir, service, "proto", service+".proto")
+
+	p := protoparse.Parser{
+		Accessor: func(filename string) (io.ReadCloser, error) {
+			f, err := os.Open(filename)
+			return ioutil.NopCloser(f), err
+		},
+	}
+
+	fdesc, err := p.ParseFiles(filePath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to parse file %v: err %v\n", filePath, err)
+		return ""
+	}
+
+	// check if the message exist
+	msgDesc := fdesc[0].FindMessage(service + "." + message)
+	if msgDesc == nil {
+		fmt.Fprintf(os.Stderr, "could not find Message %v in %v\n", message, filePath)
+		return ""
+	}
+
+	// check if the field exist
+	fieldDesc := msgDesc.FindFieldByName(field)
+	if fieldDesc == nil {
+		fmt.Fprintf(os.Stderr, "could no find Field %v in Message %v\n", field, message)
+		return ""
+	}
+
+	// check if the field type is a message type
+	desc := fieldDesc.GetMessageType()
+	if desc == nil {
+		return fieldDesc.GetType().String()
+	}
+
+	return desc.GetName()
+}
+
+// func schemaToMethods(title string, spec *openapi3.RequestBodyRef) string {
+// 	return ""
+// }

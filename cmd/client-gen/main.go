@@ -11,33 +11,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"text/template"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/stoewer/go-strcase"
-)
-
-type service struct {
-	Spec *openapi3.Swagger
-	Name string
-	//  overwrite import name of service when it's a keyword ie function in javascript
-	ImportName string
-}
-
-type example struct {
-	Title        string `json:"title"`
-	Description  string `json:"description"`
-	Request      map[string]interface{}
-	Response     map[string]interface{}
-	RunCheck     bool   `json:"run_check"`
-	Idempotent   bool   `json:"idempotent"`
-	ShellRequest string `json:"shell_request"`
-}
-
-var (
-	VanityURL = "go.m3o.com"
 )
 
 func curlExample(examplesPath, serviceName, endpoint, title string, service service, example example) {
@@ -115,7 +92,7 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	dartG := &dartG{}
-	goG := &goG{}
+	// goG := &goG{}
 	// tsG := &tsG{}
 
 	for _, f := range files {
@@ -159,8 +136,8 @@ func main() {
 			// tsG.ServiceClient(serviceName, tsPath, service)
 			// tsG.TopReadme(serviceName, examplesPath, service)
 			dartG.ServiceClient(serviceName, dartPath, service)
-			goG.ServiceClient(serviceName, goPath, service)
-			goG.TopReadme(serviceName, examplesPath, service)
+			// goG.ServiceClient(serviceName, goPath, service)
+			// goG.TopReadme(serviceName, examplesPath, service)
 
 			exam, err := ioutil.ReadFile(filepath.Join(workDir, serviceName, "examples.json"))
 			if err != nil {
@@ -177,15 +154,15 @@ func main() {
 				if len(service.Spec.Paths) != len(m) {
 					fmt.Printf("Service has %v endpoints, but only %v examples\n", len(service.Spec.Paths), len(m))
 				}
-				for endpoint, examples := range m {
-					for _, example := range examples {
-						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
+				// for endpoint, examples := range m {
+				// 	for _, example := range examples {
+				// 		title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
 
-						goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// curlExample(examplesPath, serviceName, endpoint, title, service, example)
-					}
-				}
+				// 		goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+				// 		// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+				// 		// curlExample(examplesPath, serviceName, endpoint, title, service, example)
+				// 	}
+				// }
 			} else {
 				fmt.Println(err)
 			}
@@ -193,9 +170,9 @@ func main() {
 	}
 
 	// tsG.IndexFile(workDir, tsPath, services)
-	goG.IndexFile(goPath, services)
+	// goG.IndexFile(goPath, services)
 
-	dartG.dartCollector(dartPath, services)
+	dartG.IndexFile(dartPath, services)
 
 	// publishToNpm(tsPath, tsFileList)
 }

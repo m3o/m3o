@@ -55,40 +55,10 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 }
 
 func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
+
 	var recurse func(props map[string]*openapi3.SchemaRef, level int) string
 
 	var spec *openapi3.SchemaRef = schemas[typeName]
-	detectType := func(currentType string, properties map[string]*openapi3.SchemaRef) (string, bool) {
-		index := map[string]bool{}
-		for key, prop := range properties {
-			index[key+prop.Value.Title+prop.Value.Description] = true
-		}
-
-		for k, schema := range schemas {
-			// we don't want to return the type matching itself
-			if strings.ToLower(k) == currentType {
-				continue
-			}
-			if strings.HasSuffix(k, "Request") || strings.HasSuffix(k, "Response") {
-				continue
-			}
-			if len(schema.Value.Properties) != len(properties) {
-				continue
-			}
-			found := false
-			for key, prop := range schema.Value.Properties {
-				_, ok := index[key+prop.Value.Title+prop.Value.Description]
-				found = ok
-				if !ok {
-					break
-				}
-			}
-			if found {
-				return schema.Value.Title, true
-			}
-		}
-		return "", false
-	}
 
 	fieldUpperCase := false
 	fieldSeparator := " "
@@ -161,9 +131,9 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 			// repeating code
 			switch v.Value.Type {
 			case "object":
-				typ, found := detectType(k, v.Value.Properties)
-				if found {
-					ret += varDecl + fieldSeparator + strings.Title(typ) + typeSuffix + fieldSeparator + k + fieldDelimiter
+				typ := detectType2(serviceName, typeName, k)
+				if true {
+					ret += varDecl + fieldSeparator + typ + typeSuffix + fieldSeparator + k + fieldDelimiter
 				} else {
 					// type is a dynamic map
 					// if additional properties is not present, it's an any type,
@@ -175,8 +145,8 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 					}
 				}
 			case "array":
-				typ, found := detectType(k, v.Value.Items.Value.Properties)
-				if found {
+				typ := detectType2(serviceName, typeName, k)
+				if true {
 					ret += varDecl + fieldSeparator + arrayPrefix + strings.Title(typ) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
 				} else {
 					switch v.Value.Items.Value.Type {
@@ -237,8 +207,8 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 	return recurse(spec.Value.Properties, 1)
 }
 
-func (d *dartG) dartCollector(dartPath string, services []service) {
-	templ, err := template.New("dartCollector").Funcs(funcMap()).Parse(dartCollectorTemplate)
+func (d *dartG) IndexFile(dartPath string, services []service) {
+	templ, err := template.New("dartCollector").Funcs(funcMap()).Parse(dartIndexTemplate)
 	if err != nil {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
@@ -264,3 +234,32 @@ func (d *dartG) dartCollector(dartPath string, services []service) {
 		os.Exit(1)
 	}
 }
+
+// output := []string{}
+
+// 	for p, meta := range schema.Value.Properties {
+// 		output = append(output, p)
+// 		switch meta.Value.Type {
+// 		case "string":
+// 			output = append(output, "String")
+// 		case "boolean":
+// 			output = append(output, "bool")
+// 		case "number":
+// 			switch meta.Value.Format {
+// 			case "int32":
+// 				output = append(output, "int")
+// 			case "int64":
+// 				output = append(output, "int")
+// 			case "float":
+// 				output = append(output, "double")
+// 			case "double":
+// 				output = append(output, "double")
+// 			}
+// 		case "array":
+// 			output = append(output, "List")
+// 		default:
+// 			return "unrecognized: " + meta.Value.Type
+// 		}
+// 	}
+
+// 	return strings.Join(output, " | ")

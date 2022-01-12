@@ -1,6 +1,6 @@
 package main
 
-const dartCollectorTemplate = `library m3o;
+const dartIndexTemplate = `library m3o;
   
 export 'src/client.dart';
 {{ range $service := .services }}export 'src/{{ $service.Name}}.dart';
@@ -8,8 +8,11 @@ export 'src/client.dart';
 `
 
 const dartServiceTemplate = `{{ $service := .service }}import 'dart:convert';
-
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:m3o/m3o.dart';
+
+part '{{ $service.Name }}.freezed.dart';
+part '{{ $service.Name }}.g.dart';
 
 class {{title $service.Name}}Service {
 	final Options opts;
@@ -20,45 +23,56 @@ class {{title $service.Name}}Service {
 	}
 {{ range $key, $req := $service.Spec.Components.RequestBodies }}{{ $reqType := requestType $key }}{{ $endpointName := requestTypeToEndpointName $key}}
 	/{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{end}}
-	{{ if isNotStream $service.Spec $service.Name $reqType }}Future<Response> {{untitle $endpointName}}(Map<String, dynamic> body) async {
+	{{ if isNotStream $service.Spec $service.Name $reqType }}Future<{{ $endpointName }}Response> {{untitle $endpointName}}({{ $endpointName }}Request req) async {
 		Request request = Request(
 			service: '{{$service.Name}}',
 			endpoint: '{{$endpointName}}',
-			body: body,
+			body: req.toJson(),
 		);
   
-		Response res = await _client.call(request);
-  
-		return res;
+		try {
+			Response res = await _client.call(request);
+			if (isError(res.body)) {
+			  final err = Merr(res.toJson());
+			  return {{ $endpointName }}Response.Merr(body: err.b);
+			}
+			return {{ $endpointName }}ResponseData.fromJson(res.body);
+		  } catch (e) {
+			throw Exception(e);
+		  }
 	}{{end}}
-	{{ if isStream $service.Spec $service.Name $reqType }}Stream<Response> {{untitle $endpointName}}(Map<String, dynamic> body) async* {
+	{{ if isStream $service.Spec $service.Name $reqType }}Stream<{{ $endpointName }}Response> {{untitle $endpointName}}({{ $endpointName }}Request req) async* {
 		Request request = Request(
 			service: '{{$service.Name}}',
 			endpoint: '{{$endpointName}}',
-			body: body,
+			body: req.toJson(),
 		);
 		
-	  	M3OStream st = await _client.stream(request);
-  
-	 	if (st.webS != null) {
-			await for (var value in st.webS!) {
-				yield Response.fromJson(jsonDecode(value));
+		try {
+			var webS = await _client.stream(request);
+			await for (var value in webS!) {
+				final vo = jsonDecode(value);
+				if (isError(vo)) {
+					yield {{ $endpointName }}Response.Merr(body: vo);
+				} else {
+					yield {{ $endpointName }}ResponseData.fromJson(vo);
+				}
 			}
-		} else {
-			yield Response(
-				body: null,
-				id: 'm3o-dart',
-				detail: 'address ${opts.address} unreachable',
-				status: 'service unavailable',
-			);
+		} catch (e) {
+			throw Exception(e);
 		}
 	}{{end}}{{end}}
 }
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
-class {{ title $typeName }} {
+@Freezed()
+class {{ title $typeName }} with _${{ title $typeName }} {
 	{{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}
 	{{ title $typeName }}{{"({"}}{{ range $field, $meta := $schema.Value.Properties }}this.{{$field}},{{end}}{{"});"}}
 }
 {{end}}
 `
+
+// {{ recursiveTypeDefinitionDart $schema }}
+// $typeName => {{ $typeName }}
+// $schema.Value.Description => {{ $schema.Value.Description }}

@@ -61,7 +61,7 @@ func (n *tsG) ServiceClient(serviceName, tsPath string, service service) {
 	cmd.Dir = filepath.Join(tsPath, "src", serviceName)
 	outp, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem formatting '%v' client: %v %s", serviceName, string(outp), err.Error()))
+		fmt.Printf("Problem formatting '%v' client: %v %s\n", serviceName, string(outp), err.Error())
 		os.Exit(1)
 	}
 }
