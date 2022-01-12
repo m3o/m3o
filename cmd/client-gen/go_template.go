@@ -131,7 +131,7 @@ wss://api.m3o.com/v1/{{ $service.Name }}/{{ title .endpoint }}
 
 const goReadmeTopTemplate = `{{ $service := .service }}# {{ title $service.Name }}
 
-An [m3o.com](https://m3o.com) API. For example usage see [m3o.com/{{ title $service.Name }}/api](https://m3o.com/{{ title $service.Name }}/api).
+An [m3o.com](https://m3o.com) API. For example usage see [m3o.com/{{ $service.Name }}/api](https://m3o.com/{{ $service.Name }}/api).
 
 Endpoints:
 
