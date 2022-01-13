@@ -19,8 +19,8 @@ function App() {
     if (!cookies['micro_api_token']) {
       window.location.href =
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3000/login'
-          : 'https://m3o.com/login'
+          ? 'http://localhost:3000/login?redirect=cloud'
+          : 'https://m3o.com/login?redirect=cloud'
     } else {
       setAuthenticated(true)
     }
