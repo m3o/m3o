@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 import { UserIcon, DatabaseIcon } from '@heroicons/react/outline'
 import { ApiBox } from '../components/ApiBox'
-import { FeedbackButton } from '../components/FeedbackButton'
 
 export const LandingScreen: FC = () => {
   return (
@@ -24,13 +23,6 @@ export const LandingScreen: FC = () => {
           linkTo="/database"
         />
       </div>
-      <p className="mt-8 max-w-2xl border-t pt-6 text-gray-400 border-gray-700">
-        We're always looking for ways to improve our customer experience. Please
-        provide feedback or any feature requests you have for this product.
-      </p>
-      <p>
-        <FeedbackButton />
-      </p>
     </section>
   )
 }
