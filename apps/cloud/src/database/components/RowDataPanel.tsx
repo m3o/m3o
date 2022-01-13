@@ -22,7 +22,7 @@ export const RowDataPanel: FC<Props> = ({ data, onDeleteClick }) => {
       {keysWithoutIdKey(data).map((key) => (
         <Fragment key={key}>
           <h2 className="mb-1 text-sm pb-1 font-medium">{key}</h2>
-          <p className="mb-6 text-gray-500 text-sm">
+          <p className="mb-6 text-gray-300 text-sm">
             {typeof data[key] === 'object'
               ? JSON.stringify(data[key])
               : data[key]}

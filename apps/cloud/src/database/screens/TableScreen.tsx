@@ -2,7 +2,7 @@
 import type { FC } from 'react'
 import { useCallback, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { Table } from '../../components/Table'
+import { Table } from '../components/Table'
 import { Spinner } from '../../components/Spinner'
 import { useFetchTableData } from '../../database/hooks/useFetchTableData'
 import { useDeleteTableRow } from '../../database/hooks/useDeleteTableRow'

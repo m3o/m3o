@@ -8,8 +8,8 @@ import {
   useGlobalFilter,
   useAsyncDebounce
 } from 'react-table'
-import { deDupe } from '../utils'
-import { TableSearch } from './TableSearch'
+import { deDupe } from '../../utils'
+import { TableSearch } from '../../components/TableSearch'
 
 interface DatabaseItem {
   id: string

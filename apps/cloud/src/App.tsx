@@ -8,6 +8,7 @@ import { TableScreen } from './database/screens/TableScreen'
 import { UsersScreen } from './users/screens/UsersScreen'
 import { DatabaseLayout } from './database/components/DatabaseLayout'
 import { Layout } from './components/Layout'
+import { returnLoginUrl } from './auth'
 
 const queryClient = new QueryClient()
 
@@ -17,10 +18,7 @@ function App() {
 
   useEffect(() => {
     if (!cookies['micro_api_token']) {
-      window.location.href =
-        process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3000/login?redirect=cloud'
-          : 'https://m3o.com/login?redirect=cloud'
+      window.location.href = returnLoginUrl()
     } else {
       setAuthenticated(true)
     }
