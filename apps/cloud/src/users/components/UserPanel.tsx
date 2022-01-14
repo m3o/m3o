@@ -1,15 +1,12 @@
 import type { FC } from 'react'
 import type { Account } from 'm3o/user'
-import { Fragment } from 'react'
 import { PanelRow } from '../../components/PanelRow'
-import { DeleteButton } from '../../components/DeleteButton'
 
 interface Props {
   data: Account
-  onDeleteClick: VoidFunction
 }
 
-export const UserPanel: FC<Props> = ({ data, onDeleteClick }) => {
+export const UserPanel: FC<Props> = ({ data }) => {
   return (
     <>
       <h1 className="mb-4">{data.username}</h1>
@@ -29,9 +26,6 @@ export const UserPanel: FC<Props> = ({ data, onDeleteClick }) => {
           ))}
         </>
       )}
-      <div>
-        <DeleteButton onClick={onDeleteClick} />
-      </div>
     </>
   )
 }

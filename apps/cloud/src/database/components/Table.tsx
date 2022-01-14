@@ -9,7 +9,7 @@ import {
   useAsyncDebounce
 } from 'react-table'
 import { deDupe } from '../../utils'
-import { TableSearch } from '../../components/TableSearch'
+import { TableSearch } from '../../components/Table/TableSearch'
 
 interface DatabaseItem {
   id: string

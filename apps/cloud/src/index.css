@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.circle-btn {
+  @apply w-8 h-8 bg-gray-700 flex items-center justify-center rounded-full text-sm text-white hover:bg-gray-600;
+}
+
+.circle-btn.small {
+  @apply w-6 h-6;
+}
+
+.circle-btn:disabled {
+  @apply text-gray-500;
+}
