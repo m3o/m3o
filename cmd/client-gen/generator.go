@@ -17,6 +17,11 @@ import (
 	"github.com/stoewer/go-strcase"
 )
 
+const (
+	FILE_EXECUTE_PERMISSION   = os.FileMode(int(0664))
+	FOLDER_EXECUTE_PERMISSION = os.FileMode(int(0775))
+)
+
 type service struct {
 	Spec *openapi3.Swagger
 	Name string
@@ -289,10 +294,12 @@ func detectType(currentType string, properties, schemas map[string]*openapi3.Sch
 	return "", false
 }
 
-// detectType detects the type of a field directly from the proto file
-// for the specified service and message
-func detectType2(service, message, field string) string {
+// detectType detects the type of a field directly from proto file
+// for the specified service, message and field
+func detectType2(service, message, field string) []string {
 	// fmt.Printf("service: %v | message: %v | field: %v\n", service, message, field)
+
+	res := []string{}
 
 	workDir, _ := os.Getwd()
 	filePath := filepath.Join(workDir, service, "proto", service+".proto")
@@ -307,30 +314,45 @@ func detectType2(service, message, field string) string {
 	fdesc, err := p.ParseFiles(filePath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to parse file %v: err %v\n", filePath, err)
-		return ""
+		return res
 	}
 
 	// check if the message exist
 	msgDesc := fdesc[0].FindMessage(service + "." + message)
 	if msgDesc == nil {
 		fmt.Fprintf(os.Stderr, "could not find Message %v in %v\n", message, filePath)
-		return ""
+		return res
 	}
 
 	// check if the field exist
 	fieldDesc := msgDesc.FindFieldByName(field)
 	if fieldDesc == nil {
 		fmt.Fprintf(os.Stderr, "could no find Field %v in Message %v\n", field, message)
-		return ""
+		return res
 	}
 
-	// check if the field type is a message type
-	desc := fieldDesc.GetMessageType()
-	if desc == nil {
-		return fieldDesc.GetType().String()
+	// check if the field is a map
+	if fieldDesc.IsMap() {
+		fields := fieldDesc.GetMessageType().GetFields()
+		key := fields[0].GetType().String()
+		key = strings.Split(key, "_")[1]
+		value := fields[1].GetType().String()
+		value = strings.Split(value, "_")[1]
+
+		return []string{key, value}
+
 	}
 
-	return desc.GetName()
+	switch t := fieldDesc.GetType(); t.String() {
+	case "TYPE_ENUM":
+		eDesc := fieldDesc.GetEnumType()
+		return []string{eDesc.GetName()}
+	case "TYPE_MESSAGE":
+		mDesc := fieldDesc.GetMessageType()
+		return []string{mDesc.GetName()}
+	default:
+		return []string{}
+	}
 }
 
 // func schemaToMethods(title string, spec *openapi3.RequestBodyRef) string {

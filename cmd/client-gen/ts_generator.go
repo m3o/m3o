@@ -39,13 +39,13 @@ func (n *tsG) ServiceClient(serviceName, tsPath string, service service) {
 		os.Exit(1)
 	}
 
-	err = os.MkdirAll(filepath.Join(tsPath, "src", serviceName), 0777)
+	err = os.MkdirAll(filepath.Join(tsPath, "src", serviceName), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	f, err := os.OpenFile(filepath.Join(tsPath, "src", serviceName, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(filepath.Join(tsPath, "src", serviceName, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -86,8 +86,8 @@ func (n *tsG) TopReadme(serviceName, examplesPath string, service service) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	os.MkdirAll(filepath.Join(examplesPath, "js", serviceName), 0744)
-	f, err := os.OpenFile(filepath.Join(examplesPath, "js", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	os.MkdirAll(filepath.Join(examplesPath, "js", serviceName), FOLDER_EXECUTE_PERMISSION)
+	f, err := os.OpenFile(filepath.Join(examplesPath, "js", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -116,13 +116,13 @@ func (n *tsG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 		"funcName": strcase.UpperCamelCase(title),
 	})
 
-	err = os.MkdirAll(filepath.Join(examplesPath, "js", serviceName, endpoint), 0777)
+	err = os.MkdirAll(filepath.Join(examplesPath, "js", serviceName, endpoint), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	tsExampleFile := filepath.Join(examplesPath, "js", serviceName, endpoint, title+".js")
-	f, err := os.OpenFile(tsExampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(tsExampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -136,7 +136,7 @@ func (n *tsG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	}
 
 	if example.RunCheck && example.Idempotent {
-		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+strcase.UpperCamelCase(title)), []byte{}, 0744)
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "js", serviceName, endpoint, ".run"+strcase.UpperCamelCase(title)), []byte{}, FILE_EXECUTE_PERMISSION)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
 			os.Exit(1)
@@ -159,7 +159,7 @@ func (n *tsG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	})
 
 	tsReadmeAppend := filepath.Join(examplesPath, "js", serviceName, "README.md")
-	f, err = os.OpenFile(tsReadmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(tsReadmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -176,14 +176,14 @@ func (n *tsG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	cmd.Dir = filepath.Join(examplesPath, "js", serviceName, endpoint)
 	outp, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with '%v' example '%v': %v", serviceName, endpoint, string(outp)))
+		fmt.Printf("Problem with '%v' example '%v': %v\n", serviceName, endpoint, string(outp))
 		os.Exit(1)
 	}
 }
 
 func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
 	// add file list to gitignore
-	f, err := os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(filepath.Join(tsPath, ".gitignore"), os.O_APPEND|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	//for _, sname := range tsFileList {
 	//	_, err := f.Write([]byte(sname + "\n"))
 	//	if err != nil {
@@ -207,7 +207,7 @@ func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
 		os.Exit(1)
 	}
 
-	f, err = os.OpenFile(filepath.Join(tsPath, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(filepath.Join(tsPath, "index.ts"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -222,7 +222,7 @@ func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
 	cmd.Dir = filepath.Join(tsPath)
 	outp, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
+		fmt.Printf("Problem with prettifying clients index.ts '%v\n", string(outp))
 		os.Exit(1)
 	}
 	tsFiles := filepath.Join(workDir, "cmd", "client-gen", "ts")
@@ -234,7 +234,7 @@ func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
 
 	outp, err = cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
+		fmt.Printf("Problem with prettifying clients index.ts '%v\n", string(outp))
 		os.Exit(1)
 	}
 }
@@ -424,7 +424,7 @@ func (n *tsG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 
 func publishToNpm(tsPath string, tsFileList []string) {
 	// login to NPM
-	f, err := os.OpenFile(filepath.Join(tsPath, ".npmrc"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0600)
+	f, err := os.OpenFile(filepath.Join(tsPath, ".npmrc"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open npmrc", err)
 		os.Exit(1)
@@ -533,7 +533,7 @@ func publishToNpm(tsPath string, tsFileList []string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	f, err = os.OpenFile(filepath.Join(tsPath, "package.json"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(filepath.Join(tsPath, "package.json"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open package.json", err)
 		os.Exit(1)

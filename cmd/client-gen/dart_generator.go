@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 	"text/template"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/stoewer/go-strcase"
 )
 
 type dartG struct {
@@ -34,14 +32,14 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	err = os.MkdirAll(filepath.Join(dartPath, serviceName), 0777)
+	err = os.MkdirAll(filepath.Join(dartPath, serviceName), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	clientFile := filepath.Join(dartPath, serviceName, fmt.Sprint(serviceName, ".dart"))
-	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -56,155 +54,110 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 
 func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
 
-	var recurse func(props map[string]*openapi3.SchemaRef, level int) string
+	var normalType = `{{ .type }}? {{ .parameter }}`
+	var arrayType = `List<{{ .type }}>? {{ .parameter }}`
+	var mapType = `Map<{{ .type1 }}, {{ .type2 }}>? {{ .parameter }}`
+	var anyType = `dynamic {{ .parameter }}`
+	var stringType = "String"
+	var int64Type = "int"
+	var doubleType = "double"
+	var boolType = "bool"
 
-	var spec *openapi3.SchemaRef = schemas[typeName]
+	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
+		t, err := template.New(tmpName).Parse(temp)
+		if err != nil {
+			fmt.Fprint(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
+			return ""
+		}
+		var tb bytes.Buffer
+		err = t.Execute(&tb, payload)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", temp, payload, err)
+			return ""
+		}
 
-	fieldUpperCase := false
-	fieldSeparator := " "
-	arrayPrefix := "List<"
-	arrayPostfix := ">"
-	//objectOpen := "{"
-	//	objectClose := "}"
-	fieldDelimiter := ";"
-	stringType := "String"
-	numberType := "int"
-	boolType := "bool"
-	int32Type := "int"
-	int64Type := "int"
-	floatType := "double"
-	doubleType := "double"
-	mapType := "Map<String,%v>"
-	anyType := "dynamic"
-	typeSuffix := "?"
-	varDecl := "final"
+		return tb.String()
+	}
 
-	valueToType := func(v *openapi3.SchemaRef) string {
-		switch v.Value.Type {
-		case "string":
+	typesMapper := func(t string) string {
+		switch t {
+		case "STRING":
 			return stringType
-		case "boolean":
+		case "INT32", "INT64":
+			return int64Type
+		case "DOUBLE", "FLOAT":
+			return doubleType
+		case "BOOL":
 			return boolType
-		case "number":
-			switch v.Value.Format {
-			case "int32":
-				return int32Type
-			case "int64":
-				return int64Type
-			case "float":
-				return floatType
-			case "double":
-				return doubleType
-			}
 		default:
-			return "unrecognized: " + v.Value.Type
+			return t
 		}
-		return ""
 	}
 
-	recurse = func(props map[string]*openapi3.SchemaRef, level int) string {
-		ret := ""
+	output := []string{}
+	protoMessage := schemas[typeName]
 
-		i := 0
-		var keys []string
-		for k := range props {
-			keys = append(keys, k)
+	for p, meta := range protoMessage.Value.Properties {
+		switch meta.Value.Type {
+		case "string":
+			payload := map[string]interface{}{
+				"type":      stringType,
+				"parameter": p,
+			}
+			o := runTemplate("normal", normalType, payload)
+			output = append(output, o)
+		case "boolean":
+			payload := map[string]interface{}{
+				"type":      boolType,
+				"parameter": p,
+			}
+			o := runTemplate("normal", normalType, payload)
+			output = append(output, o)
+		case "number":
+			switch meta.Value.Format {
+			case "int32", "int64":
+				payload := map[string]interface{}{
+					"type":      int64Type,
+					"parameter": p,
+				}
+				o := runTemplate("normal", normalType, payload)
+				output = append(output, o)
+			case "float", "double":
+				payload := map[string]interface{}{
+					"type":      doubleType,
+					"parameter": p,
+				}
+				o := runTemplate("normal", normalType, payload)
+				output = append(output, o)
+			}
+		case "array":
+			types := detectType2(serviceName, typeName, p)
+			payload := map[string]interface{}{
+				"type":      typesMapper(types[0]),
+				"parameter": p,
+			}
+			o := runTemplate("array", arrayType, payload)
+			output = append(output, o)
+		case "object":
+			types := detectType2(serviceName, typeName, p)
+			payload := map[string]interface{}{
+				"type1":     typesMapper(types[0]),
+				"type2":     typesMapper(types[1]),
+				"parameter": p,
+			}
+			o := runTemplate("map", mapType, payload)
+			output = append(output, o)
+		default:
+			payload := map[string]interface{}{
+				"parameter": p,
+			}
+			o := runTemplate("any", anyType, payload)
+			output = append(output, o)
 		}
-		sort.Strings(keys)
-		for _, k := range keys {
-			v := props[k]
-			ret += strings.Repeat("  ", level)
-			if v.Value.Description != "" {
-				for _, commentLine := range strings.Split(v.Value.Description, "\n") {
-					ret += "/// " + strings.TrimSpace(commentLine) + "\n" + strings.Repeat("  ", level)
-				}
 
-			}
-
-			if fieldUpperCase {
-				k = strcase.UpperCamelCase(k)
-			}
-
-			var typ string
-			// @todo clean up this piece of code by
-			// separating out type string marshaling and not
-			// repeating code
-			switch v.Value.Type {
-			case "object":
-				typ := detectType2(serviceName, typeName, k)
-				if true {
-					ret += varDecl + fieldSeparator + typ + typeSuffix + fieldSeparator + k + fieldDelimiter
-				} else {
-					// type is a dynamic map
-					// if additional properties is not present, it's an any type,
-					// like the proto struct type
-					if v.Value.AdditionalProperties != nil {
-						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + typeSuffix + fieldSeparator + k + fieldDelimiter
-					} else {
-						ret += varDecl + fieldSeparator + fmt.Sprintf(mapType, anyType) + typeSuffix + fieldSeparator + k + fieldDelimiter
-					}
-				}
-			case "array":
-				typ := detectType2(serviceName, typeName, k)
-				if true {
-					ret += varDecl + fieldSeparator + arrayPrefix + strings.Title(typ) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-				} else {
-					switch v.Value.Items.Value.Type {
-					case "string":
-						ret += varDecl + fieldSeparator + arrayPrefix + stringType + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-					case "number":
-						typ := numberType
-						switch v.Value.Format {
-						case "int32":
-							typ = int32Type
-						case "int64":
-							typ = int64Type
-						case "float":
-							typ = floatType
-						case "double":
-							typ = doubleType
-						}
-						ret += varDecl + fieldSeparator + arrayPrefix + typ + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-					case "boolean":
-						ret += varDecl + fieldSeparator + arrayPrefix + boolType + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-					case "object":
-						// type is a dynamic map
-						// if additional properties is not present, it's an any type,
-						// like the proto struct type
-						if v.Value.AdditionalProperties != nil {
-							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-						} else {
-							ret += varDecl + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, anyType) + arrayPostfix + typeSuffix + fieldSeparator + k + fieldDelimiter
-						}
-					}
-				}
-			case "string":
-				ret += varDecl + fieldSeparator + stringType + typeSuffix + fieldSeparator + k + fieldDelimiter
-			case "number":
-				typ = numberType
-				switch v.Value.Format {
-				case "int32":
-					typ = int32Type
-				case "int64":
-					typ = int64Type
-				case "float":
-					typ = floatType
-				case "double":
-					typ = doubleType
-				}
-				ret += varDecl + fieldSeparator + typ + typeSuffix + fieldSeparator + k + fieldDelimiter
-			case "boolean":
-				ret += varDecl + fieldSeparator + boolType + typeSuffix + fieldSeparator + k + fieldDelimiter
-			}
-			if i < len(props) {
-				ret += "\n"
-			}
-			i++
-
-		}
-		return ret
 	}
-	return recurse(spec.Value.Properties, 1)
+
+	return strings.Join(output, ", ")
 }
 
 func (d *dartG) IndexFile(dartPath string, services []service) {
@@ -222,7 +175,7 @@ func (d *dartG) IndexFile(dartPath string, services []service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	f, err := os.OpenFile(filepath.Join(dartPath, "m3o.dart"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(filepath.Join(dartPath, "m3o.dart"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open collector file", err)
 		os.Exit(1)
@@ -234,32 +187,3 @@ func (d *dartG) IndexFile(dartPath string, services []service) {
 		os.Exit(1)
 	}
 }
-
-// output := []string{}
-
-// 	for p, meta := range schema.Value.Properties {
-// 		output = append(output, p)
-// 		switch meta.Value.Type {
-// 		case "string":
-// 			output = append(output, "String")
-// 		case "boolean":
-// 			output = append(output, "bool")
-// 		case "number":
-// 			switch meta.Value.Format {
-// 			case "int32":
-// 				output = append(output, "int")
-// 			case "int64":
-// 				output = append(output, "int")
-// 			case "float":
-// 				output = append(output, "double")
-// 			case "double":
-// 				output = append(output, "double")
-// 			}
-// 		case "array":
-// 			output = append(output, "List")
-// 		default:
-// 			return "unrecognized: " + meta.Value.Type
-// 		}
-// 	}
-
-// 	return strings.Join(output, " | ")

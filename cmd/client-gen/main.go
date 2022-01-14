@@ -65,25 +65,25 @@ func main() {
 	}
 	workDir, _ := os.Getwd()
 	tsPath := filepath.Join(workDir, "clients", "ts")
-	err = os.MkdirAll(tsPath, 0777)
+	err = os.MkdirAll(tsPath, FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	goPath := filepath.Join(workDir, "clients", "go")
-	err = os.MkdirAll(goPath, 0777)
+	err = os.MkdirAll(goPath, FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	dartPath := filepath.Join(workDir, "clients", "dart")
-	err = os.MkdirAll(dartPath, 0777)
+	err = os.MkdirAll(dartPath, FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	examplesPath := filepath.Join(workDir, "examples")
-	err = os.MkdirAll(examplesPath, 0777)
+	err = os.MkdirAll(examplesPath, FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

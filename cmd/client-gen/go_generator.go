@@ -35,14 +35,14 @@ func (g *goG) ServiceClient(serviceName, goPath string, service service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	err = os.MkdirAll(filepath.Join(goPath, serviceName), 0777)
+	err = os.MkdirAll(filepath.Join(goPath, serviceName), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	clientFile := filepath.Join(goPath, serviceName, fmt.Sprint(serviceName, ".go"))
-	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -74,8 +74,8 @@ func (g *goG) TopReadme(serviceName, examplesPath string, service service) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	os.MkdirAll(filepath.Join(examplesPath, "go", serviceName), 0744)
-	f, err := os.OpenFile(filepath.Join(examplesPath, "go", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	os.MkdirAll(filepath.Join(examplesPath, "go", serviceName), FOLDER_EXECUTE_PERMISSION)
+	f, err := os.OpenFile(filepath.Join(examplesPath, "go", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -108,13 +108,13 @@ func (g *goG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	}
 
 	// create go examples directory
-	err = os.MkdirAll(filepath.Join(examplesPath, "go", serviceName, endpoint, title), 0777)
+	err = os.MkdirAll(filepath.Join(examplesPath, "go", serviceName, endpoint, title), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 	exampleFile := filepath.Join(examplesPath, "go", serviceName, endpoint, title, "main.go")
-	f, err := os.OpenFile(exampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(exampleFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -128,7 +128,7 @@ func (g *goG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	}
 
 	if example.RunCheck && example.Idempotent {
-		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte{}, 0744)
+		err = ioutil.WriteFile(filepath.Join(examplesPath, "go", serviceName, endpoint, title, ".run"), []byte{}, FILE_EXECUTE_PERMISSION)
 		if err != nil {
 			fmt.Println("Failed to write run file", err)
 			os.Exit(1)
@@ -155,7 +155,7 @@ func (g *goG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title st
 	}
 
 	readmeAppend := filepath.Join(examplesPath, "go", serviceName, "README.md")
-	f, err = os.OpenFile(readmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err = os.OpenFile(readmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
@@ -184,7 +184,7 @@ func (g *goG) IndexFile(goPath string, services []service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	f, err := os.OpenFile(filepath.Join(goPath, "m3o.go"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0744)
+	f, err := os.OpenFile(filepath.Join(goPath, "m3o.go"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
 		os.Exit(1)
