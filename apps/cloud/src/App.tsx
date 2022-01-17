@@ -6,7 +6,9 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { LandingScreen } from './screens/LandingScreen'
 import { TableScreen } from './database/screens/TableScreen'
 import { UsersScreen } from './users/screens/UsersScreen'
+import { UserScreen } from './users/screens/UserScreen'
 import { DatabaseLayout } from './database/components/DatabaseLayout'
+import { UsersStateProvider } from './users/components/UsersStateProvider'
 import { Layout } from './components/Layout'
 import { returnLoginUrl } from './auth'
 
@@ -31,14 +33,17 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="min-h-screen bg-gray-900">
+        <div className="min-h-screen bg-zinc-900">
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<LandingScreen />} />
               <Route path="database" element={<DatabaseLayout />}>
                 <Route path=":tableName" element={<TableScreen />} />
               </Route>
-              <Route path="users" element={<UsersScreen />} />
+              <Route path="users" element={<UsersStateProvider />}>
+                <Route index element={<UsersScreen />} />
+                <Route path=":id" element={<UserScreen />} />
+              </Route>
             </Route>
           </Routes>
         </div>

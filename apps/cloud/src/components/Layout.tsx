@@ -5,7 +5,7 @@ import { AppLinks } from './AppLinks'
 export const Layout: FC = () => {
   return (
     <div className="pl-52">
-      <aside className="bg-gray-900 h-screen fixed top-0 left-0 w-52 border-r border-gray-700">
+      <aside className="bg-zinc-900 h-screen fixed top-0 left-0 w-52 border-r border-gray-700">
         <div className="p-6">
           <Link
             to="/"

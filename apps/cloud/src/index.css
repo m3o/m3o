@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .circle-btn {
-  @apply w-8 h-8 bg-gray-700 flex items-center justify-center rounded-full text-sm text-white hover:bg-gray-600;
+  @apply w-8 h-8 bg-zinc-700 flex items-center justify-center rounded-full text-sm text-white hover:bg-zinc-600;
 }
 
 .circle-btn.small {
@@ -11,5 +11,5 @@
 }
 
 .circle-btn:disabled {
-  @apply text-gray-500;
+  @apply text-zinc-500;
 }

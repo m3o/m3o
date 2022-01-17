@@ -1,11 +1,12 @@
 import type { FC, ChangeEventHandler } from 'react'
 
 interface Props {
+  checked: boolean
   id: string
   onChange: ChangeEventHandler
 }
 
-export const Checkbox: FC<Props> = ({ id, onChange }) => {
+export const Checkbox: FC<Props> = ({ id, onChange, checked }) => {
   return (
     <div className="form-check">
       <input
@@ -14,6 +15,7 @@ export const Checkbox: FC<Props> = ({ id, onChange }) => {
         value=""
         id={id}
         onChange={onChange}
+        checked={checked}
       />
       <label className="form-check-label inline-block " htmlFor={id} />
     </div>

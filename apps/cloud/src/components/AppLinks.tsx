@@ -29,7 +29,7 @@ function CustomLink({ children, to, ...props }: LinkProps) {
   const match = location.pathname.includes(to as string)
 
   const classes = classnames('h-12 flex items-center rounded-md text-sm p-4', {
-    'border-indigo-600 bg-gray-800 text-white ': match,
+    'border-indigo-600 bg-zinc-800 text-indigo-400': match,
     'border-gray-700 text-gray-400': !match
   })
 

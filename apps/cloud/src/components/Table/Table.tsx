@@ -1,6 +1,6 @@
 import type { Column, CellProps } from 'react-table'
 import type { ChangeEvent } from 'react'
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo } from 'react'
 import {
   useTable,
   useFlexLayout,
@@ -20,33 +20,22 @@ interface ExpectedObject extends Record<string, unknown> {
 interface Props<T extends ExpectedObject> {
   columns: Column<T>[]
   data: T[]
-  onDeleteMultiple: (items: T[]) => void
+  onDeleteMultiple: VoidFunction
+  selectedItems: T[]
+  setSelectedItems: (item: T) => void
+  onSetPageSize?: (pageSize: number) => void
+  statePageSize?: number
 }
 
 export function Table<T extends ExpectedObject>({
   columns,
   data,
-  onDeleteMultiple
+  onDeleteMultiple,
+  selectedItems,
+  setSelectedItems,
+  onSetPageSize,
+  statePageSize
 }: Props<T>) {
-  const [checkedItems, setCheckedItems] = useState<T[]>([])
-
-  const onRowCheck = useCallback((item: T) => {
-    setCheckedItems((prevItems) => {
-      const jsonItem = JSON.stringify(item)
-      const found = prevItems.some(
-        (prevItem) => JSON.stringify(prevItem) === jsonItem
-      )
-
-      if (found) {
-        return prevItems.filter(
-          (prevItem) => JSON.stringify(prevItem) !== jsonItem
-        )
-      }
-
-      return [...prevItems, item]
-    })
-  }, [])
-
   const defaultColumn = useMemo(
     () => ({
       minWidth: 30,
@@ -71,18 +60,26 @@ export function Table<T extends ExpectedObject>({
         width: 50,
         Cell: ({ row }: CellProps<T>) => (
           <Checkbox
+            checked={selectedItems.some(
+              (item) => JSON.stringify(item) === JSON.stringify(row.original)
+            )}
             id={row.original.id!}
-            onChange={() => onRowCheck(row.original)}
+            onChange={() => setSelectedItems(row.original)}
           />
         )
       },
       ...columns
     ],
-    [columns, onRowCheck]
+    [columns, setSelectedItems, selectedItems]
   )
 
   const tableInstance = useTable(
-    { columns: columnsWithCheckboxes, data, defaultColumn },
+    {
+      columns: columnsWithCheckboxes,
+      data,
+      defaultColumn,
+      initialState: { pageSize: statePageSize || 10 }
+    },
     useFlexLayout,
     useGlobalFilter,
     usePagination
@@ -117,16 +114,23 @@ export function Table<T extends ExpectedObject>({
   return (
     <div className="text-white">
       <ActionsBar
-        hasCheckedItems={!!checkedItems.length}
+        hasCheckedItems={!!selectedItems.length}
         right={<TableSearch tableName="users" onChange={onSearchChange} />}
-        onDeleteClick={() => onDeleteMultiple(checkedItems)}
+        onDeleteClick={onDeleteMultiple}
+        pageSize={pageSize}
         onPageSizeChange={(event) => {
+          const newPageSize = Number(event.target.value)
+
           setPageSize(Number(event.target.value))
+
+          if (onSetPageSize) {
+            onSetPageSize(newPageSize)
+          }
         }}
       />
       <div>
         <div {...getTableProps()}>
-          <div className="bg-gray-800 font-medium text-sm text-white">
+          <div className="bg-zinc-800 font-medium text-sm text-white">
             {headerGroups.map((headerGroup) => (
               <div {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
@@ -144,15 +148,12 @@ export function Table<T extends ExpectedObject>({
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <div
-                  {...row.getRowProps()}
-                  className="cursor-pointer hover:bg-gray-800 group"
-                >
+                <div {...row.getRowProps()} className="hover:bg-zinc-800 group">
                   {row.cells.map((cell) => {
                     return (
                       <div
                         {...cell.getCellProps()}
-                        className="border-b border-gray-700 p-2 text-sm overflow-hidden overflow-ellipsis whitespace-nowrap"
+                        className="border-b border-zinc-700 p-2 text-sm overflow-hidden overflow-ellipsis whitespace-nowrap"
                       >
                         {cell.render('Cell')}
                       </div>
