@@ -85,8 +85,9 @@ void main() async {
       address: liveAddress,
     ),
   );
-  {{ $reqType := requestType .endpoint }}
-  {{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
+  {{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}
+  ForecastRequest req1 = ForecastRequest(days: 6, location: 'london');
+  rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
 	{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
 })
 fmt.Println(rsp, err){{ end }}
