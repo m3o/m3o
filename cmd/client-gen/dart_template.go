@@ -73,6 +73,48 @@ class {{ title $typeName }} with _${{ title $typeName }} {
 {{end}}
 `
 
+const dartExampleTemplate = `{{ $service := .service }}import 'dart:io';
+
+import 'package:m3o/m3o.dart';
+
+void main() async {
+  final token = Platform.environment['M3O_API_TOKEN']!;
+  final ser = {{title $service.Name}}Service(
+    Options(
+      token: token,
+      address: liveAddress,
+    ),
+  );
+  {{ $reqType := requestType .endpoint }}
+  {{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
+	{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
+})
+fmt.Println(rsp, err){{ end }}
+{{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func main() {
+	{{ $service.Name }}Service := {{ $service.Name }}.New{{ title $service.Name }}Service(os.Getenv("M3O_API_TOKEN"))
+	{{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
+		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
+	})
+	fmt.Println(rsp, err){{ end -}}
+	{{ if isStream $service.Spec $service.Name $reqType }}stream, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
+		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for {
+			rsp, err := stream.Recv()
+			if err != nil {
+					fmt.Println(err)
+					return
+			}
+
+			fmt.Println(rsp)
+	}{{ end }}
+}`
+
 // {{ recursiveTypeDefinitionDart $schema }}
 // $typeName => {{ $typeName }}
 // $schema.Value.Description => {{ $schema.Value.Description }}

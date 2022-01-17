@@ -18,8 +18,8 @@ import (
 )
 
 const (
-	FILE_EXECUTE_PERMISSION   = os.FileMode(int(0664))
-	FOLDER_EXECUTE_PERMISSION = os.FileMode(int(0775))
+	FILE_EXECUTE_PERMISSION   = 0664
+	FOLDER_EXECUTE_PERMISSION = 0775
 )
 
 type service struct {
@@ -30,12 +30,13 @@ type service struct {
 }
 
 type example struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Request     map[string]interface{}
-	Response    map[string]interface{}
-	RunCheck    bool `json:"run_check"`
-	Idempotent  bool `json:"idempotent"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	Request      map[string]interface{}
+	Response     map[string]interface{}
+	RunCheck     bool   `json:"run_check"`
+	Idempotent   bool   `json:"idempotent"`
+	ShellRequest string `json:"shell_request"`
 }
 
 type generator interface {
@@ -44,7 +45,6 @@ type generator interface {
 	ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, service service, example example)
 	IndexFile(goPath string, services []service)
 	schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string
-	// schemaToType(schema *openapi3.SchemaRef) string
 }
 
 func funcMap() map[string]interface{} {
@@ -66,6 +66,9 @@ func funcMap() map[string]interface{} {
 		return false
 	}
 	return map[string]interface{}{
+		"isCustomShell": func(ex example) bool {
+			return len(ex.ShellRequest) > 0
+		},
 		"recursiveTypeDefinitionGo": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
 			gog := &goG{}
 			return gog.schemaToType(serviceName, typeName, schemas)
@@ -146,6 +149,9 @@ func funcMap() map[string]interface{} {
 		"tsExampleRequest": func(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exampleJSON map[string]interface{}) string {
 			bs, _ := json.MarshalIndent(exampleJSON, "", "  ")
 			return string(bs)
+		},
+		"dartExampleRequest": func(endpoint string, exampleJSON map[string]interface{}) string {
+			return ""
 		},
 	}
 }
@@ -294,8 +300,9 @@ func detectType(currentType string, properties, schemas map[string]*openapi3.Sch
 	return "", false
 }
 
-// detectType detects the type of a field directly from proto file
-// for the specified service, message and field
+// detectType detects the type of elements in an array, types of key/value elements in a map
+// also the type of enum directly from proto file for the specified
+// service, message and field name
 func detectType2(service, message, field string) []string {
 	// fmt.Printf("service: %v | message: %v | field: %v\n", service, message, field)
 
@@ -327,7 +334,7 @@ func detectType2(service, message, field string) []string {
 	// check if the field exist
 	fieldDesc := msgDesc.FindFieldByName(field)
 	if fieldDesc == nil {
-		fmt.Fprintf(os.Stderr, "could no find Field %v in Message %v\n", field, message)
+		fmt.Fprintf(os.Stderr, "could not find Field %v in Message %v\n", field, message)
 		return res
 	}
 
@@ -338,9 +345,7 @@ func detectType2(service, message, field string) []string {
 		key = strings.Split(key, "_")[1]
 		value := fields[1].GetType().String()
 		value = strings.Split(value, "_")[1]
-
 		return []string{key, value}
-
 	}
 
 	switch t := fieldDesc.GetType(); t.String() {
@@ -351,7 +356,9 @@ func detectType2(service, message, field string) []string {
 		mDesc := fieldDesc.GetMessageType()
 		return []string{mDesc.GetName()}
 	default:
-		return []string{}
+		// In case the type is primitive type
+		t := fieldDesc.GetType().String()
+		return []string{strings.Split(t, "_")[1]}
 	}
 }
 

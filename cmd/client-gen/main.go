@@ -55,7 +55,6 @@ func curlExample(examplesPath, serviceName, endpoint, title string, service serv
 }
 
 func main() {
-
 	serviceFlag := flag.String("service", "", "the service dir to process")
 	flag.Parse()
 

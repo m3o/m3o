@@ -66,7 +66,7 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
 		t, err := template.New(tmpName).Parse(temp)
 		if err != nil {
-			fmt.Fprint(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
+			fmt.Fprintf(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
 			return ""
 		}
 		var tb bytes.Buffer
@@ -140,13 +140,24 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 			output = append(output, o)
 		case "object":
 			types := detectType2(serviceName, typeName, p)
-			payload := map[string]interface{}{
-				"type1":     typesMapper(types[0]),
-				"type2":     typesMapper(types[1]),
-				"parameter": p,
+			if len(types) == 1 {
+				// a Message Type
+				payload := map[string]interface{}{
+					"type":      types[0],
+					"parameter": p,
+				}
+				o := runTemplate("normal", normalType, payload)
+				output = append(output, o)
+			} else {
+				// a Map object
+				payload := map[string]interface{}{
+					"type1":     typesMapper(types[0]),
+					"type2":     typesMapper(types[1]),
+					"parameter": p,
+				}
+				o := runTemplate("map", mapType, payload)
+				output = append(output, o)
 			}
-			o := runTemplate("map", mapType, payload)
-			output = append(output, o)
 		default:
 			payload := map[string]interface{}{
 				"parameter": p,
@@ -186,4 +197,8 @@ func (d *dartG) IndexFile(dartPath string, services []service) {
 		fmt.Println("Failed to append to collector file", err)
 		os.Exit(1)
 	}
+}
+
+func schemaToDartExample() {
+
 }
