@@ -58,7 +58,7 @@
     },
     "schemas": {
       "OffsetRequest": {
-        "description": "Purchase 1 tonne of carbon offsets in a single request",
+        "description": "Purchase 1KG (0.001 tonne) of carbon offsets in a single request",
         "title": "OffsetRequest",
         "type": "object"
       },

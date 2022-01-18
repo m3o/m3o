@@ -41,6 +41,16 @@
         },
         "description": "CacheIncrementRequest"
       },
+      "CacheListKeysRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListKeysRequest"
+            }
+          }
+        },
+        "description": "CacheListKeysRequest"
+      },
       "CacheSetRequest": {
         "content": {
           "application/json": {
@@ -92,6 +102,16 @@
           }
         },
         "description": "CacheIncrementResponse"
+      },
+      "CacheListKeysResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListKeysResponse"
+            }
+          }
+        },
+        "description": "CacheListKeysResponse"
       },
       "CacheSetResponse": {
         "content": {
@@ -248,6 +268,23 @@
           }
         },
         "title": "IncrementResponse",
+        "type": "object"
+      },
+      "ListKeysRequest": {
+        "description": "List all the available keys",
+        "title": "ListKeysRequest",
+        "type": "object"
+      },
+      "ListKeysResponse": {
+        "properties": {
+          "keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListKeysResponse",
         "type": "object"
       },
       "SetRequest": {
@@ -428,6 +465,38 @@
           }
         ],
         "summary": "Cache.Increment(IncrementRequest)"
+      }
+    },
+    "/cache/Cache/ListKeys": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CacheListKeysRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CacheListKeysResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Cache.ListKeys(ListKeysRequest)"
       }
     },
     "/cache/Cache/Set": {
