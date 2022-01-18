@@ -86,34 +86,10 @@ void main() async {
     ),
   );
   {{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}
-  ForecastRequest req1 = ForecastRequest(days: 6, location: 'london');
-  rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
-	{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
-})
-fmt.Println(rsp, err){{ end }}
-{{ if endpointComment .endpoint $service.Spec.Components.Schemas }}{{ endpointComment .endpoint $service.Spec.Components.Schemas }}{{ end }}func main() {
-	{{ $service.Name }}Service := {{ $service.Name }}.New{{ title $service.Name }}Service(os.Getenv("M3O_API_TOKEN"))
-	{{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}rsp, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
-		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
-	})
-	fmt.Println(rsp, err){{ end -}}
-	{{ if isStream $service.Spec $service.Name $reqType }}stream, err := {{ $service.Name }}Service.{{ title .endpoint }}(&{{ $service.Name }}.{{ title .endpoint }}Request{
-		{{ goExampleRequest $service.Name .endpoint $service.Spec.Components.Schemas .example.Request }}
-	})
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+  final payload = <String, dynamic>{{ dartExampleRequest .example.Request }};
 
-	for {
-			rsp, err := stream.Recv()
-			if err != nil {
-					fmt.Println(err)
-					return
-			}
-
-			fmt.Println(rsp)
-	}{{ end }}
+  {{ title .endpoint }}Request req = {{ title .endpoint }}Request.fromJson(payload);
+  {{ end }}
 }`
 
 // {{ recursiveTypeDefinitionDart $schema }}

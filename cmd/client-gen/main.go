@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 
@@ -153,15 +154,16 @@ func main() {
 				if len(service.Spec.Paths) != len(m) {
 					fmt.Printf("Service has %v endpoints, but only %v examples\n", len(service.Spec.Paths), len(m))
 				}
-				// for endpoint, examples := range m {
-				// 	for _, example := range examples {
-				// 		title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
+				for endpoint, examples := range m {
+					for _, example := range examples {
+						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
 
-				// 		goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-				// 		// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-				// 		// curlExample(examplesPath, serviceName, endpoint, title, service, example)
-				// 	}
-				// }
+						dartG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						// goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						// curlExample(examplesPath, serviceName, endpoint, title, service, example)
+					}
+				}
 			} else {
 				fmt.Println(err)
 			}

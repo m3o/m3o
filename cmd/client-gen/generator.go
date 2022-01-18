@@ -150,8 +150,8 @@ func funcMap() map[string]interface{} {
 			bs, _ := json.MarshalIndent(exampleJSON, "", "  ")
 			return string(bs)
 		},
-		"dartExampleRequest": func(endpoint string, exampleJSON map[string]interface{}) string {
-			return ""
+		"dartExampleRequest": func(exampleJSON map[string]interface{}) string {
+			return schemaToDartExample(exampleJSON)
 		},
 	}
 }
