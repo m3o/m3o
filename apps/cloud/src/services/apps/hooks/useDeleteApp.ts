@@ -15,9 +15,10 @@ export function useDeleteApp(): UseDeleteApp {
   const app = useAppsInstance()
 
   const { mutate, isLoading } = useMutation(
-    (name: string) => app.update({ name }),
+    (name: string) => app.delete({ name }),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        console.log(response)
         queryClient.invalidateQueries('apps')
         showToast({
           type: 'Success',

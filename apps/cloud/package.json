@@ -14,6 +14,7 @@
     "assert": "^2.0.0",
     "classnames": "^2.3.1",
     "crypto-browserify": "^3.12.0",
+    "cypress": "^9.3.1",
     "date-fns": "^2.28.0",
     "fs": "^0.0.1-security",
     "https-browserify": "^1.0.0",
@@ -40,7 +41,8 @@
     "start": "PORT=3001 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
+    "eject": "react-app-rewired eject",
+    "e2e:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [

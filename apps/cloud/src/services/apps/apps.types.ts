@@ -1,1 +1,1 @@
-export type AppStatus = 'Running' | 'Deploying' | 'DeploymentError'
+export type AppStatus = 'Running' | 'Deploying' | 'DeploymentError' | 'Deleting'

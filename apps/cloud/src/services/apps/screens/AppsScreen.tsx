@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useState, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { PlusIcon } from '@heroicons/react/outline'
 import { useListApps } from '../hooks/useListApps'
@@ -9,24 +9,21 @@ import { App } from '../components/App'
 import { AppMenu } from '../components/AppMenu'
 import { useUpdateApp } from '../hooks/useUpdateApp'
 import { useDeleteApp } from '../hooks/useDeleteApp'
+import { useOnlyOneOpenItem } from '../../../hooks/useOnlyOneOpenItem'
 
 export const AppsScreen: FC = () => {
-  const [appIdWithOpenMenu, setAppIdWithOpenMenu] = useState('')
+  const { toggleItem, isOpen } = useOnlyOneOpenItem()
   const { apps, isLoading } = useListApps()
 
   const closeOpenAppMenu = useCallback(() => {
-    setAppIdWithOpenMenu('')
-  }, [])
+    toggleItem('')
+  }, [toggleItem])
 
   const { deleteApp } = useDeleteApp()
 
   const { update } = useUpdateApp({
     onSuccess: closeOpenAppMenu
   })
-
-  const toggleMenu = useCallback((id: string) => {
-    setAppIdWithOpenMenu((prevId) => (prevId === id ? '' : id))
-  }, [])
 
   const handleDelete = useCallback(
     (name: string) => {
@@ -45,24 +42,19 @@ export const AppsScreen: FC = () => {
           {...app}
           key={app.id}
           headerRight={
-            <AppMenu
-              isOpen={app.id === appIdWithOpenMenu}
-              handleButtonClick={() => toggleMenu(app.id!)}
-              handleClose={closeOpenAppMenu}
-              handleUpdateClick={() => update(app.name!)}
-              handleDeleteClick={() => handleDelete(app.name!)}
-            />
+            app.status === 'Deleting' ? null : (
+              <AppMenu
+                isOpen={isOpen(app.id!)}
+                handleButtonClick={() => toggleItem(app.id!)}
+                handleClose={closeOpenAppMenu}
+                handleUpdateClick={() => update(app.name!)}
+                handleDeleteClick={() => handleDelete(app.name!)}
+              />
+            )
           }
         />
       )),
-    [
-      apps,
-      appIdWithOpenMenu,
-      toggleMenu,
-      update,
-      handleDelete,
-      closeOpenAppMenu
-    ]
+    [apps, update, handleDelete, closeOpenAppMenu, isOpen, toggleItem]
   )
 
   if (isLoading) {
@@ -72,7 +64,20 @@ export const AppsScreen: FC = () => {
   return (
     <section className="p-10">
       <header className="flex items-center justify-between">
-        <h1 className="font-bold text-4xl">Apps</h1>
+        <div>
+          <h1 className="font-bold text-4xl">Apps</h1>
+          <p className="mt-2 text-zinc-300">
+            For more information on how M3O apps work, please see{' '}
+            <a
+              href="https://m3o.com/app"
+              className="text-indigo-300"
+              target="_blank"
+              rel="noreferrer"
+            >
+              M3O.com.
+            </a>
+          </p>
+        </div>
         <Link className="btn flex items-center" to="/apps/add">
           <PlusIcon className="w-4 mr-2" />
           Add App

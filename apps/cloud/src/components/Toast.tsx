@@ -17,7 +17,7 @@ export const Toast: FC<Props> = ({ message, type, open }) => {
     }
   )
   return (
-    <div className={classes}>
+    <div className={classes} data-testid="toast">
       <span className="bg-green-400 block p-2 rounded-full text-black">
         <CheckIcon className="w-4" />
       </span>

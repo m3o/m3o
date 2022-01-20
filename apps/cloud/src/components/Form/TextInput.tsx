@@ -17,6 +17,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
         <input
           {...inputProps}
           ref={ref}
+          name={name}
           className="p-4 border border-zinc-600 rounded-md bg-transparent w-full text-sm"
         />
       </FormField>

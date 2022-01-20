@@ -8,9 +8,10 @@ interface Props {
 type DotColours = Record<AppStatus, string>
 
 const DOT_COLOURS: DotColours = {
+  Deleting: 'bg-yellow-600',
   Deploying: 'bg-yellow-600',
-  Running: 'bg-green-500',
-  DeploymentError: 'bg-red-600'
+  DeploymentError: 'bg-red-600',
+  Running: 'bg-green-500'
 }
 
 export const Status: FC<Props> = ({ status }) => {

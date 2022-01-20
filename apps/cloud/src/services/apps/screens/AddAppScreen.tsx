@@ -25,7 +25,7 @@ export const AddAppScreen: FC = () => {
       >
         <Controller
           control={control}
-          defaultValue="helloworld"
+          defaultValue=""
           name="name"
           rules={{ required: 'Please provide your apps name' }}
           render={({ field, fieldState }) => (
@@ -39,7 +39,7 @@ export const AddAppScreen: FC = () => {
         <Controller
           control={control}
           name="repo"
-          defaultValue="github.com/asim/helloworld"
+          defaultValue=""
           rules={{ required: 'Please provide a repo' }}
           render={({ field, fieldState }) => (
             <TextInput
@@ -52,7 +52,6 @@ export const AddAppScreen: FC = () => {
         <Controller
           control={control}
           name="port"
-          defaultValue={8080}
           rules={{ required: 'Please provide a port number' }}
           render={({ field, fieldState }) => (
             <TextInput
@@ -66,7 +65,6 @@ export const AddAppScreen: FC = () => {
         <Controller
           control={control}
           name="branch"
-          defaultValue="master"
           rules={{ required: 'Please provide a branch' }}
           render={({ field, fieldState }) => (
             <TextInput

@@ -20,6 +20,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
         <select
           {...selectProps}
           ref={ref}
+          name={name}
           className="p-4 border border-zinc-600 rounded-md bg-transparent w-full text-sm"
         >
           {children}
