@@ -85,11 +85,33 @@ void main() async {
       address: liveAddress,
     ),
   );
-  {{ $reqType := requestType .endpoint }}{{ if isNotStream $service.Spec $service.Name $reqType }}
+ 
   final payload = <String, dynamic>{{ dartExampleRequest .example.Request }};
 
   {{ title .endpoint }}Request req = {{ title .endpoint }}Request.fromJson(payload);
-  {{ end }}
+
+  
+  try {
+	  {{ $reqType := requestType .endpoint }}
+	  {{ if isNotStream $service.Spec $service.Name $reqType }}
+	  {{ title .endpoint }}Response res = await ser.{{ .endpoint }}(req);
+
+    res.map((value) => print(value),
+        Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body!['body']));
+
+	  {{ end }}	
+	  {{ if isStream $service.Spec $service.Name $reqType }}
+	  final res = await ser.{{ .endpoint }}(req);
+		await for (var sr in res) {
+		sr.map((value) => print(value),
+			Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
+		}	
+	  {{ end }}
+  } catch (e) {
+    print(e);
+  } finally {
+    exit(0);
+  }
 }`
 
 // {{ recursiveTypeDefinitionDart $schema }}
