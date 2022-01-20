@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn {
+  @apply px-6 py-2 text-white font-bold text-sm bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors;
+}
+
 .circle-btn {
   @apply w-8 h-8 bg-zinc-700 flex items-center justify-center rounded-full text-sm text-white hover:bg-zinc-600;
 }

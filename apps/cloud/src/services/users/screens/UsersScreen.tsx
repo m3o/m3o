@@ -1,16 +1,17 @@
 import type { FC } from 'react'
 import type { Column, CellProps } from 'react-table'
 import type { Account } from 'm3o/user'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import format from 'date-fns/format'
-import { TrashIcon, PencilIcon } from '@heroicons/react/outline'
+import { TrashIcon, PencilIcon, UserAddIcon } from '@heroicons/react/outline'
 import { useMemo, useCallback } from 'react'
+import { Spinner } from '../../../components/Spinner'
 import { useListUsers } from '../hooks/useListUsers'
-import { Table } from '../../components/Table/Table'
+import { Table } from '../../../components/Table/Table'
 import { useDeleteUser } from '../hooks/useDeleteUser'
-import { NoData } from '../../components/NoData'
+import { NoData } from '../../../components/NoData'
 import { useDeleteMultipleUsers } from '../hooks/useDeleteMultipleUsers'
-import { useSelectItems } from '../../hooks/useSelectItems'
+import { useSelectItems } from '../../../hooks/useSelectItems'
 import { useUsersStateContext } from '../components/UsersStateProvider'
 
 type UserAccount = Required<Account>
@@ -19,7 +20,7 @@ export const UsersScreen: FC = () => {
   const navigate = useNavigate()
   const { selectedItems, onSelectItem, resetSelectedItems } =
     useSelectItems<UserAccount>()
-  const { data = [] } = useListUsers()
+  const { data = [], isFetching } = useListUsers()
   const { setPageSize, pageSize } = useUsersStateContext()
 
   const { mutate: deleteMultipleUsers } = useDeleteMultipleUsers({
@@ -82,7 +83,7 @@ export const UsersScreen: FC = () => {
       },
       {
         id: 'actions',
-        width: 100,
+        width: 80,
         Cell: ({ row }: CellProps<UserAccount>) => (
           <div className="hidden group-hover:block text-white text-right pr-4">
             <button onClick={() => onDeleteClick(row.original.id!)}>
@@ -100,8 +101,18 @@ export const UsersScreen: FC = () => {
     ]
   }, [onDeleteClick, navigate])
 
+  if (isFetching) {
+    return <Spinner />
+  }
+
   return (
     <div>
+      <div className="p-4 border-b border-zinc-600 flex items-center justify-between">
+        <h1 className="font-bold text-white">Users</h1>
+        <Link className="btn flex items-center" to="/users/add">
+          <UserAddIcon className="w-4 mr-2" /> Add
+        </Link>
+      </div>
       {data.length ? (
         <Table<UserAccount>
           data={data as UserAccount[]}

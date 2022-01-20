@@ -6,6 +6,6 @@ export function useListUsers() {
 
   return useQuery('users', async () => {
     const response = await user.list({})
-    return response.users || []
+    return (response.users || []).reverse()
   })
 }

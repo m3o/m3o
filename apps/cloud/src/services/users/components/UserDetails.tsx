@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { Account } from 'm3o/user'
-import { formatDate } from '../../utils'
+import { formatDate } from '../../../utils'
 import { UserDetail } from './UserDetail'
 
 interface Props {

@@ -59,13 +59,15 @@ export function Table<T extends ExpectedObject>({
         id: 'checkbox',
         width: 50,
         Cell: ({ row }: CellProps<T>) => (
-          <Checkbox
-            checked={selectedItems.some(
-              (item) => JSON.stringify(item) === JSON.stringify(row.original)
-            )}
-            id={row.original.id!}
-            onChange={() => setSelectedItems(row.original)}
-          />
+          <div className="pl-4">
+            <Checkbox
+              checked={selectedItems.some(
+                (item) => JSON.stringify(item) === JSON.stringify(row.original)
+              )}
+              id={row.original.id!}
+              onChange={() => setSelectedItems(row.original)}
+            />
+          </div>
         )
       },
       ...columns
@@ -148,14 +150,19 @@ export function Table<T extends ExpectedObject>({
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <div {...row.getRowProps()} className="hover:bg-zinc-800 group">
+                <div
+                  {...row.getRowProps()}
+                  className="hover:bg-zinc-800 group h-10"
+                >
                   {row.cells.map((cell) => {
                     return (
                       <div
                         {...cell.getCellProps()}
-                        className="border-b border-zinc-700 p-2 text-sm overflow-hidden overflow-ellipsis whitespace-nowrap"
+                        className="border-b border-zinc-700 p-2 text-sm flex items-center"
                       >
-                        {cell.render('Cell')}
+                        <span className="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                          {cell.render('Cell')}
+                        </span>
                       </div>
                     )
                   })}

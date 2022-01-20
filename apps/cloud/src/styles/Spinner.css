@@ -7,7 +7,6 @@
   color: #fff;
   font-size: 11px;
   text-indent: -99999em;
-  margin: 55px auto;
   position: relative;
   width: 10em;
   height: 10em;
@@ -62,4 +61,9 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.loader.indigo:before,
+.loader.indigo:after {
+  @apply bg-indigo-600;
 }

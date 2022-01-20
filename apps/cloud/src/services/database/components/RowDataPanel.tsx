@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Fragment } from 'react'
 import { ExpectedRecord } from '../types'
-import { DeleteButton } from '../../components/DeleteButton'
+import { DeleteButton } from '../../../components/Buttons/DeleteButton'
 
 interface Props {
   data: ExpectedRecord

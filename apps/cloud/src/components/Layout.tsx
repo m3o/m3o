@@ -29,9 +29,9 @@ export const Layout: FC = () => {
           </a>
         </nav>
       </aside>
-      <div className="min-h-screen">
+      <main className="min-h-screen">
         <Outlet />
-      </div>
+      </main>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import classNames from 'classnames'
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { Spinner } from '../../components/Spinner'
+import { Spinner } from '../../../components/Spinner'
 import { useGetDbTables } from '../hooks/useGetDbTables'
 
 export const DatabaseLayout: FC = () => {
