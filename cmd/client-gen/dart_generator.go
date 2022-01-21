@@ -102,6 +102,12 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 	protoMessage := schemas[typeName]
 
 	for p, meta := range protoMessage.Value.Properties {
+		comments := ""
+		if meta.Value.Description != "" {
+			for _, commentLine := range strings.Split(meta.Value.Description, "\n") {
+				comments += "/// " + strings.TrimSpace(commentLine) + "\n"
+			}
+		}
 		switch meta.Value.Type {
 		case "string":
 			payload := map[string]interface{}{
@@ -109,14 +115,14 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 				"parameter": p,
 			}
 			o := runTemplate("normal", normalType, payload)
-			output = append(output, o)
+			output = append(output, comments+o)
 		case "boolean":
 			payload := map[string]interface{}{
 				"type":      boolType,
 				"parameter": p,
 			}
 			o := runTemplate("normal", normalType, payload)
-			output = append(output, o)
+			output = append(output, comments+o)
 		case "number":
 			switch meta.Value.Format {
 			case "int32", "int64":
@@ -125,14 +131,14 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 					"parameter": p,
 				}
 				o := runTemplate("normal", normalType, payload)
-				output = append(output, o)
+				output = append(output, comments+o)
 			case "float", "double":
 				payload := map[string]interface{}{
 					"type":      doubleType,
 					"parameter": p,
 				}
 				o := runTemplate("normal", normalType, payload)
-				output = append(output, o)
+				output = append(output, comments+o)
 			}
 		case "array":
 			types := detectType2(serviceName, typeName, p)
@@ -141,7 +147,7 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 				"parameter": p,
 			}
 			o := runTemplate("array", arrayType, payload)
-			output = append(output, o)
+			output = append(output, comments+o)
 		case "object":
 			types := detectType2(serviceName, typeName, p)
 			if len(types) == 1 {
@@ -151,7 +157,7 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 					"parameter": p,
 				}
 				o := runTemplate("normal", normalType, payload)
-				output = append(output, o)
+				output = append(output, comments+o)
 			} else {
 				// a Map object
 				payload := map[string]interface{}{
@@ -160,14 +166,14 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 					"parameter": p,
 				}
 				o := runTemplate("map", mapType, payload)
-				output = append(output, o)
+				output = append(output, comments+o)
 			}
 		default:
 			payload := map[string]interface{}{
 				"parameter": p,
 			}
 			o := runTemplate("any", anyType, payload)
-			output = append(output, o)
+			output = append(output, comments+o)
 		}
 
 	}
