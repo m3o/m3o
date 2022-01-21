@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
@@ -202,6 +203,39 @@ func (d *dartG) IndexFile(dartPath string, services []service) {
 	}
 }
 
+func (d *dartG) TopReadme(serviceName, examplesPath string, service service) {
+	templ, err := template.New("dartTopReadme" + serviceName).Funcs(funcMap()).Parse(dartReadmeTopTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	b := bytes.Buffer{}
+	buf := bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service": service,
+	})
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	os.MkdirAll(filepath.Join(examplesPath, "dart", serviceName), FOLDER_EXECUTE_PERMISSION)
+	f, err := os.OpenFile(filepath.Join(examplesPath, "dart", serviceName, "README.md"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+}
+
 func (d *dartG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title string, service service, example example) {
 	templ, err := template.New("dart" + serviceName + endpoint).Funcs(funcMap()).Parse(dartExampleTemplate)
 	if err != nil {
@@ -221,7 +255,7 @@ func (d *dartG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title 
 		os.Exit(1)
 	}
 
-	// create go examples directory
+	// create dart examples directory
 	err = os.MkdirAll(filepath.Join(examplesPath, "dart", serviceName, endpoint, title), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
@@ -249,42 +283,54 @@ func (d *dartG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title 
 		}
 	}
 
-	// // per endpoint go readme examples
-	// templ, err = template.New("dartReadmebottom" + serviceName + endpoint).Funcs(funcMap()).Parse(goReadmeBottomTemplate)
-	// if err != nil {
-	// 	fmt.Println("Failed to unmarshal", err)
-	// 	os.Exit(1)
-	// }
-	// b = bytes.Buffer{}
-	// buf = bufio.NewWriter(&b)
-	// err = templ.Execute(buf, map[string]interface{}{
-	// 	"service":  service,
-	// 	"example":  example,
-	// 	"endpoint": endpoint,
-	// 	"funcName": strcase.UpperCamelCase(title),
-	// })
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	os.Exit(1)
-	// }
+	// per endpoint dart readme examples
+	templ, err = template.New("dartReadmebottom" + serviceName + endpoint).Funcs(funcMap()).Parse(dartReadmeBottomTemplate)
+	if err != nil {
+		fmt.Println("Failed to unmarshal", err)
+		os.Exit(1)
+	}
+	b = bytes.Buffer{}
+	buf = bufio.NewWriter(&b)
+	err = templ.Execute(buf, map[string]interface{}{
+		"service":  service,
+		"example":  example,
+		"endpoint": endpoint,
+		"funcName": strcase.UpperCamelCase(title),
+	})
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-	// readmeAppend := filepath.Join(examplesPath, "dart", serviceName, "README.md")
-	// f, err = os.OpenFile(readmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
-	// if err != nil {
-	// 	fmt.Println("Failed to open schema file", err)
-	// 	os.Exit(1)
-	// }
+	readmeAppend := filepath.Join(examplesPath, "dart", serviceName, "README.md")
+	f, err = os.OpenFile(readmeAppend, os.O_APPEND|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
+	if err != nil {
+		fmt.Println("Failed to open schema file", err)
+		os.Exit(1)
+	}
 
-	// buf.Flush()
-	// _, err = f.Write(b.Bytes())
-	// if err != nil {
-	// 	fmt.Println("Failed to append to schema file", err)
-	// 	os.Exit(1)
-	// }
+	buf.Flush()
+	_, err = f.Write(b.Bytes())
+	if err != nil {
+		fmt.Println("Failed to append to schema file", err)
+		os.Exit(1)
+	}
+
+	cmd := exec.Command("dart", "format", ".")
+	cmd.Dir = filepath.Join(examplesPath, "dart", serviceName, endpoint)
+	outp, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Printf("Problem with '%v' example '%v': %v\n", serviceName, endpoint, string(outp))
+		os.Exit(1)
+	}
 }
 
 func schemaToDartExample(exampleJSON map[string]interface{}) string {
-	bs, _ := json.MarshalIndent(exampleJSON, "", "  ")
+	isEmpty := len(exampleJSON) == 0
+	if !isEmpty {
+		bs, _ := json.MarshalIndent(exampleJSON, "", "  ")
+		return strings.Replace(string(bs), "}", ",}", 1)
+	}
 
-	return strings.Replace(string(bs), "}", ",}", 1)
+	return "{}"
 }

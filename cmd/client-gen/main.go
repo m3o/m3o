@@ -92,8 +92,8 @@ func main() {
 	services := []service{}
 	tsFileList := []string{"esm", "index.js", "index.d.ts"}
 	dartG := &dartG{}
-	// goG := &goG{}
-	// tsG := &tsG{}
+	goG := &goG{}
+	tsG := &tsG{}
 
 	for _, f := range files {
 		if len(*serviceFlag) > 0 && f.Name() != *serviceFlag {
@@ -133,11 +133,12 @@ func main() {
 			}
 			services = append(services, service)
 
-			// tsG.ServiceClient(serviceName, tsPath, service)
-			// tsG.TopReadme(serviceName, examplesPath, service)
+			tsG.ServiceClient(serviceName, tsPath, service)
+			tsG.TopReadme(serviceName, examplesPath, service)
 			dartG.ServiceClient(serviceName, dartPath, service)
-			// goG.ServiceClient(serviceName, goPath, service)
-			// goG.TopReadme(serviceName, examplesPath, service)
+			dartG.TopReadme(serviceName, examplesPath, service)
+			goG.ServiceClient(serviceName, goPath, service)
+			goG.TopReadme(serviceName, examplesPath, service)
 
 			exam, err := ioutil.ReadFile(filepath.Join(workDir, serviceName, "examples.json"))
 			if err != nil {
@@ -159,9 +160,9 @@ func main() {
 						title := regexp.MustCompile("[^a-zA-Z0-9]+").ReplaceAllString(strcase.LowerCamelCase(strings.Replace(example.Title, " ", "_", -1)), "")
 
 						dartG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
-						// curlExample(examplesPath, serviceName, endpoint, title, service, example)
+						goG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						tsG.ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title, service, example)
+						curlExample(examplesPath, serviceName, endpoint, title, service, example)
 					}
 				}
 			} else {
@@ -170,10 +171,9 @@ func main() {
 		}
 	}
 
-	// tsG.IndexFile(workDir, tsPath, services)
-	// goG.IndexFile(goPath, services)
-
+	goG.IndexFile(goPath, services)
 	dartG.IndexFile(dartPath, services)
+	tsG.IndexFile(workDir, tsPath, services)
 
 	// publishToNpm(tsPath, tsFileList)
 }

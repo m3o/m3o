@@ -78,10 +78,8 @@ func funcMap() map[string]interface{} {
 			return tsg.schemaToType(serviceName, typeName, schemas)
 		},
 		"recursiveTypeDefinitionDart": func(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
-			// "recursiveTypeDefinitionDart": func(schema *openapi3.SchemaRef) string {
 			dartg := &dartG{}
 			return dartg.schemaToType(serviceName, typeName, schemas)
-			// return dartg.schemaToType(schema)
 		},
 		"requestTypeToEndpointName": func(requestType string) string {
 			parts := camelcase.Split(requestType)
@@ -99,6 +97,11 @@ func funcMap() map[string]interface{} {
 		"isStream": isStream,
 		"isNotStream": func(spec *openapi3.Swagger, serviceName, requestType string) bool {
 			return !isStream(spec, serviceName, requestType)
+		},
+		"isResponse": func(typeName string) bool {
+			// return true if typeName has 'Response' as suffix.
+			// this is primarily used in dart template.
+			return strings.HasSuffix(typeName, "Response")
 		},
 		"requestTypeToResponseType": func(requestType string) string {
 			parts := camelcase.Split(requestType)

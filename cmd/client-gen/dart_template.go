@@ -65,12 +65,26 @@ class {{title $service.Name}}Service {
 }
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
+{{ $isResponse := isResponse $typeName }}
+{{ if not $isResponse }}
 @Freezed()
 class {{ title $typeName }} with _${{ title $typeName }} {
-	{{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}
-	{{ title $typeName }}{{"({"}}{{ range $field, $meta := $schema.Value.Properties }}this.{{$field}},{{end}}{{"});"}}
+	const factory {{ title $typeName }}({ {{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }} ,}) = _{{ title $typeName }};
+	factory {{ title $typeName }}.fromJson(Map<String, dynamic> json) =>
+      _${{ title $typeName }}FromJson(json);
 }
-{{end}}
+{{ end }}
+{{ if $isResponse }}
+@Freezed()
+class {{ title $typeName }} with _${{ title $typeName }} {
+	const factory {{ title $typeName }}({ {{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }} ,}) = {{ title $typeName }}Data;
+	const factory {{ title $typeName }}.Merr({Map<String, dynamic>? body}) =
+	{{ title $typeName }}Merr;
+	factory {{ title $typeName }}.fromJson(Map<String, dynamic> json) =>
+      _${{ title $typeName }}FromJson(json);
+}
+{{ end }}
+{{ end }}
 `
 
 const dartExampleTemplate = `{{ $service := .service }}import 'dart:io';
@@ -114,6 +128,62 @@ void main() async {
   }
 }`
 
-// {{ recursiveTypeDefinitionDart $schema }}
-// $typeName => {{ $typeName }}
-// $schema.Value.Description => {{ $schema.Value.Description }}
+const dartReadmeTopTemplate = `{{ $service := .service }}# {{ title $service.Name }}
+
+An [m3o.com](https://m3o.com) API. For example usage see [m3o.com/{{ $service.Name }}/api](https://m3o.com/{{ $service.Name }}/api).
+
+Endpoints:
+
+`
+
+const dartReadmeBottomTemplate = `{{ $service := .service }}## {{ title .endpoint }}
+
+{{ endpointDescription .endpoint $service.Spec.Components.Schemas }}
+
+[https://m3o.com/{{ $service.Name }}/api#{{ title .endpoint}}](https://m3o.com/{{ $service.Name }}/api#{{ title .endpoint}})
+
+` + "```" + `dart
+{{ $service := .service -}}import 'dart:io';
+
+import 'package:m3o/m3o.dart';
+
+void main() async {
+  final token = Platform.environment['M3O_API_TOKEN']!;
+  final ser = {{title $service.Name}}Service(
+    Options(
+      token: token,
+      address: liveAddress,
+    ),
+  );
+ 
+  final payload = <String, dynamic>{{ dartExampleRequest .example.Request }};
+
+  {{ title .endpoint }}Request req = {{ title .endpoint }}Request.fromJson(payload);
+
+  {{ $reqType := requestType .endpoint }}
+  {{ if isNotStream $service.Spec $service.Name $reqType -}}
+  try {
+
+	{{ title .endpoint }}Response res = await ser.{{ .endpoint }}(req);
+
+    res.map((value) => print(value),
+	  Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body!['body']));
+  {{- end }}	
+  {{ if isStream $service.Spec $service.Name $reqType -}}
+  try {
+
+    final res = await ser.{{ .endpoint }}(req);
+
+	  await for (var sr in res) {
+	  sr.map((value) => print(value),
+		Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
+	  }	
+	{{- end }}
+  } catch (e) {
+    print(e);
+  } finally {
+    exit(0);
+  }
+}
+` + "```" + `
+`
