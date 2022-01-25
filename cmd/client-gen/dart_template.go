@@ -69,7 +69,7 @@ class {{title $service.Name}}Service {
 {{ if not $isResponse }}
 @Freezed()
 class {{ title $typeName }} with _${{ title $typeName }} {
-	const factory {{ title $typeName }}({ {{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }} ,}) = _{{ title $typeName }};
+	const factory {{ title $typeName }}({{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}) = _{{ title $typeName }};
 	factory {{ title $typeName }}.fromJson(Map<String, dynamic> json) =>
       _${{ title $typeName }}FromJson(json);
 }
@@ -77,7 +77,7 @@ class {{ title $typeName }} with _${{ title $typeName }} {
 {{ if $isResponse }}
 @Freezed()
 class {{ title $typeName }} with _${{ title $typeName }} {
-	const factory {{ title $typeName }}({ {{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }} ,}) = {{ title $typeName }}Data;
+	const factory {{ title $typeName }}({{ recursiveTypeDefinitionDart $service.Name $typeName $service.Spec.Components.Schemas }}) = {{ title $typeName }}Data;
 	const factory {{ title $typeName }}.Merr({Map<String, dynamic>? body}) =
 	{{ title $typeName }}Merr;
 	factory {{ title $typeName }}.fromJson(Map<String, dynamic> json) =>

@@ -101,6 +101,11 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 	output := []string{}
 	protoMessage := schemas[typeName]
 
+	// return an empty string if there is no properties for the typeName
+	if len(protoMessage.Value.Properties) == 0 {
+		return ""
+	}
+
 	for p, meta := range protoMessage.Value.Properties {
 		comments := ""
 		if meta.Value.Description != "" {
@@ -178,7 +183,8 @@ func (d *dartG) schemaToType(serviceName, typeName string, schemas map[string]*o
 
 	}
 
-	return strings.Join(output, ", ")
+	res := "{" + strings.Join(output, ", ") + ",}"
+	return res
 }
 
 func (d *dartG) IndexFile(dartPath string, services []service) {
