@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"sort"
 	"strings"
 	"text/template"
 
@@ -240,186 +239,116 @@ func (n *tsG) IndexFile(workDir, tsPath string, services []service) {
 }
 
 func (n *tsG) schemaToType(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef) string {
-	var recurse func(props map[string]*openapi3.SchemaRef, level int) string
+	var normalType = `{{ .parameter }}?: {{ .type }};`
+	var arrayType = `{{ .parameter }}?: {{ .type }}[];`
+	var mapType = ` {{ .parameter }}?: { [key:{{ .type1 }}]: {{ .type2 }} };`
+	var anyType = `{{ .parameter }}?: any;`
+	var stringType = "string"
+	var number = "number"
+	var boolType = "boolean"
+	// var typePrefix = "*"
 
-	var spec *openapi3.SchemaRef = schemas[typeName]
-	detectType := func(currentType string, properties map[string]*openapi3.SchemaRef) (string, bool) {
-		index := map[string]bool{}
-		for key, prop := range properties {
-			index[key+prop.Value.Title+prop.Value.Description] = true
+	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
+		t, err := template.New(tmpName).Parse(temp)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
+			return ""
+		}
+		var tb bytes.Buffer
+		err = t.Execute(&tb, payload)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", temp, payload, err)
+			return ""
 		}
 
-		for k, schema := range schemas {
-			// we don't want to return the type matching itself
-			if strings.ToLower(k) == currentType {
-				continue
-			}
-			if strings.HasSuffix(k, "Request") || strings.HasSuffix(k, "Response") {
-				continue
-			}
-			if len(schema.Value.Properties) != len(properties) {
-				continue
-			}
-			found := false
-			for key, prop := range schema.Value.Properties {
-				_, ok := index[key+prop.Value.Title+prop.Value.Description]
-				found = ok
-				if !ok {
-					break
-				}
-			}
-			if found {
-				return schema.Value.Title, true
-			}
-		}
-		return "", false
+		return tb.String()
 	}
 
-	fieldUpperCase := false
-	fieldSeparator := "?: "
-	arrayPrefix := ""
-	arrayPostfix := "[]"
-	//objectOpen = "{\n"
-	//objectClose = "}"
-	fieldDelimiter := ";"
-	stringType := "string"
-	numberType := "number"
-	boolType := "boolean"
-	int32Type := "number"
-	int64Type := "number"
-	floatType := "number"
-	doubleType := "number"
-	anyType := "any"
-	mapType := "{ [key: string]: %v }"
-	typePrefix := ""
-
-	valueToType := func(v *openapi3.SchemaRef) string {
-		switch v.Value.Type {
-		case "string":
+	typesMapper := func(t string) string {
+		switch t {
+		case "STRING":
 			return stringType
-		case "boolean":
+		case "INT32", "INT64", "FLOAT", "DOUBLE":
+			return number
+		case "BOOL":
 			return boolType
-		case "number":
-			switch v.Value.Format {
-			case "int32":
-				return int32Type
-			case "int64":
-				return int64Type
-			case "float":
-				return floatType
-			case "double":
-				return doubleType
-			}
 		default:
-			return "unrecognized: " + v.Value.Type
+			return t
 		}
+	}
+
+	output := []string{}
+	protoMessage := schemas[typeName]
+
+	// return an empty string if there is no properties for the typeName
+	if len(protoMessage.Value.Properties) == 0 {
 		return ""
 	}
 
-	recurse = func(props map[string]*openapi3.SchemaRef, level int) string {
-		ret := ""
+	for p, meta := range protoMessage.Value.Properties {
+		comments := ""
+		o := ""
 
-		i := 0
-		var keys []string
-		for k := range props {
-			keys = append(keys, k)
+		if meta.Value.Description != "" {
+			for _, commentLine := range strings.Split(meta.Value.Description, "\n") {
+				comments += "// " + strings.TrimSpace(commentLine) + "\n"
+			}
 		}
-		sort.Strings(keys)
-		for _, k := range keys {
-			v := props[k]
-			ret += strings.Repeat("  ", level)
-			if v.Value.Description != "" {
-				for _, commentLine := range strings.Split(v.Value.Description, "\n") {
-					ret += "// " + strings.TrimSpace(commentLine) + "\n" + strings.Repeat("  ", level)
-				}
-
+		switch meta.Value.Type {
+		case "string":
+			payload := map[string]interface{}{
+				"type":      stringType,
+				"parameter": p,
 			}
-
-			if fieldUpperCase {
-				k = strcase.UpperCamelCase(k)
+			o = runTemplate("normal", normalType, payload)
+		case "boolean":
+			payload := map[string]interface{}{
+				"type":      boolType,
+				"parameter": p,
 			}
-
-			var typ string
-			// @todo clean up this piece of code by
-			// separating out type string marshaling and not
-			// repeating code
-			switch v.Value.Type {
-			case "object":
-				typ, found := detectType(k, v.Value.Properties)
-				if found {
-					ret += k + fieldSeparator + typePrefix + strings.Title(typ) + fieldDelimiter
-				} else {
-					// type is a dynamic map
-					// if additional properties is not present, it's an any type,
-					// like the proto struct type
-					if v.Value.AdditionalProperties != nil {
-						ret += k + fieldSeparator + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + fieldDelimiter
-					} else {
-						ret += k + fieldSeparator + fmt.Sprintf(mapType, anyType) + fieldDelimiter
-					}
-				}
-			case "array":
-				typ, found := detectType(k, v.Value.Items.Value.Properties)
-				if found {
-					ret += k + fieldSeparator + arrayPrefix + strings.Title(typ) + arrayPostfix + fieldDelimiter
-				} else {
-					switch v.Value.Items.Value.Type {
-					case "string":
-						ret += k + fieldSeparator + arrayPrefix + stringType + arrayPostfix + fieldDelimiter
-					case "number":
-						typ := numberType
-						switch v.Value.Format {
-						case "int32":
-							typ = int32Type
-						case "int64":
-							typ = int64Type
-						case "float":
-							typ = floatType
-						case "double":
-							typ = doubleType
-						}
-						ret += k + fieldSeparator + arrayPrefix + typ + arrayPostfix + fieldDelimiter
-					case "boolean":
-						ret += k + fieldSeparator + arrayPrefix + boolType + arrayPostfix + fieldDelimiter
-					case "object":
-						// type is a dynamic map
-						// if additional properties is not present, it's an any type,
-						// like the proto struct type
-						if v.Value.AdditionalProperties != nil {
-							ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + arrayPostfix + fieldDelimiter
-						} else {
-							ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, anyType) + arrayPostfix + fieldDelimiter
-						}
-					}
-				}
-			case "string":
-				ret += k + fieldSeparator + stringType + fieldDelimiter
-			case "number":
-				typ = numberType
-				switch v.Value.Format {
-				case "int32":
-					typ = int32Type
-				case "int64":
-					typ = int64Type
-				case "float":
-					typ = floatType
-				case "double":
-					typ = doubleType
-				}
-				ret += k + fieldSeparator + typ + fieldDelimiter
-			case "boolean":
-				ret += k + fieldSeparator + boolType + fieldDelimiter
+			o = runTemplate("normal", normalType, payload)
+		case "number":
+			payload := map[string]interface{}{
+				"type":      number,
+				"parameter": p,
 			}
-
-			if i < len(props) {
-				ret += "\n"
+			o = runTemplate("normal", normalType, payload)
+		case "array":
+			types := detectType2(serviceName, typeName, p)
+			payload := map[string]interface{}{
+				"type":      typesMapper(types[0]),
+				"parameter": p,
 			}
-			i++
-
+			o = runTemplate("array", arrayType, payload)
+		case "object":
+			types := detectType2(serviceName, typeName, p)
+			if len(types) == 1 {
+				// a Message Type
+				payload := map[string]interface{}{
+					"type":      types[0],
+					"parameter": p,
+				}
+				o = runTemplate("normal", normalType, payload)
+			} else {
+				// a Map object
+				payload := map[string]interface{}{
+					"type1":     typesMapper(types[0]),
+					"type2":     typesMapper(types[1]),
+					"parameter": p,
+				}
+				o = runTemplate("map", mapType, payload)
+			}
+		default:
+			payload := map[string]interface{}{
+				"parameter": p,
+			}
+			o = runTemplate("any", anyType, payload)
 		}
-		return ret
+
+		output = append(output, comments+o)
 	}
-	return recurse(spec.Value.Properties, 1)
+
+	return strings.Join(output, "\n")
 }
 
 func publishToNpm(tsPath string, tsFileList []string) {
