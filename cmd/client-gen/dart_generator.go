@@ -36,13 +36,13 @@ func (d *dartG) ServiceClient(serviceName, dartPath string, service service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	err = os.MkdirAll(filepath.Join(dartPath, serviceName), FOLDER_EXECUTE_PERMISSION)
+	err = os.MkdirAll(filepath.Join(dartPath, "lib", "src", serviceName), FOLDER_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	clientFile := filepath.Join(dartPath, serviceName, fmt.Sprint(serviceName, ".dart"))
+	clientFile := filepath.Join(dartPath, "lib", "src", serviceName, fmt.Sprint(serviceName, ".dart"))
 	f, err := os.OpenFile(clientFile, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open schema file", err)
@@ -197,7 +197,7 @@ func (d *dartG) IndexFile(dartPath string, services []service) {
 		fmt.Println("Failed to unmarshal", err)
 		os.Exit(1)
 	}
-	f, err := os.OpenFile(filepath.Join(dartPath, "m3o.dart"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
+	f, err := os.OpenFile(filepath.Join(dartPath, "lib", "m3o.dart"), os.O_TRUNC|os.O_WRONLY|os.O_CREATE, FILE_EXECUTE_PERMISSION)
 	if err != nil {
 		fmt.Println("Failed to open collector file", err)
 		os.Exit(1)

@@ -3,7 +3,7 @@ package main
 const dartIndexTemplate = `library m3o;
   
 export 'src/client.dart';
-{{ range $service := .services }}export 'src/{{ $service.Name}}.dart';
+{{ range $service := .services }}export 'src/{{ $service.Name }}/{{ $service.Name}}.dart';
 {{ end }}
 `
 
