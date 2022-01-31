@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 import { useMemo, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { PlusIcon } from '@heroicons/react/outline'
+
 import { useListApps } from '../hooks/useListApps'
 import { Spinner } from '../../../components/Spinner'
 import { App } from '../components/App'

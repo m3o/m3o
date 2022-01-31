@@ -1,8 +1,8 @@
 import type { UseMutateFunction } from 'react-query'
 import type { DeleteResponse } from 'm3o/app'
 import { useMutation, useQueryClient } from 'react-query'
-import { useAppsInstance } from './useAppsInstance'
 import { useToast } from '../../../providers/ToastProvider'
+import { apps } from '../apps.service'
 
 interface UseDeleteApp {
   deleteApp: UseMutateFunction<DeleteResponse, unknown, string, unknown>
@@ -12,10 +12,9 @@ interface UseDeleteApp {
 export function useDeleteApp(): UseDeleteApp {
   const { showToast } = useToast()
   const queryClient = useQueryClient()
-  const app = useAppsInstance()
 
   const { mutate, isLoading } = useMutation(
-    (name: string) => app.delete({ name }),
+    (name: string) => apps.delete({ name }),
     {
       onSuccess: (response) => {
         console.log(response)

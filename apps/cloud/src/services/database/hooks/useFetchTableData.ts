@@ -1,6 +1,5 @@
-import type { DbService } from 'm3o/db'
 import { useQuery } from 'react-query'
-import { useDbInstance } from './useDbInstance'
+import { db } from '../db.service'
 
 interface ExpectedRecord {
   id: string
@@ -8,7 +7,6 @@ interface ExpectedRecord {
 }
 
 export async function returnTableRecords(
-  db: DbService,
   tableName: string
 ): Promise<ExpectedRecord[]> {
   const response = await db.read({ table: tableName })
@@ -16,9 +14,5 @@ export async function returnTableRecords(
 }
 
 export function useFetchTableData(tableName: string) {
-  const db = useDbInstance()
-
-  return useQuery(`db-table-${tableName}`, () =>
-    returnTableRecords(db, tableName)
-  )
+  return useQuery(`db-table-${tableName}`, () => returnTableRecords(tableName))
 }

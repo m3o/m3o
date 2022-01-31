@@ -1,7 +1,7 @@
 import type { UseMutateFunction } from 'react-query'
 import type { UpdateResponse } from 'm3o/app'
 import { useMutation, useQueryClient } from 'react-query'
-import { useAppsInstance } from './useAppsInstance'
+import { apps } from '../apps.service'
 import { useToast } from '../../../providers/ToastProvider'
 
 interface UseUpdateApp {
@@ -16,10 +16,9 @@ interface UseUpdateAppProps {
 export function useUpdateApp({ onSuccess }: UseUpdateAppProps): UseUpdateApp {
   const { showToast } = useToast()
   const queryClient = useQueryClient()
-  const app = useAppsInstance()
 
   const { mutate, isLoading } = useMutation(
-    (name: string) => app.update({ name }),
+    (name: string) => apps.update({ name }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('apps')

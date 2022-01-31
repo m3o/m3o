@@ -33,7 +33,7 @@ export const ToastProvider: FC = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setState((prevState) => ({ ...prevState, open: false }))
-    }, 2000)
+    }, 4000)
   }, [state.open])
 
   return (

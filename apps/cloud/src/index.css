@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-  @apply px-6 py-2 text-white font-bold text-sm bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors;
+  @apply px-6 py-2 text-white font-bold text-sm bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors disabled:bg-opacity-30 disabled:text-indigo-600;
 }
 
 .circle-btn {

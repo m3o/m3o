@@ -18,6 +18,11 @@ interface LinkItem {
 
 const LINKS: LinkItem[] = [
   {
+    icon: TerminalIcon,
+    to: '/apps',
+    text: 'Apps'
+  },
+  {
     icon: DatabaseIcon,
     to: '/database',
     text: 'DB'
@@ -31,11 +36,6 @@ const LINKS: LinkItem[] = [
     icon: CodeIcon,
     to: '/functions',
     text: 'Functions'
-  },
-  {
-    icon: TerminalIcon,
-    to: '/apps',
-    text: 'Apps'
   }
 ]
 

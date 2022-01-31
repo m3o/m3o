@@ -1,6 +1,5 @@
-import type { DbService } from 'm3o/db'
 import { useQuery } from 'react-query'
-import { useDbInstance } from './useDbInstance'
+import { db } from '../db.service'
 
 const SECRET_TABLE_NAMES = [
   'default',
@@ -12,12 +11,11 @@ const SECRET_TABLE_NAMES = [
   'users'
 ]
 
-export async function fetchTables(db: DbService) {
+export async function fetchTables() {
   const { tables = [] } = await db.listTables({})
   return tables.filter((item) => !SECRET_TABLE_NAMES.includes(item))
 }
 
 export function useGetDbTables() {
-  const db = useDbInstance()
-  return useQuery('db-tables', () => fetchTables(db))
+  return useQuery('db-tables', fetchTables)
 }
