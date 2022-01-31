@@ -15,6 +15,7 @@ import { returnLoginUrl } from './auth'
 import { ToastProvider } from './providers/ToastProvider'
 import { AppsScreen } from './services/apps/screens/AppsScreen'
 import { AddAppScreen } from './services/apps/screens/AddAppScreen'
+import { FunctionsScreen } from './services/functions/screens/FunctionsScreen'
 
 const queryClient = new QueryClient()
 
@@ -53,6 +54,9 @@ function App() {
                 <Route path="apps">
                   <Route index element={<AppsScreen />} />
                   <Route path="add" element={<AddAppScreen />} />
+                </Route>
+                <Route path="functions">
+                  <Route index element={<FunctionsScreen />} />
                 </Route>
               </Route>
             </Routes>

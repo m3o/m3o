@@ -11,8 +11,8 @@ const KEYS: (keyof Service)[] = ['region', 'port', 'repo', 'branch']
 
 export const App: FC<Props> = ({ headerRight, ...props }) => {
   return (
-    <div className="border border-zinc-600 p-6 rounded-md bg-zinc-800">
-      <div className="border-b border-zinc-600 pb-4 flex justify-between items-center">
+    <div className="p-6 rounded-md bg-zinc-800">
+      <div className=" pb-4 flex justify-between items-center">
         <div>
           <h2 className="mb-1">
             <a
@@ -30,7 +30,10 @@ export const App: FC<Props> = ({ headerRight, ...props }) => {
       </div>
       <div className="pt-4 text-zinc-300">
         {KEYS.map((key) => (
-          <div key={key} className="grid grid-cols-2 mb-2 last:mb-0">
+          <div
+            key={key}
+            className="grid grid-cols-2 mb-2 last:mb-0 bg-zinc-700 py-2 px-4 rounded-md"
+          >
             <p className="text-sm capitalize">{key}</p>
             <p className="text-sm text-ellipsis overflow-hidden">
               {props[key]}

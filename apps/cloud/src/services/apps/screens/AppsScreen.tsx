@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import { PlusIcon } from '@heroicons/react/outline'
 import { useListApps } from '../hooks/useListApps'
 import { Spinner } from '../../../components/Spinner'
-import { NoData } from '../../../components/NoData'
 import { App } from '../components/App'
 import { AppMenu } from '../components/AppMenu'
 import { useUpdateApp } from '../hooks/useUpdateApp'
 import { useDeleteApp } from '../hooks/useDeleteApp'
 import { useOnlyOneOpenItem } from '../../../hooks/useOnlyOneOpenItem'
+import { NoApps } from '../components/NoApps'
+import { AddAppLink } from '../components/AddAppLink'
 
 export const AppsScreen: FC = () => {
   const { toggleItem, isOpen } = useOnlyOneOpenItem()
@@ -78,14 +79,15 @@ export const AppsScreen: FC = () => {
             </a>
           </p>
         </div>
-        <Link className="btn flex items-center" to="/apps/add">
-          <PlusIcon className="w-4 mr-2" />
-          Add App
-        </Link>
+        <AddAppLink />
       </header>
-      <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-10">
-        {renderedApps}
-      </div>
+      {apps.length ? (
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-10">
+          {renderedApps}
+        </div>
+      ) : (
+        <NoApps />
+      )}
     </section>
   )
 }
