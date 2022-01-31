@@ -43,8 +43,8 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "cy:run": "cypress run",
-    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run",
-    "e2e:open": "cypress open"
+    "cy:open": "cypress open",
+    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run"
   },
   "eslintConfig": {
     "extends": [
