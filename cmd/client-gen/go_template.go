@@ -77,7 +77,7 @@ func (t *{{ requestTypeToResponseType $key }}Stream) Recv() (*{{ requestTypeToRe
 
 {{ range $typeName, $schema := $service.Spec.Components.Schemas }}
 type {{ title $typeName }} struct {{ "{" }}
-{{ recursiveTypeDefinitionGo $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
+{{ recursiveTypeDefinition "go" $service.Name $typeName $service.Spec.Components.Schemas }}{{ "}" }}
 {{end}}
 `
 

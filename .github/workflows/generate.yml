@@ -18,12 +18,6 @@ jobs:
           go-version: 1.13
         id: go
 
-      - name: Set up dart latest
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk:  stable
-        id: dart
-
       - name: Install Protoc
         uses: arduino/setup-protoc@master
 
@@ -51,12 +45,6 @@ jobs:
         with:
           repository: 'm3o/m3o-go'
           path: m3o-go
-      
-      - name: Check m3o-dart repo
-        uses: actions/checkout@v2
-        with:
-          repository: 'm3o/m3o-dart'
-          path: m3o-dart
 
       - name: Enable caching
         uses: actions/cache@v2
@@ -95,7 +83,7 @@ jobs:
         run: |
           sudo npm install -g prettier
 
-      - name: Generate Go, JS and Dart packages
+      - name: Generate Go and JS packages
         working-directory: services
         if: github.ref == 'refs/heads/main'
         env:
@@ -127,10 +115,6 @@ jobs:
           #  move the js examples
           mkdir clients/ts/examples
           mv examples/js/* clients/ts/examples/
-          # sync the clients to m3o-dart/
-          rsync -avz clients/dart/ ../m3o-dart/
-          # sync the examples to m3o-dart/examples
-          rsync -avz examples/dart/ ../m3o-dart/example/
 
       - name: Gofmt and test
         working-directory: m3o-go
@@ -139,23 +123,6 @@ jobs:
         run: |
           go fmt ./...
           go test -v ./...
-
-      - name: Install dependencies m3o-dart
-        working-directory: m3o-dart
-        run:  dart pub get
-
-      - name: format m3o-dart
-        working-directory: m3o-dart
-        run:  dart format .
-
-      - name: run generate Freezed m3o-dart
-        working-directory: m3o-dart
-        run:  dart pub run build_runner build --delete-conflicting-outputs
-
-      - name: remove unnecessary files/folders
-        working-directory: m3o-dart
-        run: |
-          rm -rf .dart_tool .git .gitignore .packages pubspec.lock
 
       # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       - name: Extract branch name
@@ -172,7 +139,7 @@ jobs:
           source_file: 'm3o-go/'
           destination_repo: 'm3o/m3o-go'
           destination_branch: ${{ steps.extract_branch.outputs.branch }}
-          git_server: 'github.com'
+          github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
@@ -186,24 +153,10 @@ jobs:
           source_file: 'services/clients/ts/'
           destination_repo: 'm3o/m3o-js'
           destination_branch: ${{ steps.extract_branch.outputs.branch }}
-          git_server: 'github.com'
+          github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
-
-      - name: Push Dart files
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source_file: 'm3o-dart/'
-          destination_repo: 'm3o/m3o-dart'
-          destination_branch: ${{ steps.extract_branch.outputs.branch }}
-          git_server: 'github.com'
-          user_name: 'm3o-actions'
-          use_rsync: true
-          commit_message: 'Commit from lambdaR/GWT-m3o action'
 
       - name: Push shell files
         uses: dmnemec/copy_file_to_another_repo_action@main
@@ -215,7 +168,7 @@ jobs:
           destination_repo: 'm3o/m3o-sh'
           destination_folder: 'examples'
           destination_branch: '${{ steps.extract_branch.outputs.branch }}'
-          git_server: 'github.com'
+          github_server: 'github.com'
           user_name: 'm3o-actions'
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'

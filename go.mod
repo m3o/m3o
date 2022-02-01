@@ -9,7 +9,6 @@ require (
 	github.com/fatih/camelcase v1.0.0
 	github.com/getkin/kin-openapi v0.26.0
 	github.com/golang/protobuf v1.5.2
-	github.com/jhump/protoreflect v1.10.1
 	github.com/kr/text v0.2.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/stoewer/go-strcase v1.2.0
