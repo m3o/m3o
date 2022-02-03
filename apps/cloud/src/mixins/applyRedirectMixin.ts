@@ -1,5 +1,5 @@
 import { getApiToken } from '../utils'
-import { returnLoginUrl } from '../auth'
+import { returnLoginUrl } from '../utils/auth'
 
 export function applyRedirectMixin<S extends Function>(Service: S) {
   const methods = Object.getOwnPropertyNames(Service.prototype).filter(

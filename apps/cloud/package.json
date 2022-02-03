@@ -42,9 +42,10 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --headless",
     "cy:open": "cypress open",
-    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run"
+    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -65,12 +66,15 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/react-table": "^7.7.9",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.1",
     "eslint-plugin-cypress": "^2.12.1",
     "http-server": "^14.1.0",
+    "husky": "^7.0.4",
     "postcss-cli": "^9.1.0",
+    "react-test-renderer": "^17.0.2",
     "start-server-and-test": "^1.14.0",
     "tailwindcss": "^3.0.11"
   }

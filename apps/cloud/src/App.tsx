@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { useCookies } from 'react-cookie'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { LandingScreen } from './screens/LandingScreen'
@@ -16,21 +14,12 @@ import { AddAppScreen } from './services/apps/screens/AddAppScreen'
 import { FunctionsScreen } from './services/functions/screens/FunctionsScreen'
 import { DbScreen } from './services/database/screens/DbScreen'
 import { AddDbTableScreen } from './services/database/screens/AddDbTableScreen'
-import { returnLoginUrl } from './auth'
+import { useRedirectToLogin } from './hooks/useRedirectToLogin'
 
 const queryClient = new QueryClient({})
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false)
-  const [cookies] = useCookies()
-
-  useEffect(() => {
-    if (!cookies['micro_api_token']) {
-      window.location.href = returnLoginUrl()
-    } else {
-      setAuthenticated(true)
-    }
-  }, [cookies])
+  const { authenticated } = useRedirectToLogin()
 
   if (!authenticated) {
     return null
