@@ -54,7 +54,7 @@ export const AddUserScreen: FC = () => {
             />
           )}
         />
-        <div className="flex justify-between items-center">
+        {/* <div className="flex justify-between items-center">
           <h2 className="mt-6 font-bold mb-6">Extra Details</h2>
           <button
             className="p-2 rounded-full bg-indigo-600"
@@ -62,7 +62,7 @@ export const AddUserScreen: FC = () => {
           >
             <PlusIcon className="w-4" />
           </button>
-        </div>
+        </div> */}
         <button className="btn" type="submit">
           Submit
         </button>
