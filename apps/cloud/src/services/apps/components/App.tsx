@@ -10,11 +10,12 @@ interface Props extends Service {
 const KEYS: (keyof Service)[] = ['region', 'port', 'repo', 'branch']
 
 export const App: FC<Props> = ({ headerRight, ...props }) => {
+  console.log(props)
   return (
     <div className="p-6 rounded-md bg-zinc-800">
       <div className=" pb-4 flex justify-between items-center">
         <div>
-          <h2 className="mb-1">
+          <h2 className="mb-3">
             <a
               href={props.url}
               target="_blank"
@@ -25,6 +26,16 @@ export const App: FC<Props> = ({ headerRight, ...props }) => {
             </a>
           </h2>
           <Status status={props.status as AppStatus} />
+          <h3 className="mt-3 text-sm">
+            <a
+              href={props.url}
+              target="_blank"
+              rel="noreferrer"
+              className="underline text-zinc-300"
+            >
+              {props.url?.replace('https://', '')}
+            </a>
+          </h3>
         </div>
         {headerRight}
       </div>
