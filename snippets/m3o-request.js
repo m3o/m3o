@@ -2,9 +2,8 @@
  * M3O Request Snippet
  * -------------------------
  *
- * Use the code below to make calls to a M3O
+ * Use the code below to make http requests to a M3O
  * API without the need for libraries or installs.
- * This example uses the Fetch API.
  */
 
 // 1. Get your m3o. This should come from an environment variable to keep secret from the public
