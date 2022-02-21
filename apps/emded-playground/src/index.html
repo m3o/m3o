@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Embed / playground</title>
+  </head>
+  <body>
+    <header></header>
+    <main class="grid grid-cols-7 min-h-screen">
+      <aside>Sidebar</aside>
+      <section class="col-span-6 bg-gray-50 h-full grid grid-cols-2">
+        <div class="bg-gray-100">
+          <div class="h-3/6 bg-zinc-200">1</div>
+          <div class="h-3/6">2</div>
+        </div>
+        <div>2</div>
+      </section>
+    </main>
+    <script type="module" src="scripts/app.js"></script>
+  </body>
+</html>
