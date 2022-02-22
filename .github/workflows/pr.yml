@@ -1,5 +1,10 @@
 name: PR Sanity Check
-on: pull_request
+on:
+  pull_request:
+    paths-include:
+      - 'go.mod'
+      - 'go.sum'
+      - 'cmd/**'
 
 jobs:
 
