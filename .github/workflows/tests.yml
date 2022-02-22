@@ -1,7 +1,7 @@
 name: Run tests
 on:
   push:
-    paths-include:
+    paths:
       - 'go.mod'
       - 'go.sum'
       - 'cmd/**'

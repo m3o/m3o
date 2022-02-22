@@ -1,7 +1,7 @@
 name: PR Sanity Check
 on:
   pull_request:
-    paths-include:
+    paths:
       - 'go.mod'
       - 'go.sum'
       - 'cmd/**'
