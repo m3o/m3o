@@ -1,91 +1,89 @@
-const chalk = require('chalk');
-const path = require('path');
-const fs = require('fs');
-const rimraf = require('rimraf');
-const { ncp } = require('ncp');
+const path = require('path')
+const fs = require('fs')
+const rimraf = require('rimraf')
 
-function getTmpEsmDirectories() {
-  return fs
+function moveToTopLevel() {
+  const esmDirectories = fs
     .readdirSync('./tmp/esm')
-    .filter(file => fs.statSync(`./tmp/esm/${file}`).isDirectory());
+    .filter((file) => fs.statSync(`./tmp/esm/${file}`).isDirectory())
+
+  esmDirectories.forEach((directory) => {
+    const tmpFolder = path.join(__dirname, 'tmp', directory)
+    const tmpEsmFolder = path.join(__dirname, 'tmp/esm', directory)
+    const folder = path.join(__dirname, directory)
+
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder)
+      fs.mkdirSync(path.join(folder, 'esm'))
+    }
+
+    const files = fs.readdirSync(path.join(__dirname, 'tmp/esm', directory))
+
+    files.forEach((file) => {
+      // Copy esm
+      fs.renameSync(
+        path.join(tmpEsmFolder, file),
+        path.join(folder, 'esm', file)
+      )
+
+      // Copy compiled files
+      fs.renameSync(path.join(tmpFolder, file), path.join(folder, file))
+    })
+
+    fs.writeFileSync(
+      `${folder}/package.json`,
+      `{"module": "./esm/index.js"}`,
+      'utf8'
+    )
+  })
 }
 
-function log(text) {
-  console.log(`${chalk.cyan('M3O JS:')} ${text}`);
+function replacePathsInIndex() {
+  const indexFile = path.join(__dirname, 'esm', 'index.js')
+
+  fs.readFile(indexFile, 'utf8', function (err, data) {
+    if (err) {
+      return console.log(err)
+    }
+
+    let result = data.replace(/from \".\//g, 'from "../')
+
+    console.log(result)
+
+    fs.writeFile(indexFile, result, 'utf8', function (err) {
+      if (err) return console.log(err)
+      console.log('done')
+    })
+  })
 }
 
-function writeModulePackageJsonFile(location) {
-  fs.writeFileSync(
-    `${location}/package.json`,
-    `{"module": "./esm/index.js"}`,
-    'utf8'
-  );
-}
+function makeTopEsmFolder() {
+  const esmFolder = path.join(__dirname, 'esm')
+  const tmpFolder = path.join(__dirname, 'tmp')
 
-function deleteDirectory(directory) {
-  return new Promise(resolve => {
-    rimraf(directory, err => {
-      resolve();
-    });
-  });
-}
+  if (!fs.existsSync(esmFolder)) {
+    fs.mkdirSync(esmFolder)
+  }
 
-function copyAllTmpFolders() {
-  return new Promise((resolve, reject) => {
-    // Now copy to root level
-    ncp(path.join(__dirname, 'tmp'), __dirname, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
+  fs.renameSync(
+    path.join(tmpFolder, 'esm', 'index.js'),
+    path.join(esmFolder, 'index.js')
+  )
 
-function moveToLocalEsmFolders() {
-  return new Promise((resolve, reject) => {
-    const esmDirs = getTmpEsmDirectories();
-
-    // Move the files around in tmp...
-    esmDirs.forEach(dir => {
-      const currentPath = path.join(__dirname, 'tmp/esm', dir);
-
-      fs.readdirSync(currentPath).forEach(async file => {
-        const currentFilePath = path.join(currentPath, file);
-        const newFilePath = path.join(__dirname, 'tmp', dir, 'esm', file);
-        const esmFolderLocation = path.join(__dirname, 'tmp', dir, 'esm');
-
-        try {
-          if (!fs.existsSync(esmFolderLocation)) {
-            fs.mkdirSync(esmFolderLocation);
-          }
-
-          fs.renameSync(currentFilePath, newFilePath);
-          writeModulePackageJsonFile(`./tmp/${dir}`);
-          await deleteDirectory(`./tmp/esm/${dir}`);
-        } catch (err) {
-          reject(err);
-        }
-      });
-    });
-
-    log('Moved local esm folders');
-    resolve();
-  });
+  fs.renameSync(
+    path.join(tmpFolder, 'index.d.ts'),
+    path.join(esmFolder, 'index.d.ts')
+  )
 }
 
 async function build() {
-  log('Moving to correct folders');
+  moveToTopLevel()
+  makeTopEsmFolder()
+  replacePathsInIndex()
 
-  try {
-    await moveToLocalEsmFolders();
-    await copyAllTmpFolders();
-    writeModulePackageJsonFile('./tmp/esm');
-    await deleteDirectory('./tmp');
-  } catch (e) {
-    console.log(e);
-  }
+  rimraf(path.join(__dirname, 'tmp'), (err) => {
+    console.log(err)
+  })
 }
 
-build();
+build()
