@@ -1,0 +1,9 @@
+{
+  "id": "3a420e6a-5c53-4141-b755-199e146243d6",
+  "issuer": "micro",
+  "metadata": {},
+  "name": "test-user@m3o.com",
+  "scopes": ["customer"],
+  "secret": "",
+  "type": "customer"
+}

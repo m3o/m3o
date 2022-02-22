@@ -1,0 +1,116 @@
+[
+  {
+    "category": "logistics",
+    "description": "Address lookup by postcode\n\n# Address Service\n\nLookup UK addresses by postcode. Simply provide a valid postcode and get a full list of addresses.\n\nPowered by [ideal-postcodes.co.uk](https://ideal-postcodes.co.uk/).\n",
+    "endpoints": [
+      {
+        "name": "Address.LookupPostcode"
+      }
+    ],
+    "icon": "🏠",
+    "name": "address",
+    "display_name": "Address"
+  },
+  {
+    "category": "search",
+    "description": "Instant answers to any question\n\n# Ask Service\n\nAsk a question and get an instant answer.\n\nPowered by [duckduckgo.com](https://duckduckgo.com).\n",
+    "endpoints": [
+      {
+        "name": "Answer.Question"
+      }
+    ],
+    "icon": "❓",
+    "name": "answer",
+    "display_name": "Answer"
+  },
+  {
+    "category": "storage",
+    "description": "Quick access key-value storage\n\n# Cache Service\n\nThe cache service provides simple get/set/delete key-value storage. Values can be stored with an optional time-to-live (TTL) to automatically expire entries.\n\nThe max value size is 1MB.\n",
+    "endpoints": [
+      {
+        "name": "Cache.Decrement"
+      },
+      {
+        "name": "Cache.Delete"
+      },
+      {
+        "name": "Cache.Get"
+      },
+      {
+        "name": "Cache.Increment"
+      },
+      {
+        "name": "Cache.Set"
+      }
+    ],
+    "icon": "💭",
+    "name": "cache",
+    "display_name": "Cache"
+  },
+  {
+    "category": "money",
+    "description": "Cryptocurrency prices, quotes, and news\n\n# Crypto Service\n\nGet up to the second cryptocurrency prices, quotes, previous close information, and news.\n\nPowered by [finage.co.uk](https://finage.co.uk).\n",
+    "endpoints": [
+      {
+        "name": "Crypto.History"
+      },
+      {
+        "name": "Crypto.News"
+      },
+      {
+        "name": "Crypto.Price"
+      },
+      {
+        "name": "Crypto.Quote"
+      }
+    ],
+    "icon": "₿",
+    "name": "crypto",
+    "display_name": "Crypto"
+  },
+  {
+    "category": "money",
+    "description": "Exchange rates and currency conversion\n\n# Currency Service\n\nReal time currency conversion and exchange rates. Rate updates occur every 5 minutes.\n\nPowered by [www.exchangerate-api.com](https://www.exchangerate-api.com/).\n\n",
+    "endpoints": [
+      {
+        "name": "Currency.Codes"
+      },
+      {
+        "name": "Currency.Convert"
+      },
+      {
+        "name": "Currency.History"
+      },
+      {
+        "name": "Currency.Rates"
+      }
+    ],
+    "icon": "💱",
+    "name": "currency",
+    "display_name": "Currency"
+  },
+  {
+    "category": "storage",
+    "description": "Simple database service\n\n# DB Service\n\nThe DB service is a straightforward key-value and document database which provides persistent storage via a Create Read Update Delete (CRUD) API. It includes feature rich querying and JSON based formatted records for native use in Node.js and or any language. Powering the backend of your apps from anywhere in the world.\n\n",
+    "endpoints": [
+      {
+        "name": "Db.Create"
+      },
+      {
+        "name": "Db.Delete"
+      },
+      {
+        "name": "Db.Read"
+      },
+      {
+        "name": "Db.Truncate"
+      },
+      {
+        "name": "Db.Update"
+      }
+    ],
+    "icon": "📦",
+    "name": "db",
+    "display_name": "DB"
+  }
+]

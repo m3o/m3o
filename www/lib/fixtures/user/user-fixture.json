@@ -1,0 +1,7 @@
+{
+  "id": "726cfc63-e75e-4683-8d86-91bd41999f3e",
+  "issuer": "micro",
+  "name": "martin+1@m3o.com",
+  "scopes": ["customer"],
+  "type": "customer"
+}

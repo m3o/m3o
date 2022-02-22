@@ -1,0 +1,78 @@
+a {
+  @apply text-blue-600 hover:underline dark:text-white;
+}
+
+.btn {
+  @apply py-4 px-8 bg-zinc-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-zinc-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800;
+}
+
+.inverse-btn {
+  @apply bg-indigo-600 text-sm rounded-md flex items-center hover:shadow-md hover:no-underline dark:border-indigo-300 text-white;
+}
+
+.btn:active,
+.inverse-btn:active {
+  @apply scale-95;
+}
+
+.input {
+  @apply border block py-4 px-6 w-full rounded-lg text-sm focus:border-indigo-800 transition-colors dark:border-zinc-600 dark:bg-transparent appearance-none;
+}
+
+.m3o-container {
+  @apply container px-4 md:px-6 mx-auto max-w-6xl relative w-11/12;
+}
+
+.tabs {
+  @apply flex items-center font-medium text-sm;
+}
+
+.tab {
+  @apply border-transparent text-zinc-600 font-normal dark:text-zinc-300 py-4 mr-8 border-b-2 border-solid block;
+}
+
+.tab.selected {
+  @apply border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-indigo-800 via-purple-500 to-pink-500 bg-clip-text text-transparent;
+}
+
+.box {
+  @apply bg-zinc-50 dark:bg-zinc-800 border dark:border-zinc-700 border-zinc-300;
+}
+
+/* Toggle border colour */
+.tbc {
+  @apply dark:border-zinc-700 border-zinc-200;
+}
+
+.tbgc {
+  @apply bg-zinc-100 dark:bg-zinc-800;
+}
+
+.ttc {
+  @apply text-zinc-600 dark:text-zinc-300;
+}
+
+.gradient-bg {
+  @apply bg-gradient-to-r from-indigo-800 via-purple-500 to-pink-500;
+}
+
+.description-heading {
+  @apply text-lg font-medium uppercase text-zinc-600 dark:text-white;
+}
+
+.card {
+  @apply bg-white rounded-md dark:bg-zinc-800 overflow-hidden border;
+}
+
+/* Stripe */
+.stripe-card {
+  @apply p-6 rounded-lg dark:bg-zinc-700 bg-zinc-200;
+}
+
+.stripe-card input {
+  @apply ttc;
+}
