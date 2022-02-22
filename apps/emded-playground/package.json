@@ -12,6 +12,7 @@
     "parcel": "latest"
   },
   "dependencies": {
-    "m3o": "^1.0.1335"
+    "m3o": "^1.0.1339",
+    "monaco-editor": "^0.32.1"
   }
 }
