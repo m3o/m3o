@@ -4,10 +4,6 @@ on:
     paths:
       - 'www/**'
 
-defaults:
-  run:
-    working-directory: www
-
 jobs:
   build:
     name: Build, Push, Deploy
@@ -18,14 +14,17 @@ jobs:
 
       - name: Docker Build
         run: docker build -t m3o/cloud-next .
+        working-directory: www
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
+        working-directory: www
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Log in to DO Container Registry
         run: doctl registry login --expiry-seconds 600
+        working-directory: www
 
       - name: Tag & Push Live
         if: github.ref == 'refs/heads/main'
@@ -33,6 +32,7 @@ jobs:
           docker tag m3o/cloud-next registry.digitalocean.com/m3o/cloud-next:live
           docker push registry.digitalocean.com/m3o/cloud-next:live
           doctl apps create-deployment ${{ secrets.DIGITALOCEAN_LIVE_ID }}
+        working-directory: www
 
       - name: Tag & Push Preview
         if: github.ref != 'refs/heads/main'
@@ -40,3 +40,4 @@ jobs:
           docker tag m3o/cloud-next registry.digitalocean.com/m3o/cloud-next:preview
           docker push registry.digitalocean.com/m3o/cloud-next:preview
           doctl apps create-deployment ${{ secrets.DIGITALOCEAN_PREVIEW_ID }}
+        working-directory: www
