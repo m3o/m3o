@@ -1,4 +1,4 @@
-# M3O Web
+# M3O Web Dashboard
 
 The M3O Web Dashboard
 
