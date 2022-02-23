@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --exec npm start",
-    "build:ui": "webpack"
+    "build:ui": "webpack",
+    "build": "NODE_ENV=production npm run build:ui"
   },
   "license": "ISC",
   "dependencies": {

@@ -1,6 +1,3 @@
-/*!********************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/styles/globals.css ***!
-  \********************************************************************************************************************/
 /*
 ! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 *//*
@@ -460,12 +457,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     max-width: 1536px;
   }
 }
-.mt-10 {
-  margin-top: 2.5rem;
-}
-.mb-4 {
-  margin-bottom: 1rem;
-}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -487,21 +478,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-.font-bold {
-  font-weight: 700;
+.font-light {
+  font-weight: 300;
 }
 .font-black {
   font-weight: 900;
 }
-.font-light {
-  font-weight: 300;
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 .text-zinc-500 {
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
-}
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
