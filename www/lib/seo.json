@@ -1,0 +1,56 @@
+{
+  "about": {
+    "title": "About Us",
+    "description": "See how M3O became the company it is today."
+  },
+  "account": {
+    "billing": {
+      "title": "Account - Billing"
+    },
+    "dashboard": {
+      "title": "Account - Dashboard"
+    },
+    "keys": {
+      "title": "Account - API Keys"
+    },
+    "usage": {
+      "title": "Account - Usage"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Your M3O overview dashboard"
+  },
+  "explore": {
+    "title": "Explore",
+    "description": "Explore and consume free and paid public APIs as simpler programmable building blocks for a 10x better developer experience."
+  },
+  "gettingStarted": {
+    "title": "Getting Started",
+    "description": "A guide to using the Micro APIs"
+  },
+  "home": {
+    "description": "M3O is a cloud platform for the next generation of developers. Consume public APIs as simpler programmable building blocks for a 10x better developer experience.",
+    "title": "Next Generation Cloud"
+  },
+  "login": {
+    "description": "Login to Micro to start using our public APIs",
+    "title": "Login"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "description": "The majority of our API's are FREE to use. Please see our pricing page for the pricing of our paid APIs"
+  },
+  "register": {
+    "title": "Register",
+    "description": "Create a free account and get started now"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Reset your password"
+  },
+  "trending": {
+    "title": "Trending",
+    "description": "See the most popular APIs and users using them"
+  }
+}

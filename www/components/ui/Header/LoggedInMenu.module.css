@@ -1,0 +1,9 @@
+.link {
+  display: block;
+  font-size: 14px;
+  padding: var(--m3o-spacing);
+}
+
+.link:hover {
+  color: var(--m3o-hot-pink);
+}

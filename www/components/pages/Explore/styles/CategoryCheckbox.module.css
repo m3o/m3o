@@ -1,0 +1,31 @@
+.root {
+  @apply mb-3;
+}
+
+.root input {
+  position: absolute;
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  width: 0;
+}
+
+.root label {
+  @apply flex items-center cursor-pointer capitalize;
+}
+
+.root label svg {
+  @apply opacity-0;
+}
+
+.icon {
+  @apply w-6 h-6 rounded-md border border-solid border-zinc-400 mr-4 flex items-center justify-center dark:border-zinc-600;
+}
+
+.root input:checked + label svg {
+  @apply opacity-100;
+}
+
+.root input:checked + label .icon {
+  @apply bg-indigo-600 border-indigo-600;
+}
