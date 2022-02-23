@@ -1,7 +1,9 @@
 let MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+let mode = process.env.NODE_ENV || 'development'
+
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode,
   entry: {
     home: './src/home.js',
     widgets: './src/widgets.js',
@@ -11,7 +13,7 @@ module.exports = {
     filename: '[name].js',
     path: __dirname + '/public'
   },
-  watch: true,
+  watch: mode === 'development',
   module: {
     rules: [
       {
