@@ -11,7 +11,6 @@ app.set('views', './views')
 
 // Static files
 app.use(express.static('public'))
-app.use('/widgets', express.static('widgets'))
 
 app.get('/', (req, res) => {
   res.render('home', {
