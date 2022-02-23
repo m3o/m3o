@@ -78,7 +78,7 @@
     "eslint": "^7.32.0",
     "eslint-config-next": "11.0.1",
     "eslint-plugin-unused-imports": "^1.1.5",
-    "husky": "^7.0.0",
+    "husky": "^7.0.1",
     "identity-obj-proxy": "^3.0.0",
     "immer": ">=9.0.6",
     "jest": "^27.4.7",
