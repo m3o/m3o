@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     home: './src/home.js',
     widgets: './src/widgets.js',
+    'create-widget': './src/create-widget.js',
   },
   output: {
     filename: '[name].js',

@@ -16,8 +16,14 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/widgets/create', (req, res) => {
+  res.render('widgets/create', {
+    name: 'create-widget',
+  })
+})
+
 app.get('/widgets', (req, res) => {
-  res.render('widgets', {
+  res.render('widgets/index', {
     name: 'widgets',
   })
 })

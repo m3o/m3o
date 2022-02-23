@@ -2,10 +2,14 @@
   <head>
     <meta charset='utf-8' />
     <title>Example App</title>
-    <link rel='stylesheet' href='{{name}}.css' />
+    {{#if name}}
+      <link rel='stylesheet' href='/{{name}}.css' />
+    {{/if}}
   </head>
   <body>
     {{{body}}}
   </body>
-  <script src='{{name}}.js'></script>
+  {{#if name}}
+    <script src='/{{name}}.js'></script>
+  {{/if}}
 </html>
