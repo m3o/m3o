@@ -427,4 +427,81 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+
+  .container {
+    max-width: 1536px;
+  }
+}
+.mt-10 {
+  margin-top: 2.5rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+.p-10 {
+  padding: 2.5rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-black {
+  font-weight: 900;
+}
+.font-light {
+  font-weight: 300;
+}
+.text-zinc-500 {
+  --tw-text-opacity: 1;
+  color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
 

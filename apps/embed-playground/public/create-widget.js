@@ -6,7 +6,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
@@ -14,19 +14,19 @@
 /*!********************************!*\
   !*** ./src/styles/globals.css ***!
   \********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://server-rendered/./src/styles/globals.css?");
 
 /***/ }),
 
-/***/ "./src/home.js":
-/*!*********************!*\
-  !*** ./src/home.js ***!
-  \*********************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ "./src/create-widget.js":
+/*!******************************!*\
+  !*** ./src/create-widget.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_globals_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/globals.css */ \"./src/styles/globals.css\");\n\n\n\n//# sourceURL=webpack://server-rendered/./src/home.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_globals_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/globals.css */ \"./src/styles/globals.css\");\n\n\n\n//# sourceURL=webpack://server-rendered/./src/create-widget.js?");
 
 /***/ })
 
@@ -58,22 +58,22 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sty
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/home.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/create-widget.js");
 /******/ 	
 /******/ })()
 ;
