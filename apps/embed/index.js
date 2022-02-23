@@ -8,23 +8,14 @@ let server = http.createServer(app)
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './views')
+
+// Static files
 app.use(express.static('public'))
+app.use('/widgets', express.static('widgets'))
 
 app.get('/', (req, res) => {
   res.render('home', {
     name: 'home'
-  })
-})
-
-app.get('/widgets/create', (req, res) => {
-  res.render('widgets/create', {
-    name: 'create-widget'
-  })
-})
-
-app.get('/widgets', (req, res) => {
-  res.render('widgets/index', {
-    name: 'widgets'
   })
 })
 

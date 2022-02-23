@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --exec npm start",
-    "build:ui": "webpack",
+    "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css --watch",
     "build": "NODE_ENV=production npm run build:ui"
   },
   "license": "ISC",

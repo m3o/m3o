@@ -5,9 +5,7 @@ let mode = process.env.NODE_ENV || 'development'
 module.exports = {
   mode,
   entry: {
-    home: './src/home.js',
-    widgets: './src/widgets.js',
-    'create-widget': './src/create-widget.js'
+    home: './src/home.js'
   },
   output: {
     filename: '[name].js',
