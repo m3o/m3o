@@ -12,19 +12,19 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   res.render('home', {
-    name: 'home',
+    name: 'home'
   })
 })
 
 app.get('/widgets/create', (req, res) => {
   res.render('widgets/create', {
-    name: 'create-widget',
+    name: 'create-widget'
   })
 })
 
 app.get('/widgets', (req, res) => {
   res.render('widgets/index', {
-    name: 'widgets',
+    name: 'widgets'
   })
 })
 
