@@ -13,3 +13,4 @@ m3o-next.css
 _site
 .jekyll-cache
 .parcel-cache
+apps/embed/public

@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --exec npm start",
-    "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css --watch",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:ui\"",
+    "dev:server": "nodemon --exec npm start",
+    "dev:ui": "npm run build:ui --watch",
+    "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css",
     "build": "NODE_ENV=production npm run build:ui"
   },
   "license": "ISC",
@@ -21,6 +23,7 @@
     "@babel/core": "^7.17.5",
     "@babel/node": "^7.16.8",
     "autoprefixer": "^10.4.2",
+    "concurrently": "^7.0.0",
     "css-loader": "^6.6.0",
     "mini-css-extract-plugin": "^2.5.3",
     "postcss": "^8.4.6",
