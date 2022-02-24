@@ -2,14 +2,15 @@
   "name": "embed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "start": "node index.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:ui\"",
     "dev:server": "nodemon --exec npm start",
     "dev:ui": "npm run build:ui --watch",
+    "build": "NODE_ENV=production npm run build:ui && build:widgets",
     "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css",
-    "build": "NODE_ENV=production npm run build:ui && cd src/widgets/hello-world && npm i && npm run build"
+    "build:widgets": "parcel build"
   },
   "license": "ISC",
   "dependencies": {
@@ -26,11 +27,20 @@
     "concurrently": "^7.0.0",
     "css-loader": "^6.6.0",
     "mini-css-extract-plugin": "^2.5.3",
+    "parcel": "^2.3.2",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.23",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
+  },
+  "source": [
+    "src/widgets/hello-world/src/hello-world.html"
+  ],
+  "targets": {
+    "default": {
+      "distDir": "./public"
+    }
   }
 }
