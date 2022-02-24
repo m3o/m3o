@@ -1,0 +1,70 @@
+import type { NextPage } from 'next'
+import { useState } from 'react'
+import { NextSeo } from 'next-seo'
+import { Routes } from '@/lib/constants'
+import { DashboardLayout } from '@/components/layouts'
+import { withAuth } from '@/lib/api/m3o/withAuth'
+import {
+  KeysApiUsage,
+  PersonalToken,
+  ApiKeys,
+  DeleteKeyConfirmationModal,
+  CreateAPIKeyModal,
+} from '@/components/pages/User'
+import seo from '@/lib/seo.json'
+
+interface KeysProps {
+  user: Account
+}
+
+export const getServerSideProps = withAuth(async context => {
+  if (!context.req.user) {
+    return {
+      redirect: {
+        destination: Routes.Home,
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      user: context.req.user,
+    },
+  }
+})
+
+const Keys: NextPage<KeysProps> = () => {
+  const [deleteKeyId, setDeleteKeyId] = useState('')
+  const [showAddKeyModal, setShowAddKeyModal] = useState(false)
+
+  return (
+    <>
+      <NextSeo title={seo.account.keys.title} />
+      <DashboardLayout>
+        <h1 className="gradient-text text-3xl md:text-5xl mb-6 pb-4 font-bold">
+          API Keys
+        </h1>
+        <KeysApiUsage />
+        <PersonalToken />
+        <ApiKeys
+          onDeleteClick={setDeleteKeyId}
+          onAddClick={() => setShowAddKeyModal(true)}
+        />
+        {showAddKeyModal && (
+          <CreateAPIKeyModal
+            open={showAddKeyModal}
+            closeModal={() => setShowAddKeyModal(false)}
+          />
+        )}
+        <DeleteKeyConfirmationModal
+          deleteKeyId={deleteKeyId}
+          open={!!deleteKeyId}
+          closeModal={() => setDeleteKeyId('')}
+        />
+      </DashboardLayout>
+    </>
+  )
+}
+
+export default Keys

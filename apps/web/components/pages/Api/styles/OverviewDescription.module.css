@@ -1,0 +1,11 @@
+.root p {
+  @apply mb-3 leading-6;
+}
+
+.root ul {
+  @apply list-disc pl-6 mb-3;
+}
+
+.root code {
+  @apply text-sm text-indigo-400;
+}
