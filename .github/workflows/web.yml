@@ -15,6 +15,7 @@ jobs:
       - name: Docker Build
         run: docker build -t m3o/cloud-next .
         working_directory: ./apps/web
+        
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
