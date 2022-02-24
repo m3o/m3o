@@ -95,7 +95,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                                 'border-transparent': pathname !== item.href,
                               },
                             )}>
-                            <item.icon className="w-5 align-top inline" /> {item.text}
+                            <item.icon className="w-5 mr-2 align-top inline" />{item.text}
                           </a>
                         </Link>
                       </li>
