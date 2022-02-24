@@ -22,5 +22,6 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "packageManager": "npm@8.1.0"
 }
