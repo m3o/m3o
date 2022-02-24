@@ -1,0 +1,15 @@
+{
+  "name": "widgets",
+  "source": [
+    "hello-world/index.html",
+    "hello-world-2/index.html"
+  ],
+  "scripts": {
+    "build": "parcel build"
+  },
+  "targets": {
+    "default": {
+      "distDir": "../public"
+    }
+  }
+}

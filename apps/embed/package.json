@@ -1,5 +1,5 @@
 {
-  "name": "embed",
+  "name": "@m3o/embed",
   "version": "1.0.0",
   "description": "",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -10,7 +10,7 @@
     "dev:ui": "npm run build:ui --watch",
     "build": "NODE_ENV=production npm run build:ui && build:widgets",
     "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css",
-    "build:widgets": "parcel build"
+    "build:widgets": "cd widgets && npm run build"
   },
   "license": "ISC",
   "dependencies": {
@@ -34,13 +34,5 @@
     "tailwindcss": "^3.0.23",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
-  },
-  "source": [
-    "src/widgets/hello-world/src/hello-world.html"
-  ],
-  "targets": {
-    "default": {
-      "distDir": "./public"
-    }
   }
 }

@@ -1,1 +1,1 @@
-*.handlebars
+site/views/**/*.handlebars
