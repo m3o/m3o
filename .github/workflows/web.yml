@@ -2,6 +2,7 @@ name: Web - Build, Push, Deploy
 on:
   push:
     paths:
+      - '.github/workflows/web.yml'
       - 'apps/web/**'
 
 jobs:
