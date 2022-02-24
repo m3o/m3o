@@ -1,3 +1,4 @@
+import type { ComponentType, ComponentProps } from 'react'
 import type { ReactElement, PropsWithChildren } from 'react'
 import { Fragment, useRef, useState, useEffect } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
@@ -9,11 +10,23 @@ import { Subscription, RecentlyViewed } from '@/components/pages/Home'
 import { Balance } from '@/components/ui'
 import { useWindowResizeTrigger, useBillingAccount } from '@/hooks'
 import { SubscriptionPlans } from '@/lib/constants'
+import {
+  HomeIcon,
+  CloudIcon,
+  SearchIcon,
+  ChartBarIcon,
+  CashIcon,
+  KeyIcon,
+  SupportIcon,
+  UsersIcon,
+  MailIcon,
+} from '@heroicons/react/outline'
 
 interface SidebarItem {
   href: string
   external?: boolean
   text: string
+  icon: ComponentType<ComponentProps<'svg'>>
 }
 
 interface SidebarSection {
@@ -82,7 +95,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                                 'border-transparent': pathname !== item.href,
                               },
                             )}>
-                            {item.text}
+                            <item.icon className="w-5 align-top inline" /> {item.text}
                           </a>
                         </Link>
                       </li>
@@ -115,15 +128,18 @@ export function DashboardLayout({
                   {
                     text: 'Home',
                     href: '/',
+                    icon: HomeIcon,
                   },
                   {
                     text: 'Cloud',
                     href: 'https://cloud.m3o.com',
                     external: true,
+                    icon: CloudIcon,
                   },
                   {
                     text: 'Explore',
                     href: '/explore',
+                    icon: SearchIcon,
                   },
                 ],
               },
@@ -133,14 +149,17 @@ export function DashboardLayout({
                   {
                     text: 'Usage',
                     href: '/account/usage',
+                    icon: ChartBarIcon,
                   },
                   {
                     text: 'Billing & Plans',
                     href: '/account/billing',
+                    icon: CashIcon,
                   },
                   {
                     text: 'API Keys',
                     href: '/account/keys',
+                    icon: KeyIcon,
                   },
                 ],
               },
@@ -150,16 +169,19 @@ export function DashboardLayout({
                   {
                     text: 'Getting Started',
                     href: '/getting-started',
+                    icon: SupportIcon,
                   },
                   {
                     text: 'Community',
                     href: 'https://discord.gg/TBR9bRjd6Z',
                     external: true,
+                    icon: UsersIcon,
                   },
                   isProUser
                     ? {
                         text: 'Email',
                         href: 'mailto:support@m3o.com',
+                        icon: MailIcon,
                       }
                     : undefined,
                 ],
