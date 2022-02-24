@@ -9,7 +9,7 @@
     "dev:server": "nodemon --exec npm start",
     "dev:ui": "npm run build:ui --watch",
     "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css",
-    "build": "NODE_ENV=production npm run build:ui && cd src/widgets/hello-world && npm run build"
+    "build": "NODE_ENV=production npm run build:ui && cd src/widgets/hello-world && npm i && npm run build"
   },
   "license": "ISC",
   "dependencies": {
