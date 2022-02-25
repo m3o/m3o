@@ -1,4 +1,5 @@
 {
   "extends": ["next", "next/core-web-vitals"],
-  "plugins": ["unused-imports"]
+  "plugins": ["unused-imports"],
+  "react/jsx-key": "off"
 }
