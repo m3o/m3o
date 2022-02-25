@@ -85,5 +85,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "resolutions": {
+    "eslint-plugin-react": "7.28.0"
   }
 }
