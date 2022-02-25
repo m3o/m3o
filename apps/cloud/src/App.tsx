@@ -12,6 +12,7 @@ import { ToastProvider } from './providers/ToastProvider'
 import { AppsScreen } from './services/apps/screens/AppsScreen'
 import { AddAppScreen } from './services/apps/screens/AddAppScreen'
 import { FunctionsScreen } from './services/functions/screens/FunctionsScreen'
+import { AddFunctionScreen } from './services/functions/screens/AddFunctionScreen'
 import { DbScreen } from './services/database/screens/DbScreen'
 import { AddDbTableScreen } from './services/database/screens/AddDbTableScreen'
 import { useRedirectToLogin } from './hooks/useRedirectToLogin'
@@ -49,6 +50,7 @@ function App() {
                 </Route>
                 <Route path="functions">
                   <Route index element={<FunctionsScreen />} />
+                  <Route path="add" element={<AddFunctionScreen />} />
                 </Route>
               </Route>
             </Routes>
