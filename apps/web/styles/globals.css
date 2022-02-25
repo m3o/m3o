@@ -76,3 +76,7 @@ a {
 .stripe-card input {
   @apply ttc;
 }
+
+option {
+  @apply dark:text-black;
+}
