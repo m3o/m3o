@@ -107,6 +107,7 @@ export const Explore: FC<ExploreProps> = ({
       <div className="bg-zinc-50 pt-20 dark:bg-zinc-900">
         <div className="m3o-container sm">
           <div className="md:grid md:grid-cols-5">
+            {/*
             <aside className="hidden md:block">
               <CategoriesFilter
                 categories={categories}
@@ -115,7 +116,8 @@ export const Explore: FC<ExploreProps> = ({
                 selectedCategories={selectedCategories}
               />
             </aside>
-            <div className="col-span-4 pb-6">
+            */}
+            <div className="col-span-6 pb-6">
               {isFetching ? (
                 <div className="flex justify-center w-full">
                   <Spinner className="scale-125 transform" />
@@ -137,6 +139,7 @@ export const Explore: FC<ExploreProps> = ({
           </div>
         </div>
       </div>
+      {/*
       <FiltersButton
         onClick={() => setShowMobileMenu(true)}
         selectedCategoriesLength={categoriesLength}
@@ -151,6 +154,7 @@ export const Explore: FC<ExploreProps> = ({
           selectedCategories={selectedCategories}
         />
       </MobileFilters>
+      */}
     </>
   )
 }
