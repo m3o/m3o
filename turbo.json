@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.org/schema.json",
   "baseBranch": "origin/main",
   "pipeline": {
+    "@m3o/widgets/hello-world": {},
     "@m3o/embed#build": {},
     "build": {
       "dependsOn": ["^build"],

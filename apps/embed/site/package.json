@@ -1,8 +1,17 @@
 {
   "name": "@m3o/embed",
+  "version": "1.0.0",
+  "description": "",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "cd site && npm run dev"
+    "start": "node src/index.js",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:ui\" \"npm run build-widgets'\"",
+    "dev:server": "nodemon --exec npm start",
+    "dev:ui": "npm run build:ui --watch",
+    "build": "NODE_ENV=production npm run build:ui",
+    "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css"
   },
+  "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.2",
