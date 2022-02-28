@@ -22,7 +22,8 @@
   },
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "apps/*",
+    "apps/embed/widgets"
   ],
   "packageManager": "npm@8.1.0"
 }
