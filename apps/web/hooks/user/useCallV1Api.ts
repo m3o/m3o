@@ -16,7 +16,7 @@ export async function callV1Api(
   token: string,
   payload: CallV1ApiPayload,
 ): Promise<unknown> {
-  const endpointName = payload.endpoint.replace(' ', '')
+  const endpointName = payload.endpoint.replaceAll(' ', '')
 
   try {
     const response = await axios.post<unknown>(
