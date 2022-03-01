@@ -1,34 +1,23 @@
 {
-  "name": "@m3o/embed",
-  "source": "src/index.js",
+  "name": "embed",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon --exec npm start",
-    "dev:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css --watch",
-    "build": "NODE_ENV=production npm run build:ui",
-    "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css"
+    "start": "http-server ./public -p 1234",
+    "dev": "parcel './apps/*'",
+    "build": "parcel build './apps/*'"
   },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "express-handlebars": "^6.0.2",
-    "m3o": "^1.0.1340",
+    "http-server": "^14.1.0",
     "nodemon": "^2.0.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "url": "^0.11.0"
-    
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/node": "^7.16.8",
     "autoprefixer": "^10.4.2",
     "concurrently": "^7.0.0",
-    "css-loader": "^6.6.0",
-    "mini-css-extract-plugin": "^2.5.3",
     "parcel": "^2.3.2",
-    "postcss": "^8.4.6",
-    "postcss-loader": "^6.2.1",
-    "style-loader": "^3.3.1",
-    "tailwindcss": "^3.0.23",
     "yargs": "^17.3.1"
   },
   "engines": {

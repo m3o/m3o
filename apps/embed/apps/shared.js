@@ -1,4 +1,4 @@
-export async function m3oRequest({apiName, method, data}) {
+export async function m3oRequest({ apiName, method, data }) {
   const response = await fetch(`https://api.m3o.com/v1/${apiName}/${method}`, {
     method: 'POST',
     body: JSON.stringify(data),

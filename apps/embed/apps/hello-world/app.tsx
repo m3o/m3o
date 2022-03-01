@@ -1,12 +1,12 @@
-import type { FormEvent, ReactElement } from 'react';
+import type { FormEvent, ReactElement } from 'react'
 import { useState } from 'react'
 import { m3oRequest, returnFormValues } from '../shared'
 
 export function App(): ReactElement {
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState('')
 
-  async function handleSubmit (event: FormEvent): Promise<void> {
-    event.preventDefault();
+  async function handleSubmit(event: FormEvent): Promise<void> {
+    event.preventDefault()
 
     let { name } = returnFormValues(event.target)
     let response = await m3oRequest({
@@ -17,7 +17,6 @@ export function App(): ReactElement {
 
     setResult(response.message)
   }
-
 
   return (
     <div className="bg-zinc-800 p-10 rounded-lg text-white font-light">

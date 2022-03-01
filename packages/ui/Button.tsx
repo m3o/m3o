@@ -21,11 +21,7 @@ export function Button({
   variant = ButtonVariants.primary,
   ...props
 }: PropsWithChildren<Props>): ReactElement {
-  const classes = classnames('btn', className, {
-    'text-white bg-indigo-600': variant === ButtonVariants.primary,
-    'text-zinc-400 border-zinc-300': variant === ButtonVariants.ghost,
-    'inverse-btn': inverse
-  })
+  const classes = classnames('bg-red-50 px-6 py-4', className)
 
   return (
     <button className={classes} {...props}>

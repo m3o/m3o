@@ -1,5 +1,9 @@
 module.exports = {
-  content: ['./src/views/**/*.{handlebars,js}'],
+  content: [
+    './apps/**/index.html',
+    './apps/**/*.tsx',
+    '../../packages/ui/Button.tsx'
+  ],
   theme: {
     extend: {}
   },
