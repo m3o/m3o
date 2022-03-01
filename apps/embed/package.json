@@ -1,13 +1,10 @@
 {
   "name": "@m3o/embed",
-  "version": "1.0.0",
-  "description": "",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:ui\"",
-    "dev:server": "nodemon --exec npm start",
-    "dev:ui": "npm run build:ui --watch",
+    "dev": "nodemon --exec npm start",
+    "dev:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css --watch",
     "build": "NODE_ENV=production npm run build:ui",
     "build:ui": "npx tailwindcss -i ./src/styles/globals.css -o ./public/main.css"
   },
@@ -33,5 +30,8 @@
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.23",
     "yargs": "^17.3.1"
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
