@@ -1,4 +1,6 @@
-module.exports = {
+const withTM = require('next-transpile-modules')(['ui'])
+
+module.exports = withTM({
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
@@ -11,4 +13,4 @@ module.exports = {
   images: {
     domains: ['avatars.githubusercontent.com'],
   },
-}
+})
