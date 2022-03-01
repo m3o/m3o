@@ -1,0 +1,11 @@
+node_modules
+dist
+es
+lib
+types
+tmp
+index.js
+index.d.ts
+esm
+.npmrc
+npmrc
