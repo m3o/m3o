@@ -1,0 +1,1 @@
+document.write(`<iframe src="/url-shortener" width="500" height="300"></iframe>`)
