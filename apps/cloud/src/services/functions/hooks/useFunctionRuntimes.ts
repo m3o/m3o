@@ -3,7 +3,7 @@ import { functions } from '../functions.service'
 
 interface UseFunctionRuntimes {
   runtimes: string[]
-  isLoading: boolean
+  loadingRuntimes: boolean
 }
 
 async function fetchRuntimes(): Promise<string[]> {
@@ -13,5 +13,5 @@ async function fetchRuntimes(): Promise<string[]> {
 
 export function useFunctionRuntimes(): UseFunctionRuntimes {
   const { data = [], isLoading } = useQuery('function-runtimes', fetchRuntimes)
-  return { runtimes: data, isLoading }
+  return { runtimes: data, loadingRuntimes: isLoading }
 }
