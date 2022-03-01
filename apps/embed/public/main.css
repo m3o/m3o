@@ -515,6 +515,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 2.5rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -548,6 +556,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 2.5rem;
 }
 
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -558,6 +581,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.25rem;
 }
 
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .font-light {
   font-weight: 300;
 }
@@ -566,9 +604,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-weight: 900;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-zinc-300 {
+  --tw-text-opacity: 1;
+  color: rgb(212 212 216 / var(--tw-text-opacity));
 }
 
 .gradient-text {
@@ -580,4 +627,44 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
+}
+
+.m3o-container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .m3o-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .m3o-container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .m3o-container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .m3o-container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .m3o-container {
+    max-width: 1536px;
+  }
+}
+
+.m3o-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem;
 }

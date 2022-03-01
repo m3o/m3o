@@ -1,5 +1,4 @@
 import type { ComponentProps, ReactElement, PropsWithChildren } from 'react'
-import React from 'react';
 import PulseLoader from 'react-spinners/PulseLoader'
 import classnames from 'classnames'
 

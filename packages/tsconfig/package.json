@@ -1,7 +1,9 @@
 {
-  "name": "@m3o/tsconfig",
+  "name": "tsconfig",
   "version": "0.0.0",
   "files": [
-    "base.json"
+    "base.json",
+    "nextjs.json",
+    "react-library.json"
   ]
 }

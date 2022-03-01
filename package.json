@@ -2,8 +2,13 @@
   "name": "m3o",
   "version": "1.0.0",
   "description": "<p align=\"center\"> \t<a href=\"https://m3o.com\" style=\"color: #333333;\"> \t\t<img id=\"banner\" src=\"assets/images/m3o.png\" /> \t</a> </p> <p align=\"center\"> \t<a href=\"https://discord.gg/TBR9bRjd6Z\"><img src=\"https://img.shields.io/badge/join-discord-purple\"></a> \t<a href=\"https://m3o.com\"><img src=\"https://img.shields.io/badge/signup-free-green\"></a> \t<a href=\"https://twitter.com/m3oservices\"><img src=\"https://img.shields.io/badge/twitter-follow-blue\"></a> \t<a href=\"https://github.com/m3o/m3o\"><img src=\"https://img.shields.io/badge/github-repo-yellow\"></a>",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "embed-dev": "turbo run dev --scope=\"@m3o/embed\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "web:dev": "turbo run dev --scope=\"web\"",
     "dev": "turbo run dev --no-cache --parallel --continue",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,10 +25,5 @@
   "devDependencies": {
     "turbo": "latest"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "apps/embed/widgets"
-  ],
   "packageManager": "npm@8.1.0"
 }
