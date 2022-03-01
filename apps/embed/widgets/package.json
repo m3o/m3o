@@ -4,6 +4,10 @@
 		"url-shortener/index.html",
 		"hello-world/index.html"
 	],
+	"scripts": {
+		"dev": "parcel",
+		"build": "parcel build"
+	},
 	"targets": {
 		"default": {
 			"distDir": "../public"

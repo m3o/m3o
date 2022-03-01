@@ -13,4 +13,5 @@ m3o-next.css
 _site
 .jekyll-cache
 .parcel-cache
-apps/embed/public
+apps/embed/public/hello-world
+apps/embed/public/url-shortner
