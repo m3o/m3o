@@ -18,6 +18,8 @@
     "autoprefixer": "^10.4.2",
     "concurrently": "^7.0.0",
     "parcel": "^2.3.2",
+    "postcss": "^8.4.7",
+    "tailwindcss": "^3.0.23",
     "yargs": "^17.3.1"
   },
   "engines": {
