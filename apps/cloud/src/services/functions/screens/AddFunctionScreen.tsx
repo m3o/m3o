@@ -6,6 +6,7 @@ import { Heading1 } from '../../../components/Headings/Heading1'
 import { TextInput } from '../../../components/Form/TextInput'
 import { Select } from '../../../components/Form/Select'
 import { useFunctionRegions } from '../hooks/useFunctionRegions'
+import { useFunctionRuntimes } from '../hooks/useFunctionRuntimes'
 import { SubmitButton } from '../../../components/Buttons/SubmitButton'
 import { Spinner } from '../../../components/Spinner'
 import { useDeployFunction } from '../hooks/useDeployFunction'
@@ -13,6 +14,7 @@ import { useDeployFunction } from '../hooks/useDeployFunction'
 export const AddFunctionScreen: FC = () => {
   const { run } = useDeployFunction()
   const { regions, isLoading } = useFunctionRegions()
+  const { runtimes, loadingRuntimes } = useFunctionRuntimes()
   const { handleSubmit, control } = useForm<DeployRequest>()
 
   return (
@@ -83,17 +85,29 @@ export const AddFunctionScreen: FC = () => {
             />
           )}
         />
-        <Controller
-          control={control}
-          name="runtime"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              label="Runtime"
-              error={fieldState.error?.message}
-            />
-          )}
-        />
+        {loadingRuntimes ? (
+          <Spinner />
+        ) : (
+          <Controller
+            control={control}
+            name="runtime"
+            rules={{ required: 'Please select a runtime' }}
+            render={({ field, fieldState }) => (
+              <Select
+                {...field}
+                label="Runtime"
+                error={fieldState.error?.message}
+              >
+                <option value="">Please select</option>
+                {runtimes.map((runtime) => (
+                  <option value={runtime} key={runtime}>
+                    {runtime}
+                  </option>
+                ))}
+              </Select>
+            )}
+          />
+        )}
         {isLoading ? (
           <Spinner />
         ) : (
