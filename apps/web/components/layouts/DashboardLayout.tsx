@@ -95,7 +95,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                                 'border-transparent': pathname !== item.href,
                               },
                             )}>
-                            <item.icon className="w-5 mr-2 align-top inline" />
+                            {/* <item.icon className="w-5 mr-2 align-top inline" /> */}
                             {item.text}
                           </a>
                         </Link>
@@ -119,8 +119,8 @@ export function DashboardLayout({
 
   return (
     <MainLayout>
-      <section className="min-h-screen md:grid md:grid-cols-5">
-        <aside className="md:border-r tbc bg-white dark:bg-zinc-900 md:pt-6">
+      <section className="min-h-screen md:grid md:grid-cols-6">
+        <aside className=" bg-white dark:bg-zinc-800 md:pt-6 md:border-r tbc">
           <SidebarItems
             items={[
               {
@@ -131,16 +131,30 @@ export function DashboardLayout({
                     href: '/',
                     icon: HomeIcon,
                   },
+                ],
+              },
+              {
+                title: 'Cloud',
+                items: [
                   {
-                    text: 'Cloud',
-                    href: 'https://cloud.m3o.com',
-                    external: true,
-                    icon: CloudIcon,
+                    text: 'Apps',
+                    href: '/cloud/apps',
+                    icon: ChartBarIcon,
                   },
                   {
-                    text: 'Explore',
-                    href: '/explore',
-                    icon: SearchIcon,
+                    text: 'Database',
+                    href: '/cloud/database',
+                    icon: ChartBarIcon,
+                  },
+                  {
+                    text: 'Functions',
+                    href: '/cloud/functions',
+                    icon: ChartBarIcon,
+                  },
+                  {
+                    text: 'Users',
+                    href: '/cloud/users',
+                    icon: ChartBarIcon,
                   },
                 ],
               },
@@ -190,13 +204,13 @@ export function DashboardLayout({
             ]}
           />
         </aside>
-        <div className="col-span-4 bg-white dark:bg-zinc-900 p-4 md:p-10 xl:grid xl:grid-cols-3 gap-10">
-          <div className="col-span-2">{children}</div>
-          <div className="bg-zinc-900 dark:bg-zinc-800 rounded-lg p-8 mt-4 md:mt-10 xl:mt-0">
+        <div className="col-span-5 bg-white dark:bg-zinc-900">
+          {children}
+          {/* <div className="bg-zinc-900 dark:bg-zinc-800 rounded-lg p-8 mt-4 md:mt-10 xl:mt-0">
             <Subscription />
             <Balance />
             <RecentlyViewed />
-          </div>
+          </div> */}
         </div>
       </section>
     </MainLayout>

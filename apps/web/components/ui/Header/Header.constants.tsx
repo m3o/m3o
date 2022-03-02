@@ -49,9 +49,8 @@ export const LOGGED_IN_HEADER_LINKS: HeaderLink[] = [
     text: 'Home',
   },
   {
-    link: 'https://cloud.m3o.com',
+    link: '/cloud',
     text: 'Cloud',
-    external: true,
   },
   {
     link: Routes.Explore,
