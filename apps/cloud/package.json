@@ -46,8 +46,7 @@
     "eject": "react-app-rewired eject",
     "cy:run": "cypress run --headless",
     "cy:open": "cypress open",
-    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run",
-    "prepare": "cd ../.. && husky install apps/cloud"
+    "e2e": "start-server-and-test start http-get://localhost:3001 cy:run"
   },
   "eslintConfig": {
     "extends": [
