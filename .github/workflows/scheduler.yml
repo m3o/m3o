@@ -6,12 +6,12 @@ on:
       - beta
     paths:
       - '.github/workflows/scheduler.yml'
-      - 'cmd/m3o-client-gen/**'
-      - 'cmd/release-note/**'
+      - 'cmd/**'
 
   repository_dispatch:
     types: [build_m3o_client,build_dart,build_go,build_ts,build_shell]
 
+# temporarily to suppress actions below. 
 # env:
 #   GH_PAT: ${{ secrets.API_TOKEN_GITHUB }}
 
