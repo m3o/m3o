@@ -74,7 +74,7 @@ export const UsersScreen: FC = () => {
         Header: 'Created',
         accessor: 'created',
         Cell: ({ value }) => {
-          return format(new Date(Number(value) * 1000), 'hh:mm do LLL yy')
+          return format(new Date(Number(value) * 1000), 'PPpp')
         }
       },
       {
