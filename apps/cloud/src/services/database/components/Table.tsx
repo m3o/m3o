@@ -30,6 +30,14 @@ export const Table: FC<Props> = ({ data, tableName, onRowClick }) => {
       maxWidth: 200, // maxWidth is only used as a limit for resizing
       // And also our default editable cell
       Cell: ({ value }: { value: any }) => {
+        if (typeof value === 'boolean') {
+          return value ? 'true' : 'false'
+        }
+
+        if (Array.isArray(value)) {
+          return value.join(', ')
+        }
+
         if (typeof value === 'object') {
           return ''
         }
@@ -79,13 +87,13 @@ export const Table: FC<Props> = ({ data, tableName, onRowClick }) => {
       <TableSearch tableName={tableName} onChange={onSearchChange} />
       <div className="overflow-x-scroll">
         <div {...getTableProps()}>
-          <div className="font-medium text-sm text-white">
+          <div className="font-medium text-white">
             {headerGroups.map((headerGroup) => (
               <div {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <div
                     {...column.getHeaderProps()}
-                    className="text-left p-4 text-sm bg-gray-800 border-b border-gray-700"
+                    className="text-left p-4 bg-zinc-800 border-b border-zinc-700"
                   >
                     {column.render('Header')}
                   </div>
@@ -106,7 +114,7 @@ export const Table: FC<Props> = ({ data, tableName, onRowClick }) => {
                     return (
                       <div
                         {...cell.getCellProps()}
-                        className="p-4 text-sm overflow-hidden overflow-ellipsis whitespace-nowrap border-b border-gray-800 font-light text-white"
+                        className="p-4 overflow-hidden overflow-ellipsis whitespace-nowrap border-b border-gray-800 font-light text-white"
                       >
                         {cell.render('Cell')}
                       </div>

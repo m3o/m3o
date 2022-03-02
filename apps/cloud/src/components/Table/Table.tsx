@@ -1,6 +1,7 @@
 import type { Column, CellProps } from 'react-table'
 import type { ChangeEvent } from 'react'
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   useTable,
   useFlexLayout,
@@ -12,6 +13,7 @@ import { Pagination } from './Pagination'
 import { ActionsBar } from './ActionsBar'
 import { TableSearch } from './TableSearch'
 import { Checkbox } from '../Checkbox'
+import { useSelectItems } from '../../hooks/useSelectItems'
 
 interface ExpectedObject extends Record<string, unknown> {
   id: string
@@ -20,22 +22,25 @@ interface ExpectedObject extends Record<string, unknown> {
 interface Props<T extends ExpectedObject> {
   columns: Column<T>[]
   data: T[]
-  onDeleteMultiple: VoidFunction
-  selectedItems: T[]
-  setSelectedItems: (item: T) => void
+  onTrashClick: (items: string[]) => void
   onSetPageSize?: (pageSize: number) => void
   statePageSize?: number
+  rowClickPath: string
 }
 
 export function Table<T extends ExpectedObject>({
   columns,
   data,
-  onDeleteMultiple,
-  selectedItems,
-  setSelectedItems,
+  onTrashClick,
   onSetPageSize,
-  statePageSize
+  statePageSize,
+  rowClickPath
 }: Props<T>) {
+  const navigate = useNavigate()
+  const [shouldSelectAll, setShouldSelectAll] = useState(false)
+  const { onSelectItem, selectedItems, resetSelectedItems } =
+    useSelectItems<T>()
+
   const defaultColumn = useMemo(
     () => ({
       minWidth: 30,
@@ -59,20 +64,40 @@ export function Table<T extends ExpectedObject>({
         id: 'checkbox',
         width: 50,
         Cell: ({ row }: CellProps<T>) => (
+          <div className="pl-4 relative z-20">
+            <Checkbox
+              checked={
+                shouldSelectAll ||
+                selectedItems.some(
+                  (item) =>
+                    JSON.stringify(item) === JSON.stringify(row.original)
+                )
+              }
+              id={row.original.id!}
+              onChange={() => onSelectItem(row.original)}
+            />
+          </div>
+        ),
+        Header: () => (
           <div className="pl-4">
             <Checkbox
-              checked={selectedItems.some(
-                (item) => JSON.stringify(item) === JSON.stringify(row.original)
-              )}
-              id={row.original.id!}
-              onChange={() => setSelectedItems(row.original)}
+              checked={shouldSelectAll}
+              id="select-all"
+              onChange={() => {
+                const newValue = !shouldSelectAll
+                setShouldSelectAll(newValue)
+
+                if (!newValue) {
+                  resetSelectedItems()
+                }
+              }}
             />
           </div>
         )
       },
       ...columns
     ],
-    [columns, setSelectedItems, selectedItems]
+    [columns, onSelectItem, selectedItems, shouldSelectAll]
   )
 
   const tableInstance = useTable(
@@ -80,7 +105,7 @@ export function Table<T extends ExpectedObject>({
       columns: columnsWithCheckboxes,
       data,
       defaultColumn,
-      initialState: { pageSize: statePageSize || 10 }
+      initialState: { pageSize: statePageSize || 20 }
     },
     useFlexLayout,
     useGlobalFilter,
@@ -113,13 +138,22 @@ export function Table<T extends ExpectedObject>({
     200
   )
 
+  const handleDeleteClick = useCallback(() => {
+    const items: string[] = shouldSelectAll
+      ? page.map(({ original }) => original.id)
+      : selectedItems.map(({ id }) => id)
+
+    onTrashClick(items)
+  }, [shouldSelectAll, selectedItems, page])
+
   return (
     <div className="text-white">
       <ActionsBar
-        hasCheckedItems={!!selectedItems.length}
+        hasCheckedItems={!!selectedItems.length || shouldSelectAll}
         right={<TableSearch tableName="users" onChange={onSearchChange} />}
-        onDeleteClick={onDeleteMultiple}
+        onDeleteClick={handleDeleteClick}
         pageSize={pageSize}
+        showingResults={`${data.length} results`}
         onPageSizeChange={(event) => {
           const newPageSize = Number(event.target.value)
 
@@ -147,17 +181,23 @@ export function Table<T extends ExpectedObject>({
             ))}
           </div>
           <div {...getTableBodyProps()}>
-            {page.map((row, i) => {
+            {page.map((row) => {
               prepareRow(row)
               return (
                 <div
                   {...row.getRowProps()}
-                  className="hover:bg-zinc-800 group h-10"
+                  className="hover:bg-zinc-800 group h-10 cursor-pointer"
                 >
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell, idx) => {
                     return (
                       <div
                         {...cell.getCellProps()}
+                        onClick={
+                          !idx
+                            ? undefined
+                            : () =>
+                                navigate(`${rowClickPath}/${row.original.id}`)
+                        }
                         className="border-b border-zinc-700 p-2 text-sm flex items-center"
                       >
                         <span className="overflow-hidden overflow-ellipsis whitespace-nowrap">

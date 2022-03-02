@@ -1,9 +1,10 @@
 import type { FC } from 'react'
 import type { Column, CellProps } from 'react-table'
 import type { Account } from 'm3o/user'
+import { useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import format from 'date-fns/format'
-import { TrashIcon, PencilIcon, UserAddIcon } from '@heroicons/react/outline'
+import { UserAddIcon } from '@heroicons/react/outline'
 import { useMemo, useCallback } from 'react'
 import { Spinner } from '../../../components/Spinner'
 import { useListUsers } from '../hooks/useListUsers'
@@ -17,17 +18,12 @@ import { useUsersStateContext } from '../components/UsersStateProvider'
 type UserAccount = Required<Account>
 
 export const UsersScreen: FC = () => {
+  const currentPageRef = useRef<UserAccount[]>([])
   const navigate = useNavigate()
-  const { selectedItems, onSelectItem, resetSelectedItems } =
-    useSelectItems<UserAccount>()
   const { data = [], isFetching } = useListUsers()
   const { setPageSize, pageSize } = useUsersStateContext()
 
-  const { mutate: deleteMultipleUsers } = useDeleteMultipleUsers({
-    onSuccess: () => {
-      resetSelectedItems()
-    }
-  })
+  const { mutate: deleteMultipleUsers } = useDeleteMultipleUsers()
 
   const { mutate } = useDeleteUser({
     onSuccess: () => {}
@@ -42,16 +38,23 @@ export const UsersScreen: FC = () => {
     [mutate]
   )
 
-  const onDeleteMultiple = useCallback(() => {
-    const message =
-      selectedItems.length === 1
-        ? 'Are you sure you would like to delete this user?'
-        : `Are you sure you would like to delete these ${selectedItems.length} users?`
+  const handleDeleteClick = useCallback(
+    (items: string[]) => {
+      const message =
+        items.length === 1
+          ? 'Are you sure you would like to delete this user?'
+          : `Are you sure you would like to delete these ${items.length} users?`
 
-    if (window.confirm(message)) {
-      deleteMultipleUsers(selectedItems)
-    }
-  }, [selectedItems, deleteMultipleUsers])
+      if (window.confirm(message)) {
+        deleteMultipleUsers(items)
+      }
+    },
+    [deleteMultipleUsers]
+  )
+
+  let onPageChange = (items: UserAccount[]) => {
+    currentPageRef.current = items
+  }
 
   const columns = useMemo<Column<UserAccount>[]>(() => {
     return [
@@ -80,23 +83,6 @@ export const UsersScreen: FC = () => {
         Cell: ({ value }) => {
           return value ? '✅' : '❌'
         }
-      },
-      {
-        id: 'actions',
-        width: 80,
-        Cell: ({ row }: CellProps<UserAccount>) => (
-          <div className="hidden group-hover:block text-white text-right pr-4">
-            <button onClick={() => onDeleteClick(row.original.id!)}>
-              <TrashIcon className="w-4" />
-            </button>
-            <button
-              onClick={() => navigate(`/users/${row.original.id!}`)}
-              className="ml-3"
-            >
-              <PencilIcon className="w-4" />
-            </button>
-          </div>
-        )
       }
     ]
   }, [onDeleteClick, navigate])
@@ -117,11 +103,10 @@ export const UsersScreen: FC = () => {
         <Table<UserAccount>
           data={data as UserAccount[]}
           columns={columns}
-          onDeleteMultiple={onDeleteMultiple}
-          selectedItems={selectedItems}
-          setSelectedItems={onSelectItem}
+          onTrashClick={handleDeleteClick}
           onSetPageSize={setPageSize}
           statePageSize={pageSize}
+          rowClickPath="/users"
         />
       ) : (
         <NoData />

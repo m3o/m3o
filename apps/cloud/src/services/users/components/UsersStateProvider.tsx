@@ -13,7 +13,7 @@ const UsersStateContext = createContext({} as UsersStateContextValue)
 
 export const UsersStateProvider: FC = () => {
   const [state, setState] = useState<UsersState>({
-    pageSize: 10
+    pageSize: 20
   })
 
   const setPageSize = (pageSize: number) => {

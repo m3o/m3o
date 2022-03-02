@@ -7,6 +7,7 @@ interface Props {
   onPageSizeChange: ChangeEventHandler<HTMLSelectElement>
   onDeleteClick: VoidFunction
   pageSize: number
+  showingResults: string
 }
 
 export const ActionsBar: FC<Props> = ({
@@ -14,7 +15,8 @@ export const ActionsBar: FC<Props> = ({
   right,
   onDeleteClick,
   onPageSizeChange,
-  pageSize
+  pageSize,
+  showingResults
 }) => {
   return (
     <div className="border-b border-gray-700 p-1 flex justify-between items-center">
@@ -28,6 +30,9 @@ export const ActionsBar: FC<Props> = ({
         )}
       </div>
       <div className="flex items-center">
+        <p className="text-sm mr-4 border-r border-zinc-700 pr-4">
+          {showingResults}
+        </p>
         <div className="text-right mr-2 flex items-center">
           <p className="text-xs mr-2">Page size:</p>
           <select

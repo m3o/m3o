@@ -1,22 +1,16 @@
-import type { Account } from 'm3o/user'
 import { useMutation, useQueryClient } from 'react-query'
 import { useUserInstance } from './useUsersInstance'
 
-interface UseDeleteMultipleUsers {
-  onSuccess: VoidFunction
-}
-
-export function useDeleteMultipleUsers({ onSuccess }: UseDeleteMultipleUsers) {
+export function useDeleteMultipleUsers() {
   const queryClient = useQueryClient()
   const user = useUserInstance()
 
   return useMutation(
-    (items: Required<Account>[]) =>
-      Promise.all(items.map((item) => user.delete({ id: item.id }))),
+    (items: string[]) =>
+      Promise.all(items.map((item) => user.delete({ id: item }))),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('users')
-        onSuccess()
       }
     }
   )
