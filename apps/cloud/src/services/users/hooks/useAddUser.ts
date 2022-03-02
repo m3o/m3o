@@ -1,17 +1,19 @@
-import type { CreateUserFields } from '../user.types'
+import type { CreateRequest, CreateResponse } from 'm3o/user'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-import { useUserInstance } from './useUsersInstance'
 import { useToast } from '../../../providers/ToastProvider'
+import { m3oClient } from '../../../lib/m3o-client'
 
 export function useAddUser() {
-  const user = useUserInstance()
   const navigate = useNavigate()
   const { showToast } = useToast()
 
   return useMutation(
-    (fields: CreateUserFields) =>
-      user.create({ ...fields, username: fields.email }),
+    (fields: CreateRequest) =>
+      m3oClient.post<CreateResponse>('user/create', {
+        ...fields,
+        username: fields.email
+      }),
     {
       onSuccess: () => {
         navigate('/users')

@@ -1,23 +1,15 @@
-import { useUserInstance } from './useUsersInstance'
 import { useMutation, useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+import { m3oClient } from '../../../lib/m3o-client'
 
-interface UseDeleteUserProps {
-  onSuccess: VoidFunction
-}
-
-export function useDeleteUser({ onSuccess }: UseDeleteUserProps) {
+export function useDeleteUser() {
   const queryClient = useQueryClient()
-  const user = useUserInstance()
+  const navigate = useNavigate()
 
-  return useMutation(
-    (id: string) => {
-      return user.delete({ id })
-    },
-    {
-      onSuccess: () => {
-        onSuccess()
-        queryClient.invalidateQueries('users')
-      }
+  return useMutation((id: string) => m3oClient.post('user/delete', { id }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+      navigate('/users')
     }
-  )
+  })
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { LandingScreen } from './screens/LandingScreen'
 import { TableScreen } from './services/database/screens/TableScreen'
@@ -16,8 +16,7 @@ import { AddFunctionScreen } from './services/functions/screens/AddFunctionScree
 import { DbScreen } from './services/database/screens/DbScreen'
 import { AddDbTableScreen } from './services/database/screens/AddDbTableScreen'
 import { useRedirectToLogin } from './hooks/useRedirectToLogin'
-
-const queryClient = new QueryClient({})
+import { queryClient } from './lib/react-query'
 
 function App() {
   const { authenticated } = useRedirectToLogin()

@@ -12,11 +12,7 @@ export const UserScreen: FC = () => {
   const params = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { data, isLoading } = useGetUserById(params.id!)
-  const { mutate } = useDeleteUser({
-    onSuccess: () => {
-      navigate('/users')
-    }
-  })
+  const deleteUserMutation = useDeleteUser()
 
   if (!data || isLoading) {
     return <Spinner />
@@ -24,7 +20,7 @@ export const UserScreen: FC = () => {
 
   const onDeleteClick = () => {
     if (window.confirm('Are you sure you would like to delete this user?')) {
-      mutate(params.id!)
+      deleteUserMutation.mutate(params.id!)
     }
   }
 
