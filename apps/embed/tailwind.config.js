@@ -1,7 +1,7 @@
 module.exports = {
   content: [
-    './apps/**/index.html',
-    './apps/**/*.tsx',
+    './src/**/index.html',
+    './src/**/*.tsx',
     '../../packages/ui/Button.tsx'
   ],
   theme: {
