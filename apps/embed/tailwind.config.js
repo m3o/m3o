@@ -2,7 +2,7 @@ module.exports = {
   content: [
     './src/**/index.html',
     './src/**/*.tsx',
-    '../../packages/ui/Button.tsx'
+    '../../packages/**/**/*.tsx'
   ],
   theme: {
     extend: {}
