@@ -1,30 +1,79 @@
 name: M3O Client Generation Scheduler
 on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - '.github/workflows/scheduler.yml'
+      - 'cmd/m3o-client-gen/**'
+      - 'cmd/release-note/**'
+
   repository_dispatch:
-    types: 
-      - bp_m3o_client
-      - bp_dart
-      - bp_go
-      - bp_ts
-      - bp_shell
+    types: [build_m3o_client,build_dart,build_go,build_ts,build_shell]
+
+# env:
+#   GH_PAT: ${{ secrets.API_TOKEN_GITHUB }}
 
 jobs:
-  generate-dart:
-    if: ${{ github.event.action == 'bp_dart' }}
+  # here we can trigger the generation processes of all m3o clients 
+  # at once, it is triggered on push or repository_dispatch == build_m3o_client
+  generate:
+    if: ${{ github.event_name == 'push' || github.event.action == 'build_m3o_client' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger m3o/m3o-dart
         run: |
           curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-dart/dispatches -d '{"event_type":"build_publish_dart"}'
-        env:
-          GH_PAT: ${{ secrets.API_TOKEN_GITHUB }}
+        
+      - name: Trigger m3o/m3o-go
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-go/dispatches -d '{"event_type":"build_publish_go"}'
+        
+      - name: Trigger m3o/m3o-ts
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-ts/dispatches -d '{"event_type":"build_publish_ts"}'
+        
+      - name: Trigger m3o/m3o-sh
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-sh/dispatches -d '{"event_type":"build_publish_shell"}'
 
+  # here we can trigger the generation process of m3o dart clients, it is 
+  # triggered on repository_dispatch == build_dart
+  generate-dart:
+    if: ${{ github.event.action == 'build_dart' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger m3o/m3o-dart
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-dart/dispatches -d '{"event_type":"build_publish_dart"}'
+
+  # here we can trigger the generation process of m3o go clients, it is 
+  # triggered on repository_dispatch == build_go
   generate-go:
-    if: ${{ github.event.action == 'bp_go' }}
+    if: ${{ github.event.action == 'build_go' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger m3o/m3o-go
         run: |
           curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-go/dispatches -d '{"event_type":"build_publish_go"}'
-        env:
-          GH_PAT: ${{ secrets.API_TOKEN_GITHUB }}
+
+  # here we can trigger the generation process of m3o ts clients, it is 
+  # triggered on repository_dispatch == build_ts
+  generate-ts:
+    if: ${{ github.event.action == 'build_ts' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger m3o/m3o-ts
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-ts/dispatches -d '{"event_type":"build_publish_ts"}'
+
+  # here we can trigger the generation process of m3o shell clients, it is 
+  # triggered on repository_dispatch == build_shell
+  generate-shell:
+    if: ${{ github.event.action == 'build_shell' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger m3o/m3o-sh
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-sh/dispatches -d '{"event_type":"build_publish_shell"}'
