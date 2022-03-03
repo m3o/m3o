@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/google/go-github/v42/github"
@@ -44,7 +45,7 @@ func main() {
 	message := commits.GetCommit().GetMessage()
 
 	payload := map[string]interface{}{
-		"sha":     sha[:9],
+		"sha":     sha[:6],
 		"url":     htm_url,
 		"message": message,
 	}
@@ -63,5 +64,21 @@ func main() {
 		fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", release_note_temp, payload, err)
 	}
 
-	fmt.Fprint(os.Stdout, tb.String())
+	// some clean up
+	msg := ""
+	lines := strings.Split(tb.String(), "*")
+	counter := 1
+
+	for _, line := range lines {
+		line = strings.ReplaceAll(line, "\n", "")
+		line = strings.ReplaceAll(line, "\r", "")
+		if counter == 1 {
+			msg += fmt.Sprintln(line)
+		} else {
+			msg += fmt.Sprintln("* ", line)
+		}
+		counter++
+	}
+
+	fmt.Fprint(os.Stdout, msg)
 }
