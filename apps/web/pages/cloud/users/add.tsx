@@ -4,7 +4,8 @@ import { DashboardLayout } from '@/components/layouts'
 import { useForm, Controller } from 'react-hook-form'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { TextInput } from '@/components/ui'
+import { TextInput, Alert } from '@/components/ui'
+import { useAddUser } from '@/hooks'
 
 interface CreateUserFields extends Account {
   password: string
@@ -29,27 +30,50 @@ export const getServerSideProps = withAuth(async context => {
 
 export default function CloudAddUser() {
   const { control, handleSubmit } = useForm<CreateUserFields>()
+  const addUserMutation = useAddUser()
+
+  console.log(addUserMutation.error)
+
+  function onSubmit(values: CreateUserFields) {
+    addUserMutation.mutate(values)
+  }
 
   return (
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="px-8 py-8 border-b tbc flex justify-between items-center">
+        <div className="px-8 py-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold">Add User</h1>
         </div>
-        <div className="p-10">
-          <form className="max-w-lg">
-            <h2 className="mt-6 font-bold">Details</h2>
+        <div className="px-8">
+          {addUserMutation.error && (
+            <Alert type="error" className="mb-8">
+              {addUserMutation.error as string}
+            </Alert>
+          )}
+          <form className="max-w-lg" onSubmit={handleSubmit(onSubmit)}>
             <Controller
               control={control}
               name="email"
               defaultValue=""
-              render={({ field }) => (
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Please provide your email address',
+                },
+                pattern: {
+                  value:
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Please provide a valid email address',
+                },
+              }}
+              render={({ field, fieldState }) => (
                 <TextInput
                   {...field}
                   label="Email"
-                  className="my-6"
+                  className="my-4"
                   placeholder="e.g john@smith.me"
+                  error={fieldState.error?.message}
                 />
               )}
             />
@@ -57,12 +81,23 @@ export default function CloudAddUser() {
               control={control}
               name="password"
               defaultValue=""
-              render={({ field }) => (
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Please provide a password',
+                },
+                minLength: {
+                  value: 8,
+                  message:
+                    'Please provide a password with 8 characters or more',
+                },
+              }}
+              render={({ field, fieldState }) => (
                 <TextInput
                   {...field}
                   label="Password"
-                  className="mb-6"
                   type="password"
+                  error={fieldState.error?.message}
                 />
               )}
             />

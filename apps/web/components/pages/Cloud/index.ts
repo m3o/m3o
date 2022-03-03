@@ -1,3 +1,5 @@
 export * from './Database/DatabaseTableItem'
 export * from './components/Table'
 export * from './Users/Table'
+export * from './Database/Table'
+export * from './Apps'

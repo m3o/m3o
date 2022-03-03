@@ -20,14 +20,14 @@ export const FormField: FC<FormFieldProps> = ({
   required,
 }) => {
   return (
-    <div className={classnames('pb-4 relative', className)}>
+    <div className={classnames('pb-4', className)}>
       <label
         htmlFor={name}
         className={classnames('block mb-2 text-sm', labelClass)}>
         {label} {required && <sup className="text-red-500">*</sup>}
       </label>
       {children}
-      {error && <p className="absolute text-red-700 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
     </div>
   )
 }

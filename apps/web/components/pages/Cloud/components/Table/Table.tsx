@@ -43,11 +43,19 @@ export function Table<T extends ExpectedObject>({
 
   const defaultColumn = useMemo(
     () => ({
-      minWidth: 30,
-      width: 150, // width is used for both the flex-basis and flex-grow
+      minWidth: 10,
+      // width: 150, // width is used for both the flex-basis and flex-grow
       maxWidth: 200, // maxWidth is only used as a limit for resizing
       // And also our default editable cell
       Cell: ({ value }: { value: any }) => {
+        if (typeof value === 'boolean') {
+          return value ? 'true' : 'false'
+        }
+
+        if (Array.isArray(value)) {
+          return value.join(', ')
+        }
+
         if (typeof value === 'object') {
           return ''
         }

@@ -1,8 +1,10 @@
 import { NextSeo } from 'next-seo'
-import { MainLayout, DashboardLayout } from '@/components/layouts'
+import { DashboardLayout } from '@/components/layouts'
+// import { LinkButton, Spinner } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { useFetchApps } from '@/hooks'
+// import { useFetchUsers } from '@/hooks'
+// import { UsersTable } from '@/components/pages/Cloud'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -21,15 +23,16 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-export default function CloudApps() {
-  const { data, isFetching } = useFetchApps()
+export default function CloudFunctions() {
+  // const { data, isFetching } = useFetchUsers()
 
   return (
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <h1 className="text-4xl font-bold mb-6">Apps</h1>
-        <h2>For more information on how M3O apps work</h2>
+        <div className="p-8 flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Functions</h1>
+        </div>
       </DashboardLayout>
     </>
   )
