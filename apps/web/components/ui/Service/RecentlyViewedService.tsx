@@ -18,7 +18,7 @@ export const RecentlyViewedService: FC<ExploreAPI> = ({
       <div className="ml-4">
         <h4 className="font-bold">
           <Link href={`/${name}`}>
-            <a className="text-white">{display_name}</a>
+            <a className="text-white dark:text-white">{display_name}</a>
           </Link>
         </h4>
         <p className="text-sm text-zinc-400">{readme(name, description)}</p>

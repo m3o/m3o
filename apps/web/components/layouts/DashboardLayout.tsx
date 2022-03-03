@@ -88,14 +88,15 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                         <Link href={item.href}>
                           <a
                             className={classNames(
-                              'block py-2 px-8 border-l-4 text-zinc-900 text-sm',
+                              'block py-2 px-8 border-l-4 text-zinc-900 text-sm dark:text-white',
                               {
                                 'border-zinc-900 dark:border-zinc-50':
                                   pathname === item.href,
                                 'border-transparent': pathname !== item.href,
                               },
                             )}>
-                            <item.icon className="w-5 mr-2 align-top inline" />{item.text}
+                            <item.icon className="w-5 mr-2 align-top inline" />
+                            {item.text}
                           </a>
                         </Link>
                       </li>

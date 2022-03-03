@@ -1,5 +1,5 @@
 a {
-  @apply text-blue-600 hover:underline dark:text-white;
+  @apply text-blue-600 dark:text-blue-300 hover:underline;
 }
 
 .btn {

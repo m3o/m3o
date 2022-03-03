@@ -4,14 +4,11 @@ import { useRouter } from 'next/router'
 import classnames from 'classnames'
 import { NextSeo } from 'next-seo'
 import { WithAuthProps } from '@/lib/api/m3o/withAuth'
+import { ArrowLeftIcon } from '@heroicons/react/outline'
 import { useDownloadFile, useGetRelatedApis, useRecentlyViewed } from '@/hooks'
 import { getDescription } from '@/utils/api'
 import { Routes } from '@/lib/constants'
-import {
-  Footer,
-  Header,
-  Top10UsersButton,
-} from '@/components/ui'
+import { Footer, Header, Top10UsersButton } from '@/components/ui'
 import { RoundCircleCtas } from '../pages/Api/RoundCircleCtas'
 import { CategoryBubble } from '../ui/CategoryBubble'
 import { Navigation, RelatedItems, DownloadModal } from '@/components/pages/Api'
@@ -74,12 +71,7 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
       <div className="py-10 border-b tbc">
         <div className="m3o-container">
           <div className="flex justify-between items-center mb-2">
-            {/* <Link href="/explore">
-              <a className="flex items-center text-sm">
-                <ArrowLeftIcon className="w-4 mr-2" />
-                Back
-              </a>
-            </Link> */}
+            {/*  */}
             {/* <div className="flex items-center">
               <Top10UsersButton apiName={router.query.api as string} /> */}
             {/* {user && CLOUD_APIS.includes(name) && (
@@ -91,6 +83,11 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
           </div>
           <div className="flex items-center justify-between">
             <div>
+              <Link href="/explore">
+                <a className="flex mb-6">
+                  <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
+                </a>
+              </Link>
               <CategoryBubble className="inline-block mb-6">
                 {category}
               </CategoryBubble>
@@ -107,7 +104,7 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
             </div>
             <div className="hidden md:block">
               <Link href={Routes.GettingStarted}>
-                <a className="btn inline-block my-6 mb-16">
+                <a className="btn inline-block my-6 mb-16 dark:text-white">
                   Get Started
                 </a>
               </Link>
@@ -122,11 +119,9 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
       </div>
       {!user && (
         <div className="m-6 border border-zinc-300 border-solid rounded-md p-6 mb-0 md:hidden dark:bg-zinc-900 dark:border-zinc-600">
-           <Link href={Routes.GettingStarted}>
-             <a className="btn inline-block my-6 mb-16">
-               Get Started
-             </a>
-           </Link>
+          <Link href={Routes.GettingStarted}>
+            <a className="btn inline-block my-6 mb-16">Get Started</a>
+          </Link>
         </div>
       )}
       <div className={contentClasses}>

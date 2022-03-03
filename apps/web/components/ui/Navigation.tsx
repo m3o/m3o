@@ -7,7 +7,7 @@ interface Props {
 }
 
 const LINK_CLASSES =
-  'font-medium block ml-8 text-zinc-800 text-sm hover:text-pink-500 transition-colors'
+  'font-medium block ml-8 text-zinc-800 text-sm hover:text-pink-500 transition-colors dark:text-white'
 
 export const Navigation: FC<Props> = ({ links }) => {
   function renderLink(item: HeaderLink) {

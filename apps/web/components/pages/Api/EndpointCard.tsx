@@ -42,8 +42,10 @@ export const EndpointCard: FC<Props> = ({
             {splitEndpointTitle(title)}
           </h3>
           <h4 className="pt-2">
-            <span className="font-bold text-green-800">{apiMethod}</span>{' '}
-            <span className="text-sm text-zinc-400">/{apiVersion}/{apiName}/{endpointName}</span>
+            <span className="font-medium text-pink-600">{apiMethod}</span>{' '}
+            <span className="text-sm text-zinc-400">
+              /{apiVersion}/{apiName}/{endpointName}
+            </span>
           </h4>
           {requestSchema && (
             <p className="max-w-x mt-4 max-w-2xl">

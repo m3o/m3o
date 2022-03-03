@@ -32,7 +32,7 @@ export function HeaderBanner() {
       )}>
       <a
         href="https://discord.gg/TBR9bRjd6Z"
-        className="text-white text-center text-xs md:text-sm w-full flex items-center px-6 py-2">
+        className="text-white text-center text-xs md:text-sm w-full flex items-center px-6 py-2 dark:text-white">
         <DiscordIcon />
         Join the discord community, hack on apps and win prizes!
       </a>
