@@ -20,7 +20,7 @@ a {
 }
 
 .m3o-container {
-  @apply container px-4 md:px-6 mx-auto max-w-screen-2xl relative w-10/12;
+  @apply container px-4 md:px-6 mx-auto max-w-screen-2xl relative w-11/12 md:w-10/12;
 }
 
 .tabs {

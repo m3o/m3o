@@ -24,7 +24,7 @@ export function HeaderBanner() {
   return (
     <div
       className={classNames(
-        'bg-indigo-800 dark:bg-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-700 relative transition',
+        'bg-indigo-800 dark:bg-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-700 relative transition ',
         {
           flex: show,
           hidden: !show,
@@ -32,7 +32,7 @@ export function HeaderBanner() {
       )}>
       <a
         href="https://discord.gg/TBR9bRjd6Z"
-        className="text-white text-center text-xs md:text-sm w-full flex items-center px-6 py-2 dark:text-white">
+        className="text-white text-xs md:text-sm w-full flex items-center px-6 py-2 dark:text-white">
         <DiscordIcon />
         Join the discord community, hack on apps and win prizes!
       </a>

@@ -70,7 +70,7 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <Link href="/explore">
-                <a className="flex mb-6">
+                <a className="flex mb-6 items-center text-sm">
                   <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
                 </a>
               </Link>
@@ -99,13 +99,6 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
           <Navigation onDownloadsClick={() => setShowDownloadsModal(true)} />
         </div>
       </div>
-      {!user && (
-        <div className="m-6 border border-zinc-300 border-solid rounded-md p-6 mb-0 md:hidden dark:bg-zinc-900 dark:border-zinc-600">
-          <Link href={Routes.GettingStarted}>
-            <a className="btn inline-block my-6 mb-16">Get Started</a>
-          </Link>
-        </div>
-      )}
       <div className={contentClasses}>
         <div className="m3o-container">{children}</div>
         <RelatedItems
