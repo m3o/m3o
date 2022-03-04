@@ -19,7 +19,7 @@ export const Status: FC<Props> = ({ status }) => {
   const dotColour = DOT_COLOURS[status]
 
   return (
-    <p className="text-zinc-200 text-sm flex items-center">
+    <p className="ttc text-sm flex items-center">
       <span className="flex h-2 w-2 relative mr-2">
         <span
           className={`animate-ping absolute inline-flex h-full w-full rounded-full ${dotColour} opacity-75`}

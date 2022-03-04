@@ -6,7 +6,7 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useRunApp } from '@/hooks'
-import { TextInput, Select } from '@/components/ui'
+import { TextInput, Select, BackButtonLink } from '@/components/ui'
 
 interface Props {
   regions: string[]
@@ -52,7 +52,8 @@ export default function CloudAddApp({ regions }: Props) {
       <NextSeo {...seo.about} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
-          <h1 className="text-4xl font-bold mb-6">Add Apps</h1>
+          <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
+          <h1 className="text-4xl font-bold mb-6">Add App</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl pt-6">
             <Controller
               control={control}

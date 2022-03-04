@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const LinkButton: FC<Props> = ({ href, children, className }) => {
-  const classes = classnames('btn', className)
+  const classes = classnames('btn dark:text-white', className)
 
   return (
     <Link href={href}>
