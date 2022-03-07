@@ -1,12 +1,17 @@
 import type { RunRequest } from 'm3o/app'
+import type { AddAppFormValues } from '@/types'
 import { NextSeo } from 'next-seo'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useRunApp } from '@/hooks'
-import { TextInput, Select, BackButtonLink } from '@/components/ui'
+import { BackButtonLink } from '@/components/ui'
+import {
+  EnvironmentVariablesForm,
+  AppDetailsForm,
+} from '@/components/pages/Cloud'
 
 interface Props {
   regions: string[]
@@ -40,11 +45,11 @@ export const getServerSideProps = withAuth(async ({ req }) => {
 })
 
 export default function CloudAddApp({ regions }: Props) {
+  const formMethods = useForm<RunRequest>()
   const runAppMutation = useRunApp()
-  const { handleSubmit, control } = useForm<RunRequest>()
 
-  function onSubmit(values: RunRequest) {
-    runAppMutation.mutate(values)
+  const handleSubmit = (values: AddAppFormValues) => {
+    console.log(values)
   }
 
   return (
@@ -54,87 +59,18 @@ export default function CloudAddApp({ regions }: Props) {
         <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
           <h1 className="text-4xl font-bold mb-6">Add App</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl pt-6">
-            <Controller
-              control={control}
-              defaultValue=""
-              name="name"
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Please provide your apps name',
-                },
-                pattern: {
-                  value: /^\S+$/,
-                  message: 'Please enter a name without spaces',
-                },
-              }}
-              render={({ field, fieldState }) => (
-                <TextInput
-                  {...field}
-                  label="Name"
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="repo"
-              defaultValue=""
-              rules={{ required: 'Please provide a repo' }}
-              render={({ field, fieldState }) => (
-                <TextInput
-                  {...field}
-                  label="Repo"
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="port"
-              rules={{ required: 'Please provide a port number' }}
-              render={({ field, fieldState }) => (
-                <TextInput
-                  {...field}
-                  label="Port"
-                  type="number"
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="branch"
-              rules={{ required: 'Please provide a branch' }}
-              render={({ field, fieldState }) => (
-                <TextInput
-                  {...field}
-                  label="Branch"
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="region"
-              rules={{ required: 'Please select a region' }}
-              render={({ field, fieldState }) => (
-                <Select
-                  {...field}
-                  label="Region"
-                  error={fieldState.error?.message}
-                  options={regions.map(region => ({
-                    name: region,
-                    value: region,
-                  }))}
-                />
-              )}
-            />
-            <button type="submit" className="btn mt-10">
-              Submit
-            </button>
-          </form>
+          <div className="max-w-3xl">
+            <FormProvider {...formMethods}>
+              <form onSubmit={formMethods.handleSubmit(handleSubmit)}>
+                <h2 className="font-bold text-xl my-10">Configuration</h2>
+                <AppDetailsForm regions={regions} />
+                <h2 className="font-bold text-xl my-10">
+                  Environment Variables
+                </h2>
+                <EnvironmentVariablesForm />
+              </form>
+            </FormProvider>
+          </div>
         </div>
       </DashboardLayout>
     </>

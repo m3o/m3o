@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
@@ -22,10 +23,11 @@ class MyDocument extends Document {
           />
           {process.env.NODE_ENV === 'production' && (
             <>
-              <script
+              <Script
                 async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-70478210-4"></script>
-              <script
+                src="https://www.googletagmanager.com/gtag/js?id=UA-70478210-4"
+              />
+              <Script
                 dangerouslySetInnerHTML={{
                   __html: `
       window.dataLayer = window.dataLayer || [];
@@ -36,7 +38,8 @@ class MyDocument extends Document {
   
       gtag('config', 'UA-70478210-4');
     `,
-                }}></script>
+                }}
+              />
             </>
           )}
         </Head>

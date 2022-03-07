@@ -1,10 +1,14 @@
+import type { Service } from 'm3o/app'
+import type { Column } from 'react-table'
+import Link from 'next/link'
+import { useMemo } from 'react'
 import { NextSeo } from 'next-seo'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchApps, useDeleteApp, useUpdateApp } from '@/hooks'
 import { LinkButton, Button, Spinner } from '@/components/ui'
-import { App } from '@/components/pages/Cloud'
+import { Table } from '@/components/pages/Cloud'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -28,31 +32,50 @@ export default function CloudApps() {
   const deleteMutation = useDeleteApp()
   const updateMutation = useUpdateApp()
 
+  type RequiredService = Required<Service>
+
+  const columns = useMemo<Column<RequiredService>[]>(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        Cell: ({ value, row }) => (
+          <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
+        ),
+      },
+      {
+        Header: 'Port',
+        accessor: 'port',
+      },
+      {
+        Header: 'Repo',
+        accessor: 'repo',
+      },
+      {
+        Header: 'Branch',
+        accessor: 'branch',
+      },
+      {
+        Header: 'Region',
+        accessor: 'region',
+      },
+      {
+        Header: 'URL',
+        accessor: 'url',
+        Cell: ({ value }) => <a href={value}>{value}</a>,
+      },
+    ],
+    [],
+  )
+
   function renderApps() {
     return (
       <div className="grid gap-6 mt-8">
-        {data!.map(app => (
-          <App
-            {...app}
-            key={app.id}
-            buttons={
-              <div className="w-full border-t pt-4 tbc mt-4 lg:mt-0 lg:border-0 lg:pt-0">
-                <Button
-                  className="w-full text-sm mb-4"
-                  onClick={() => updateMutation.mutate(app.name!)}
-                  loading={updateMutation.isLoading}>
-                  Update
-                </Button>
-                <Button
-                  className="w-full text-sm"
-                  onClick={() => deleteMutation.mutate(app.name!)}
-                  loading={deleteMutation.isLoading}>
-                  Delete
-                </Button>
-              </div>
-            }
-          />
-        ))}
+        <Table<RequiredService>
+          data={data! as RequiredService[]}
+          onTrashClick={console.log}
+          columns={columns}
+        />
       </div>
     )
   }
@@ -63,9 +86,7 @@ export default function CloudApps() {
       <DashboardLayout>
         <div className="p-6 md:p-10">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-6">Apps</h1>
-            </div>
+            <h1 className="text-4xl font-bold">Apps</h1>
             <LinkButton href="/cloud/apps/add">Add</LinkButton>
           </div>
           {isLoading ? <Spinner /> : renderApps()}

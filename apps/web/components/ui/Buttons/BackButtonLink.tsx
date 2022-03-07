@@ -9,7 +9,7 @@ interface Props {
 export const BackButtonLink: FC<Props> = ({ children, href }) => {
   return (
     <Link href={href}>
-      <a className="flex mb-6 text-sm text-white">
+      <a className="flex mb-6 text-sm">
         <ChevronLeftIcon className="w-4" /> {children}
       </a>
     </Link>

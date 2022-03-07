@@ -25,7 +25,6 @@ interface Props<T extends ExpectedObject> {
   onTrashClick: (items: string[]) => void
   onSetPageSize?: (pageSize: number) => void
   statePageSize?: number
-  rowClickPath: string
 }
 
 export function Table<T extends ExpectedObject>({
@@ -34,7 +33,6 @@ export function Table<T extends ExpectedObject>({
   onTrashClick,
   onSetPageSize,
   statePageSize,
-  rowClickPath,
 }: Props<T>) {
   const router = useRouter()
   const [shouldSelectAll, setShouldSelectAll] = useState(false)
@@ -192,19 +190,11 @@ export function Table<T extends ExpectedObject>({
               return (
                 <div
                   {...row.getRowProps()}
-                  className="hover:bg-zinc-50 dark:hover:bg-zinc-800 group h-10 cursor-pointer">
-                  {row.cells.map((cell, idx) => {
+                  className="hover:bg-zinc-50 dark:hover:bg-zinc-800 group h-10">
+                  {row.cells.map(cell => {
                     return (
                       <div
                         {...cell.getCellProps()}
-                        onClick={
-                          !idx
-                            ? undefined
-                            : () =>
-                                router.push(
-                                  `${rowClickPath}/${row.original.id}`,
-                                )
-                        }
                         className="border-b tbc p-2 text-sm flex items-center">
                         <span className="overflow-hidden overflow-ellipsis whitespace-nowrap">
                           {cell.render('Cell')}

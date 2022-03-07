@@ -31,9 +31,11 @@ export const PropertiesTable: FC<Props> = ({ title, properties = {} }) => {
               description={property.description}
               title={key}
             />
-            <PropertiesList key={key}>
-              {createPropertyTree(recursionProperties)}
-            </PropertiesList>
+            {property.properties && (
+              <PropertiesList key={key}>
+                {createPropertyTree(recursionProperties)}
+              </PropertiesList>
+            )}
           </Fragment>
         )
       }
@@ -49,7 +51,7 @@ export const PropertiesTable: FC<Props> = ({ title, properties = {} }) => {
     })
   }
 
-  const input = createPropertyTree(properties);
+  const input = createPropertyTree(properties)
 
   return (
     <div className="mb-8">
