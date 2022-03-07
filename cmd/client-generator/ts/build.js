@@ -76,6 +76,11 @@ function makeTopEsmFolder() {
   )
 
   fs.renameSync(
+    path.join(tmpFolder, 'esm', 'index.d.ts'),
+    path.join(__dirname, 'index.d.ts')
+  )
+
+  fs.renameSync(
     path.join(tmpFolder, 'index.d.ts'),
     path.join(esmFolder, 'index.d.ts')
   )
