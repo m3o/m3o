@@ -59,6 +59,9 @@ func main() {
 	case "shell":
 		shellG := &shellG{}
 		generate(shellG, "", workDir, examplesPath)
+	case "cli":
+		cliG := &cliG{}
+		generate(cliG, "", workDir, examplesPath)
 	}
 }
 
