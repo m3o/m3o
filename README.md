@@ -20,6 +20,16 @@
   <p align="center"><a href="https://m3o.com/register" id="signup">Signup and start for FREE</a></p>
 </p>
 
+---
+
+<div align="center">
+    <p>
+        <img src="https://discordapp.com/api/guilds/861917584437805127/widget.png?style=banner2" alt="Discord Banner"/>
+    </p>
+</div>
+
+---
+
 ## Introduction
 
 M3O is a next generation cloud plaform. Explore, discover and consume public APIs as simpler programmable building blocks.
