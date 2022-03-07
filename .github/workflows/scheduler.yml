@@ -9,7 +9,7 @@ on:
       - 'cmd/**'
 
   repository_dispatch:
-    types: [build_m3o_client,build_dart,build_go,build_ts,build_shell]
+    types: [build_m3o_client,build_dart,build_go,build_ts,build_shell,build_cli]
 
 # temporarily to suppress actions below. 
 # env:
@@ -43,6 +43,10 @@ jobs:
       - name: Trigger m3o/m3o-sh
         run: |
           curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-sh/dispatches -d '{"event_type":"build_publish_shell"}'
+
+      - name: Trigger m3o/m3o-cli
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-cli/dispatches -d '{"event_type":"build_publish_cli"}'
 
   # build m3o dart clients, it is triggered on repository_dispatch == build_dart
   generate-dart:
@@ -79,3 +83,12 @@ jobs:
       - name: Trigger m3o/m3o-sh
         run: |
           curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-sh/dispatches -d '{"event_type":"build_publish_shell"}'
+
+  # build m3o cli examples, it is triggered on repository_dispatch == build_cli
+  generate-cli:
+    if: ${{ github.event.action == 'build_cli' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger m3o/m3o-cli
+        run: |
+          curl -X POST -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/m3o/m3o-cli/dispatches -d '{"event_type":"build_publish_cli"}'
