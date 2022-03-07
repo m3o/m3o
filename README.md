@@ -22,11 +22,11 @@
 
 ---
 
-<div align="center">
-    <p>
-        <img src="https://discordapp.com/api/guilds/861917584437805127/widget.png?style=banner2" alt="Discord Banner"/>
-    </p>
-</div>
+<p align="center">
+	<a href="https://discord.gg/TBR9bRjd6Z">
+		<img src="https://discordapp.com/api/guilds/861917584437805127/widget.png?style=banner2" alt="Discord Banner"/>
+	</a>
+</p>
 
 ---
 
