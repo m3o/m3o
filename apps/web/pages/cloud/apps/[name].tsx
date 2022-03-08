@@ -74,7 +74,9 @@ export default function CloudApp({ app }: Props): ReactElement {
                 <h2 className="font-bold">Overview</h2>
                 <div className="mt-6 text-sm">
                   {APP_FIELDS.map(key => (
-                    <div key={key} className="grid grid-cols-2 even:bg-zinc-50">
+                    <div
+                      key={key}
+                      className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800 rounded-md">
                       <p className="capitalize font-medium p-4">{key}</p>
                       <p className="p-4">{app[key]}</p>
                     </div>
@@ -87,7 +89,7 @@ export default function CloudApp({ app }: Props): ReactElement {
                       {Object.keys(environmentVariables).map(key => (
                         <div
                           key={key}
-                          className="grid grid-cols-2 even:bg-zinc-50">
+                          className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800">
                           <p className="capitalize font-medium p-4">{key}</p>
                           <p className="p-4">{environmentVariables[key]}</p>
                         </div>
@@ -99,7 +101,7 @@ export default function CloudApp({ app }: Props): ReactElement {
             </div>
             <aside>
               <Button
-                className="text-sm w-full mb-2"
+                className="text-sm w-full mb-4"
                 onClick={() => updateAppMutation.mutate()}
                 loading={updateAppMutation.isLoading}>
                 Update

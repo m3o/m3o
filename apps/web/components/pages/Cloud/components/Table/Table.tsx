@@ -1,7 +1,6 @@
 import type { Column, CellProps } from 'react-table'
 import type { ChangeEvent } from 'react'
 import { useMemo, useState, useCallback } from 'react'
-import { useRouter } from 'next/router'
 import {
   useTable,
   useFlexLayout,
@@ -20,6 +19,7 @@ interface ExpectedObject extends Record<string, unknown> {
 }
 
 interface Props<T extends ExpectedObject> {
+  allowSelection?: boolean
   columns: Column<T>[]
   data: T[]
   onTrashClick: (items: string[]) => void
@@ -28,13 +28,13 @@ interface Props<T extends ExpectedObject> {
 }
 
 export function Table<T extends ExpectedObject>({
+  allowSelection = true,
   columns,
   data,
   onTrashClick,
   onSetPageSize,
   statePageSize,
 }: Props<T>) {
-  const router = useRouter()
   const [shouldSelectAll, setShouldSelectAll] = useState(false)
   const { onSelectItem, selectedItems, resetSelectedItems } =
     useSelectItems<T>()
@@ -69,36 +69,39 @@ export function Table<T extends ExpectedObject>({
       {
         id: 'checkbox',
         width: 50,
-        Cell: ({ row }: CellProps<T>) => (
-          <div className="pl-4 relative z-20">
-            <Checkbox
-              checked={
-                shouldSelectAll ||
-                selectedItems.some(
-                  item => JSON.stringify(item) === JSON.stringify(row.original),
-                )
-              }
-              id={row.original.id!}
-              onChange={() => onSelectItem(row.original)}
-            />
-          </div>
-        ),
-        Header: () => (
-          <div className="pl-4">
-            <Checkbox
-              checked={shouldSelectAll}
-              id="select-all"
-              onChange={() => {
-                const newValue = !shouldSelectAll
-                setShouldSelectAll(newValue)
-
-                if (!newValue) {
-                  resetSelectedItems()
+        Cell: ({ row }: CellProps<T>) =>
+          allowSelection && (
+            <div className="pl-4 relative z-20">
+              <Checkbox
+                checked={
+                  shouldSelectAll ||
+                  selectedItems.some(
+                    item =>
+                      JSON.stringify(item) === JSON.stringify(row.original),
+                  )
                 }
-              }}
-            />
-          </div>
-        ),
+                id={row.original.id!}
+                onChange={() => onSelectItem(row.original)}
+              />
+            </div>
+          ),
+        Header: () =>
+          allowSelection && (
+            <div className="pl-4">
+              <Checkbox
+                checked={shouldSelectAll}
+                id="select-all"
+                onChange={() => {
+                  const newValue = !shouldSelectAll
+                  setShouldSelectAll(newValue)
+
+                  if (!newValue) {
+                    resetSelectedItems()
+                  }
+                }}
+              />
+            </div>
+          ),
       },
       ...columns,
     ],

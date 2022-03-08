@@ -9,7 +9,7 @@ export function DatabaseTableItem({ name }: Props) {
   return (
     <div data-testid={name}>
       <Link href={`/cloud/database/${name}`}>
-        <a className="p-8 block bg-zinc-800 hover:bg-zinc-700 rounded-md transition-colors">
+        <a className="p-8 block dark:bg-zinc-800 bg-zinc-100 dark:hover:bg-zinc-700 rounded-md transition-colors">
           {name}
         </a>
       </Link>

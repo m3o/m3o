@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { useFetchApps, useDeleteApp, useUpdateApp } from '@/hooks'
+import { useFetchApps } from '@/hooks'
 import { LinkButton, Spinner } from '@/components/ui'
 import { Table, Status, AppStatus } from '@/components/pages/Cloud'
 
@@ -29,8 +29,6 @@ export const getServerSideProps = withAuth(async context => {
 
 export default function CloudApps() {
   const { data, isLoading } = useFetchApps()
-  const deleteMutation = useDeleteApp()
-  const updateMutation = useUpdateApp()
 
   type RequiredService = Required<Service>
 
@@ -39,9 +37,15 @@ export default function CloudApps() {
       {
         Header: 'Name',
         accessor: 'name',
-        Cell: ({ value, row }) => (
-          <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
-        ),
+        Cell: ({ value, row }) => {
+          if (row.original.status !== 'Deleting') {
+            return (
+              <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
+            )
+          }
+
+          return value
+        },
       },
       {
         Header: 'Status',
@@ -77,6 +81,7 @@ export default function CloudApps() {
     return (
       <div className="grid gap-6 mt-8">
         <Table<RequiredService>
+          allowSelection={false}
           data={data! as RequiredService[]}
           onTrashClick={console.log}
           columns={columns}
@@ -96,8 +101,8 @@ export default function CloudApps() {
               Add
             </LinkButton>
           </div>
-          {isLoading ? <Spinner /> : renderApps()}
         </div>
+        {isLoading ? <Spinner /> : renderApps()}
       </DashboardLayout>
     </>
   )

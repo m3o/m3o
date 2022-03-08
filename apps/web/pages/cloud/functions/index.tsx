@@ -1,10 +1,16 @@
+import type { Func } from 'm3o/function'
 import { NextSeo } from 'next-seo'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 import { DashboardLayout } from '@/components/layouts'
-// import { LinkButton, Spinner } from '@/components/ui'
+import { Spinner } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-// import { useFetchUsers } from '@/hooks'
-// import { UsersTable } from '@/components/pages/Cloud'
+import { useM3OClient } from '@/hooks'
+import { NoServiceResults, Table } from '@/components/pages/Cloud'
+import { QueryKeys } from '@/lib/constants'
+
+type FunctionItem = Func & { id: string }
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -24,15 +30,50 @@ export const getServerSideProps = withAuth(async context => {
 })
 
 export default function CloudFunctions() {
-  // const { data, isFetching } = useFetchUsers()
+  const m3o = useM3OClient()
+
+  const { data, isLoading } = useQuery(
+    QueryKeys.CloudFunctions,
+    async () => {
+      const response = await m3o.function.list({})
+      return response.functions || []
+    },
+    {
+      initialData: [],
+    },
+  )
+
+  console.log(data)
+
+  const columns = useMemo(() => [], [])
+
+  function renderItems() {
+    if (isLoading) {
+      return <Spinner />
+    }
+
+    if (data?.length === 0) {
+      return (
+        <NoServiceResults
+          startLink="/cloud/functions/add"
+          serviceName="Functions"
+        />
+      )
+    }
+
+    return (
+      <Table<FunctionItem> data={data as FunctionItem[]} columns={columns} />
+    )
+  }
 
   return (
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="p-8 flex justify-between items-center">
+        <div className="p-8">
           <h1 className="text-3xl font-bold">Functions</h1>
         </div>
+        {renderItems()}
       </DashboardLayout>
     </>
   )

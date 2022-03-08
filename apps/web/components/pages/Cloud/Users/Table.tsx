@@ -1,25 +1,26 @@
 import type { Account } from 'm3o/user'
 import type { Column } from 'react-table'
-
+import Link from 'next/link'
 import format from 'date-fns/format'
 import { useMemo } from 'react'
-import { useRouter } from 'next/router'
 import { Table } from '@/components/pages/Cloud'
 
 type UserAccount = Required<Account>
 
 interface Props {
+  handleUserDeleteClick: (items: string[]) => void
   users: UserAccount[]
 }
 
-export function UsersTable({ users }: Props) {
-  const router = useRouter()
-
+export function UsersTable({ users, handleUserDeleteClick }: Props) {
   const columns = useMemo<Column<UserAccount>[]>(() => {
     return [
       {
         Header: 'Email',
         accessor: 'email',
+        Cell: ({ row, value }) => (
+          <Link href={`/cloud/users/${row.original.id}`}>{value}</Link>
+        ),
       },
       {
         Header: 'Username',
@@ -50,10 +51,9 @@ export function UsersTable({ users }: Props) {
     <Table<UserAccount>
       data={users}
       columns={columns}
-      onTrashClick={console.log}
+      onTrashClick={handleUserDeleteClick}
       onSetPageSize={console.log}
       statePageSize={20}
-      rowClickPath="/users"
     />
   )
 }

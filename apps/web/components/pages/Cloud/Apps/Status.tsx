@@ -1,6 +1,11 @@
 import type { FC } from 'react'
 
-export type AppStatus = 'Running' | 'Deploying' | 'DeploymentError' | 'Deleting'
+export type AppStatus =
+  | 'Running'
+  | 'Deploying'
+  | 'DeploymentError'
+  | 'Deleting'
+  | 'Updating'
 
 interface Props {
   status: AppStatus
@@ -13,6 +18,7 @@ const DOT_COLOURS: DotColours = {
   Deploying: 'bg-yellow-600',
   DeploymentError: 'bg-red-600',
   Running: 'bg-green-500',
+  Updating: 'bg-yellow-600',
 }
 
 export const Status: FC<Props> = ({ status }) => {
