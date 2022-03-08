@@ -81,7 +81,7 @@ const Pricing: NextPage<PricingProps> = ({ prices }) => {
               request per month account quota.
             </p>
             <p className="mb-4 text-sm">
-              Additional requests are charged at $0.000001 per request or in
+              Additional requests are charged at 0.000001 credit per request or in
               plain english $1 per million requests.
             </p>
           </div>

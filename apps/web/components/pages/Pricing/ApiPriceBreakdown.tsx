@@ -27,7 +27,7 @@ export const ApiPriceBreakdown: FC<PricingItem> = ({
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase">
-                      Price (per request)
+                      Credits (per request)
                     </th>
                   </tr>
                 </thead>

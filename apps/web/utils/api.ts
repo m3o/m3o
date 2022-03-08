@@ -17,7 +17,7 @@ export function splitEndpointTitle(str: string): string {
 
 export function getPrice({ pricing = {}, key }: GetPriceArguments): string {
   return pricing[key] && pricing[key] !== '0'
-    ? `$${parseInt(pricing[key]) / 1000000}`
+    ? `${parseInt(pricing[key]) / 1000000}`
     : 'Free'
 }
 

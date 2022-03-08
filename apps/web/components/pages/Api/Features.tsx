@@ -30,7 +30,7 @@ export const Features: FC<Props> = ({ features, serviceName }) => {
               Description
             </th>
             <th className="text-left text-xs font-medium tracking-wider py-3 text-zinc-400">
-              Pricing (per request)
+              Credits (per request)
             </th>
           </tr>
         </thead>

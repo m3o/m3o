@@ -72,7 +72,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
               <PulseLoader />
             ) : (
               <span className="font-medium text-indigo-600 dark:text-indigo-300">
-                ${(currentBalance.data || 0).toFixed(2)}
+                {(currentBalance.data || 0).toFixed(2)}
               </span>
             )}
           </div>

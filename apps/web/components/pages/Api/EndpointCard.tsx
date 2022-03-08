@@ -54,7 +54,7 @@ export const EndpointCard: FC<Props> = ({
           )}
         </div>
         <p className="block text-sm font-medium text-indigo-600 dark:text-indigo-300">
-          {price} {price === 'Free' ? '' : 'per request'}
+          {price} {price === 'Free' ? '' : 'credits'}
         </p>
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-6">
