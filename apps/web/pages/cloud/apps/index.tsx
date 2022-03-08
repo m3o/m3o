@@ -7,8 +7,8 @@ import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchApps, useDeleteApp, useUpdateApp } from '@/hooks'
-import { LinkButton, Button, Spinner } from '@/components/ui'
-import { Table } from '@/components/pages/Cloud'
+import { LinkButton, Spinner } from '@/components/ui'
+import { Table, Status, AppStatus } from '@/components/pages/Cloud'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -42,6 +42,11 @@ export default function CloudApps() {
         Cell: ({ value, row }) => (
           <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
         ),
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        Cell: ({ value }) => <Status status={value as AppStatus} />,
       },
       {
         Header: 'Port',
@@ -87,7 +92,9 @@ export default function CloudApps() {
         <div className="p-6 md:p-10">
           <div className="flex items-center justify-between">
             <h1 className="text-4xl font-bold">Apps</h1>
-            <LinkButton href="/cloud/apps/add">Add</LinkButton>
+            <LinkButton href="/cloud/apps/add" className="text-sm">
+              Add
+            </LinkButton>
           </div>
           {isLoading ? <Spinner /> : renderApps()}
         </div>

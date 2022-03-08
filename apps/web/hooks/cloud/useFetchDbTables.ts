@@ -1,7 +1,6 @@
-import type { ListTablesResponse } from 'm3o/db'
 import { useQuery } from 'react-query'
-import { apiClient } from '@/lib/api-client'
 import { QueryKeys } from '@/lib/constants'
+import { useM3OClient } from '..'
 
 const SECRET_TABLE_NAMES = [
   'default',
@@ -14,11 +13,14 @@ const SECRET_TABLE_NAMES = [
 ]
 
 export function useFetchDbTables() {
+  const m3o = useM3OClient()
+
   return useQuery(
     QueryKeys.CloudDatabaseTables,
     async () => {
-      const response = await apiClient.post<ListTablesResponse>('db/ListTables')
-      return (response.data.tables || []).filter(
+      const response = await m3o.db.listTables({})
+
+      return (response.tables || []).filter(
         item => !SECRET_TABLE_NAMES.includes(item),
       )
     },

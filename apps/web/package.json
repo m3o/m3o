@@ -14,8 +14,7 @@
     "test:watch": "jest --watch",
     "prettier:base": "prettier --parser typescript",
     "prettier:check": "npm run prettier:base -- --list-different \"**/*.{ts,tsx}\"",
-    "prettier:write": "npm run prettier:base -- --write \"**/*.{ts,tsx}\"",
-    "prepare": "husky install"
+    "prettier:write": "npm run prettier:base -- --write \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@heroicons/react": "^1.0.4",
@@ -30,8 +29,9 @@
     "cookie": "^0.4.1",
     "d3": "^7.3.0",
     "date-fns": "^2.23.0",
+    "m3o": "^1.0.1405",
     "memory-cache": "^0.2.0",
-    "next": "^12.0.10",
+    "next": "^12.1.0",
     "next-seo": "^4.28.1",
     "next-themes": "^0.0.15",
     "openapi3-ts": "^2.0.1",
@@ -44,6 +44,7 @@
     "react-query": "^3.19.1",
     "react-spinners": "^0.11.0",
     "react-syntax-highlighter": "^15.4.4",
+    "react-table": "^7.7.0",
     "react-tooltip": "^4.2.21",
     "uuid": "^8.3.2"
   },
@@ -70,7 +71,6 @@
     "eslint": "^7.32.0",
     "eslint-config-next": "11.0.1",
     "eslint-plugin-unused-imports": "^1.1.5",
-    "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
     "immer": ">=9.0.6",
     "jest": "^27.4.7",

@@ -1,14 +1,15 @@
-import type { ListResponse } from 'm3o/user'
 import { useQuery } from 'react-query'
-import { apiClient } from '@/lib/api-client'
+import { useM3OClient } from '..'
 import { QueryKeys } from '@/lib/constants'
 
 export function useFetchUsers() {
+  const m3o = useM3OClient()
+
   return useQuery(
     QueryKeys.CloudUsers,
     async () => {
-      const response = await apiClient.post<ListResponse>('user/List')
-      return response.data.users || []
+      const response = await m3o.user.list({})
+      return response.users || []
     },
     {
       initialData: [],

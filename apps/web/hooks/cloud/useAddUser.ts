@@ -1,19 +1,17 @@
-import type { CreateRequest, CreateResponse } from 'm3o/user'
+import type { CreateRequest } from 'm3o/user'
 import type { AxiosError } from 'axios'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
-import { apiClient } from '@/lib/api-client'
+import { useM3OClient } from '..'
 
 export function useAddUser() {
+  const m3o = useM3OClient()
   const router = useRouter()
 
   return useMutation(
     async (fields: CreateRequest) => {
       try {
-        await apiClient.post<CreateResponse>('user/create', {
-          ...fields,
-          username: fields.email,
-        })
+        await m3o.user.create({ ...fields, username: fields.email })
       } catch (e) {
         const error = e as AxiosError
         throw (error.response!.data as ApiError).Detail

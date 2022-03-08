@@ -89,9 +89,6 @@ export function EnvironmentVariablesForm(): ReactElement {
           </div>
         )}
       </div>
-      <div className="border-t tbc">
-        <Button className="mt-6 text-sm self-start">Complete</Button>
-      </div>
     </>
   )
 }

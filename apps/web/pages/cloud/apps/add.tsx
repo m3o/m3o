@@ -7,11 +7,12 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useRunApp } from '@/hooks'
-import { BackButtonLink } from '@/components/ui'
+import { BackButtonLink, Button } from '@/components/ui'
 import {
   EnvironmentVariablesForm,
   AppDetailsForm,
 } from '@/components/pages/Cloud'
+import { createApiClient } from '@/lib/api-client'
 
 interface Props {
   regions: string[]
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export const getServerSideProps = withAuth(async ({ req }) => {
+  const m3o = createApiClient(req.cookies[AuthCookieNames.ApiToken])
+
   if (!req.user) {
     return {
       redirect: {
@@ -28,17 +31,11 @@ export const getServerSideProps = withAuth(async ({ req }) => {
     }
   }
 
-  const response = await fetch('https://api.m3o.com/v1/app/Regions', {
-    headers: {
-      Authorization: `Bearer ${req.cookies[AuthCookieNames.ApiToken]}`,
-    },
-  })
-
-  const { regions } = (await response.json()) as { regions: string[] }
+  const response = await m3o.app.regions({})
 
   return {
     props: {
-      regions,
+      regions: response.regions || [],
       user: req.user,
     } as Props,
   }
@@ -48,8 +45,18 @@ export default function CloudAddApp({ regions }: Props) {
   const formMethods = useForm<RunRequest>()
   const runAppMutation = useRunApp()
 
-  const handleSubmit = (values: AddAppFormValues) => {
-    console.log(values)
+  // TODO: come back and fix this.
+  const handleSubmit = (values: any) => {
+    const hack = values as AddAppFormValues
+
+    const envVars = hack.env_vars.reduce((obj, { key, value }) => {
+      return { ...obj, [key]: value }
+    }, {})
+
+    runAppMutation.mutate({
+      ...values,
+      env_vars: envVars,
+    })
   }
 
   return (
@@ -68,6 +75,14 @@ export default function CloudAddApp({ regions }: Props) {
                   Environment Variables
                 </h2>
                 <EnvironmentVariablesForm />
+                <div className="border-t tbc">
+                  <Button
+                    className="mt-6 text-sm self-start"
+                    type="submit"
+                    loading={runAppMutation.isLoading}>
+                    Complete
+                  </Button>
+                </div>
               </form>
             </FormProvider>
           </div>

@@ -1,15 +1,13 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { apiClient } from '@/lib/api-client'
+import { useM3OClient } from '..'
 
-export function useUpdateApp() {
+export function useUpdateApp(name: string) {
+  const m3o = useM3OClient()
   const queryClient = useQueryClient()
 
-  return useMutation(
-    (name: string) => apiClient.post('/app/Update', { name }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('apps')
-      },
+  return useMutation(() => m3o.app.update({ name }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['apps', name])
     },
-  )
+  })
 }
