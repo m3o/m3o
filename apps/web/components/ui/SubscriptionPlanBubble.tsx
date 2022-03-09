@@ -12,8 +12,8 @@ export function SubscriptionPlanBubble({ plan }: Props): ReactElement {
       className={classNames(
         'capitalize inline-block rounded-full py-1 px-6 text-sm font-bold text-white',
         {
-          'gradient-bg': plan !== SubscriptionPlans.Free,
-          'bg-zinc-700': plan === SubscriptionPlans.Free,
+          'gradient-bg': plan !== SubscriptionPlans.Solo,
+          'bg-zinc-700': plan === SubscriptionPlans.Solo,
         },
       )}>
       {plan}
