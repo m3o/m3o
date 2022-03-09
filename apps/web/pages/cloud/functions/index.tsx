@@ -1,9 +1,10 @@
+import type { Column } from 'react-table'
 import type { Func } from 'm3o/function'
 import { NextSeo } from 'next-seo'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { DashboardLayout } from '@/components/layouts'
-import { Spinner } from '@/components/ui'
+import { FullSpinner, LinkButton } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useM3OClient } from '@/hooks'
@@ -32,22 +33,49 @@ export const getServerSideProps = withAuth(async context => {
 export default function CloudFunctions() {
   const m3o = useM3OClient()
 
-  const { data, isLoading } = useQuery(
-    QueryKeys.CloudFunctions,
-    async () => {
-      const response = await m3o.function.list({})
-      return response.functions || []
-    },
-    {
-      initialData: [],
-    },
-  )
+  const { data, isLoading } = useQuery(QueryKeys.CloudFunctions, async () => {
+    const response = await m3o.function.list({})
+    return response.functions || []
+  })
 
-  const columns = useMemo(() => [], [])
+  const columns = useMemo<Column<FunctionItem>[]>(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'URL',
+        accessor: 'url',
+        Cell: ({ value }) => <a href={value}>{value}</a>,
+      },
+      {
+        Header: 'Branch',
+        accessor: 'branch',
+      },
+      {
+        Header: 'Repo',
+        accessor: 'repo',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+      },
+      {
+        Header: 'Sub Folder',
+        accessor: 'subfolder',
+      },
+      {
+        Header: 'Runtime',
+        accessor: 'runtime',
+      },
+    ],
+    [],
+  )
 
   function renderItems() {
     if (isLoading) {
-      return <Spinner />
+      return <FullSpinner />
     }
 
     if (data?.length === 0) {
@@ -64,12 +92,17 @@ export default function CloudFunctions() {
     )
   }
 
+  console.log(data)
+
   return (
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="p-6 border-b tbc">
+        <div className="p-6 border-b tbc flex items-center justify-between">
           <h1 className="text-3xl font-medium gradient-text">Functions</h1>
+          <LinkButton href="/cloud/functions/add" className="text-sm">
+            Add
+          </LinkButton>
         </div>
         {renderItems()}
       </DashboardLayout>

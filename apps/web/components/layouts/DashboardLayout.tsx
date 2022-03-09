@@ -6,14 +6,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import { MainLayout } from './MainLayout'
-import { Subscription, RecentlyViewed } from '@/components/pages/Home'
-import { Balance } from '@/components/ui'
 import { useWindowResizeTrigger, useBillingAccount } from '@/hooks'
 import { SubscriptionPlans } from '@/lib/constants'
 import {
-  HomeIcon,
-  CloudIcon,
-  SearchIcon,
   ChartBarIcon,
   CashIcon,
   KeyIcon,
@@ -193,14 +188,7 @@ export function DashboardLayout({
             ]}
           />
         </aside>
-        <div className="col-span-5 bg-white dark:bg-zinc-900">
-          {children}
-          {/* <div className="bg-zinc-900 dark:bg-zinc-800 rounded-lg p-8 mt-4 md:mt-10 xl:mt-0">
-            <Subscription />
-            <Balance />
-            <RecentlyViewed />
-          </div> */}
-        </div>
+        <div className="col-span-5 bg-white dark:bg-zinc-900">{children}</div>
       </section>
     </MainLayout>
   )

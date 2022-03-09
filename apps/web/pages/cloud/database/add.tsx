@@ -1,16 +1,24 @@
 import type { CreateRequest } from 'm3o/db'
 import { NextSeo } from 'next-seo'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
-import { ArrowLeftIcon } from '@heroicons/react/outline'
 import { PlusIcon, TrashIcon } from '@heroicons/react/outline'
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { TextInput, Button } from '@/components/ui'
+import { TextInput, Button, BackButtonLink } from '@/components/ui'
 import { useM3OClient } from '@/hooks'
+
+type RecordItem = {
+  key: string
+  value: string
+}
+
+type FormData = {
+  table: string
+  record: RecordItem[]
+}
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -28,16 +36,6 @@ export const getServerSideProps = withAuth(async context => {
     },
   }
 })
-
-interface RecordItem {
-  key: string
-  value: string
-}
-
-type FormData = {
-  table: string
-  record: RecordItem[]
-}
 
 export default function CloudDatabaseAdd() {
   const router = useRouter()
@@ -79,17 +77,13 @@ export default function CloudDatabaseAdd() {
     <>
       <NextSeo {...seo.cloud.users.add} />
       <DashboardLayout>
-        <div className="px-8 py-6 flex justify-between items-center border-b tbc">
-          <h1 className="text-3xl font-medium gradient-text flex items-center">
-            <Link href="/cloud/database">
-              <a className="ttc">
-                <ArrowLeftIcon className="w-4 mr-4" />
-              </a>
-            </Link>
+        <div className="p-6 md:p-10 max-w-xl">
+          <BackButtonLink href="/cloud/database">
+            Back to database
+          </BackButtonLink>
+          <h1 className="text-3xl font-medium mb-6 gradient-text">
             Add Database
           </h1>
-        </div>
-        <div className="p-6 md:p-10 max-w-xl">
           <h2 className="font-medium mb-6">Details</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller

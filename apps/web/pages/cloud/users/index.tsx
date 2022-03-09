@@ -45,7 +45,7 @@ export default function CloudUsers() {
         <div className="py-4 px-8 border-b tbc flex justify-between items-center">
           <h1 className="text-2xl font-medium gradient-text">Users</h1>
           <LinkButton href="/cloud/users/add" className="text-sm">
-            Add User
+            Add
           </LinkButton>
         </div>
         {isLoading ? (

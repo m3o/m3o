@@ -1,7 +1,7 @@
 import type { DeployRequest } from 'm3o/function'
 import type { AddFunctionFormValues } from '@/types'
 import { NextSeo } from 'next-seo'
-import { useForm, Controller, FormProvider } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 import { DashboardLayout } from '@/components/layouts'
@@ -9,7 +9,7 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
-import { BackButtonLink, Button, TextInput, Select } from '@/components/ui'
+import { BackButtonLink, Button } from '@/components/ui'
 import { createApiClient } from '@/lib/api-client'
 import {
   AddFunctionForm,
@@ -79,7 +79,9 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
           <BackButtonLink href="/cloud/functions">
             Back to functions
           </BackButtonLink>
-          <h1 className="text-4xl font-bold mb-6">Add Function</h1>
+          <h1 className="text-3xl font-medium mb-6 gradient-text">
+            Add Function
+          </h1>
           <div className="max-w-3xl">
             <FormProvider {...formMethods}>
               <form

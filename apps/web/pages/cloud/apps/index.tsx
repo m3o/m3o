@@ -1,12 +1,14 @@
 import type { Service } from 'm3o/app'
 import type { Column } from 'react-table'
+import { useQuery } from 'react-query'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { NextSeo } from 'next-seo'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { useFetchApps } from '@/hooks'
+import { QueryKeys } from '@/lib/constants'
+import { useM3OClient } from '@/hooks'
 import { LinkButton, Spinner } from '@/components/ui'
 import {
   Table,
@@ -32,10 +34,21 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-export default function CloudApps() {
-  const { data, isLoading } = useFetchApps()
+type RequiredService = Required<Service>
 
-  type RequiredService = Required<Service>
+export default function CloudApps() {
+  const m3o = useM3OClient()
+
+  const { data, isLoading } = useQuery(
+    QueryKeys.CloudApps,
+    async () => {
+      const response = await m3o.app.list({})
+      return response.services || []
+    },
+    {
+      refetchInterval: 5000,
+    },
+  )
 
   const columns = useMemo<Column<RequiredService>[]>(
     () => [
