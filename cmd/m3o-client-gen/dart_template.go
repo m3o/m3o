@@ -37,7 +37,8 @@ class {{title $service.Name}}Service {
 			  return {{ $endpointName }}Response.Merr(body: err.b);
 			}
 			return {{ $endpointName }}ResponseData.fromJson(res.body);
-		  } catch (e) {
+		  } catch (e, stack) {
+			print(stack);  
 			throw Exception(e);
 		  }
 	}{{end}}
@@ -58,7 +59,8 @@ class {{title $service.Name}}Service {
 					yield {{ $endpointName }}ResponseData.fromJson(vo);
 				}
 			}
-		} catch (e) {
+		} catch (e, stack) {
+			print(stack);
 			throw Exception(e);
 		}
 	}{{end}}{{end}}
@@ -122,8 +124,9 @@ void main() async {
 			Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
 		}	
 	  {{ end }}
-  } catch (e) {
+  } catch (e, stack) {
     print(e);
+	print(stack);
   } finally {
     exit(0);
   }
@@ -181,8 +184,9 @@ void main() async {
 		Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
 	  }	
 	{{- end }}
-  } catch (e) {
+  } catch (e, stack) {
     print(e);
+	print(stack);
   } finally {
     exit(0);
   }
