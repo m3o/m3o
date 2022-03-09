@@ -94,12 +94,14 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
                   Environment Variables
                 </h2>
                 <EnvironmentVariablesForm />
-                <Button
-                  className="mt-6 text-sm self-start"
-                  type="submit"
-                  loading={addMutation.isLoading}>
-                  Complete
-                </Button>
+                <div>
+                  <Button
+                    className="mt-6 text-sm"
+                    type="submit"
+                    loading={addMutation.isLoading}>
+                    Complete
+                  </Button>
+                </div>
               </form>
             </FormProvider>
           </div>

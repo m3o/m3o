@@ -4,7 +4,7 @@ import { DashboardLayout } from '@/components/layouts'
 import { useForm, Controller } from 'react-hook-form'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { TextInput, Alert } from '@/components/ui'
+import { TextInput, Alert, BackButtonLink } from '@/components/ui'
 import { useAddUser } from '@/hooks'
 
 interface CreateUserFields extends Account {
@@ -40,10 +40,9 @@ export default function CloudAddUser() {
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="px-8 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Add User</h1>
-        </div>
-        <div className="px-8">
+        <div className="p-6 md:p-10">
+          <BackButtonLink href="/cloud/users">Back to Users</BackButtonLink>
+          <h1 className="text-3xl font-medium mb-6 gradient-text">Add User</h1>
           {addUserMutation.error && (
             <Alert type="error" className="mb-8">
               {addUserMutation.error as string}
