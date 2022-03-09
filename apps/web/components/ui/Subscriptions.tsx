@@ -8,7 +8,7 @@ export function Subscriptions(): ReactElement {
     <div className="grid md:grid-cols-3 mt-10 text-left gap-4">
       <Subscription
         cost="Free to start"
-        plan={SubscriptionPlans.Free}
+        plan={SubscriptionPlans.Solo}
         description="For individuals and developers"
         features={[
           'Access to 50+ public APIs',
@@ -20,7 +20,7 @@ export function Subscriptions(): ReactElement {
           <Link href="/register">
             <a
               className="btn block w-full text-center"
-              data-testid="subscription-free-start-button">
+              data-testid="subscription-solo-start-button">
               Start For Free
             </a>
           </Link>
