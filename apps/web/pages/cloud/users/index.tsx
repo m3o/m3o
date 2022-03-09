@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo'
 import { DashboardLayout } from '@/components/layouts'
-import { LinkButton, Spinner } from '@/components/ui'
+import { LinkButton, FullSpinner } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchUsers, useDeleteUsers } from '@/hooks'
@@ -43,15 +43,13 @@ export default function CloudUsers() {
       <NextSeo {...seo.about} />
       <DashboardLayout>
         <div className="py-4 px-8 border-b tbc flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Users</h1>
+          <h1 className="text-2xl font-medium gradient-text">Users</h1>
           <LinkButton href="/cloud/users/add" className="text-sm">
             Add User
           </LinkButton>
         </div>
         {isLoading ? (
-          <div className="flex justify-center mt-10">
-            <Spinner />
-          </div>
+          <FullSpinner />
         ) : (
           <UsersTable
             users={data as any}

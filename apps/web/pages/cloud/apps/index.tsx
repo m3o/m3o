@@ -8,7 +8,12 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchApps } from '@/hooks'
 import { LinkButton, Spinner } from '@/components/ui'
-import { Table, Status, AppStatus } from '@/components/pages/Cloud'
+import {
+  Table,
+  Status,
+  AppStatus,
+  NoServiceResults,
+} from '@/components/pages/Cloud'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -78,8 +83,12 @@ export default function CloudApps() {
   )
 
   function renderApps() {
+    if (data?.length === 0) {
+      return <NoServiceResults serviceName="apps" startLink="/cloud/apps/add" />
+    }
+
     return (
-      <div className="grid gap-6 mt-8">
+      <div className="grid gap-6">
         <Table<RequiredService>
           allowSelection={false}
           data={data! as RequiredService[]}
@@ -94,12 +103,14 @@ export default function CloudApps() {
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="p-6 md:p-10">
+        <div className="p-6 border-b tbc">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-bold">Apps</h1>
-            <LinkButton href="/cloud/apps/add" className="text-sm">
-              Add
-            </LinkButton>
+            <h1 className="text-3xl font-medium gradient-text">Apps</h1>
+            {!!data?.length && (
+              <LinkButton href="/cloud/apps/add" className="text-sm">
+                Add
+              </LinkButton>
+            )}
           </div>
         </div>
         {isLoading ? <Spinner /> : renderApps()}

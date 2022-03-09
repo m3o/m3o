@@ -70,8 +70,8 @@ export default function CloudFunctions() {
     <>
       <NextSeo {...seo.about} />
       <DashboardLayout>
-        <div className="p-8">
-          <h1 className="text-3xl font-bold">Functions</h1>
+        <div className="p-6 border-b tbc">
+          <h1 className="text-3xl font-medium gradient-text">Functions</h1>
         </div>
         {renderItems()}
       </DashboardLayout>

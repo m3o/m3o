@@ -17,3 +17,11 @@ export const Spinner: FC<SpinnerProps> = ({ className }) => {
     </div>
   )
 }
+
+export function FullSpinner() {
+  return (
+    <div className="w-full flex items-center pt-10 justify-center">
+      <Spinner />
+    </div>
+  )
+}

@@ -17,6 +17,11 @@
       "title": "Account - Usage"
     }
   },
+  "cloud": {
+    "users": {
+      "add": "Cloud - User - Add"
+    }
+  },
   "dashboard": {
     "title": "Dashboard",
     "description": "Your M3O overview dashboard"

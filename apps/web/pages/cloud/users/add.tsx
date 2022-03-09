@@ -32,8 +32,6 @@ export default function CloudAddUser() {
   const { control, handleSubmit } = useForm<CreateUserFields>()
   const addUserMutation = useAddUser()
 
-  console.log(addUserMutation.error)
-
   function onSubmit(values: CreateUserFields) {
     addUserMutation.mutate(values)
   }
@@ -59,7 +57,7 @@ export default function CloudAddUser() {
               rules={{
                 required: {
                   value: true,
-                  message: 'Please provide your email address',
+                  message: 'Please provide an email address for this user',
                 },
                 pattern: {
                   value:
@@ -101,15 +99,6 @@ export default function CloudAddUser() {
                 />
               )}
             />
-            {/* <div className="flex justify-between items-center">
-          <h2 className="mt-6 font-bold mb-6">Extra Details</h2>
-          <button
-            className="p-2 rounded-full bg-indigo-600"
-            onClick={() => setAddProfileField(true)}
-          >
-            <PlusIcon className="w-4" />
-          </button>
-        </div> */}
             <button className="btn" type="submit">
               Submit
             </button>

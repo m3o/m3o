@@ -54,57 +54,59 @@ const Billing: NextPage<Props> = ({ user }) => {
       <NextSeo title={seo.account.billing.title} />
       <BillingProvider user={user}>
         <DashboardLayout>
-          <h1 className="gradient-text text-3xl md:text-5xl mb-6 pb-4 font-bold">
-            Billing &amp; Plans
-          </h1>
-          <div className="mt-8 tbgc p-6 md:p-10 rounded-lg">
-            <h3 className="font-bold text-2xl text-black mb-3 dark:text-white">
-              Subscription Plan
-            </h3>
-            <p className="ttc">
-              You are currently on the{' '}
-              {subscriptionLevel && (
-                <SubscriptionPlanBubble plan={subscriptionLevel} />
-              )}{' '}
-              plan
-            </p>
-
-            {subscriptionLevel !== SubscriptionPlans.Solo && (
-              <div className="mt-4 font-light">
-                <button
-                  className="bg-zinc-200 dark:bg-zinc-700 py-2 px-4 rounded-full text-sm flex items-center"
-                  onClick={() => setShowSubscriptionModal(true)}>
-                  Cancel subscription <ChevronRightIcon className="w-4 ml-2" />
-                </button>
-              </div>
-            )}
-            {subscriptionLevel === SubscriptionPlans.Solo && (
-              <div className="mt-4 font-light">
-                <Link href="/subscriptions/pro/card-details">
-                  <a className="bg-zinc-200 dark:bg-zinc-700 py-2 px-4 rounded-full text-sm inline-flex items-center">
-                    Upgrade to Pro <ChevronRightIcon className="w-4 ml-2" />
-                  </a>
-                </Link>
-              </div>
-            )}
+          <div className="p-6 md:p-10">
+            <h1 className="gradient-text text-3xl mb-6 pb-4 font-medium">
+              Billing &amp; Plans
+            </h1>
+            <div className="mt-8 tbgc p-6 md:p-10 rounded-lg">
+              <h3 className="font-bold text-2xl text-black mb-3 dark:text-white">
+                Subscription Plan
+              </h3>
+              <p className="ttc">
+                You are currently on the{' '}
+                {subscriptionLevel && (
+                  <SubscriptionPlanBubble plan={subscriptionLevel} />
+                )}{' '}
+                plan
+              </p>
+              {subscriptionLevel !== SubscriptionPlans.Free && (
+                <div className="mt-4 font-light">
+                  <button
+                    className="bg-zinc-200 dark:bg-zinc-700 py-2 px-4 rounded-full text-sm flex items-center"
+                    onClick={() => setShowSubscriptionModal(true)}>
+                    Cancel subscription{' '}
+                    <ChevronRightIcon className="w-4 ml-2" />
+                  </button>
+                </div>
+              )}
+              {subscriptionLevel === SubscriptionPlans.Free && (
+                <div className="mt-4 font-light">
+                  <Link href="/subscriptions/pro/card-details">
+                    <a className="bg-zinc-200 dark:bg-zinc-700 py-2 px-4 rounded-full text-sm inline-flex items-center">
+                      Upgrade to Pro <ChevronRightIcon className="w-4 ml-2" />
+                    </a>
+                  </Link>
+                </div>
+              )}
+            </div>
+            <AddFunds />
+            <PaymentMethods />
+            <History />
+            <DeleteCardModal />
+            <Modal
+              open={showCancelSubscriptionModal}
+              closeModal={() => setShowSubscriptionModal(false)}>
+              <p className="pr-6">
+                Are you sure you would like to cancel your subscription?
+              </p>
+              <Button
+                loading={isLoading}
+                onClick={() => downgrade()}
+                className="mt-6">
+                Confirm
+              </Button>
+            </Modal>
           </div>
-          <AddFunds />
-          <PaymentMethods />
-          <History />
-          <DeleteCardModal />
-          <Modal
-            open={showCancelSubscriptionModal}
-            closeModal={() => setShowSubscriptionModal(false)}>
-            <p className="pr-6">
-              Are you sure you would like to cancel your subscription?
-            </p>
-            <Button
-              loading={isLoading}
-              onClick={() => downgrade()}
-              className="mt-6">
-              Confirm
-            </Button>
-          </Modal>
         </DashboardLayout>
       </BillingProvider>
     </>

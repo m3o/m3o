@@ -78,9 +78,9 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
           {items.map((item, i) => (
             <Fragment key={`section-${i}`}>
               {item.title && (
-                <h2 className="py-4 px-8 font-bold">{item.title}</h2>
+                <h2 className="py-4 px-8 font-medium">{item.title}</h2>
               )}
-              <ul className="mt-2 pb-6 md:pb-0">
+              <ul className="pb-6 md:pb-0">
                 {item.items.map(
                   item =>
                     item && (
@@ -95,7 +95,6 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                                 'border-transparent': pathname !== item.href,
                               },
                             )}>
-                            {/* <item.icon className="w-5 mr-2 align-top inline" /> */}
                             {item.text}
                           </a>
                         </Link>
@@ -123,16 +122,6 @@ export function DashboardLayout({
         <aside className=" bg-white dark:bg-zinc-800 md:pt-6 md:border-r tbc">
           <SidebarItems
             items={[
-              {
-                title: 'Navigation',
-                items: [
-                  {
-                    text: 'Home',
-                    href: '/',
-                    icon: HomeIcon,
-                  },
-                ],
-              },
               {
                 title: 'Cloud',
                 items: [

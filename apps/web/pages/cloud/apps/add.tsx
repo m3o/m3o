@@ -65,7 +65,7 @@ export default function CloudAddApp({ regions }: Props) {
       <DashboardLayout>
         <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
-          <h1 className="text-4xl font-bold mb-6">Add App</h1>
+          <h1 className="text-3xl font-medium mb-6 gradient-text">Add App</h1>
           <div className="max-w-3xl">
             <FormProvider {...formMethods}>
               <form onSubmit={formMethods.handleSubmit(handleSubmit)}>

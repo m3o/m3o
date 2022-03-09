@@ -1,3 +1,4 @@
+import type { CreateRequest } from 'm3o/db'
 import type { RunRequest } from 'm3o/app'
 import type { DeployRequest } from 'm3o/function'
 
@@ -12,4 +13,8 @@ export type AddAppFormValues = RunRequest & {
 
 export type AddFunctionFormValues = DeployRequest & {
   env_vars: Field[]
+}
+
+export type AddDatabaseFormValues = CreateRequest & {
+  record: Field[]
 }

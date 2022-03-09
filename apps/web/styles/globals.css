@@ -3,7 +3,7 @@ a {
 }
 
 .btn {
-  @apply py-4 px-8 bg-zinc-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-zinc-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white;
+  @apply py-4 px-8 bg-zinc-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-zinc-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white text-sm;
 }
 
 .inverse-btn {

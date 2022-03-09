@@ -42,26 +42,28 @@ const Keys: NextPage<KeysProps> = () => {
     <>
       <NextSeo title={seo.account.keys.title} />
       <DashboardLayout>
-        <h1 className="gradient-text text-3xl md:text-5xl mb-6 pb-4 font-bold">
-          API Keys
-        </h1>
-        <KeysApiUsage />
-        <PersonalToken />
-        <ApiKeys
-          onDeleteClick={setDeleteKeyId}
-          onAddClick={() => setShowAddKeyModal(true)}
-        />
-        {showAddKeyModal && (
-          <CreateAPIKeyModal
-            open={showAddKeyModal}
-            closeModal={() => setShowAddKeyModal(false)}
+        <div className="p-6 md:p-10">
+          <h1 className="gradient-text text-3xl mb-6 pb-4 font-medium">
+            API Keys
+          </h1>
+          <KeysApiUsage />
+          <PersonalToken />
+          <ApiKeys
+            onDeleteClick={setDeleteKeyId}
+            onAddClick={() => setShowAddKeyModal(true)}
           />
-        )}
-        <DeleteKeyConfirmationModal
-          deleteKeyId={deleteKeyId}
-          open={!!deleteKeyId}
-          closeModal={() => setDeleteKeyId('')}
-        />
+          {showAddKeyModal && (
+            <CreateAPIKeyModal
+              open={showAddKeyModal}
+              closeModal={() => setShowAddKeyModal(false)}
+            />
+          )}
+          <DeleteKeyConfirmationModal
+            deleteKeyId={deleteKeyId}
+            open={!!deleteKeyId}
+            closeModal={() => setDeleteKeyId('')}
+          />
+        </div>
       </DashboardLayout>
     </>
   )

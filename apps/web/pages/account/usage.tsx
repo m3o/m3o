@@ -32,10 +32,12 @@ const Usage: NextPage<UsageProps> = () => {
     <>
       <NextSeo title={seo.account.usage.title} />
       <DashboardLayout>
-        <h1 className="gradient-text text-3xl md:text-5xl mb-6 pb-4 font-bold">
-          Usage
-        </h1>
-        <LegacyUsage showAllResults={true} />
+        <div className="p-6 md:p-10">
+          <h1 className="gradient-text text-3xl mb-6 pb-4 font-medium">
+            Usage
+          </h1>
+          <LegacyUsage showAllResults={true} />
+        </div>
       </DashboardLayout>
     </>
   )
