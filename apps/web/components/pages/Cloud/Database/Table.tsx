@@ -29,7 +29,6 @@ export function DatabaseTable({ rows }: Props) {
       onTrashClick={console.log}
       onSetPageSize={console.log}
       statePageSize={20}
-      rowClickPath="/users"
     />
   )
 }

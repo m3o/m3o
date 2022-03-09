@@ -7,7 +7,7 @@ import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { DatabaseTable } from '@/components/pages/Cloud'
-import { useFetchDbTableData, useM3OClient } from '@/hooks'
+import { useM3OClient } from '@/hooks'
 import { Button, FullSpinner } from '@/components/ui'
 import { QueryKeys } from '@/lib/constants'
 

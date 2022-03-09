@@ -22,7 +22,7 @@ interface Props<T extends ExpectedObject> {
   allowSelection?: boolean
   columns: Column<T>[]
   data: T[]
-  onTrashClick: (items: string[]) => void
+  onTrashClick?: (items: string[]) => void
   onSetPageSize?: (pageSize: number) => void
   statePageSize?: number
 }
@@ -151,7 +151,9 @@ export function Table<T extends ExpectedObject>({
       ? page.map(({ original }) => original.id)
       : selectedItems.map(({ id }) => id)
 
-    onTrashClick(items)
+    if (onTrashClick) {
+      onTrashClick(items)
+    }
   }, [shouldSelectAll, selectedItems, page])
 
   return (

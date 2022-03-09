@@ -10,7 +10,7 @@ import { useM3OClient } from '@/hooks'
 import { NoServiceResults, Table } from '@/components/pages/Cloud'
 import { QueryKeys } from '@/lib/constants'
 
-type FunctionItem = Func & { id: string }
+type FunctionItem = Required<Func> & { id: string }
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -42,8 +42,6 @@ export default function CloudFunctions() {
       initialData: [],
     },
   )
-
-  console.log(data)
 
   const columns = useMemo(() => [], [])
 

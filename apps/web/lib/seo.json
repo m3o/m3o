@@ -19,7 +19,9 @@
   },
   "cloud": {
     "users": {
-      "add": "Cloud - User - Add"
+      "add": {
+        "title": "Cloud - User - Add"
+      }
     }
   },
   "dashboard": {
