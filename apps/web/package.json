@@ -62,6 +62,7 @@
     "@types/memory-cache": "^0.2.1",
     "@types/react": "17.0.15",
     "@types/react-syntax-highlighter": "^13.5.2",
+    "@types/react-table": "^7.7.9",
     "@types/uuid": "^8.3.1",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^27.4.6",
