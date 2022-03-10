@@ -74,11 +74,7 @@ const Pricing: NextPage<PricingProps> = ({ prices }) => {
               <strong className="font-bold text-black dark:text-white">
                 FREE
               </strong>{' '}
-              to use, with a{' '}
-              <strong className="font-bold text-black dark:text-white">
-                1 million
-              </strong>{' '}
-              request per month account quota.
+              to use, with a monthly quota to get you started.
             </p>
             <p className="mb-4 text-sm">
               Additional requests are charged at 0.000001 credit per request or in

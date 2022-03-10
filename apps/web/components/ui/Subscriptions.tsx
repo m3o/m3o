@@ -9,10 +9,10 @@ export function Subscriptions(): ReactElement {
       <Subscription
         cost="Free to start"
         plan={SubscriptionPlans.Free}
-        description="For individuals and developers"
+        description="For hackers and hobbyists"
         features={[
           'Access to 50+ public APIs',
-          '1 million api calls per month',
+          '100,000 api calls per month',
           'Top-up to pay as you grow',
           'Community support',
         ]}
@@ -27,13 +27,33 @@ export function Subscriptions(): ReactElement {
         }
       />
       <Subscription
+        cost="£10/month"
+        plan={SubscriptionPlans.Solo}
+        description="For individuals and creators"
+        features={[
+          'Everything in Free plus',
+          '1 million api calls per month',
+          'Unlock paid APIs and features',
+          'Increased usage limits',
+        ]}
+        button={
+          <Link href="#">
+            <a
+              className="btn block w-full text-center"
+              data-testid="subscription-solo-start-button">
+              Coming soon
+            </a>
+          </Link>
+        }
+      />
+      <Subscription
         cost="£20/month"
         plan={SubscriptionPlans.Pro}
         description="For professionals and teams"
         features={[
-          'Everything in Free plus',
+          'Everything in Solo plus',
           '10 million requests per month',
-          'Increased usage limits',
+          'Higher SLAs and response time,
           'Email support',
         ]}
         button={

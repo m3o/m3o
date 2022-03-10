@@ -66,6 +66,7 @@ export enum BillingApiRoutes {
 
 export enum SubscriptionPlans {
   Free = 'free',
+  Solo = 'solo',
   Pro = 'pro',
   Business = 'business',
 }
