@@ -80,7 +80,7 @@ export default function CloudAddApp({ regions }: Props) {
                     className="mt-6 text-sm self-start"
                     type="submit"
                     loading={runAppMutation.isLoading}>
-                    Complete
+                    Submit
                   </Button>
                 </div>
               </form>

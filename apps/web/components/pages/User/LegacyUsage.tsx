@@ -70,7 +70,7 @@ export const LegacyUsage: FC<Props> = ({ showAllResults = false }) => {
     : formattedTableData.slice(0, 10)
 
   return (
-    <div className="p-4 md:p-10 tbgc rounded-lg mt-10">
+    <div className="p-4 md:p-10 tbgc rounded-lg mt-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h5 className="font-bold text-xl text-black dark:text-white">

@@ -19,8 +19,11 @@
   },
   "cloud": {
     "users": {
+      "main": {
+        "title": "Cloud - Users"
+      },
       "add": {
-        "title": "Cloud - User - Add"
+        "title": "Cloud - Users - Add"
       }
     },
     "functions": {
@@ -28,7 +31,7 @@
         "title": "Cloud - Functions"
       },
       "add": {
-        "title": "Cloud - User - Add"
+        "title": "Cloud - Functions - Add"
       }
     },
     "database": {

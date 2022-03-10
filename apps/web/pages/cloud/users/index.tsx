@@ -40,7 +40,7 @@ export default function CloudUsers() {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo {...seo.cloud.users.main} />
       <DashboardLayout>
         <div className="py-4 px-8 border-b tbc flex justify-between items-center">
           <h1 className="text-3xl font-medium gradient-text">Users</h1>

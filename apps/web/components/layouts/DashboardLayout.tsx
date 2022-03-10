@@ -9,7 +9,12 @@ import { MainLayout } from './MainLayout'
 import { useWindowResizeTrigger, useBillingAccount } from '@/hooks'
 import { SubscriptionPlans } from '@/lib/constants'
 import {
+  HomeIcon,
+  CodeIcon,
+  ServerIcon,
   ChartBarIcon,
+  UserGroupIcon,
+  DatabaseIcon,
   CashIcon,
   KeyIcon,
   SupportIcon,
@@ -76,7 +81,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
               {item.title && (
                 <h2 className="py-4 px-8 font-medium">{item.title}</h2>
               )}
-              <ul className="pb-6 md:pb-0">
+              <ul className="pb-6 md:pb-0 mb-2">
                 {item.items.map(
                   item =>
                     item && (
@@ -84,8 +89,9 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
                         <Link href={item.href}>
                           <a
                             className={classNames(
-                              'block py-2 px-8 text-zinc-900 text-sm dark:text-white',
+                              'flex items-center py-2 px-12 text-zinc-900 text-sm dark:text-zinc-300',
                             )}>
+                            <item.icon className="w-4 mr-2" />
                             {item.text}
                           </a>
                         </Link>
@@ -110,7 +116,7 @@ export function DashboardLayout({
   return (
     <MainLayout>
       <section className="min-h-screen md:grid md:grid-cols-6">
-        <aside className=" bg-white dark:bg-zinc-800 md:pt-6 md:border-r tbc">
+        <aside className=" bg-white dark:bg-zinc-900   md:pt-6 border-r tbc">
           <SidebarItems
             items={[
               {
@@ -119,7 +125,7 @@ export function DashboardLayout({
                   {
                     text: 'Home',
                     href: '/',
-                    icon: ChartBarIcon,
+                    icon: HomeIcon,
                   },
                 ],
               },
@@ -129,22 +135,22 @@ export function DashboardLayout({
                   {
                     text: 'Apps',
                     href: '/cloud/apps',
-                    icon: ChartBarIcon,
+                    icon: ServerIcon,
                   },
                   {
                     text: 'Database',
                     href: '/cloud/database',
-                    icon: ChartBarIcon,
+                    icon: DatabaseIcon,
                   },
                   {
                     text: 'Functions',
                     href: '/cloud/functions',
-                    icon: ChartBarIcon,
+                    icon: CodeIcon,
                   },
                   {
                     text: 'Users',
                     href: '/cloud/users',
-                    icon: ChartBarIcon,
+                    icon: UserGroupIcon,
                   },
                 ],
               },
