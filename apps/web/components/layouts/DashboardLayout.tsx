@@ -114,6 +114,16 @@ export function DashboardLayout({
           <SidebarItems
             items={[
               {
+                title: 'Navigation',
+                items: [
+                  {
+                    text: 'Home',
+                    href: '/',
+                    icon: ChartBarIcon,
+                  },
+                ],
+              },
+              {
                 title: 'Cloud',
                 items: [
                   {
