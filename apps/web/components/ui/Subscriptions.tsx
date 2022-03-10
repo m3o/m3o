@@ -5,7 +5,7 @@ import { SubscriptionPlans } from '@/lib/constants'
 
 export function Subscriptions(): ReactElement {
   return (
-    <div className="grid md:grid-cols-3 mt-10 text-left gap-4">
+    <div className="grid md:grid-cols-4 mt-10 text-left gap-4">
       <Subscription
         cost="Free to start"
         plan={SubscriptionPlans.Free}
@@ -53,7 +53,7 @@ export function Subscriptions(): ReactElement {
         features={[
           'Everything in Solo plus',
           '10 million requests per month',
-          'Higher SLAs and response time,
+          'Higher SLAs & response times',
           'Email support',
         ]}
         button={
