@@ -24,6 +24,11 @@
       "@/utils/*": ["utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "react-table-config.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
