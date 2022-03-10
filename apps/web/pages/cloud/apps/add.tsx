@@ -61,7 +61,7 @@ export default function CloudAddApp({ regions }: Props) {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo {...seo.cloud.apps.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>

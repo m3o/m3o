@@ -30,6 +30,22 @@
       "add": {
         "title": "Cloud - User - Add"
       }
+    },
+    "database": {
+      "main": {
+        "title": "Cloud - Database"
+      },
+      "add": {
+        "title": "Cloud - Database - Add"
+      }
+    },
+    "apps": {
+      "main": {
+        "title": "Cloud - App"
+      },
+      "add": {
+        "title": "Cloud - App - Add"
+      }
     }
   },
   "dashboard": {

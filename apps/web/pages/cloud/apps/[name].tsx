@@ -57,7 +57,7 @@ export default function CloudApp({ app }: Props): ReactElement {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo title={`${seo.cloud.apps.main.title} - ${app.name}`} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>

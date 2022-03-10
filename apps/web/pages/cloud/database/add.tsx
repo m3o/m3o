@@ -75,7 +75,7 @@ export default function CloudDatabaseAdd() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.users.add} />
+      <NextSeo {...seo.cloud.database.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10 max-w-xl">
           <BackButtonLink href="/cloud/database">

@@ -114,7 +114,7 @@ export default function CloudApps() {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo {...seo.cloud.apps.main} />
       <DashboardLayout>
         <div className="p-6 border-b tbc">
           <div className="flex items-center justify-between">

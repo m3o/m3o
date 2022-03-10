@@ -41,6 +41,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    console.log(isMenuOpen)
     if (isMenuOpen) {
       const height = (menuRef.current?.firstChild as HTMLDivElement)
         .clientHeight
@@ -60,7 +61,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
       <button
         className="md:hidden w-full p-4 text-left flex justify-between"
         onClick={() => setIsMenuOpen(prev => !prev)}>
-        {/* {link.text} */}
+        Navigation
         <ChevronDownIcon
           className={classNames('w-6', { 'rotate-180': isMenuOpen })}
         />

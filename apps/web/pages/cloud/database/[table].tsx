@@ -73,7 +73,7 @@ export default function CloudDatabaseTable() {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo title={`${seo.cloud.database.main.title} - ${tableName}`} />
       <DashboardLayout>
         <div className="p-6 border-b tbc flex items-center justify-between">
           <h1 className="text-2xl font-medium gradient-text flex items-center">
