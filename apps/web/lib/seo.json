@@ -22,6 +22,14 @@
       "add": {
         "title": "Cloud - User - Add"
       }
+    },
+    "functions": {
+      "main": {
+        "title": "Cloud - Functions"
+      },
+      "add": {
+        "title": "Cloud - User - Add"
+      }
     }
   },
   "dashboard": {

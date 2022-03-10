@@ -9,7 +9,7 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { QueryKeys } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
-import { LinkButton, Spinner } from '@/components/ui'
+import { LinkButton, FullSpinner } from '@/components/ui'
 import {
   Table,
   Status,
@@ -126,7 +126,7 @@ export default function CloudApps() {
             )}
           </div>
         </div>
-        {isLoading ? <Spinner /> : renderApps()}
+        {isLoading ? <FullSpinner /> : renderApps()}
       </DashboardLayout>
     </>
   )

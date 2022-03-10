@@ -174,15 +174,15 @@ export function Table<T extends ExpectedObject>({
           }
         }}
       />
-      <div>
+      <div className="overflow-x-scroll">
         <div {...getTableProps()}>
-          <div className="tbgc font-medium text-sm ttc ">
+          <div className="font-medium text-sm ttc">
             {headerGroups.map(headerGroup => (
               <div {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
                   <div
                     {...column.getHeaderProps()}
-                    className="text-left p-2 text-sm">
+                    className="text-left p-2 text-sm overflow-hidden text-ellipsis tbgc">
                     {column.render('Header')}
                   </div>
                 ))}

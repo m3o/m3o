@@ -2,7 +2,7 @@ import type { Column } from 'react-table'
 import type { Func } from 'm3o/function'
 import { NextSeo } from 'next-seo'
 import { useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { DashboardLayout } from '@/components/layouts'
 import { FullSpinner, LinkButton } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
@@ -31,12 +31,34 @@ export const getServerSideProps = withAuth(async context => {
 })
 
 export default function CloudFunctions() {
+  const queryClient = useQueryClient()
   const m3o = useM3OClient()
 
-  const { data, isLoading } = useQuery(QueryKeys.CloudFunctions, async () => {
-    const response = await m3o.function.list({})
-    return response.functions || []
-  })
+  const { data, isFetching } = useQuery(
+    QueryKeys.CloudFunctions,
+    async () => {
+      const response = await m3o.function.list({})
+      return response.functions || []
+    },
+    {
+      refetchInterval: 15000,
+    },
+  )
+
+  const deleteFunctionsMutation = useMutation(
+    (items: string[]) => {
+      const promises = items
+        .map(item => data?.find(func => func.id === item))
+        .map(item => m3o.function.delete({ name: item?.name }))
+
+      return Promise.all(promises)
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QueryKeys.CloudFunctions)
+      },
+    },
+  )
 
   const columns = useMemo<Column<FunctionItem>[]>(
     () => [
@@ -73,8 +95,19 @@ export default function CloudFunctions() {
     [],
   )
 
+  function handleTrashClick(items: string[]) {
+    const message =
+      items.length === 1
+        ? 'Are you sure you would like to delete this function?'
+        : `Are you sure you would like to delete these ${items.length} functions?`
+
+    if (window.confirm(message)) {
+      deleteFunctionsMutation.mutate(items)
+    }
+  }
+
   function renderItems() {
-    if (isLoading) {
+    if (isFetching) {
       return <FullSpinner />
     }
 
@@ -88,15 +121,17 @@ export default function CloudFunctions() {
     }
 
     return (
-      <Table<FunctionItem> data={data as FunctionItem[]} columns={columns} />
+      <Table<FunctionItem>
+        data={data as FunctionItem[]}
+        columns={columns}
+        onTrashClick={handleTrashClick}
+      />
     )
   }
 
-  console.log(data)
-
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo {...seo.cloud.functions.main} />
       <DashboardLayout>
         <div className="p-6 border-b tbc flex items-center justify-between">
           <h1 className="text-3xl font-medium gradient-text">Functions</h1>

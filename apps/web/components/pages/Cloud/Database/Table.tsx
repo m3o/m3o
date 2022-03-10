@@ -5,12 +5,13 @@ import { Table } from '@/components/pages/Cloud'
 type DatabaseItem = Record<string, unknown> & { id: string }
 
 interface Props {
+  handleDatabaseRowDelete: (items: string[]) => void
   rows: DatabaseItem[]
 }
 
 const deDupe = <A extends any[]>(arr: A) => Array.from(new Set(arr))
 
-export function DatabaseTable({ rows }: Props) {
+export function DatabaseTable({ rows, handleDatabaseRowDelete }: Props) {
   const columns = useMemo<Column<DatabaseItem>[]>(() => {
     const keys = deDupe(rows.flatMap(item => Object.keys(item)))
 
@@ -26,7 +27,7 @@ export function DatabaseTable({ rows }: Props) {
     <Table<DatabaseItem>
       data={rows}
       columns={columns}
-      onTrashClick={console.log}
+      onTrashClick={handleDatabaseRowDelete}
       onSetPageSize={console.log}
       statePageSize={20}
     />

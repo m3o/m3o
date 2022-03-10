@@ -60,6 +60,17 @@ export default function CloudDatabaseTable() {
     }
   }
 
+  function handleDatabaseRowDelete(items: string[]) {
+    const message =
+      items.length === 1
+        ? 'Are you sure you would like to delete this row?'
+        : `Are you sure you would like to delete these ${items.length} row?`
+
+    if (window.confirm(message)) {
+      // deleteFunctionsMutation.mutate(items)
+    }
+  }
+
   return (
     <>
       <NextSeo {...seo.about} />
@@ -80,7 +91,10 @@ export default function CloudDatabaseTable() {
         {isLoading ? (
           <FullSpinner />
         ) : (
-          <DatabaseTable rows={data as DatabaseItem[]} />
+          <DatabaseTable
+            rows={data as DatabaseItem[]}
+            handleDatabaseRowDelete={handleDatabaseRowDelete}
+          />
         )}
       </DashboardLayout>
     </>

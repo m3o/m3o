@@ -73,7 +73,7 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
 
   return (
     <>
-      <NextSeo {...seo.about} />
+      <NextSeo {...seo.cloud.functions.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/functions">
