@@ -49,10 +49,6 @@ export const LOGGED_IN_HEADER_LINKS: HeaderLink[] = [
     text: 'Home',
   },
   {
-    link: '/cloud',
-    text: 'Cloud',
-  },
-  {
     link: Routes.Explore,
     text: 'Explore',
   },
