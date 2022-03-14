@@ -139,7 +139,7 @@ func main() {
 				}
 			}
 
-			spec := &openapi3.Swagger{}
+			spec := &openapi3.T{}
 
 			// we have to read an openapi spec otherwise we can't publish
 			if err := json.Unmarshal(js, &spec); err != nil {
@@ -191,6 +191,11 @@ func main() {
 				if len(split) != 4 {
 					fmt.Printf("Error processing path %s %s. Unexpected format\n", k, serviceDir)
 					os.Exit(1)
+				}
+				if split[2] != split[1] {
+					fmt.Printf("Skipping %s", split)
+					// skip, this is for a service that isn't exposed as part of the public api
+					continue
 				}
 				if _, ok := exjson[split[3]]; !ok {
 					fmt.Printf("Can't find example for endpoint %s %s\n", serviceDir, split[3])
