@@ -35,14 +35,16 @@ export const EndpointCard: FC<Props> = ({
   title,
 }) => {
   return (
-    <Card className="p-4 md:p-6 mb-4" id={title.replace(/ /g, '')}>
-      <div className="border-b pb-4 mb-8 border-zinc-100 dark:border-zinc-700 flex justify-between">
+    <div
+      className="mb-4 border-b tbc pb-10 pt-6 first:pt-0 last:border-b-0"
+      id={title.replace(/ /g, '')}>
+      <div className="pb-4 mb-8 flex justify-between">
         <div>
           <h3 className="font-bold text-black text-2xl dark:text-white">
             {splitEndpointTitle(title)}
           </h3>
           <h4 className="pt-2">
-            <span className="font-medium text-pink-600">{apiMethod}</span>{' '}
+            <span className="font-medium text-pink-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
               /{apiVersion}/{apiName}/{endpointName}
             </span>
@@ -83,6 +85,6 @@ export const EndpointCard: FC<Props> = ({
           )}
         </div>
       </div>
-    </Card>
+    </div>
   )
 }

@@ -86,9 +86,9 @@ const Overview: NextPage<Props> = ({
       name={name}
       summaryDescription={summaryDescription}
       category={category}>
-      <div className="py-6 font-light">
-        <div className="col-span-2 mb-6 p-4 md:p-6 tbgc tbc rounded-lg border">
-          <div className="pb-6 tbc border-b mb-6">
+      <div className="">
+        <div className="col-span-2 mb-6">
+          <div className="pb-6 max-w-2xl my-4 md:my-8">
             <SubTitle>Introduction</SubTitle>
             <OverviewDescription>{description}</OverviewDescription>
           </div>

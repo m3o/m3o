@@ -40,13 +40,7 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-const APP_FIELDS: (keyof Service)[] = [
-  'name',
-  'id',
-  'branch',
-  'port',
-  'repo',
-]
+const APP_FIELDS: (keyof Service)[] = ['name', 'id', 'branch', 'port', 'repo']
 
 export default function CloudApp({ app }: Props): ReactElement {
   const { data = {} } = useFetchSingleApp(app)
@@ -64,7 +58,7 @@ export default function CloudApp({ app }: Props): ReactElement {
             <div className="col-span-3">
               <h1 className="font-bold text-3xl mb-2">{data.name}</h1>
               <p>
-                <a href={data.url} className="flex mb-4">
+                <a href={data.url} className="flex items-center mb-4">
                   {data.url} <ExternalLinkIcon className="w-4 ml-1" />
                 </a>
                 <Status status={data.status as AppStatus} />

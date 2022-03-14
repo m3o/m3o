@@ -28,7 +28,7 @@ a {
 }
 
 .tab {
-  @apply border-transparent text-zinc-600 font-normal dark:text-zinc-300 py-4 mr-8 border-b-2 border-solid block;
+  @apply border-transparent text-zinc-600 dark:text-zinc-300 py-4 mr-8 border-b-2 border-solid block text-sm;
 }
 
 .tab.selected {

@@ -54,8 +54,8 @@ export const PropertiesTable: FC<Props> = ({ title, properties = {} }) => {
   const input = createPropertyTree(properties)
 
   return (
-    <div className="mb-8">
-      <h4 className="font-medium text-indigo-600 mb-4 text-sm dark:text-indigo-300 border-b border-solid border-zinc-100 pb-2 dark:border-zinc-600">
+    <div className="mb-10">
+      <h4 className="font-medium text-indigo-600 mb-4 text-sm dark:text-indigo-300 pb-2 ">
         {title}
       </h4>
       {input.length > 0 ? input : <small>nil</small>}

@@ -21,7 +21,7 @@ export const Service: FC<ExploreAPI> = ({
       </Link>
       <div className="relative z-40 pointer-events-none p-6 pb-0 md:pb-0">
         <div className="flex items-center justify-between mb-3">
-          {Icon && <Icon className="w-5 text-indigo-600" />}
+          {Icon && <Icon className="w-5 text-indigo-600 dark:text-pink-400" />}
           {category && <CategoryBubble>{category}</CategoryBubble>}
         </div>
         <h3 className="mt-0 text-2xl mb-1">

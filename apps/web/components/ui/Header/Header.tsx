@@ -31,7 +31,7 @@ export const Header: FC = () => {
       <HeaderBanner />
       <header
         className={classNames(
-          'p-4 md:p-6 bg-zinc-100 backdrop-blur-sm bg-opacity-75 dark:bg-zinc-900 dark:bg-opacity-75 border-b tbc',
+          'p-4 md:px-6 bg-zinc-100 backdrop-blur-sm bg-opacity-75 dark:bg-zinc-900 dark:bg-opacity-75 border-b tbc',
         )}>
         <div className="flex items-center justify-between">
           <div className="flex items-center">

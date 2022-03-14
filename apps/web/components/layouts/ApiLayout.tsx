@@ -65,22 +65,22 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
         }}
       />
       <Header />
-      <div className="py-10 border-b tbc">
+      <div className="py-8 border-b tbc">
         <div className="m3o-container">
           <div className="flex items-center justify-between">
             <div>
               <Link href="/explore">
-                <a className="flex mb-6 items-center text-sm">
+                <a className="flex mb-6 items-center text-xs">
                   <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
                 </a>
               </Link>
               <CategoryBubble className="inline-block mb-6">
                 {category}
               </CategoryBubble>
-              <h1 className="font-bold text-5xl md:text-5xl mb-4 mt-2 text-black dark:text-white">
+              <h1 className="font-bold text-4xl md:text-5xl my-2 text-black dark:text-white">
                 {displayName}
               </h1>
-              <p className="pb-6 text-lg text-zinc-700 dark:text-zinc-300">
+              <p className="pb-6 text-lg text-zinc-700 dark:text-zinc-400 font-light">
                 {shortDescription}
               </p>
             </div>
@@ -94,7 +94,7 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
           </div>
         </div>
       </div>
-      <div className="border-b tbc">
+      <div className="border-b tbc bg-zinc-100 dark:bg-zinc-800 mb-8">
         <div className="m3o-container">
           <Navigation onDownloadsClick={() => setShowDownloadsModal(true)} />
         </div>

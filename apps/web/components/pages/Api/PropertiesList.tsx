@@ -12,7 +12,7 @@ export const PropertiesList: FC = ({ children }) => {
         {open ? 'Hide' : 'Show'} attributes
       </button>
       {open && (
-        <div className="w-full p-4 border border-zinc-100 border-solid mt-4 rounded-md">
+        <div className="w-full p-4 border tbc border-solid mt-4 rounded-md">
           {children}
         </div>
       )}

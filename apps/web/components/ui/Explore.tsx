@@ -123,17 +123,7 @@ export const Explore: FC<ExploreProps> = ({
                   <Spinner className="scale-125 transform" />
                 </div>
               ) : (
-                <>
-                  <ExploreResults
-                    services={shouldShowMore ? data : data.slice(0, 9)}
-                  />
-                  {data.length > 9 && (
-                    <ShowHideResultsButton
-                      onClick={() => setShouldShowMore(prev => !prev)}
-                      shouldShowMore={shouldShowMore}
-                    />
-                  )}
-                </>
+                <ExploreResults services={data} />
               )}
             </div>
           </div>
