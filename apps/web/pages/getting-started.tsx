@@ -1,15 +1,15 @@
-import type { NextPage } from 'next'
-import type { ServiceExamples } from '@/types'
+import type {NextPage} from 'next'
+import type {ServiceExamples} from '@/types'
 import Link from 'next/link'
-import { NextSeo } from 'next-seo'
-import { SchemaObject } from 'openapi3-ts'
-import { MainLayout } from '@/components/layouts'
-import { Example, Section } from '@/components/pages/GettingStarted'
-import { Routes } from '@/lib/constants'
-import { withAuth, WithAuthProps } from '@/lib/api/m3o/withAuth'
-import { fetchSingleService } from '@/lib/api/m3o/services/explore'
+import {NextSeo} from 'next-seo'
+import {SchemaObject} from 'openapi3-ts'
+import {MainLayout} from '@/components/layouts'
+import {Example, Section} from '@/components/pages/GettingStarted'
+import {Routes} from '@/lib/constants'
+import {withAuth, WithAuthProps} from '@/lib/api/m3o/withAuth'
+import {fetchSingleService} from '@/lib/api/m3o/services/explore'
 import seo from '@/lib/seo.json'
-import { PageHeader } from '@/components/ui'
+import {PageHeader} from '@/components/ui'
 
 interface Props extends WithAuthProps {
   examples: ServiceExamples
@@ -17,7 +17,7 @@ interface Props extends WithAuthProps {
 }
 
 export const getServerSideProps = withAuth(async context => {
-  const { examples, schemas } = await fetchSingleService('helloworld')
+  const {examples, schemas} = await fetchSingleService('helloworld')
 
   return {
     props: {
@@ -28,7 +28,7 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-const GettingStarted: NextPage<Props> = ({ user, examples, requestSchema }) => {
+const GettingStarted: NextPage<Props> = ({user, examples, requestSchema}) => {
   return (
     <MainLayout>
       <NextSeo
@@ -63,7 +63,7 @@ const GettingStarted: NextPage<Props> = ({ user, examples, requestSchema }) => {
             Here&apos;s a simple example to call the helloworld API:
           </p>
           <div className="max-w-3xl">
-            <Example examples={examples} requestSchema={requestSchema} />
+            <Example examples={examples} requestSchema={requestSchema}/>
           </div>
         </Section>
         <Section title="Discover APIs">
@@ -86,13 +86,25 @@ const GettingStarted: NextPage<Props> = ({ user, examples, requestSchema }) => {
           </p>
         </Section>
         <Section title="Using an API">
-          <p>
+          <p className="mt-4 mb-4">
             M3O APIs can be accessed via the url
             &#34;https://api.m3o.com/v1/[service]/[endpoint] &#34;. All API
-            calls require an API token provided via the &#34;Authorization:
-            Bearer&#34; header. Our APIs provide a JSON based request/response
-            format and also require a `Content-Type: application/json` header
-            for each request.
+            calls require an API token to be provided. You can specify the token in one of three ways:
+            <ul className="list-disc mt-2">
+              <li>via the &#34;Authorization&#34; header. Prepend your API token with the string &#34;Bearer&#34;
+                i.e. the header will look like &#34;Authorization: Bearer &lt;YOUR API TOKEN&gt;&#34;</li>
+              <li>via HTTP basic authentication. Use the string &#34;user&#34; as the username and use your API token as
+                the password
+              </li>
+              <li>via the &#34;Sec-Websocket-Protocol&#34; header for websocket calls. Pass your API token as the
+                protocol name
+              </li>
+            </ul>
+          </p>
+
+          <p className="mt-4">
+            Our APIs provide a JSON based request/response format and also require a `Content-Type: application/json`
+            header for each request.
           </p>
 
           <p className="mt-4">
@@ -118,8 +130,8 @@ const GettingStarted: NextPage<Props> = ({ user, examples, requestSchema }) => {
         </Section>
         <Section title="Account Billing">
           <p>
-            The majority of our APIs are free, with a 1 million request per
-            month quota. Third party APIs or calls that perform specific
+            The majority of our APIs are free, with a 10,000 request per
+            month quota on the free tier. Third party APIs or calls that perform specific
             functions such as SMS or email are charged for and billed per
             request. Each account has a credit based balance. Any request made
             to a paid API will be debited from the balance in real time. When
@@ -147,7 +159,8 @@ const GettingStarted: NextPage<Props> = ({ user, examples, requestSchema }) => {
         </Section>
         <Section title="Feedback or Support">
           <p>
-            Join the community and ask questions on <a className="dark:text-blue-300" href="https://discord.gg/TBR9bRjd6Z">Discord</a>.
+            Join the community and ask questions on <a className="dark:text-blue-300"
+                                                       href="https://discord.gg/TBR9bRjd6Z">Discord</a>.
             If you&apos;re subscribed to the Pro tier email{' '}
             <a className="dark:text-blue-300" href="mailto:support@m3o.com">support@m3o.com</a> for help. Otherwise you
             can provide feedback at <a className="dark:text-blue-300" href="mailto:contact@m3o.com">contact@m3o.com</a>.
