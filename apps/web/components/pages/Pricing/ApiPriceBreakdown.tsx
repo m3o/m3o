@@ -10,7 +10,7 @@ export const ApiPriceBreakdown: FC<PricingItem> = ({
   return (
     <div className="py-4">
       <h3 className="text-lg font-bold text-black mb-4 dark:text-white">
-        {icon} {display_name}
+        {display_name}
       </h3>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -22,7 +22,7 @@ export const ApiPriceBreakdown: FC<PricingItem> = ({
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase">
-                      Feature
+                      Endpoint
                     </th>
                     <th
                       scope="col"
