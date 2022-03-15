@@ -70,19 +70,19 @@ export const LegacyUsage: FC<Props> = ({ showAllResults = false }) => {
     : formattedTableData.slice(0, 10)
 
   return (
-    <div className="p-4 md:p-10 tbgc rounded-lg mt-8">
+    <div className="p-8 md:p-10 tbgc rounded-lg mt-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h5 className="font-bold text-xl text-black dark:text-white">
             API Usage
           </h5>
-          <p className="mb-4 font-medium text-sm mt-2 ttc">
+          <p className="mb-4 text-sm mt-2 ttc">
             Free quota: {Number(data.quota_remaining).toLocaleString()}
           </p>
         </div>
         {!showAllResults && (
           <Link href={Routes.UserUsage}>
-            <a className="flex items-center text-sm">
+            <a className="md:flex items-center text-sm hidden">
               See all API usage <ArrowRightIcon className="w-4 ml-2" />
             </a>
           </Link>
@@ -108,11 +108,11 @@ export const LegacyUsage: FC<Props> = ({ showAllResults = false }) => {
             return (
               <div
                 key={item.name}
-                className="grid grid-cols-2 md:grid-cols-4 items-center h-8">
-                <div className="border-b border-zinc-200 h-full flex items-center font-medium text-sm px-4 dark:border-zinc-600">
+                className="grid grid-cols-2 md:grid-cols-4 items-center h-8 border-b tbc last:border-0">
+                <div className=" h-full flex items-center font-medium text-sm px-4 dark:border-zinc-600">
                   {item.name}
                 </div>
-                <div className="hidden md:block col-span-2 bg-pink-50 border-b border-zinc-200 h-full dark:border-zinc-600 dark:bg-zinc-800">
+                <div className="hidden md:block col-span-2  bg-pink-50 h-full dark:bg-zinc-800">
                   <div
                     className=" bg-pink-600 h-full dark:bg-pink-300"
                     style={{
@@ -120,7 +120,7 @@ export const LegacyUsage: FC<Props> = ({ showAllResults = false }) => {
                       opacity: percentage / 100,
                     }}></div>
                 </div>
-                <div className="border-b border-zinc-100 h-full flex items-center px-4 text-sm dark:border-zinc-600">
+                <div className="h-full flex items-center px-4 text-sm dark:border-zinc-600">
                   {item.requestsAmount}
                 </div>
               </div>

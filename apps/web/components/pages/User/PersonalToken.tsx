@@ -1,12 +1,11 @@
 import type { FC } from 'react'
-import { Alert } from '@/components/ui'
 import { useV1Token } from '@/hooks'
 
 export const PersonalToken: FC = () => {
   const v1Token = useV1Token()
 
   return (
-    <div className="mt-8 tbgc p-6 md:p-10 rounded-lg">
+    <div className="mt-8 tbgc p-8 md:p-10 rounded-lg">
       <h1 className="font-bold text-xl text-black md:text-2xl dark:text-white">
         Personal Token
       </h1>

@@ -7,7 +7,7 @@ interface Props {
 
 export const APIKey: FC<Props> = ({ apiToken }) => {
   return (
-    <div className="tbgc p-6 md:p-10 rounded-lg">
+    <div className="tbgc p-8 md:p-10 rounded-lg">
       <h5 className="font-bold text-xl text-black dark:text-white">
         Personal API Key
       </h5>

@@ -76,7 +76,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
       <div
         ref={menuRef}
         style={{ height: isMobile ? menuHeight : 'auto' }}
-        className="overflow-hidden transition-all border-b md:border-b-0 tbc mb-6">
+        className="overflow-hidden transition-all border-b md:border-b-0 tbc">
         <div>
           {items.map((item, i) => (
             <Fragment key={`section-${i}`}>
@@ -118,7 +118,7 @@ export function DashboardLayout({
   return (
     <MainLayout>
       <section className="min-h-screen md:grid md:grid-cols-6">
-        <aside className=" bg-white dark:bg-zinc-900  md:pt-6 border-r tbc">
+        <aside className=" bg-white dark:bg-zinc-900 md:pt-6 md:border-r tbc">
           <SidebarItems
             items={[
               {

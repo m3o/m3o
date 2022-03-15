@@ -25,6 +25,7 @@ interface Props<T extends ExpectedObject> {
   onTrashClick?: (items: string[]) => void
   onSetPageSize?: (pageSize: number) => void
   statePageSize?: number
+  tableName: string
 }
 
 export function Table<T extends ExpectedObject>({
@@ -34,6 +35,7 @@ export function Table<T extends ExpectedObject>({
   onTrashClick,
   onSetPageSize,
   statePageSize,
+  tableName,
 }: Props<T>) {
   const [shouldSelectAll, setShouldSelectAll] = useState(false)
   const { onSelectItem, selectedItems, resetSelectedItems } =
@@ -160,7 +162,7 @@ export function Table<T extends ExpectedObject>({
     <>
       <ActionsBar
         hasCheckedItems={!!selectedItems.length || shouldSelectAll}
-        right={<TableSearch tableName="users" onChange={onSearchChange} />}
+        right={<TableSearch tableName={tableName} onChange={onSearchChange} />}
         onDeleteClick={handleDeleteClick}
         pageSize={pageSize}
         showingResults={`${data.length} results`}
@@ -212,18 +214,18 @@ export function Table<T extends ExpectedObject>({
             })}
           </div>
         </div>
-        <Pagination
-          gotoPage={gotoPage}
-          canNextPage={canNextPage}
-          canPreviousPage={canPreviousPage}
-          previousPage={previousPage}
-          pageCount={pageCount}
-          pageOptions={pageOptions}
-          nextPage={nextPage}
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-        />
       </div>
+      <Pagination
+        gotoPage={gotoPage}
+        canNextPage={canNextPage}
+        canPreviousPage={canPreviousPage}
+        previousPage={previousPage}
+        pageCount={pageCount}
+        pageOptions={pageOptions}
+        nextPage={nextPage}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+      />
     </>
   )
 }

@@ -125,6 +125,7 @@ export default function CloudFunctions() {
         data={data as FunctionItem[]}
         columns={columns}
         onTrashClick={handleTrashClick}
+        tableName="functions"
       />
     )
   }
@@ -133,8 +134,10 @@ export default function CloudFunctions() {
     <>
       <NextSeo {...seo.cloud.functions.main} />
       <DashboardLayout>
-        <div className="p-6 border-b tbc flex items-center justify-between">
-          <h1 className="text-3xl font-medium gradient-text">Functions</h1>
+        <div className="px-6 py-4 border-b tbc flex items-center justify-between">
+          <h1 className="text-2xl md:text-3xl font-medium gradient-text">
+            Functions
+          </h1>
           <LinkButton href="/cloud/functions/add" className="text-sm">
             Add
           </LinkButton>

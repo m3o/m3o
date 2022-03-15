@@ -14,7 +14,7 @@ export const LoggedInView: FC<LoggedInViewProps> = ({ apiToken, user }) => {
   return (
     <DashboardLayout>
       <div className="p-6 lg:p-10 md:grid gap-6 lg:grid-cols-3 xl:grid-cols-7">
-        <div className="lg:col-span-2 xl:col-span-5 md:px-12">
+        <div className="lg:col-span-2 xl:col-span-5 md:px-10">
           <APIKey apiToken={apiToken} />
           <LegacyUsage />
         </div>

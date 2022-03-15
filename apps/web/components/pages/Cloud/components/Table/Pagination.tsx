@@ -3,7 +3,7 @@ import {
   ChevronDoubleLeftIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ChevronDoubleRightIcon
+  ChevronDoubleRightIcon,
 } from '@heroicons/react/outline'
 
 interface Props {
@@ -26,22 +26,20 @@ export const Pagination: FC<Props> = ({
   previousPage,
   pageOptions,
   pageIndex,
-  pageCount
+  pageCount,
 }) => {
   return (
-    <div className="flex items-center p-2 justify-end mt-2">
+    <div className="flex items-center p-2 justify-end">
       <button
         onClick={() => gotoPage(0)}
         disabled={!canPreviousPage}
-        className="circle-btn"
-      >
+        className="circle-btn">
         <ChevronDoubleLeftIcon className="w-4" />
       </button>
       <button
         onClick={() => previousPage()}
         disabled={!canPreviousPage}
-        className="circle-btn ml-2"
-      >
+        className="circle-btn ml-2">
         <ChevronLeftIcon className="w-4" />
       </button>
       <p className="px-2">
@@ -50,15 +48,13 @@ export const Pagination: FC<Props> = ({
       <button
         onClick={() => nextPage()}
         disabled={!canNextPage}
-        className="circle-btn mr-2"
-      >
+        className="circle-btn mr-2">
         <ChevronRightIcon className="w-4" />
       </button>
       <button
         onClick={() => gotoPage(pageCount - 1)}
         disabled={!canNextPage}
-        className="circle-btn mr-2"
-      >
+        className="circle-btn mr-2">
         <ChevronDoubleRightIcon className="w-4" />
       </button>
     </div>

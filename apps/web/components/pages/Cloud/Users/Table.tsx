@@ -54,6 +54,7 @@ export function UsersTable({ users, handleUserDeleteClick }: Props) {
       onTrashClick={handleUserDeleteClick}
       onSetPageSize={console.log}
       statePageSize={20}
+      tableName="users"
     />
   )
 }

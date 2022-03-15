@@ -8,11 +8,11 @@ interface Props {
 
 export const TableSearch: FC<Props> = ({ tableName, onChange }) => {
   return (
-    <div className="relative dark:text-white rounded-md">
-      <SearchIcon className="w-4 absolute left-5 top-1/2 -translate-y-1/2 transform" />
+    <div className="relative dark:text-white w-full md:w-auto px-6">
+      <SearchIcon className="w-4 absolute left-10 top-1/2 -translate-y-1/2 transform" />
       <input
         type="text"
-        className="pl-10 text-sm m-2  h-12 p-5 outline-none bg-zinc-100 dark:bg-zinc-700 rounded-md"
+        className="text-sm outline-none bg-zinc-100 dark:bg-zinc-700 rounded-md box-border w-full pl-12 py-4 md:w-72"
         placeholder={`Search ${tableName}...`}
         onChange={onChange}
       />

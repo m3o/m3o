@@ -103,6 +103,7 @@ export default function CloudApps() {
           data={data! as RequiredService[]}
           onTrashClick={console.log}
           columns={columns}
+          tableName="apps"
         />
       </div>
     )
@@ -112,9 +113,11 @@ export default function CloudApps() {
     <>
       <NextSeo {...seo.cloud.apps.main} />
       <DashboardLayout>
-        <div className="p-6 border-b tbc">
+        <div className="px-6 py-4 border-b tbc">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-medium gradient-text">Apps</h1>
+            <h1 className="text-2xl font-medium gradient-text mt-0 md:text-3xl">
+              Apps
+            </h1>
             {!!data?.length && (
               <LinkButton href="/cloud/apps/add" className="text-sm">
                 Add

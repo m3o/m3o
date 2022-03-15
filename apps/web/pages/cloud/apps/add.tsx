@@ -70,9 +70,7 @@ export default function CloudAddApp({ regions }: Props) {
             <FormProvider {...formMethods}>
               <form onSubmit={formMethods.handleSubmit(handleSubmit)}>
                 <AppDetailsForm regions={regions} />
-                <p className="text-sm mb-4">
-                  Environment Variables
-                </p>
+                <p className="text-sm mb-4">Environment Variables</p>
                 <EnvironmentVariablesForm />
                 <div className="border-t tbc">
                   <Button
