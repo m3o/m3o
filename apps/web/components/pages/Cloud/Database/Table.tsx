@@ -30,6 +30,7 @@ export function DatabaseTable({ rows, handleDatabaseRowDelete }: Props) {
       onTrashClick={handleDatabaseRowDelete}
       onSetPageSize={console.log}
       statePageSize={20}
+      tableName="database"
     />
   )
 }
