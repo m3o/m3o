@@ -70,9 +70,7 @@ const Api: NextPage<Props> = ({
       summaryDescription={summaryDescription}
       user={user}>
       <div className="px-20 pb-10 font-medium">
-        <h1 className="font-medium text-3xl md:text-5xl mb-4">
-          {display_name}
-        </h1>
+        <h1 className="font-medium text-3xl md:text-5xl">{display_name}</h1>
       </div>
 
       {endpoints.map(endpoint => {

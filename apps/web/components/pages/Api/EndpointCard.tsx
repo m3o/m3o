@@ -37,7 +37,7 @@ export const EndpointCard: FC<Props> = ({
   return (
     <>
       <div
-        className="grid grid-cols-2 mb-10"
+        className="grid grid-cols-2 border-b tbc last:border-0 pt-20 first:pt-0"
         style={{ maxWidth: 1600 }}
         id={title.replace(/ /g, '')}>
         <div className="px-20 pb-20">
