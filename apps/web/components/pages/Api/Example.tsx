@@ -17,13 +17,13 @@ export const Example: FC<Props> = ({ apiName, examples, requestSchema }) => {
 
   return (
     <>
-      <SubTitle className="mt-6">Example</SubTitle>
+      {/* <SubTitle className="mt-6">Example</SubTitle>
       <p className="mb-6">
         For more examples see the{' '}
         <Link href={`/${apiName}/api`}>
           <a>API Reference</a>
         </Link>
-      </p>
+      </p> */}
       <RequestBlock
         {...selectLanguage}
         examples={examples}

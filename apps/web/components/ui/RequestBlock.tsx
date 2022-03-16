@@ -142,7 +142,7 @@ export const RequestBlock: FC<Props> = ({
             code: fetchRequestBlock.data,
             token,
             language,
-          })}
+          }).trim()}
           language={language}
         />
       )}

@@ -2,6 +2,12 @@
   @apply mb-3 leading-6;
 }
 
+/* dark: didn't seem to work above */
+:global(.dark) .root p,
+:global(.dark) .root ul {
+  @apply text-zinc-400;
+}
+
 .root ul {
   @apply list-disc pl-6 mb-3;
 }
@@ -11,5 +17,5 @@
 }
 
 .root h2 {
-  @apply font-medium mb-4;
+  @apply font-bold mb-4;
 }

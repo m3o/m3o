@@ -10,13 +10,15 @@ interface Props {
 export const CodeBlock: FC<Props> = ({ code, language = 'javascript' }) => {
   return (
     <SyntaxHighlighter
+      className="code-block"
       language={language}
-      showLineNumbers={true}
+      showLineNumbers={false}
       style={nord}
       customStyle={{
         fontSize: 14,
-        backgroundColor: 'rgb(31, 41, 55)',
         marginTop: 0,
+        paddingLeft: 30,
+        background: 'transparent',
       }}>
       {code}
     </SyntaxHighlighter>

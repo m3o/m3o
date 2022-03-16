@@ -35,32 +35,26 @@ export const EndpointCard: FC<Props> = ({
   title,
 }) => {
   return (
-    <div
-      className="mb-4 border-b tbc pb-10 pt-6 first:pt-0 last:border-b-0"
-      id={title.replace(/ /g, '')}>
-      <div className="pb-4 mb-8 flex justify-between">
-        <div>
-          <h3 className="font-bold text-black text-2xl dark:text-white">
-            {splitEndpointTitle(title)}
-          </h3>
-          <h4 className="pt-2">
-            <span className="font-medium text-pink-400">{apiMethod}</span>{' '}
+    <>
+      <div
+        className="grid grid-cols-2 mb-10"
+        style={{ maxWidth: 1600 }}
+        id={title.replace(/ /g, '')}>
+        <div className="px-20 pb-20">
+          <h4 className="mb-4  inline-block text-xs">
+            <span className="font-medium text-indigo-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
               /{apiVersion}/{apiName}/{endpointName}
             </span>
           </h4>
+          <h3 className="font-medium text-black text-4xl dark:text-white mb-2">
+            {splitEndpointTitle(title)}
+          </h3>
           {requestSchema && (
-            <p className="max-w-x mt-4 max-w-2xl">
+            <p className="max-w-x mt-4  text-zinc-400 mb-10 max-w-lg">
               {requestSchema.description}
             </p>
           )}
-        </div>
-        <p className="block text-sm font-medium text-indigo-600 dark:text-indigo-300">
-          {price} {price === 'Free' ? '' : 'credits'}
-        </p>
-      </div>
-      <div className="md:grid md:grid-cols-2 md:gap-6">
-        <div>
           <PropertiesTable
             title="Request"
             properties={requestSchema?.properties}
@@ -70,7 +64,7 @@ export const EndpointCard: FC<Props> = ({
             properties={responseSchema?.properties}
           />
         </div>
-        <div>
+        <div className="p-10">
           {requestSchema && (
             <RequestBlock
               examples={examples}
@@ -85,6 +79,18 @@ export const EndpointCard: FC<Props> = ({
           )}
         </div>
       </div>
-    </div>
+      {/* <div className="mb-4 border-b tbc pb-10 pt-6 first:pt-0 last:border-b-0">
+        <div className="pb-4 mb-8 flex justify-between">
+          <div></div>
+          <p className="block text-sm font-medium text-indigo-600 dark:text-indigo-300">
+            {price} {price === 'Free' ? '' : 'credits'}
+          </p>
+        </div>
+        <div className="md:grid md:grid-cols-2 md:gap-6">
+          <div></div>
+          <div></div>
+        </div>
+      </div> */}
+    </>
   )
 }

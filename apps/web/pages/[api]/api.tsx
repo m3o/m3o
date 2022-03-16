@@ -69,6 +69,12 @@ const Api: NextPage<Props> = ({
       contentClassName="pt-6 pb-6"
       summaryDescription={summaryDescription}
       user={user}>
+      <div className="px-20 pb-10 font-medium">
+        <h1 className="font-medium text-3xl md:text-5xl mb-4">
+          {display_name}
+        </h1>
+      </div>
+
       {endpoints.map(endpoint => {
         return (
           <EndpointCard

@@ -46,6 +46,7 @@
     "react-syntax-highlighter": "^15.4.4",
     "react-table": "^7.7.0",
     "react-tooltip": "^4.2.21",
+    "read-more-react": "^1.0.10",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -63,6 +64,7 @@
     "@types/react": "17.0.15",
     "@types/react-syntax-highlighter": "^13.5.2",
     "@types/react-table": "^7.7.9",
+    "@types/tailwindcss": "^3.0.9",
     "@types/uuid": "^8.3.1",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^27.4.6",

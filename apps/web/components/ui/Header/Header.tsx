@@ -44,7 +44,7 @@ export const Header: FC = () => {
           </div>
           <div className="flex items-center">
             <div>{user ? <LoggedInMenu user={user} /> : <LoggedOutMenu />}</div>
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <MobileMenuButton onClick={() => setMobileMenuOpen(true)} />
           </div>
         </div>

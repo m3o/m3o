@@ -65,48 +65,10 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
         }}
       />
       <Header />
-      <div className="py-8 border-b tbc">
-        <div className="m3o-container">
-          <div className="flex items-center justify-between">
-            <div>
-              <Link href="/explore">
-                <a className="flex mb-6 items-center text-xs">
-                  <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
-                </a>
-              </Link>
-              <CategoryBubble className="inline-block mb-6">
-                {category}
-              </CategoryBubble>
-              <h1 className="font-bold text-4xl md:text-5xl my-2 text-black dark:text-white">
-                {displayName}
-              </h1>
-              <p className="pb-6 text-lg text-zinc-700 dark:text-zinc-400 font-light">
-                {shortDescription}
-              </p>
-            </div>
-            <div className="hidden md:block">
-              <Link href={Routes.GettingStarted}>
-                <a className="btn inline-block my-6 mb-16 dark:text-white">
-                  Get Started
-                </a>
-              </Link>
-            </div>
-          </div>
-        </div>
+      <div className="px-20 py-10">
+        <Navigation onDownloadsClick={() => console.log()} />
       </div>
-      <div className="bg-zinc-100 dark:bg-zinc-800 mb-8">
-        <div className="m3o-container">
-          <Navigation onDownloadsClick={() => setShowDownloadsModal(true)} />
-        </div>
-      </div>
-      <div className={contentClasses}>
-        <div className="m3o-container">{children}</div>
-        <RelatedItems
-          isLoading={isLoading}
-          items={relatedItems}
-          apiDisplayName={displayName}
-        />
-      </div>
+      {children}
       <Footer />
       <DownloadModal
         open={showDownloadsModal}
