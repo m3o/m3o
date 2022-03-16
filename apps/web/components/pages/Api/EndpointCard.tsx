@@ -37,17 +37,16 @@ export const EndpointCard: FC<Props> = ({
   return (
     <>
       <div
-        className="grid grid-cols-2 border-b tbc last:border-0 pt-20 first:pt-0"
-        style={{ maxWidth: 1600 }}
+        className="grid grid-cols-2 border-b tbc last:border-0 pt-12 first:pt-0"
         id={title.replace(/ /g, '')}>
-        <div className="px-20 pb-20">
-          <h4 className="mb-4  inline-block text-xs">
+        <div className="px-20 pb-10">
+          <h4 className="mb-4 inline-block text-xs">
             <span className="font-medium text-indigo-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
               /{apiVersion}/{apiName}/{endpointName}
             </span>
           </h4>
-          <h3 className="font-medium text-black text-4xl dark:text-white mb-2">
+          <h3 className="font-medium text-black text-3xl dark:text-white mb-2">
             {splitEndpointTitle(title)}
           </h3>
           {requestSchema && (

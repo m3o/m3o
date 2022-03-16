@@ -104,7 +104,7 @@ const Overview: NextPage<Props> = ({
           <CategoryBubble className="inline-block mb-6">
             {category}
           </CategoryBubble>
-          <h1 className="font-medium text-3xl md:text-5xl mb-4">
+          <h1 className="font-medium text-3xl md:text-5xl mb-4 gradient-text">
             {displayName}
           </h1>
           <p className="pb-6 text-lg text-zinc-700 dark:text-zinc-400 font-light mb-4">
