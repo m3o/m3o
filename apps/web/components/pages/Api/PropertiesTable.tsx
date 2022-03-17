@@ -55,7 +55,7 @@ export const PropertiesTable: FC<Props> = ({ title, properties = {} }) => {
 
   return (
     <div className="mb-10">
-      <h4 className="font-medium text-indigo-600 mb-4 text-sm dark:text-indigo-300 pb-2 ">
+      <h4 className="font-medium text-indigo-600 mb-3 text-sm dark:text-indigo-300 pb-2 ">
         {title}
       </h4>
       {input.length > 0 ? input : <small>{`{}`}</small>}

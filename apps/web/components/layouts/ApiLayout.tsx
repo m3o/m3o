@@ -1,27 +1,22 @@
 import type { FormattedService } from '@/types'
 import { FC, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import classnames from 'classnames'
 import { NextSeo } from 'next-seo'
 import { WithAuthProps } from '@/lib/api/m3o/withAuth'
 import { ArrowLeftIcon } from '@heroicons/react/outline'
 import { useDownloadFile, useGetRelatedApis, useRecentlyViewed } from '@/hooks'
 import { getDescription } from '@/utils/api'
-import { Routes } from '@/lib/constants'
-import { Footer, Header, Top10UsersButton } from '@/components/ui'
-import { CategoryBubble } from '../ui/CategoryBubble'
-import { Navigation, RelatedItems, DownloadModal } from '@/components/pages/Api'
+import { Footer, Header } from '@/components/ui'
+import { Navigation, DownloadModal } from '@/components/pages/Api'
 import Link from 'next/link'
 
 type ApiLayoutProps = WithAuthProps &
   Pick<FormattedService, 'summaryDescription' | 'category' | 'name'> & {
     displayName: string
-    contentClassName?: string
   }
 
 export const ApiLayout: FC<ApiLayoutProps> = ({
   category,
-  contentClassName,
   children,
   displayName,
   name,
@@ -39,11 +34,6 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
   const seoTitle = `${displayName} API - ${shortDescription.trimEnd()}`
   const seoDescription = getDescription(summaryDescription)
   const seoUrl = `https://m3o.com/${router.query.api}`
-
-  const contentClasses = classnames(
-    'min-h-screen dark:bg-zinc-900 bg-zinc-50',
-    contentClassName,
-  )
 
   const [showDownloadsModal, setShowDownloadsModal] = useState(false)
 
@@ -65,7 +55,12 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
         }}
       />
       <Header />
-      <div className="px-20 py-10">
+      <div className="px-6 lg:px-20 md:px-10 my-6 api-max-width">
+        <Link href="/explore">
+          <a className="flex mb-6 items-center text-xs">
+            <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
+          </a>
+        </Link>
         <Navigation onDownloadsClick={() => console.log()} />
       </div>
       {children}

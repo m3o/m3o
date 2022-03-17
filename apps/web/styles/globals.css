@@ -28,7 +28,7 @@ a {
 }
 
 .tab {
-  @apply border-transparent text-zinc-600 dark:text-zinc-300 py-4 mr-8 border-b-2 border-solid block text-sm;
+  @apply border-transparent text-zinc-600 dark:text-zinc-300 py-2 mr-8 border-b-2 border-solid block text-sm;
 }
 
 .tab.selected {
@@ -89,6 +89,6 @@ option {
   max-height: 640px;
 }
 
-.code-block code {
-  @apply bg-zinc-800;
+.api-max-width {
+  max-width: 1800px;
 }

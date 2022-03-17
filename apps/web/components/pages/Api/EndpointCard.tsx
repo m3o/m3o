@@ -35,11 +35,11 @@ export const EndpointCard: FC<Props> = ({
   title,
 }) => {
   return (
-    <>
+    <div className="border-b tbc last:border-0 pt-6 first:pt-0 md:py-10 lg:py-20">
       <div
-        className="grid grid-cols-2 border-b tbc last:border-0 pt-12 first:pt-0"
+        className="md:grid md:grid-cols-2 api-max-width"
         id={title.replace(/ /g, '')}>
-        <div className="px-20 pb-10">
+        <div className="px-6 md:px-10 lg:px-20 pb-4">
           <h4 className="mb-4 inline-block text-xs">
             <span className="font-medium text-indigo-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
@@ -50,7 +50,7 @@ export const EndpointCard: FC<Props> = ({
             {splitEndpointTitle(title)}
           </h3>
           {requestSchema && (
-            <p className="max-w-x mt-4  text-zinc-400 mb-10 max-w-lg">
+            <p className="text-zinc-400 mb-10 max-w-md">
               {requestSchema.description}
             </p>
           )}
@@ -63,7 +63,7 @@ export const EndpointCard: FC<Props> = ({
             properties={responseSchema?.properties}
           />
         </div>
-        <div className="p-10">
+        <div className="px-6 pb-6">
           {requestSchema && (
             <RequestBlock
               examples={examples}
@@ -78,18 +78,6 @@ export const EndpointCard: FC<Props> = ({
           )}
         </div>
       </div>
-      {/* <div className="mb-4 border-b tbc pb-10 pt-6 first:pt-0 last:border-b-0">
-        <div className="pb-4 mb-8 flex justify-between">
-          <div></div>
-          <p className="block text-sm font-medium text-indigo-600 dark:text-indigo-300">
-            {price} {price === 'Free' ? '' : 'credits'}
-          </p>
-        </div>
-        <div className="md:grid md:grid-cols-2 md:gap-6">
-          <div></div>
-          <div></div>
-        </div>
-      </div> */}
-    </>
+    </div>
   )
 }

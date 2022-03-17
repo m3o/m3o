@@ -105,7 +105,7 @@ export const RequestBlock: FC<Props> = ({
   )
 
   return (
-    <div className="bg-zinc-800 border border-solid dark:border-zinc-700 rounded-lg">
+    <div className="bg-zinc-800 rounded-lg">
       <div className="p-4 border-b border-solid border-zinc-700 flex justify-between items-center">
         <p className="text-white text-sm font-medium mb-0">{title}</p>
         <div className="relative">

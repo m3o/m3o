@@ -67,16 +67,14 @@ const Api: NextPage<Props> = ({
       displayName={display_name}
       name={name}
       category={category}
-      contentClassName="pt-6 pb-6"
       summaryDescription={summaryDescription}
       user={user}>
-      <div className="px-20 pb-8 font-medium">
-        <CategoryBubble className="inline-block mb-6">
+      <div className="px-6 md:px-10 lg:px-20 pb-8 font-medium">
+        <CategoryBubble className="inline-block mb-4">
           {category}
         </CategoryBubble>
-        <h1 className="font-medium text-3xl gradient-text">{display_name}</h1>
+        <h1 className="font-medium text-2xl md:text-3xl">{display_name}</h1>
       </div>
-
       {endpoints.map(endpoint => {
         return (
           <EndpointCard

@@ -10,7 +10,6 @@ interface Props {
 export const CodeBlock: FC<Props> = ({ code, language = 'javascript' }) => {
   return (
     <SyntaxHighlighter
-      className="code-block"
       language={language}
       showLineNumbers={false}
       style={nord}

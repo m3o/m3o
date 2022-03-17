@@ -94,17 +94,14 @@ const Overview: NextPage<Props> = ({
       name={name}
       summaryDescription={summaryDescription}
       category={category}>
-      <div className="grid grid-cols-2 min-h-screen" style={{ maxWidth: 1600 }}>
-        <div className="px-20 pb-20">
-          {/* <Link href="/explore">
-            <a className="flex mb-6 items-center text-xs">
-              <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
-            </a>
-          </Link> */}
+      <div
+        className="md:grid md:grid-cols-2 min-h-screen api-max-width"
+        style={{ maxWidth: 1600 }}>
+        <div className="px-6 md:px-10 lg:px-20 pb-6">
           <CategoryBubble className="inline-block mb-6">
             {category}
           </CategoryBubble>
-          <h1 className="font-medium text-3xl md:text-5xl mb-4 gradient-text">
+          <h1 className="font-medium text-4xl md:text-5xl mb-4">
             {displayName}
           </h1>
           <p className="pb-6 text-lg text-zinc-700 dark:text-zinc-400 font-light mb-4">
@@ -128,20 +125,21 @@ const Overview: NextPage<Props> = ({
             </div>
           ))}
         </div>
-        <div className="p-10">
+        <div className="px-6 flex flex-col md:pr-10 lg:pr-20 ">
           <LinkButton
             href="/login"
-            className="inline-block ml-auto float-right mb-10">
+            className="block md:float-right mb-10 order-1 text-center mt-10 md:order-0 md:inline-block md:ml-auto">
             Get Started
           </LinkButton>
-          <div className="">
-            <div className="clear-right">
-              <Example
-                examples={examples}
-                apiName={name}
-                requestSchema={requestSchema}
-              />
-            </div>
+          <div className="md:order-1">
+            <h2 className="text-white text-xl mb-6 font-bold md:hidden">
+              Example
+            </h2>
+            <Example
+              examples={examples}
+              apiName={name}
+              requestSchema={requestSchema}
+            />
             <ResponseBlock code={JSON.stringify(response, null, 4)} />
           </div>
         </div>
