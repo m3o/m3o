@@ -63,7 +63,7 @@ export const EndpointCard: FC<Props> = ({
             properties={responseSchema?.properties}
           />
         </div>
-        <div className="px-6 pb-6">
+        <div className="px-6 pb-6 md:pr-10 lg:pr-20">
           {requestSchema && (
             <RequestBlock
               examples={examples}

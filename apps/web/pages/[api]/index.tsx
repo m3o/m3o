@@ -125,7 +125,7 @@ const Overview: NextPage<Props> = ({
             </div>
           ))}
         </div>
-        <div className="px-6 flex flex-col md:pr-10 lg:pr-20 ">
+        <div className="px-6 flex flex-col md:pr-10 lg:pr-20">
           <LinkButton
             href="/login"
             className="block md:float-right mb-10 order-1 text-center mt-10 md:order-0 md:inline-block md:ml-auto">
