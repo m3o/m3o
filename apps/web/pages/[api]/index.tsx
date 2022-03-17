@@ -94,9 +94,7 @@ const Overview: NextPage<Props> = ({
       name={name}
       summaryDescription={summaryDescription}
       category={category}>
-      <div
-        className="md:grid md:grid-cols-2 min-h-screen api-max-width"
-        style={{ maxWidth: 1600 }}>
+      <div className="md:grid md:grid-cols-2 min-h-screen api-max-width">
         <div className="px-6 md:px-10 lg:px-20 pb-6">
           <CategoryBubble className="inline-block mb-6">
             {category}
@@ -108,7 +106,7 @@ const Overview: NextPage<Props> = ({
             {summaryDescription.split('#')[0]}
           </p>
           <h2 className="text-white text-xl mb-4 font-bold">Introduction</h2>
-          <div className="max-w-xl">
+          <div className="max-w-lg">
             <OverviewDescription>{description}</OverviewDescription>
           </div>
           <h2 className="text-white text-xl mb-4 mt-10 font-bold">Endpoints</h2>

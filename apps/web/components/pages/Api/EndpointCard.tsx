@@ -35,7 +35,7 @@ export const EndpointCard: FC<Props> = ({
   title,
 }) => {
   return (
-    <div className="border-b tbc last:border-0 pt-6 first:pt-0 md:py-10 lg:py-20">
+    <div className="endpoint-card">
       <div
         className="md:grid md:grid-cols-2 api-max-width"
         id={title.replace(/ /g, '')}>
