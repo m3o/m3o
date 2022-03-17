@@ -96,5 +96,5 @@ option {
 }
 
 .endpoint-card {
-  @apply border-t dark:border-zinc-700 last-of-type:border-0 pt-6 first:pt-0 md:py-10;
+  @apply border-t dark:border-zinc-700 pt-6 md:py-10;
 }
