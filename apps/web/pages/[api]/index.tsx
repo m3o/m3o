@@ -95,7 +95,7 @@ const Overview: NextPage<Props> = ({
       summaryDescription={summaryDescription}
       category={category}>
       <div className="md:grid md:grid-cols-2 min-h-screen api-max-width">
-        <div className="px-6 md:px-10 lg:px-20 pb-6">
+        <div className="pb-6 mt-10 md:pr-6">
           <CategoryBubble className="inline-block mb-6">
             {category}
           </CategoryBubble>
@@ -123,7 +123,7 @@ const Overview: NextPage<Props> = ({
             </div>
           ))}
         </div>
-        <div className="px-6 flex flex-col md:pr-10 lg:pr-20">
+        <div className="flex flex-col">
           <LinkButton
             href="/login"
             className="block md:float-right mb-10 order-1 text-center mt-10 md:order-0 md:inline-block md:ml-auto">

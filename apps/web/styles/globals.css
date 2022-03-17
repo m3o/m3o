@@ -91,8 +91,10 @@ option {
 
 .api-max-width {
   max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .endpoint-card {
-  @apply border-b dark:border-zinc-700 last-of-type:border-0 pt-6 first:pt-0 md:py-10 lg:py-20;
+  @apply border-t dark:border-zinc-700 last-of-type:border-0 pt-6 first:pt-0 md:py-10;
 }

@@ -36,10 +36,8 @@ export const EndpointCard: FC<Props> = ({
 }) => {
   return (
     <div className="endpoint-card">
-      <div
-        className="md:grid md:grid-cols-2 api-max-width"
-        id={title.replace(/ /g, '')}>
-        <div className="px-6 md:px-10 lg:px-20 pb-4">
+      <div className="md:grid md:grid-cols-2" id={title.replace(/ /g, '')}>
+        <div className="pb-4">
           <h4 className="mb-4 inline-block text-xs">
             <span className="font-medium text-indigo-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
@@ -63,7 +61,7 @@ export const EndpointCard: FC<Props> = ({
             properties={responseSchema?.properties}
           />
         </div>
-        <div className="px-6 pb-6 md:pr-10 lg:pr-20">
+        <div className="pb-6">
           {requestSchema && (
             <RequestBlock
               examples={examples}

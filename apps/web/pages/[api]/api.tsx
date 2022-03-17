@@ -69,7 +69,7 @@ const Api: NextPage<Props> = ({
       category={category}
       summaryDescription={summaryDescription}
       user={user}>
-      <div className="px-6 md:px-10 lg:px-20 pb-8 md:pb-0 font-medium">
+      <div className="pb-8 md:pb-0 font-medium mt-6 md:mb-10">
         <CategoryBubble className="inline-block mb-4">
           {category}
         </CategoryBubble>

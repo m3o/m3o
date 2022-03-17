@@ -55,15 +55,15 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
         }}
       />
       <Header />
-      <div className="px-6 lg:px-20 md:px-10 my-6 api-max-width">
+      <div className="my-10 max-w-7xl mx-auto w-11/12">
         <Link href="/explore">
           <a className="flex mb-6 items-center text-xs">
             <ArrowLeftIcon className="w-4 mr-3" /> Back to explore
           </a>
         </Link>
         <Navigation onDownloadsClick={() => console.log()} />
+        {children}
       </div>
-      {children}
       <Footer />
       <DownloadModal
         open={showDownloadsModal}
