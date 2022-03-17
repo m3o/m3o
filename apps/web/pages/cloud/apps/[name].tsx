@@ -6,9 +6,10 @@ import { ExternalLinkIcon } from '@heroicons/react/outline'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { BackButtonLink, Button } from '@/components/ui'
+import { BackButtonLink, Button, Tabs } from '@/components/ui'
 import { AuthCookieNames } from '@/lib/constants'
 import { createApiClient } from '@/lib/api-client'
+import { Logs } from '@/components/pages/Cloud'
 import { useFetchSingleApp, useUpdateApp, useDeleteApp } from '@/hooks'
 
 interface Props {
@@ -52,49 +53,21 @@ export default function CloudApp({ app }: Props): ReactElement {
     <>
       <NextSeo title={`${seo.cloud.apps.main.title} - ${app.name}`} />
       <DashboardLayout>
-        <div className="p-6 md:p-10">
+        <div className="p-6 md:p-10 max-w-7xl mx-auto">
           <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
-          <div className="grid grid-cols-4">
+          <div className="md:grid grid-cols-4 ">
             <div className="col-span-3">
               <h1 className="font-bold text-3xl mb-2">{data.name}</h1>
               <p>
                 <a href={data.url} className="flex items-center mb-4">
                   {data.url} <ExternalLinkIcon className="w-4 ml-1" />
                 </a>
-                <Status status={data.status as AppStatus} />
               </p>
-              <div className="mt-10">
-                <h2 className="font-bold">Overview</h2>
-                <div className="mt-6 text-sm">
-                  {APP_FIELDS.map(key => (
-                    <div
-                      key={key}
-                      className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800 rounded-md">
-                      <p className="capitalize font-medium p-4">{key}</p>
-                      <p className="p-4">{app[key]}</p>
-                    </div>
-                  ))}
-                </div>
-                {!!Object.keys(environmentVariables).length && (
-                  <>
-                    <h2 className="font-bold mt-10">Environment Variables</h2>
-                    <div className="mt-6 text-sm">
-                      {Object.keys(environmentVariables).map(key => (
-                        <div
-                          key={key}
-                          className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800">
-                          <p className="capitalize font-medium p-4">{key}</p>
-                          <p className="p-4">{environmentVariables[key]}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
+              <Status status={data.status as AppStatus} />
             </div>
-            <aside>
+            <div className="mt-6 md:mt-0">
               <Button
-                className="text-sm w-full mb-4"
+                className="text-sm w-full mb-2"
                 onClick={() => updateAppMutation.mutate()}
                 loading={updateAppMutation.isLoading}>
                 Update
@@ -105,9 +78,46 @@ export default function CloudApp({ app }: Props): ReactElement {
                 loading={deleteAppMutation.isLoading}>
                 Delete
               </Button>
-            </aside>
+            </div>
+          </div>
+          <div className="mt-10">
+            <Tabs>
+              <div title="Overview" className="pt-6 text-sm">
+                {APP_FIELDS.map(key => (
+                  <div
+                    key={key}
+                    className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800 rounded-md w-full">
+                    <p className="capitalize font-medium p-4">{key}</p>
+                    <p className="p-4 overflow-hidden text-ellipsis">
+                      {app[key]}
+                    </p>
+                  </div>
+                ))}
+                {!!Object.keys(environmentVariables).length && (
+                  <>
+                    <h2 className="font-bold mt-10">Environment Variables</h2>
+                    <div className="mt-6 text-sm">
+                      {Object.keys(environmentVariables).map(key => (
+                        <div
+                          key={key}
+                          className="grid grid-cols-2 even:bg-zinc-50 even:dark:bg-zinc-800">
+                          <p className="capitalize font-medium p-4 text-sm">
+                            {key}
+                          </p>
+                          <p className="p-4 ">{environmentVariables[key]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+              <div title="Logs">
+                <Logs appName={app.name!} />
+              </div>
+            </Tabs>
           </div>
         </div>
+        <aside className="mt-10"></aside>
       </DashboardLayout>
     </>
   )

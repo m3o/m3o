@@ -29,7 +29,7 @@
     "cookie": "^0.4.1",
     "d3": "^7.3.0",
     "date-fns": "^2.23.0",
-    "m3o": "^1.0.1405",
+    "m3o": "^1.0.1480",
     "memory-cache": "^0.2.0",
     "next": "^12.1.0",
     "next-seo": "^4.28.1",
@@ -47,7 +47,8 @@
     "react-table": "^7.7.0",
     "react-tooltip": "^4.2.21",
     "read-more-react": "^1.0.10",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "xterm": "^4.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",

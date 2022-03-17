@@ -56,7 +56,10 @@ export default function CloudApps() {
         Header: 'Name',
         accessor: 'name',
         Cell: ({ value, row }) => {
-          if (row.original.status !== 'Deleting') {
+          if (
+            row.original.status !== 'Deleting' &&
+            row.original.status !== 'Deploying'
+          ) {
             return (
               <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
             )

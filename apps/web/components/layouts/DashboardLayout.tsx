@@ -48,7 +48,6 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log(isMenuOpen)
     if (isMenuOpen) {
       const height = (menuRef.current?.firstChild as HTMLDivElement)
         .clientHeight
