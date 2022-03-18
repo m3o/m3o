@@ -1,13 +1,11 @@
 name: M3O Client Generation Scheduler
 on:
   push:
-    branches:
-      - main
-      - beta
     paths:
-      - '.github/workflows/scheduler.yml'
-      - 'cmd/**'
-
+      - 'cmd/api-publisher/**'
+      - 'cmd/m3o-client-gen/**'
+      - 'cmd/protoc-gen-openapi/**'
+      - 'cmd/release-note/**'
   repository_dispatch:
     types: [build_m3o_client,build_dart,build_go,build_ts,build_shell,build_cli]
 
