@@ -35,9 +35,12 @@ export const EndpointCard: FC<Props> = ({
   title,
 }) => {
   return (
-    <div className="endpoint-card">
-      <div className="md:grid md:grid-cols-2" id={title.replace(/ /g, '')}>
+    <div className="endpoint-card" id={title.replace(/ /g, '')}>
+      <div className="md:grid md:grid-cols-2">
         <div className="pb-4">
+          <p className="mb-6 font-bold text-sm text-indigo-300">
+            {price} {price === 'Free' ? '' : 'credits'}
+          </p>
           <h4 className="mb-4 inline-block text-xs">
             <span className="font-medium text-indigo-400">{apiMethod}</span>{' '}
             <span className="text-sm text-zinc-400">
@@ -48,7 +51,7 @@ export const EndpointCard: FC<Props> = ({
             {splitEndpointTitle(title)}
           </h3>
           {requestSchema && (
-            <p className="text-zinc-400 mb-10 max-w-md">
+            <p className="text-zinc-400 mb-10  max-w-md">
               {requestSchema.description}
             </p>
           )}
