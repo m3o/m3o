@@ -1,6 +1,7 @@
 import type { DeployRequest } from 'm3o/function'
 import type { AddFunctionFormValues } from '@/types'
 import { NextSeo } from 'next-seo'
+import Link from 'next/link'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
@@ -9,16 +10,9 @@ import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
-import { BackButtonLink, Button } from '@/components/ui'
 import { createApiClient } from '@/lib/api-client'
-import {
-  AddFunctionForm,
-  EnvironmentVariablesForm,
-} from '@/components/pages/Cloud'
 
 interface Props {
-  runtimes: string[]
-  regions: string[]
   user: Account
 }
 
@@ -34,21 +28,14 @@ export const getServerSideProps = withAuth(async ({ req }) => {
     }
   }
 
-  const [{ regions = [] }, { runtimes = [] }] = await Promise.all([
-    m3o.function.regions({}),
-    m3o.function.runtimes({}),
-  ])
-
   return {
     props: {
-      runtimes,
-      regions,
       user: req.user,
     } as Props,
   }
 })
 
-export default function CloudAddFunction({ regions, runtimes }: Props) {
+export default function CloudAddFunction() {
   const router = useRouter()
   const m3o = useM3OClient()
   const formMethods = useForm<DeployRequest>()
@@ -75,7 +62,14 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
     <>
       <NextSeo {...seo.cloud.functions.add} />
       <DashboardLayout>
-        <div className="p-6 md:p-10">
+        Add
+        <Link href="/cloud/functions/add/source">
+          <a>Write functions in the browser</a>
+        </Link>
+        <Link href="/cloud/functions/add/repo">
+          <a>Upload functions from your Github repo</a>
+        </Link>
+        {/* <div className="p-6 md:p-10">
           <BackButtonLink href="/cloud/functions">
             Back to functions
           </BackButtonLink>
@@ -89,9 +83,7 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
                   addMutation.mutate(values as AddFunctionFormValues),
                 )}>
                 <AddFunctionForm regions={regions} runtimes={runtimes} />
-                <p className="text-sm mb-4">
-                  Environment Variables
-                </p>
+                <p className="text-sm mb-4">Environment Variables</p>
                 <EnvironmentVariablesForm />
                 <div>
                   <Button
@@ -104,7 +96,7 @@ export default function CloudAddFunction({ regions, runtimes }: Props) {
               </form>
             </FormProvider>
           </div>
-        </div>
+        </div> */}
       </DashboardLayout>
     </>
   )

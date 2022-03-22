@@ -1,5 +1,6 @@
 import type { Column } from 'react-table'
 import type { Func } from 'm3o/function'
+import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import { useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
@@ -41,7 +42,7 @@ export default function CloudFunctions() {
       return response.functions || []
     },
     {
-      refetchInterval: 15000,
+      refetchInterval: 30000,
     },
   )
 
@@ -65,6 +66,12 @@ export default function CloudFunctions() {
       {
         Header: 'Name',
         accessor: 'name',
+        Cell: ({
+          row: {
+            original: { id },
+          },
+          value,
+        }) => <Link href={`/cloud/functions/edit/${id}`}>{value}</Link>,
       },
       {
         Header: 'URL',

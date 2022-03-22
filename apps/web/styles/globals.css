@@ -6,6 +6,10 @@ a {
   @apply py-4 px-8 bg-zinc-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-zinc-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white text-sm;
 }
 
+.btn.small {
+  @apply py-2 px-6;
+}
+
 .inverse-btn {
   @apply bg-indigo-600 text-sm rounded-md flex items-center hover:shadow-md hover:no-underline dark:border-indigo-300 text-white;
 }
@@ -24,7 +28,7 @@ a {
 }
 
 .tabs {
-  @apply flex items-center font-medium text-sm;
+  @apply flex items-center font-medium text-sm pt-4 px-6 border-b tbc;
 }
 
 .tab {
