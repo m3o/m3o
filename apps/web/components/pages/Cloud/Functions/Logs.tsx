@@ -19,18 +19,18 @@ export function FunctionLogs() {
     },
   )
 
-  console.log(data)
-
   return (
-    <div className="pt-10">
+    <>
       {isError && error ? (
         <Alert type="error">{(error as any).detail}</Alert>
       ) : (
-        <textarea
-          value={data}
-          className="w-full p-10 text-xs bg-zinc-800 h-96"
-        />
+        <div className="p-6">
+          <textarea
+            value={data}
+            className="w-full text-xs bg-zinc-800 h-96 p-6 rounded-md"
+          />
+        </div>
       )}
-    </div>
+    </>
   )
 }

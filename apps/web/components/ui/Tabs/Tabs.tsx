@@ -11,7 +11,7 @@ export const Tabs: FC<Props> = ({ children, initialTabIndex = 0 }) => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(initialTabIndex)
 
   return (
-    <div>
+    <>
       <ul className="tabs">
         {children.map((item, index) => {
           if (!item) return null
@@ -27,7 +27,7 @@ export const Tabs: FC<Props> = ({ children, initialTabIndex = 0 }) => {
           )
         })}
       </ul>
-      <div>{children[selectedTabIndex]}</div>
-    </div>
+      <div className="h-full">{children[selectedTabIndex]}</div>
+    </>
   )
 }

@@ -1,12 +1,18 @@
-import type { Func } from 'm3o/function'
+import type { SourceCodeFunctionEditProps } from '@/components/pages/Cloud'
+import { useRef, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { useRouter } from 'next/router'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import { DashboardLayout } from '@/components/layouts'
 import { QueryKeys } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
-import { Tabs, FullSpinner } from '@/components/ui'
-import { FunctionEditAndCreate, FunctionLogs } from '@/components/pages/Cloud'
+import { FullSpinner } from '@/components/ui'
+
+type UpdateFuncFields = {
+  name: string
+  source?: string
+}
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -25,7 +31,16 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
+const SourceCodeFunctionEdit = dynamic<SourceCodeFunctionEditProps>(
+  () =>
+    import('@/components/pages/Cloud').then(mod => mod.SourceCodeFunctionEdit),
+  {
+    ssr: false,
+  },
+)
+
 export default function EditFunction() {
+  const sourceCodeRef = useRef('')
   const m3o = useM3OClient()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -41,15 +56,18 @@ export default function EditFunction() {
     },
   )
 
+  useEffect(() => {
+    if (data?.source) {
+      sourceCodeRef.current = data.source
+    }
+  }, [data])
+
   const updateFunctionMutation = useMutation(
-    (values: Func) =>
-      m3o.function.update({
-        name: values.name,
-        source: values.source,
-      }),
+    (values: UpdateFuncFields) => {
+      return m3o.function.update(values)
+    },
     {
       onSuccess: () => {
-        // Reload the fetch function
         queryClient.invalidateQueries([
           QueryKeys.CloudFunctions,
           router.query.id,
@@ -64,28 +82,17 @@ export default function EditFunction() {
 
   return (
     <DashboardLayout>
-      <Tabs>
-        {data.source ? (
-          <div title="Function">
-            <div className="px-6">
-              <FunctionEditAndCreate
-                {...data}
-                onSubmit={(values: Func) =>
-                  updateFunctionMutation.mutate(values)
-                }
-                submitButtonText="Update"
-              />
-            </div>
-          </div>
-        ) : (
-          <div title="Overview"></div>
-        )}
-        <div title="Logs">
-          <div className="px-6">
-            <FunctionLogs />
-          </div>
-        </div>
-      </Tabs>
+      {isLoading || !data ? (
+        <FullSpinner />
+      ) : (
+        <SourceCodeFunctionEdit
+          func={data}
+          onUpdateClick={(values: Required<UpdateFuncFields>) =>
+            updateFunctionMutation.mutate(values)
+          }
+          isUpdating={updateFunctionMutation.isLoading}
+        />
+      )}
     </DashboardLayout>
   )
 }
