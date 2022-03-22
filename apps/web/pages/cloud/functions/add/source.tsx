@@ -1,4 +1,4 @@
-import type { DeployResponse } from 'm3o/function'
+import type { DeployResponse, Func } from 'm3o/function'
 import { NextSeo } from 'next-seo'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
@@ -8,7 +8,7 @@ import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
 import { createApiClient } from '@/lib/api-client'
-import { FunctionEditAndCreate, FunctionFields } from '@/components/pages/Cloud'
+import { FunctionEditAndCreate } from '@/components/pages/Cloud'
 
 interface Props {
   user: Account
@@ -37,12 +37,7 @@ export default function CloudAddFunctionFromSource() {
   const router = useRouter()
   const m3o = useM3OClient()
 
-  const createMutation = useMutation<
-    DeployResponse,
-    ApiError,
-    FunctionFields,
-    void
-  >(
+  const createMutation = useMutation<DeployResponse, ApiError, Func, void>(
     values => {
       // const envVars = values.env_vars.reduce((obj, { key, value }) => {
       //   return { ...obj, [key]: value }

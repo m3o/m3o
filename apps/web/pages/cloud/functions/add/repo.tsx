@@ -1,6 +1,5 @@
 import type { DeployRequest } from 'm3o/function'
-import Editor, { EditorProps } from '@monaco-editor/react'
-import { useCallback, useRef } from 'react'
+import type { EditorProps } from '@monaco-editor/react'
 import type { AddFunctionFormValues } from '@/types'
 import { NextSeo } from 'next-seo'
 import { useForm, FormProvider } from 'react-hook-form'
