@@ -2,7 +2,8 @@ import type { DeployRequest } from 'm3o/function'
 import type { AddFunctionFormValues } from '@/types'
 import { NextSeo } from 'next-seo'
 import Link from 'next/link'
-import { useForm, FormProvider } from 'react-hook-form'
+import { ArrowRightIcon } from '@heroicons/react/outline'
+import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 import { DashboardLayout } from '@/components/layouts'
@@ -11,6 +12,7 @@ import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
 import { createApiClient } from '@/lib/api-client'
+import { BackButtonLink } from '@/components/ui'
 
 interface Props {
   user: Account
@@ -62,17 +64,25 @@ export default function CloudAddFunction() {
     <>
       <NextSeo {...seo.cloud.functions.add} />
       <DashboardLayout>
-        Add
-        <Link href="/cloud/functions/add/source">
-          <a>Write functions in the browser</a>
-        </Link>
-        <Link href="/cloud/functions/add/repo">
-          <a>Upload functions from your Github repo</a>
-        </Link>
-        {/* <div className="p-6 md:p-10">
+        <div className="p-10">
           <BackButtonLink href="/cloud/functions">
             Back to functions
           </BackButtonLink>
+          <h1 className="font-bold mb-10 text-3xl">Add a function</h1>
+          <Link href="/cloud/functions/add/source">
+            <a className="bg-zinc-800 flex px-8 py-6 mb-6 items-center rounded-md">
+              Write function in the browser{' '}
+              <ArrowRightIcon className="w-6 ml-4" />
+            </a>
+          </Link>
+          <Link href="/cloud/functions/add/repo">
+            <a className="bg-zinc-800 flex px-8 py-6 mb-6 items-center rounded-md">
+              Upload functions from your Github repo{' '}
+              <ArrowRightIcon className="w-6 ml-4" />
+            </a>
+          </Link>
+        </div>
+        {/* <div className="p-6 md:p-10">
           <h1 className="text-3xl font-medium mb-6 gradient-text">
             Add Function
           </h1>

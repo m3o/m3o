@@ -1,4 +1,7 @@
-import type { SourceCodeFunctionEditProps } from '@/components/pages/Cloud'
+import type {
+  SourceCodeFunctionEditProps,
+  RepoFunctionEditProps,
+} from '@/components/pages/Cloud'
 import { useRef, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
@@ -34,6 +37,13 @@ export const getServerSideProps = withAuth(async context => {
 const SourceCodeFunctionEdit = dynamic<SourceCodeFunctionEditProps>(
   () =>
     import('@/components/pages/Cloud').then(mod => mod.SourceCodeFunctionEdit),
+  {
+    ssr: false,
+  },
+)
+
+const RepoCodeFunctionEdit = dynamic<RepoFunctionEditProps>(
+  () => import('@/components/pages/Cloud').then(mod => mod.RepoFunctionEdit),
   {
     ssr: false,
   },
@@ -80,19 +90,33 @@ export default function EditFunction() {
     return <FullSpinner />
   }
 
-  return (
-    <DashboardLayout>
-      {isLoading || !data ? (
-        <FullSpinner />
-      ) : (
+  function renderContent() {
+    if (data!.source) {
+      return (
         <SourceCodeFunctionEdit
-          func={data}
+          func={data!}
           onUpdateClick={(values: Required<UpdateFuncFields>) =>
             updateFunctionMutation.mutate(values)
           }
           isUpdating={updateFunctionMutation.isLoading}
         />
-      )}
+      )
+    }
+
+    return (
+      <RepoCodeFunctionEdit
+        func={data!}
+        onUpdateClick={(values: UpdateFuncFields) =>
+          updateFunctionMutation.mutate(values)
+        }
+        isUpdating={updateFunctionMutation.isLoading}
+      />
+    )
+  }
+
+  return (
+    <DashboardLayout>
+      {isLoading || !data ? <FullSpinner /> : renderContent()}
     </DashboardLayout>
   )
 }

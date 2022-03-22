@@ -17,32 +17,42 @@ export function FunctionHeader({
   return (
     <div className="p-8 border-b tbc">
       <BackButtonLink href="/cloud/functions">Back to functions</BackButtonLink>
-      <div className="flex justify-between">
-        <div className="flex">
-          <div className="border-r tbc pr-10">
+      <div className="md:flex justify-between">
+        <div className="md:flex">
+          <div className="border-r tbc md:pr-10 mb-4 md:mb-0">
             <p className="text-zinc-400 text-sm">Function:</p>
-            <h1 className="font-bold text-lg">{func.name}</h1>
+            <h1 className="font-bold xl:text-lg">{func.name}</h1>
           </div>
-          <div className="border-r tbc px-6">
+          <div className="md:border-r tbc md:px-6 mb-4 md:mb-0">
             <p className="text-zinc-400 text-sm">Runtime:</p>
-            <h2 className="font-bold text-lg">{func.runtime}</h2>
+            <h2 className="font-bold xl:text-lg">{func.runtime}</h2>
           </div>
-          <div className="border-r tbc px-6">
+          <div className="md:border-r tbc md:px-6 mb-4 md:mb-0">
             <p className="text-zinc-400 text-sm">Region:</p>
-            <h2 className="font-bold text-lg">{func.region}</h2>
+            <h2 className="font-bold xl:text-lg">{func.region}</h2>
           </div>
-          <div className="px-6">
+          <div className="md:px-6">
             <p className="text-zinc-400 text-sm">Status:</p>
             <Status
               status={func.status as AppStatus}
-              className="text-lg font-bold text-white"
+              className="xl:text-lg font-bold text-white"
             />
           </div>
         </div>
-        <Button onClick={onUpdateClick} loading={isUpdating}>
+        <Button
+          onClick={onUpdateClick}
+          loading={isUpdating}
+          className="w-full my-6 md:w-auto md:my-0">
           Update
         </Button>
       </div>
+      <a
+        href={func.url}
+        className="inline-block mt-2 text-sm"
+        target="_blank"
+        rel="noreferrer">
+        {func.url}
+      </a>
     </div>
   )
 }

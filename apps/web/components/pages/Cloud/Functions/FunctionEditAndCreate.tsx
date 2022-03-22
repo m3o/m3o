@@ -60,7 +60,7 @@ export function FunctionEditAndCreate({
     }
   }, [])
 
-  const { data = {}, isLoading } = useQuery(
+  const { data, isLoading } = useQuery(
     [QueryKeys.CloudFunctions, 'regions-and-runtime'],
     async () => {
       const [{ runtimes = [] }, { regions = [] }] = await Promise.all([
@@ -83,8 +83,8 @@ export function FunctionEditAndCreate({
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="flex">
-        <aside className="w-3/12 p-6">
+      <div className="md:flex">
+        <aside className="md:w-3/12 p-6">
           <Controller
             defaultValue={name}
             control={form.control}
@@ -140,10 +140,10 @@ export function FunctionEditAndCreate({
             )}
           />
         </aside>
-        <div className="w-9/12 border-l tbc">
+        <div className="md:w-9/12 border-l tbc">
           <div className="p-4 flex border-b tbc">
             <button
-              className="btn small ml-auto"
+              className="btn small ml-auto w-full md:w-auto"
               type="submit"
               ref={submitButtonRef}>
               {submitButtonText}
