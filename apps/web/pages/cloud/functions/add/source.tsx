@@ -8,7 +8,7 @@ import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
 import { createApiClient } from '@/lib/api-client'
-import { FunctionEditAndCreate } from '@/components/pages/Cloud'
+import { FunctionCreateFromSource } from '@/components/pages/Cloud'
 
 interface Props {
   user: Account
@@ -59,7 +59,7 @@ export default function CloudAddFunctionFromSource() {
     <>
       <NextSeo {...seo.cloud.functions.add} />
       <DashboardLayout>
-        <FunctionEditAndCreate
+        <FunctionCreateFromSource
           onSubmit={values => createMutation.mutate(values)}
         />
       </DashboardLayout>

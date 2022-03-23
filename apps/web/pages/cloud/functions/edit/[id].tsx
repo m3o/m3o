@@ -1,5 +1,5 @@
 import type {
-  SourceCodeFunctionEditProps,
+  FunctionEditSourceProps,
   RepoFunctionEditProps,
 } from '@/components/pages/Cloud'
 import { useRef, useEffect } from 'react'
@@ -34,9 +34,8 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-const SourceCodeFunctionEdit = dynamic<SourceCodeFunctionEditProps>(
-  () =>
-    import('@/components/pages/Cloud').then(mod => mod.SourceCodeFunctionEdit),
+const SourceCodeFunctionEdit = dynamic<FunctionEditSourceProps>(
+  () => import('@/components/pages/Cloud').then(mod => mod.FunctionEditSource),
   {
     ssr: false,
   },
@@ -95,8 +94,11 @@ export default function EditFunction() {
       return (
         <SourceCodeFunctionEdit
           func={data!}
-          onUpdateClick={(values: Required<UpdateFuncFields>) =>
-            updateFunctionMutation.mutate(values)
+          onSubmit={sourceCode =>
+            updateFunctionMutation.mutate({
+              source: sourceCode,
+              name: data!.name!,
+            })
           }
           isUpdating={updateFunctionMutation.isLoading}
         />

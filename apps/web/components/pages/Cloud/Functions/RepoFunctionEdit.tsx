@@ -20,12 +20,12 @@ export function RepoFunctionEdit({
     <>
       <FunctionHeader
         func={func}
-        onUpdateClick={() =>
+        onSubmit={() =>
           onUpdateClick({
             name: func.name as string,
           })
         }
-        isUpdating={isUpdating}
+        isLoading={isUpdating}
       />
       <div className="p-6">
         <h4 className="mb-6 font-bold text-xl">Logs</h4>
