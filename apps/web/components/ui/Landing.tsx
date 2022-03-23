@@ -7,6 +7,7 @@ import {
   HowToGetStarted,
   CloudBanner,
   Pricing,
+  Faqs,
 } from '@/components/pages/Home'
 import { MainLayout } from '@/components/layouts'
 import { ServicesGrid } from '@/components/ui'
@@ -28,7 +29,11 @@ export function Landing({
       </WhatIsM3O>
       <HowToGetStarted />
       <Pricing />
-      <CloudBanner />
+      <section className="py-20">
+        <div className="m3o-container">
+          <Faqs />
+        </div>
+      </section>
       <SubscribeSection />
     </MainLayout>
   )

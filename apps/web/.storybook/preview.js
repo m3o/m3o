@@ -25,7 +25,7 @@ export const parameters = {
 
 export const decorators = [
   story => (
-    <div className="bg-zinc-900 text-white">
+    <div className="bg-zinc-900 text-white min-h-screen">
       <QueryClientProvider client={queryClient}>
         {story()}
         <ReactQueryDevtools />

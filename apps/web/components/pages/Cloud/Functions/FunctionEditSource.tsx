@@ -9,7 +9,6 @@ import { FunctionEditor } from './FunctionEditor'
 export interface FunctionEditSourceProps extends Func {
   func: Func
   onSubmit: (sourceCode: string) => void
-  submitButtonText?: string
   isUpdating: boolean
 }
 

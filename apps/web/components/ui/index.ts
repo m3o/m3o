@@ -1,4 +1,5 @@
 export * from './Buttons'
+export * from './AccordionItem'
 export * from './Alert'
 export * from './Balance'
 export * from './Card'
