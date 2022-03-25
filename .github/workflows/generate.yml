@@ -176,19 +176,19 @@ jobs:
           use_rsync: true
           commit_message: 'Commit from m3o/m3o action'
 
-      - name: install postman converter
-        working-directory: services
-        run: |
-          sudo npm install -g openapi-to-postmanv2
-          openapi2postmanv2 -h
+      # - name: install postman converter
+      #   working-directory: services
+      #   run: |
+      #     sudo npm install -g openapi-to-postmanv2
+      #     openapi2postmanv2 -h
 
-      - name: Generate openapi spec and publish the api
-        working-directory: services
-        if: github.ref == 'refs/heads/main'
-        run: |
-          go run cmd/api-publisher/main.go .
-        env:
-          MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
+      # - name: Generate openapi spec and publish the api
+      #   working-directory: services
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     go run cmd/api-publisher/main.go .
+      #   env:
+      #     MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
 
       - name: publish npm clients
         working-directory: services

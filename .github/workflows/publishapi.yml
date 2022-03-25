@@ -1,0 +1,69 @@
+name: Public API Publisher
+on:
+  repository_dispatch:
+    types: [public_api_publisher]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@master
+
+      - name: Check m3o repo
+        uses: actions/checkout@v2
+        with:
+          path: m3o
+          ref: ${{ github.ref }}
+
+      - name: Check services repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'micro/services'
+          path: services
+
+      - name: Check micro repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'micro/micro'
+          path: 'micro'
+          ref: 'master'
+
+      - name: Enable caching
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install protoc gen micro plugin
+        working-directory: micro/cmd/protoc-gen-micro
+        run: |
+          go get -u github.com/golang/protobuf/protoc-gen-go
+          go install
+
+      - name: Install openapi plugin
+        working-directory: m3o/cmd/protoc-gen-openapi
+        run: |
+          go install
+
+      - name: install postman converter
+        working-directory: services
+        run: |
+          sudo npm install -g openapi-to-postmanv2
+          openapi2postmanv2 -h
+
+      - name: Generate openapi spec and publish the api
+        working-directory: services
+        if: github.ref == 'refs/heads/main'
+        run: |
+          go run cmd/api-publisher/main.go .
+        env:
+          MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
