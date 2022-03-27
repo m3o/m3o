@@ -346,9 +346,9 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 
 		// int64 represented as string
 		if meta.Value.Format == "int64" {
-			o += fmt.Sprintf(" `json:\"%v,string\"`", p)
+			o += fmt.Sprintf(" `json:\"%v,string,omitempty\"`", p)
 		} else {
-			o += fmt.Sprintf(" `json:\"%v\"`", p)
+			o += fmt.Sprintf(" `json:\"%v,omitempty\"`", p)
 		}
 
 		output = append(output, comments+o)

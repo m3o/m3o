@@ -1059,7 +1059,7 @@ func schemaToType(language, serviceName, typeName string, schemas map[string]*op
 				if typ == int64Type {
 					ret += ",string"
 				}
-				ret += "\"`"
+				ret += ",omitempty\"`"
 			}
 
 			if i < len(props) {
