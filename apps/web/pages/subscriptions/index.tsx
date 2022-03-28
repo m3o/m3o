@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 import { withAuth } from '@/lib/api/m3o/withAuth'
-import { Routes, SessionStorageKeys } from '@/lib/constants'
+import { Routes, SubscriptionPlans } from '@/lib/constants'
 import { SubscriptionsLayout } from '@/components/layouts'
 import { useLocalStripe, useGetSavedCards, useSubscribeToTier } from '@/hooks'
 import {
@@ -13,6 +13,10 @@ import {
   Alert,
 } from '@/components/ui'
 import { PaymentMethods } from '@/components/pages/subscriptions'
+
+interface Props extends WithAuthProps {
+  tier: SubscriptionPlans
+}
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -26,12 +30,13 @@ export const getServerSideProps = withAuth(async context => {
 
   return {
     props: {
+      tier: context.query.tier,
       user: context.req.user,
     },
   }
 })
 
-export default function SubscriptionsCardDetails({ user }: WithAuthProps) {
+export default function SubscriptionsCardDetails({ user, tier }: Props) {
   const [cardId, setCardId] = useState('')
   const router = useRouter()
   const {
@@ -45,15 +50,6 @@ export default function SubscriptionsCardDetails({ user }: WithAuthProps) {
   })
   const { cards, isLoading } = useGetSavedCards()
   const stripePromise = useLocalStripe(user!)
-  const plan = window.sessionStorage.getItem(
-    SessionStorageKeys.SubscriptionFlow,
-  )
-
-  console.log(plan)
-
-  useEffect(() => {
-    window.sessionStorage.removeItem(SessionStorageKeys.SubscriptionFlow)
-  }, [])
 
   useEffect(() => {
     if (cards.length === 1) {
@@ -66,7 +62,7 @@ export default function SubscriptionsCardDetails({ user }: WithAuthProps) {
   }
 
   const handleSubscribe = () => {
-    return mutate({ card_id: cardId, id: plan })
+    return mutate({ card_id: cardId, id: tier })
   }
 
   return (

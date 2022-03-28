@@ -15,9 +15,11 @@ export function useLogin() {
         SessionStorageKeys.SubscriptionFlow,
       )
 
+      console.log(subscriptionPath)
+
       if (subscriptionPath) {
         // Assume the user has come from clicking a subscription
-        router.push('/subscriptions/card-details')
+        router.push(`/subscriptions?tier=${subscriptionPath}`)
         return
       }
 

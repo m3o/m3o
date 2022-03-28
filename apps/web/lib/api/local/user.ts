@@ -44,8 +44,7 @@ export function handleSuccessfulOAuthLogin(router: NextRouter) {
   )
 
   if (subscriptionFlow) {
-    router.push(Routes.SubscriptionCardDetails)
-    sessionStorage.removeItem(SessionStorageKeys.SubscriptionFlow)
+    router.push(`${Routes.SubscriptionCardDetails}?tier=${subscriptionFlow}`)
     return
   }
 

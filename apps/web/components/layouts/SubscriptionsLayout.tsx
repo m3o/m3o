@@ -5,7 +5,7 @@ export const SubscriptionsLayout: FC = ({ children }) => {
   return (
     <MainLayout>
       <div className="flex justify-center md:py-20 py-10 min-h-screen px-8">
-        <div className="md:w-1/2 max-w-lg">
+        <div className="xl:w-1/2 max-w-lg">
           <h1 className="text-2xl mb-3 gradient-text font-bold">
             M3O Subscriptions
           </h1>
