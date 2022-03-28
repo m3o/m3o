@@ -4,7 +4,7 @@ import { mocked } from 'jest-mock'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { BillingApiRoutes } from '@/lib/constants'
 import { m3oInstance } from '@/lib/api/m3o/api'
-import { useSubscribeToProTier } from '../useSubscribeToProTier'
+import { useSubscribeToTier } from '../useSubscribeToTier'
 import { useM3OApi } from '../../m3o/useM3OApi'
 
 jest.mock('../../m3o/useM3OApi')
@@ -21,9 +21,9 @@ const wrapper: FC = ({ children }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 )
 
-describe('useSubscribeToProTier', () => {
+describe('useSubscribeToTier', () => {
   it('should call post to the correct URL and payload', async () => {
-    const { result } = renderHook(() => useSubscribeToProTier(), { wrapper })
+    const { result } = renderHook(() => useSubscribeToTier(), { wrapper })
     await act(async () => await result.current.subscribe(CARD_ID))
 
     expect(mockedM3OInstance.post).toBeCalledWith(
@@ -37,7 +37,7 @@ describe('useSubscribeToProTier', () => {
 
   it('should call the passed "onSuccess" method when a successful call is made', async () => {
     const onSuccess = jest.fn()
-    const { result } = renderHook(() => useSubscribeToProTier({ onSuccess }), {
+    const { result } = renderHook(() => useSubscribeToTier({ onSuccess }), {
       wrapper,
     })
     await act(async () => await result.current.subscribe(CARD_ID))

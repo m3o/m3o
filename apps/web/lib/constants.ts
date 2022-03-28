@@ -40,8 +40,8 @@ export enum Routes {
   UserUsage = '/account/usage',
   Pricing = '/pricing',
   Trending = '/trending',
-  SubscriptionProCardDetails = '/subscriptions/pro/card-details',
-  SubscriptionProSuccess = '/subscriptions/pro/success',
+  SubscriptionCardDetails = '/subscriptions',
+  SubscriptionSuccess = '/subscriptions/success',
 }
 
 export enum LandingPageExampleNames {

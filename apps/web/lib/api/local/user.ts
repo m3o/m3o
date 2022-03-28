@@ -43,8 +43,8 @@ export function handleSuccessfulOAuthLogin(router: NextRouter) {
     SessionStorageKeys.RedirectToAfterLogin,
   )
 
-  if (subscriptionFlow === 'pro') {
-    router.push(Routes.SubscriptionProCardDetails)
+  if (subscriptionFlow) {
+    router.push(Routes.SubscriptionCardDetails)
     sessionStorage.removeItem(SessionStorageKeys.SubscriptionFlow)
     return
   }

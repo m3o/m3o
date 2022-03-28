@@ -1,24 +1,29 @@
 import type { AxiosError } from 'axios'
 import { useMutation, useQueryClient } from 'react-query'
-import { QueryKeys, BillingApiRoutes } from '@/lib/constants'
+import { QueryKeys, BillingApiRoutes, SubscriptionPlans } from '@/lib/constants'
 import { useM3OApi } from '@/hooks'
 
 interface UseSubscribeToProTierProps {
   onSuccess?: VoidFunction
 }
 
-export function useSubscribeToProTier({
+interface MutationProps {
+  card_id: string
+  id: SubscriptionPlans
+}
+
+export function useSubscribeToTier({
   onSuccess,
 }: UseSubscribeToProTierProps = {}) {
   const m3oApi = useM3OApi()
   const queryClient = useQueryClient()
 
-  const { mutate, isLoading, error } = useMutation(
-    async (card_id: string) => {
+  return useMutation(
+    async ({ card_id, id }: MutationProps) => {
       try {
         const response = await m3oApi.post(BillingApiRoutes.SubscribeTier, {
           card_id,
-          id: 'pro',
+          id,
         })
 
         return response
@@ -36,10 +41,4 @@ export function useSubscribeToProTier({
       },
     },
   )
-
-  return {
-    subscribe: mutate,
-    isLoading,
-    error,
-  }
 }

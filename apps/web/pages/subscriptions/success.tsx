@@ -1,5 +1,3 @@
-import type { FC } from 'react'
-import type { WithAuthProps } from '@/lib/api/m3o/withAuth'
 import { SubscriptionsLayout } from '@/components/layouts'
 import Link from 'next/link'
 import { withAuth } from '@/lib/api/m3o/withAuth'
@@ -22,7 +20,7 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-const SubscriptionsProSuccess: FC<WithAuthProps> = () => {
+export default function SubscriptionsSuccess() {
   return (
     <SubscriptionsLayout>
       <h2>Congratulations your subscription sign up was successful!</h2>
@@ -32,5 +30,3 @@ const SubscriptionsProSuccess: FC<WithAuthProps> = () => {
     </SubscriptionsLayout>
   )
 }
-
-export default SubscriptionsProSuccess

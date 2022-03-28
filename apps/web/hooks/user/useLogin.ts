@@ -15,9 +15,9 @@ export function useLogin() {
         SessionStorageKeys.SubscriptionFlow,
       )
 
-      if (subscriptionPath === 'pro') {
+      if (subscriptionPath) {
         // Assume the user has come from clicking a subscription
-        router.push('/subscriptions/pro/card-details')
+        router.push('/subscriptions/card-details')
         return
       }
 

@@ -1,2 +1,2 @@
-export * from './useSubscribeToProTier'
+export * from './useSubscribeToTier'
 export * from './useDowngradeToFreeTier'
