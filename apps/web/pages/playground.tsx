@@ -26,10 +26,15 @@ type PlaygroundResponseSectionProps = {
   data?: Record<string, unknown>
 }
 
-function useFetchSelectedApi(selectedApi?: ExploreAPI) {
+type PlaygroundServicesProps = {
+  data: ExploreAPI[]
+  onSelectService: (apiName: string) => void
+}
+
+function useFetchSelectedApi(selectedApi: string) {
   const { data: api, isFetching } = useQuery(
-    ['playground-api', selectedApi?.display_name],
-    () => fetchSingleService(selectedApi!.name),
+    ['playground-api', selectedApi],
+    () => fetchSingleService(selectedApi),
     {
       enabled: !!selectedApi,
     },
@@ -125,10 +130,29 @@ function PlaygroundResponseSection({ data }: PlaygroundResponseSectionProps) {
   )
 }
 
+function PlaygroundServices({
+  data,
+  onSelectService,
+}: PlaygroundServicesProps) {
+  return (
+    <div className="overflow-y-scroll border-r border-zinc-800">
+      {data.map(item => (
+        <div key={item.name}>
+          <button
+            className="block px-8 py-3 text-sm"
+            onClick={() => onSelectService(item.name)}>
+            {item.name}
+          </button>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function Playground() {
   const m3o = useM3OClient()
   const [requestPayload, setRequestPayload] = useState({})
-  const [selectedApi, setSelectedApi] = useState<ExploreAPI | undefined>()
+  const [selectedApi, setSelectedApi] = useState('')
   const [selectedEndpoint, setSelectedEndpoint] = useState('')
   const { data, isLoading } = useListApis()
   const { api, isFetchingApi } = useFetchSelectedApi(selectedApi)
@@ -152,11 +176,46 @@ export default function Playground() {
     }))
   }
 
-  console.log(runRequestMutation.error)
-
   return (
-    <section className="h-screen overflow-hidden">
-      <div className="flex px-6 py-2 items-center justify-between border-b border-zinc-800">
+    <section className="h-screen overflow-hidden grid grid-cols-6">
+      <PlaygroundServices data={data} onSelectService={setSelectedApi} />
+      <div className="col-span-5">
+        <div className="py-4 px-6 border-b border-zinc-800 w-full">
+          <div className="flex overflow-x-scroll">
+            {selectedApi &&
+              data
+                .find(item => item.name === selectedApi)!
+                .endpoints!.map(item => (
+                  <button
+                    onClick={() => {
+                      setSelectedEndpoint(item.name)
+                      setRequestPayload({})
+                      runRequestMutation.reset()
+                      runRequestMutation.error = ''
+                    }}
+                    className={classNames(
+                      'block p-4 text-left text-sm font-light rounded-md flex-1 endpoint',
+                      {
+                        ' text-white bg-zinc-800':
+                          item.name === selectedEndpoint,
+                        'text-zinc-400': item.name !== selectedEndpoint,
+                      },
+                    )}>
+                    <span className="font-bold block mb-1 font-mono">
+                      {returnFormattedEndpointName(item.name)}
+                    </span>
+                    <span className="block text-xs leading-5 overflow-hidden text-ellipsis whitespace-nowrap">
+                      {
+                        api?.schemas[`${getEndpointName(item.name)}Request`]
+                          .description
+                      }
+                    </span>
+                  </button>
+                ))}
+          </div>
+        </div>
+      </div>
+      {/* <div className="flex px-6 py-2 items-center justify-between border-b border-zinc-800">
         <Select
           name="selectedApi"
           label="Api"
@@ -181,40 +240,7 @@ export default function Playground() {
           Run Request
         </Button>
       </div>
-      <div className="py-4 px-6 border-r tbc w-full border-b border-zinc-800">
-        <h2 className="font-medium mb-3">Select endpoint:</h2>
-        <div className="flex overflow-x-scroll">
-          {selectedApi &&
-            data
-              .find(item => item.display_name === selectedApi.display_name)!
-              .endpoints!.map(item => (
-                <button
-                  onClick={() => {
-                    setSelectedEndpoint(item.name)
-                    setRequestPayload({})
-                    runRequestMutation.reset()
-                    runRequestMutation.error = ''
-                  }}
-                  className={classNames(
-                    'block p-4 text-left text-sm font-light rounded-md flex-1 endpoint',
-                    {
-                      ' text-white bg-zinc-800': item.name === selectedEndpoint,
-                      'text-zinc-400': item.name !== selectedEndpoint,
-                    },
-                  )}>
-                  <span className="font-bold block mb-1 font-mono">
-                    {returnFormattedEndpointName(item.name)}
-                  </span>
-                  <span className="block text-xs leading-5 overflow-hidden text-ellipsis whitespace-nowrap">
-                    {
-                      api?.schemas[`${getEndpointName(item.name)}Request`]
-                        .description
-                    }
-                  </span>
-                </button>
-              ))}
-        </div>
-      </div>
+      
       <div className="grid h-screen grid-cols-6 relative">
         <div className="h-full col-span-2">
           <div className="p-8">
@@ -246,8 +272,8 @@ export default function Playground() {
                 />
               </div>
             )}
-          </div>
-          {/* <Tabs>
+          </div> */}
+      {/* <Tabs>
             <div title="Response">
               {runRequestMutation.error && (
                 <p className="border-b border-red-600 p-4 bg-red-500 text-white font-medium">
@@ -282,8 +308,8 @@ main();
               )}
             </div>
           </Tabs> */}
-        </div>
-      </div>
+      {/* </div> */}
+      {/* </div> */}
     </section>
   )
 }
