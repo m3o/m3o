@@ -13,6 +13,8 @@ export const CodeBlock: FC<Props> = ({ code, language = 'javascript' }) => {
       language={language}
       showLineNumbers={false}
       style={nord}
+      wrapLines={true}
+      lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
       customStyle={{
         fontSize: 14,
         marginTop: 0,

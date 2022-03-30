@@ -6,6 +6,7 @@ import { FormField, FormFieldProps } from './FormField'
 type Props = FormFieldProps &
   ComponentPropsWithoutRef<'input'> & {
     wrapperClassName?: string
+    variant?: 'default' | 'grey'
   }
 
 export const TextInput = forwardRef<HTMLInputElement, Props>(
@@ -18,6 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
       labelClass,
       required,
       wrapperClassName,
+      variant = 'default',
       ...props
     },
     ref,
@@ -25,6 +27,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
     const classes = classnames('input', className, {
       'border-zinc-300': !error,
       'border-red-700': error,
+      grey: variant === 'grey',
     })
 
     return (
