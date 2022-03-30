@@ -3,16 +3,13 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 	"text/template"
 
-	"github.com/crufter/nested"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/stoewer/go-strcase"
 )
@@ -357,188 +354,172 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 	return strings.Join(output, "\n")
 }
 
-func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef, values map[string]interface{}) string {
-	var recurse func(props map[string]*openapi3.SchemaRef, path []string) string
+func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef, examples map[string]interface{}) string {
 
-	var spec *openapi3.SchemaRef = schemas[typeName]
-	if spec == nil {
-		existing := ""
-		for k, _ := range schemas {
-			existing += k + " "
-		}
-		panic("can't find schema " + typeName + " but found " + existing)
-	}
-	detectType := func(currentType string, properties map[string]*openapi3.SchemaRef) (string, bool) {
-		index := map[string]bool{}
-		for key, prop := range properties {
-			index[key+prop.Value.Title] = true
-		}
-		for k, schema := range schemas {
-			// we don't want to return the type matching itself
-			if strings.ToLower(k) == currentType {
-				continue
-			}
-			if strings.HasSuffix(k, "Request") || strings.HasSuffix(k, "Response") {
-				continue
-			}
-			if len(schema.Value.Properties) != len(properties) {
-				continue
-			}
-			found := false
-			for key, prop := range schema.Value.Properties {
+	var requestAtrr = `{{ .parameter }}: {{ .value }}`
+	var objRerequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
+	var jsonType = "map[string]interface{}"
+	var stringType = "string"
+	var int32Type = "int32"
+	var int64Type = "int64"
+	var floatType = "float32"
+	var doubleType = "float64"
+	var boolType = "bool"
+	// var pointerType = "*"
 
-				_, ok := index[key+prop.Value.Title]
-				found = ok
-				if !ok {
-					break
-				}
-			}
-			if found {
-				return schema.Value.Title, true
-			}
+	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
+		t, err := template.New(tmpName).Parse(temp)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
+			return ""
 		}
-		return "", false
-	}
-	var fieldSeparator, objectOpen, objectClose, arrayPrefix, arrayPostfix, fieldDelimiter, stringType, boolType string
-	var int32Type, int64Type, floatType, doubleType, mapType, anyType, typeInstancePrefix string
-	var fieldUpperCase bool
-	language := "go"
-	switch language {
-	case "go":
-		fieldUpperCase = true
-		fieldSeparator = ": "
-		arrayPrefix = "[]"
-		arrayPostfix = ""
-		objectOpen = "{\n"
-		objectClose = "}"
-		fieldDelimiter = ","
-		stringType = "string"
-		boolType = "bool"
-		int32Type = "int32"
-		int64Type = "int64"
-		floatType = "float32"
-		doubleType = "float64"
-		mapType = "map[string]%v"
-		anyType = "interface{}"
-		typeInstancePrefix = "&"
+		var tb bytes.Buffer
+		err = t.Execute(&tb, payload)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", temp, payload, err)
+			return ""
+		}
+
+		return tb.String()
 	}
 
-	valueToType := func(v *openapi3.SchemaRef) string {
-		switch v.Value.Type {
-		case "string":
+	typesMapper := func(t string) string {
+		switch t {
+		case "STRING":
 			return stringType
-		case "boolean":
+		case "INT32":
+			return int32Type
+		case "INT64":
+			return int64Type
+		case "FLOAT":
+			return floatType
+		case "DOUBLE":
+			return doubleType
+		case "BOOL":
 			return boolType
+		case "JSON":
+			return jsonType
+		default:
+			return t
+		}
+	}
+
+	output := []string{}
+	// just a reminder, typeName here has [endpoint]Request signature
+	protoMessage := schemas[typeName]
+
+	for p, meta := range protoMessage.Value.Properties {
+
+		o := ""
+
+		// skip the loop if property doesn't exist
+		if examples[p] == nil {
+			continue
+		}
+
+		switch meta.Value.Type {
+		case "string":
+			payload := map[string]interface{}{
+				"parameter": strcase.UpperCamelCase(p),
+				"value":     fmt.Sprintf("%q", examples[p]),
+			}
+			o = runTemplate("requestAtrr", requestAtrr, payload)
+		case "boolean":
+			payload := map[string]interface{}{
+				"parameter": strcase.UpperCamelCase(p),
+				"value":     examples[p],
+			}
+			o = runTemplate("requestAtrr", requestAtrr, payload)
 		case "number":
-			switch v.Value.Format {
-			case "int32":
-				return int32Type
-			case "int64":
-				return int64Type
-			case "float":
-				return floatType
-			case "double":
-				return doubleType
+			switch meta.Value.Format {
+			case "int32", "int64", "float", "double":
+				payload := map[string]interface{}{
+					"parameter": strcase.UpperCamelCase(p),
+					"value":     examples[p],
+				}
+				o = runTemplate("requestAtrr", requestAtrr, payload)
+			}
+		case "array":
+			// types := detectType2(serviceName, typeName, p)
+			// payload := map[string]interface{}{
+			// 	"type":      typesMapper(types[0]),
+			// 	"parameter": strcase.UpperCamelCase(p),
+			// }
+			// o = runTemplate("array", arrayType, payload)
+			fmt.Println("*********** WE HAVE AN EXAMPLE THAT USES ARRAY ***********")
+		case "object":
+			types := detectType2(serviceName, typeName, p)
+			// a Message Type
+			if len(types) == 1 {
+				t := typesMapper(types[0])
+				payload := map[string]interface{}{
+					"service":   serviceName,
+					"type":      t,
+					"values":    populateStruct(examples, p),
+					"parameter": strcase.UpperCamelCase(p),
+				}
+				o = runTemplate("objRequestAtrr", objRerequestAtrr, payload)
+			} else {
+				// a Map object
+				// payload := map[string]interface{}{
+				// 	"type1":     typesMapper(types[0]),
+				// 	"type2":     typesMapper(types[1]),
+				// 	"parameter": strcase.UpperCamelCase(p),
+				// }
+				// o = runTemplate("map", mapType, payload)
+				fmt.Println("************** inside case 'object' the else section *********")
 			}
 		default:
-			return "unrecognized: " + v.Value.Type
+			// payload := map[string]interface{}{
+			// 	"parameter": strcase.UpperCamelCase(p),
+			// }
+			// o = runTemplate("any", anyType, payload)
+			fmt.Println("*********** WE HAVE AN EXAMPLE THAT USES UNKOWN TYPE ***********")
+			fmt.Printf("In service |%v| typename |%v| parameter |%v|", serviceName, typeName, p)
 		}
-		return ""
+
+		output = append(output, o+",")
 	}
 
-	printMap := func(m map[string]interface{}, level int) string {
-		ret := ""
-		for k, v := range m {
-			marsh, _ := json.Marshal(v)
-			ret += strings.Repeat("\t", level) + fmt.Sprintf("\"%v\": %v,\n", k, string(marsh))
-		}
-		return ret
-	}
+	return strings.Join(output, "\n")
+}
 
-	recurse = func(props map[string]*openapi3.SchemaRef, path []string) string {
-		ret := ""
-
-		i := 0
-		var keys []string
-		for k := range props {
-			keys = append(keys, k)
-		}
-		sort.Strings(keys)
-		for i, v := range path {
-			path[i] = strcase.LowerCamelCase(v)
-		}
-		for _, k := range keys {
-			v := props[k]
-			ret += strings.Repeat("\t", len(path))
-			if fieldUpperCase {
-				k = strcase.UpperCamelCase(k)
-			}
-
-			var val interface{}
-			p := strings.Replace(strings.Join(append(path, strcase.LowerCamelCase(k)), "."), ".[", "[", -1)
-			val, ok := nested.Get(values, p)
-			if !ok {
-				continue
-			}
-			// hack
-			if str, ok := val.(string); ok {
-				if str == "<nil>" {
-					continue
+func populateStruct(values map[string]interface{}, property string) string {
+	fmt.Println("p:", property)
+	for key, value := range values {
+		if key == property {
+			fmt.Println("k:", key)
+			fmt.Println("v:", value)
+			output := "{"
+			switch value.(type) {
+			case map[string]interface{}:
+				output += "\n" + strings.Title(key) + ": {"
+				for ksub, vsub := range value.(map[string]interface{}) {
+					output += "\n" + strings.Title(ksub) + ":" + fmt.Sprint(vsub)
 				}
-			}
-			switch v.Value.Type {
-			case "object":
-				typ, found := detectType(k, v.Value.Properties)
-				if found {
-					ret += k + fieldSeparator + typeInstancePrefix + serviceName + "." + strings.Title(typ) + objectOpen + recurse(v.Value.Properties, append(path, k)) + objectClose + fieldDelimiter
-				} else {
-					// type is a dynamic map
-					// if additional properties is present, then it's a map string string or other typed map
-					if v.Value.AdditionalProperties != nil {
-						ret += k + fieldSeparator + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + objectOpen + printMap(val.(map[string]interface{}), len(path)+1) + objectClose + fieldDelimiter
-					} else {
-						// if additional properties is not present, it's an any type,
-						// like the proto struct type
-						ret += k + fieldSeparator + fmt.Sprintf(mapType, anyType) + objectOpen + printMap(val.(map[string]interface{}), len(path)+1) + objectClose + fieldDelimiter
-					}
-				}
-			case "array":
-				typ, found := detectType(k, v.Value.Items.Value.Properties)
-				if found {
-					ret += k + fieldSeparator + arrayPrefix + serviceName + "." + strings.Title(typ) + objectOpen + serviceName + "." + strings.Title(typ) + objectOpen + recurse(v.Value.Items.Value.Properties, append(append(path, k), "[0]")) + objectClose + objectClose + arrayPostfix + fieldDelimiter
-				} else {
-					arrint := val.([]interface{})
-					switch v.Value.Items.Value.Type {
-					case "string":
-						arrstr := make([]string, len(arrint))
-						for i, v := range arrint {
-							arrstr[i] = fmt.Sprintf("%v", v)
+				output += "\n}"
+			case []interface{}:
+				output += "\n" + strings.Title(key) + ": ["
+				for _, item := range value.([]interface{}) {
+					switch item.(type) {
+					case map[string]interface{}:
+						for k, v := range item.(map[string]interface{}) {
+							output += "\n" + strings.Title(k) + ":" + fmt.Sprint(v)
 						}
-
-						ret += k + fieldSeparator + fmt.Sprintf("%#v", arrstr) + fieldDelimiter
-					case "number", "boolean":
-						ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf("%v", val) + arrayPostfix + fieldDelimiter
-					case "object":
-						ret += k + fieldSeparator + arrayPrefix + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + objectOpen + fmt.Sprintf(mapType, valueToType(v.Value.AdditionalProperties)) + objectOpen + recurse(v.Value.Items.Value.Properties, append(append(path, k), "[0]")) + strings.Repeat("\t", len(path)) + objectClose + objectClose + arrayPostfix + fieldDelimiter
+						output += "\n}"
+					default:
+						output += "\n" + item.(string)
 					}
+					output += "\n]"
 				}
-			case "string":
-				if strings.Contains(val.(string), "\n") {
-					ret += k + fieldSeparator + fmt.Sprintf("`%v`", val) + fieldDelimiter
-				} else {
-					ret += k + fieldSeparator + fmt.Sprintf("\"%v\"", val) + fieldDelimiter
-				}
-			case "number", "boolean":
-				ret += k + fieldSeparator + fmt.Sprintf("%v", val) + fieldDelimiter
+			default:
+				output += "\n" + strings.Title(key) + ":" + fmt.Sprint(value)
 			}
 
-			if i < len(props) {
-				ret += "\n"
-			}
-			i++
-
+			output += "\n}"
+			// we only populate first example
+			return output
 		}
-		return ret
 	}
-	return recurse(spec.Value.Properties, []string{})
+	return ""
 }
