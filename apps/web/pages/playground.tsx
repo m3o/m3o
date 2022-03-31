@@ -2,6 +2,7 @@ import type { SchemaObject } from 'openapi3-ts'
 import { useQuery, useMutation } from 'react-query'
 import { useState, useEffect, useMemo } from 'react'
 import classNames from 'classnames'
+import { MainLayout } from '@/components/layouts'
 import { FullSpinner, Spinner, TextInput, Button } from '@/components/ui'
 import { useListApis, usePlaygroundService } from '@/hooks'
 import { fetchSingleService } from '@/lib/api/m3o/services/explore'
@@ -127,7 +128,11 @@ export default function Playground() {
   }, [data, selectedApi])
 
   if (isLoading || !data) {
-    return <FullSpinner />
+    return (
+      <MainLayout>
+        <FullSpinner />
+      </MainLayout>
+    )
   }
 
   function handleParamChange(name: string, value: string | number | boolean) {
@@ -138,76 +143,80 @@ export default function Playground() {
   }
 
   return (
-    <section className="h-screen overflow-hidden grid grid-cols-6">
-      <ServicesSidebar
-        data={data}
-        onSelectService={name => {
-          setSelectedApi(name)
-          setRequestPayload({})
-          setSelectedEndpoint('')
-          // runRequestMutation.reset()
-          // runRequestMutation.error = ''
-        }}
-        selectedService={selectedApi}
-      />
-      <div className="col-span-5">
-        {selectedApi ? (
-          <>
-            <div className="py-2 px-6 border-b border-zinc-800 w-full">
-              <div className="flex overflow-x-scroll">{endpoints}</div>
-            </div>
-            {selectedEndpoint && (
-              <div className="h-full">
-                <div className="flex justify-between border-b border-zinc-800 items-center px-6 py-2">
-                  <div>
-                    <p className="text-sm text-zinc-400">
-                      <span className="inline-block mr-3 bg-zinc-800 p-2 rounded-md text-indigo-300 text-xs">
-                        POST
-                      </span>
-                      {process.env.NEXT_PUBLIC_API_URL}/{selectedApi}/
-                      {selectedEndpoint.split('.')[1]}
-                    </p>
-                  </div>
-                  <Button
-                    className="font-mono text-sm"
-                    onClick={() => run.mutate()}
-                    loading={run.isLoading}
-                    disabled={isFetchingApi}>
-                    Run Request
-                  </Button>
-                </div>
-                <div className="grid grid-cols-4 h-full">
-                  <div className="border-r border-zinc-800 p-6">
-                    <h2 className="font-bold mb-4">Params</h2>
-                    {selectedEndpoint && api && (
-                      <EndpointParams
-                        key={selectedEndpoint}
-                        isLoading={isFetchingApi}
-                        schemas={api.schemas}
-                        selectedEndpoint={getEndpointName(selectedEndpoint)}
-                        onParamChange={handleParamChange}
-                      />
-                    )}
-                  </div>
-                  <div className="col-span-3">
-                    <Output
-                      data={run.data}
-                      isFetching={run.isLoading}
-                      key={selectedApi}
-                      currentTab={currentTab}
-                      onTabClick={setCurrentTab}
-                    />
-                  </div>
-                </div>
+    <MainLayout>
+      <section className="h-screen overflow-hidden grid grid-cols-6">
+        <ServicesSidebar
+          data={data}
+          onSelectService={name => {
+            setSelectedApi(name)
+            setRequestPayload({})
+            setSelectedEndpoint('')
+            // runRequestMutation.reset()
+            // runRequestMutation.error = ''
+          }}
+          selectedService={selectedApi}
+        />
+        <div className="col-span-5">
+          {selectedApi ? (
+            <>
+              <div className="py-2 px-6 border-b border-zinc-800 w-full">
+                <div className="flex overflow-x-scroll">{endpoints}</div>
               </div>
-            )}
-          </>
-        ) : (
-          <div className="flex items-center justify-center h-full uppercase ">
-            <p className="text-zinc-400">Please select an API to get started</p>
-          </div>
-        )}
-      </div>
-    </section>
+              {selectedEndpoint && (
+                <div className="h-full">
+                  <div className="flex justify-between border-b border-zinc-800 items-center px-6 py-2">
+                    <div>
+                      <p className="text-sm text-zinc-400">
+                        <span className="inline-block mr-3 bg-zinc-800 p-2 rounded-md text-indigo-300 text-xs">
+                          POST
+                        </span>
+                        {process.env.NEXT_PUBLIC_API_URL}/{selectedApi}/
+                        {selectedEndpoint.split('.')[1]}
+                      </p>
+                    </div>
+                    <Button
+                      className="font-mono text-sm"
+                      onClick={() => run.mutate()}
+                      loading={run.isLoading}
+                      disabled={isFetchingApi}>
+                      Run Request
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-4 h-full">
+                    <div className="border-r border-zinc-800 p-6">
+                      <h2 className="font-bold mb-4">Params</h2>
+                      {selectedEndpoint && api && (
+                        <EndpointParams
+                          key={selectedEndpoint}
+                          isLoading={isFetchingApi}
+                          schemas={api.schemas}
+                          selectedEndpoint={getEndpointName(selectedEndpoint)}
+                          onParamChange={handleParamChange}
+                        />
+                      )}
+                    </div>
+                    <div className="col-span-3">
+                      <Output
+                        data={run.data}
+                        isFetching={run.isLoading}
+                        key={selectedApi}
+                        currentTab={currentTab}
+                        onTabClick={setCurrentTab}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="flex items-center justify-center h-full uppercase ">
+              <p className="text-zinc-400">
+                Please select an API to get started
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    </MainLayout>
   )
 }
