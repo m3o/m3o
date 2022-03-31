@@ -357,7 +357,8 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef, examples map[string]interface{}) string {
 
 	var requestAtrr = `{{ .parameter }}: {{ .value }}`
-	var objRerequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
+	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .type }} {{ .values }}`
+	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
 	var jsonType = "map[string]interface{}"
 	var stringType = "string"
 	var int32Type = "int32"
@@ -440,13 +441,13 @@ func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi
 				o = runTemplate("requestAtrr", requestAtrr, payload)
 			}
 		case "array":
-			// types := detectType2(serviceName, typeName, p)
-			// payload := map[string]interface{}{
-			// 	"type":      typesMapper(types[0]),
-			// 	"parameter": strcase.UpperCamelCase(p),
-			// }
-			// o = runTemplate("array", arrayType, payload)
-			fmt.Println("*********** WE HAVE AN EXAMPLE THAT USES ARRAY ***********")
+			payload := map[string]interface{}{
+				"service":   serviceName,
+				"type":      strcase.UpperCamelCase(p),
+				"values":    populateStruct(examples, serviceName, p),
+				"parameter": strcase.UpperCamelCase(p),
+			}
+			o = runTemplate("arrRequestAtrr", arrRequestAtrr, payload)
 		case "object":
 			types := detectType2(serviceName, typeName, p)
 			// a Message Type
@@ -454,11 +455,11 @@ func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi
 				t := typesMapper(types[0])
 				payload := map[string]interface{}{
 					"service":   serviceName,
-					"type":      t,
-					"values":    populateStruct(examples, p),
+					"type":      strcase.UpperCamelCase(t),
+					"values":    populateStruct(examples, serviceName, p),
 					"parameter": strcase.UpperCamelCase(p),
 				}
-				o = runTemplate("objRequestAtrr", objRerequestAtrr, payload)
+				o = runTemplate("objRequestAtrr", objRequestAtrr, payload)
 			} else {
 				// a Map object
 				// payload := map[string]interface{}{
@@ -484,36 +485,34 @@ func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi
 	return strings.Join(output, "\n")
 }
 
-func populateStruct(values map[string]interface{}, property string) string {
+func populateStruct(values map[string]interface{}, serviceName, property string) string {
 	fmt.Println("p:", property)
 	for key, value := range values {
 		if key == property {
 			fmt.Println("k:", key)
 			fmt.Println("v:", value)
 			output := "{"
-			switch value.(type) {
+			switch val := value.(type) {
 			case map[string]interface{}:
 				output += "\n" + strings.Title(key) + ": {"
-				for ksub, vsub := range value.(map[string]interface{}) {
-					output += "\n" + strings.Title(ksub) + ":" + fmt.Sprint(vsub)
+				for ksub, vsub := range val {
+					output += "\n" + strcase.UpperCamelCase(ksub) + ":" + fmt.Sprint(vsub) + ","
 				}
-				output += "\n}"
 			case []interface{}:
-				output += "\n" + strings.Title(key) + ": ["
-				for _, item := range value.([]interface{}) {
-					switch item.(type) {
+				for _, item := range val {
+					output += "\n" + serviceName + "." + strcase.UpperCamelCase(key) + ": {"
+					switch item := item.(type) {
 					case map[string]interface{}:
-						for k, v := range item.(map[string]interface{}) {
-							output += "\n" + strings.Title(k) + ":" + fmt.Sprint(v)
+						for k, v := range item {
+							output += "\n" + strcase.UpperCamelCase(k) + ":" + fmt.Sprint(v) + ","
 						}
-						output += "\n}"
+						output += "\n},"
 					default:
-						output += "\n" + item.(string)
+						output += "\n" + fmt.Sprint(item) + ","
 					}
-					output += "\n]"
 				}
 			default:
-				output += "\n" + strings.Title(key) + ":" + fmt.Sprint(value)
+				output += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
 			}
 
 			output += "\n}"
@@ -523,3 +522,22 @@ func populateStruct(values map[string]interface{}, property string) string {
 	}
 	return ""
 }
+
+// output := ""
+// 			for key, value := range examples {
+// 				if key == p {
+// 					output += "\n" + strcase.UpperCamelCase(p) + ": []" + serviceName + "." + typeName + "{"
+// 					for _, item := range value.([]interface{}) {
+// 						switch item.(type) {
+// 						case map[string]interface{}:
+// 							output += "\n" + serviceName + "." + typeName + ": {"
+// 							for ksub, vsub := range item.(map[string]interface{}) {
+// 								output += "\n" + strings.Title(ksub) + ":" + fmt.Sprint(vsub)
+// 							}
+// 							output += "\n}"
+// 						default:
+// 							output += "\n" + fmt.Sprint(item)
+// 						}
+// 					}
+// 				}
+// 			}
