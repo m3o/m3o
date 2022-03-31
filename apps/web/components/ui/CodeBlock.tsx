@@ -4,7 +4,7 @@ import { nord } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 interface Props {
   code: string
-  language?: 'javascript' | 'json' | 'bash' | 'go' | 'cli'
+  language?: 'javascript' | 'json' | 'bash' | 'go' | 'cli' | 'dart'
 }
 
 export const CodeBlock: FC<Props> = ({ code, language = 'javascript' }) => {
