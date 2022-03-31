@@ -29,6 +29,7 @@ interface CompileCode {
 }
 
 const LANGUAGES: LanguagesObject = {
+  dart: 'dart',
   javascript: 'js',
   go: 'go',
   cli: 'cli',

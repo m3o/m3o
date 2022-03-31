@@ -18,6 +18,7 @@ const URL = 'https://raw.githubusercontent.com/m3o'
 const EXTENSIONS: Extensions = {
   cli: '.sh',
   bash: '.sh',
+  dart: '.dart',
   go: '.go',
   javascript: '.js',
 }
@@ -32,10 +33,11 @@ async function fetchCodeExample({
   const repo = language == 'cli' ? 'm3o-cli' : `m3o-${extension.replace('.', '')}`
   const branch = 'main'
   const method = removeFullStopAtEnd(examplePath)
-  const mainExtension = extension.includes('go') ? '/main' : ''
+  const mainExtension = extension.includes('go') || extension.includes('dart') ? '/main' : ''
+  const examples = language == 'dart' ? 'example' : 'examples'
 
   const response = await axios.get(
-    `${URL}/${repo}/${branch}/examples/${apiName}/${camelize(
+    `${URL}/${repo}/${branch}/${examples}/${apiName}/${camelize(
       path,
     )}/${method}${mainExtension}${extension}`,
     {
