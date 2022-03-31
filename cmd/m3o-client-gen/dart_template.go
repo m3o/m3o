@@ -15,11 +15,11 @@ part '{{ $service.Name }}.freezed.dart';
 part '{{ $service.Name }}.g.dart';
 
 class {{title $service.Name}}Service {
-	final Options opts;
 	var _client;
+  	final String token;
   
-	{{title $service.Name}}Service(this.opts) {
-	  _client = Client(opts);
+	{{title $service.Name}}Service(String token) :token = token {
+	  _client = Client(token: token);
 	}
 {{ range $key, $req := $service.Spec.Components.RequestBodies }}{{ $reqType := requestType $key }}{{ $endpointName := requestTypeToEndpointName $key}}
 	/{{ if endpointComment $endpointName $service.Spec.Components.Schemas }}{{ endpointComment $endpointName $service.Spec.Components.Schemas }}{{ end -}}
@@ -37,8 +37,8 @@ class {{title $service.Name}}Service {
 			  return {{ $endpointName }}Response.Merr(body: err.b);
 			}
 			return {{ $endpointName }}ResponseData.fromJson(res.body);
-		  } catch (e, stack) {
-			print(stack);  
+		  } catch (e, st) {
+			print(st);  
 			throw Exception(e);
 		  }
 	}{{end}}
@@ -59,8 +59,8 @@ class {{title $service.Name}}Service {
 					yield {{ $endpointName }}ResponseData.fromJson(vo);
 				}
 			}
-		} catch (e, stack) {
-			print(stack);
+		} catch (e, st) {
+			print(st);
 			throw Exception(e);
 		}
 	}{{end}}{{end}}
@@ -91,17 +91,10 @@ class {{ title $typeName }} with _${{ title $typeName }} {
 
 const dartExampleTemplate = `{{ $service := .service }}import 'dart:io';
 
-import 'package:m3o/src/client/client.dart';
 import 'package:m3o/src/{{ $service.Name }}/{{ $service.Name }}.dart';
 
 void main() async {
-  final token = Platform.environment['M3O_API_TOKEN']!;
-  final ser = {{title $service.Name}}Service(
-    Options(
-      token: token,
-      address: liveAddress,
-    ),
-  );
+  final ser = {{title $service.Name}}Service(Platform.environment['M3O_API_TOKEN']!);
  
   final payload = <String, dynamic>{{ dartExampleRequest .example.Request }};
 
@@ -124,9 +117,9 @@ void main() async {
 			Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
 		}	
 	  {{ end }}
-  } catch (e, stack) {
+  } catch (e, st) {
     print(e);
-	print(stack);
+	print(st);
   } finally {
     exit(0);
   }
@@ -149,17 +142,10 @@ const dartReadmeBottomTemplate = `{{ $service := .service }}## {{ title .endpoin
 ` + "```" + `dart
 {{ $service := .service -}}import 'dart:io';
 
-import 'package:m3o/src/client/client.dart';
 import 'package:m3o/src/{{ $service.Name }}/{{ $service.Name }}.dart';
 
 void main() async {
-  final token = Platform.environment['M3O_API_TOKEN']!;
-  final ser = {{title $service.Name}}Service(
-    Options(
-      token: token,
-      address: liveAddress,
-    ),
-  );
+  final ser = {{title $service.Name}}Service(Platform.environment['M3O_API_TOKEN']!);
  
   final payload = <String, dynamic>{{ dartExampleRequest .example.Request }};
 
@@ -184,9 +170,9 @@ void main() async {
 		Merr: ({{ title .endpoint }}ResponseMerr err) => print(err.body));
 	  }	
 	{{- end }}
-  } catch (e, stack) {
+  } catch (e, st) {
     print(e);
-	print(stack);
+	print(st);
   } finally {
     exit(0);
   }
