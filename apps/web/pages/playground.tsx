@@ -1,34 +1,23 @@
 import type { SchemaObject } from 'openapi3-ts'
 import { useQuery, useMutation } from 'react-query'
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import classNames from 'classnames'
-import {
-  Select,
-  FullSpinner,
-  Spinner,
-  TextInput,
-  Button,
-  Tabs,
-  CodeBlock,
-} from '@/components/ui'
-import { useListApis, useM3OClient } from '@/hooks'
+import { FullSpinner, Spinner, TextInput, Button } from '@/components/ui'
+import { useListApis, usePlaygroundService } from '@/hooks'
 import { fetchSingleService } from '@/lib/api/m3o/services/explore'
 import { returnFormattedEndpointName, getEndpointName } from '@/utils/api'
+import {
+  Output,
+  ServicesSidebar,
+  Endpoint,
+} from '@/components/pages/Playground'
+import { OutputTypes } from '@/lib/constants'
 
 type EndpointParamsProps = {
   isLoading: boolean
   schemas: SchemaObject
   selectedEndpoint: string
   onParamChange: (name: string, value: string | number | boolean) => void
-}
-
-type PlaygroundResponseSectionProps = {
-  data?: Record<string, unknown>
-}
-
-type PlaygroundServicesProps = {
-  data: ExploreAPI[]
-  onSelectService: (apiName: string) => void
 }
 
 function useFetchSelectedApi(selectedApi: string) {
@@ -99,71 +88,43 @@ function EndpointParams({
   )
 }
 
-enum ResponseTabs {
-  Response = 'Response',
-  CodeSnippets = 'Code Snippet',
-}
-
-function PlaygroundResponseSection({ data }: PlaygroundResponseSectionProps) {
-  const [currentTab, setCurrentTab] = useState(ResponseTabs.Response)
-
-  function renderButtons() {
-    return Object.values(ResponseTabs).map(item => (
-      <button
-        className="bg-zinc-900 p-4 py-2 rounded-md text-sm mr-4"
-        onClick={() => setCurrentTab(item)}
-        key={item}>
-        {item}
-      </button>
-    ))
-  }
-
-  return (
-    <div className="p-8 h-full border-l tbc">
-      {renderButtons()}
-      {data && (
-        <div className="pb-40">
-          <CodeBlock code={JSON.stringify(data, null, 2)} language="json" />
-        </div>
-      )}
-    </div>
-  )
-}
-
-function PlaygroundServices({
-  data,
-  onSelectService,
-}: PlaygroundServicesProps) {
-  return (
-    <div className="overflow-y-scroll border-r border-zinc-800">
-      {data.map(item => (
-        <div key={item.name}>
-          <button
-            className="block px-8 py-3 text-sm"
-            onClick={() => onSelectService(item.name)}>
-            {item.name}
-          </button>
-        </div>
-      ))}
-    </div>
-  )
-}
-
 export default function Playground() {
-  const m3o = useM3OClient()
-  const [requestPayload, setRequestPayload] = useState({})
   const [selectedApi, setSelectedApi] = useState('')
-  const [selectedEndpoint, setSelectedEndpoint] = useState('')
+  const [currentTab, setCurrentTab] = useState(OutputTypes.Response)
   const { data, isLoading } = useListApis()
   const { api, isFetchingApi } = useFetchSelectedApi(selectedApi)
+  const { setSelectedEndpoint, setRequestPayload, selectedEndpoint, run } =
+    usePlaygroundService(api?.name)
 
-  const runRequestMutation = useMutation(async () => {
-    const response = await m3o[api.name][
-      getEndpointName(selectedEndpoint.toLowerCase())
-    ](requestPayload)
+  useEffect(() => {
+    if (data && selectedApi && !selectedEndpoint) {
+      const item = data.find(item => item.name === selectedApi)!
+      setSelectedEndpoint((item?.endpoints || [])[0].name)
+    }
+  }, [selectedApi, data, selectedEndpoint])
 
-    return response
-  })
+  const endpoints = useMemo(() => {
+    if (!selectedApi || !data) return null
+
+    return data
+      .find(item => item.name === selectedApi)!
+      .endpoints!.map(item => (
+        <Endpoint
+          key={item.name}
+          onClick={() => {
+            setSelectedEndpoint(item.name)
+            setRequestPayload({})
+            run.reset()
+            run.error = ''
+          }}
+          isSelected={item.name === selectedEndpoint}
+          description={
+            api?.schemas[`${getEndpointName(item.name)}Request`].description
+          }
+          name={item.name}
+        />
+      ))
+  }, [data, selectedApi])
 
   if (isLoading || !data) {
     return <FullSpinner />
@@ -178,138 +139,75 @@ export default function Playground() {
 
   return (
     <section className="h-screen overflow-hidden grid grid-cols-6">
-      <PlaygroundServices data={data} onSelectService={setSelectedApi} />
+      <ServicesSidebar
+        data={data}
+        onSelectService={name => {
+          setSelectedApi(name)
+          setRequestPayload({})
+          setSelectedEndpoint('')
+          // runRequestMutation.reset()
+          // runRequestMutation.error = ''
+        }}
+        selectedService={selectedApi}
+      />
       <div className="col-span-5">
-        <div className="py-4 px-6 border-b border-zinc-800 w-full">
-          <div className="flex overflow-x-scroll">
-            {selectedApi &&
-              data
-                .find(item => item.name === selectedApi)!
-                .endpoints!.map(item => (
-                  <button
-                    onClick={() => {
-                      setSelectedEndpoint(item.name)
-                      setRequestPayload({})
-                      runRequestMutation.reset()
-                      runRequestMutation.error = ''
-                    }}
-                    className={classNames(
-                      'block p-4 text-left text-sm font-light rounded-md flex-1 endpoint',
-                      {
-                        ' text-white bg-zinc-800':
-                          item.name === selectedEndpoint,
-                        'text-zinc-400': item.name !== selectedEndpoint,
-                      },
-                    )}>
-                    <span className="font-bold block mb-1 font-mono">
-                      {returnFormattedEndpointName(item.name)}
-                    </span>
-                    <span className="block text-xs leading-5 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {
-                        api?.schemas[`${getEndpointName(item.name)}Request`]
-                          .description
-                      }
-                    </span>
-                  </button>
-                ))}
-          </div>
-        </div>
-      </div>
-      {/* <div className="flex px-6 py-2 items-center justify-between border-b border-zinc-800">
-        <Select
-          name="selectedApi"
-          label="Api"
-          onChange={event => {
-            const item = data.find(
-              item => event.target.value === item.display_name,
-            )!
-
-            setSelectedEndpoint('')
-            setSelectedApi(item)
-          }}
-          value={selectedApi?.display_name}
-          options={data.map(item => ({
-            name: item.display_name,
-            value: item.display_name,
-          }))}
-        />
-        <Button
-          className="font-mono"
-          onClick={() => runRequestMutation.mutate()}
-          loading={runRequestMutation.isLoading}>
-          Run Request
-        </Button>
-      </div>
-      
-      <div className="grid h-screen grid-cols-6 relative">
-        <div className="h-full col-span-2">
-          <div className="p-8">
-            <h2 className="font-bold mb-4">Params</h2>
-            {selectedEndpoint && api && (
-              <EndpointParams
-                key={selectedEndpoint}
-                isLoading={isFetchingApi}
-                schemas={api.schemas}
-                selectedEndpoint={getEndpointName(selectedEndpoint)}
-                onParamChange={handleParamChange}
-              />
-            )}
-          </div>
-        </div>
-        <div className="h-full col-span-3 overflow-scroll">
-          <div className="p-8 h-full border-l tbc">
-            <button className="bg-zinc-900 p-4 py-2 rounded-md text-sm mr-4">
-              Response
-            </button>
-            <button className="bg-zinc-900 p-4 py-2 rounded-md text-sm">
-              Code Snippet
-            </button>
-            {runRequestMutation.data && (
-              <div className="pb-40">
-                <CodeBlock
-                  code={JSON.stringify(runRequestMutation.data, null, 2)}
-                  language="json"
-                />
+        {selectedApi ? (
+          <>
+            <div className="py-2 px-6 border-b border-zinc-800 w-full">
+              <div className="flex overflow-x-scroll">{endpoints}</div>
+            </div>
+            {selectedEndpoint && (
+              <div className="h-full">
+                <div className="flex justify-between border-b border-zinc-800 items-center px-6 py-2">
+                  <div>
+                    <p className="text-sm text-zinc-400">
+                      <span className="inline-block mr-3 bg-zinc-800 p-2 rounded-md text-indigo-300 text-xs">
+                        POST
+                      </span>
+                      {process.env.NEXT_PUBLIC_API_URL}/{selectedApi}/
+                      {selectedEndpoint.split('.')[1]}
+                    </p>
+                  </div>
+                  <Button
+                    className="font-mono text-sm"
+                    onClick={() => run.mutate()}
+                    loading={run.isLoading}
+                    disabled={isFetchingApi}>
+                    Run Request
+                  </Button>
+                </div>
+                <div className="grid grid-cols-4 h-full">
+                  <div className="border-r border-zinc-800 p-6">
+                    <h2 className="font-bold mb-4">Params</h2>
+                    {selectedEndpoint && api && (
+                      <EndpointParams
+                        key={selectedEndpoint}
+                        isLoading={isFetchingApi}
+                        schemas={api.schemas}
+                        selectedEndpoint={getEndpointName(selectedEndpoint)}
+                        onParamChange={handleParamChange}
+                      />
+                    )}
+                  </div>
+                  <div className="col-span-3">
+                    <Output
+                      data={run.data}
+                      isFetching={run.isLoading}
+                      key={selectedApi}
+                      currentTab={currentTab}
+                      onTabClick={setCurrentTab}
+                    />
+                  </div>
+                </div>
               </div>
             )}
-          </div> */}
-      {/* <Tabs>
-            <div title="Response">
-              {runRequestMutation.error && (
-                <p className="border-b border-red-600 p-4 bg-red-500 text-white font-medium">
-                  {runRequestMutation.error.detail}
-                </p>
-              )}
-
-              {runRequestMutation.isLoading && <FullSpinner />}
-            </div>
-            <div title="JSON">
-              <CodeBlock
-                code={JSON.stringify(requestPayload, null, 2)}
-                language="json"
-              />
-            </div>
-            <div title="Code">
-              {selectedApi && selectedEndpoint && api && (
-                <CodeBlock
-                  code={`
-const m3o = require('m3o')(process.env.M3O_API_KEY)
-
-function main() {
-  const response = await m3o.${api.name}.${getEndpointName(
-                    selectedEndpoint.toLowerCase(),
-                  )}(${JSON.stringify(requestPayload, null, 2)})
-}
-
-main();
-              `}
-                  language="javascript"
-                />
-              )}
-            </div>
-          </Tabs> */}
-      {/* </div> */}
-      {/* </div> */}
+          </>
+        ) : (
+          <div className="flex items-center justify-center h-full uppercase ">
+            <p className="text-zinc-400">Please select an API to get started</p>
+          </div>
+        )}
+      </div>
     </section>
   )
 }

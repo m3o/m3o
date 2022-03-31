@@ -50,7 +50,8 @@
     "react-tooltip": "^4.2.21",
     "read-more-react": "^1.0.10",
     "uuid": "^8.3.2",
-    "xterm": "^4.18.0"
+    "xterm": "^4.18.0",
+    "zustand": "^3.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",

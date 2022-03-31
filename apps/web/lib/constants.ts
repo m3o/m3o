@@ -80,3 +80,8 @@ export enum TimeSelections {
   LastMonth = 'Last month',
   Past30Days = 'Past 30 days',
 }
+
+export enum OutputTypes {
+  Response = 'Response',
+  CodeSnippets = 'Code Snippet',
+}
