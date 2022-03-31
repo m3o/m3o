@@ -54,13 +54,13 @@ const EXAMPLES: Examples = {
   },
   dart: {
     'User.Login':
-      'https://raw.githubusercontent.com/m3o/m3o-dart/main/examples/user/login/logAUserIn/main.dart',
+      'https://raw.githubusercontent.com/m3o/m3o-dart/main/example/user/login/logAUserIn/main.dart',
     'User.Create':
-      'https://raw.githubusercontent.com/m3o/m3o-dart/main/examples/user/create/createAnAccount/main.dart',
+      'https://raw.githubusercontent.com/m3o/m3o-dart/main/example/user/create/createAnAccount/main.dart',
     'Db.Create':
-      'https://raw.githubusercontent.com/m3o/m3o-dart/main/examples/db/create/createARecord/main.dart',
+      'https://raw.githubusercontent.com/m3o/m3o-dart/main/example/db/create/createARecord/main.dart',
     'Db.Read':
-      'https://raw.githubusercontent.com/m3o/m3o-dart/main/examples/db/read/readRecords/main.dart',
+      'https://raw.githubusercontent.com/m3o/m3o-dart/main/example/db/read/readRecords/main.dart',
   },
 }
 
