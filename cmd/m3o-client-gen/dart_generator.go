@@ -346,7 +346,9 @@ func schemaToDartExample(exampleJSON map[string]interface{}) string {
 	isEmpty := len(exampleJSON) == 0
 	if !isEmpty {
 		bs, _ := json.MarshalIndent(exampleJSON, "", "  ")
-		return strings.Replace(string(bs), "}", ",}", 1)
+		exa := strings.Replace(string(bs), "}", ",}", 1)
+		exa = strings.ReplaceAll(exa, "$micro_verification_link", "\\$micro_verification_link")
+		return strings.ReplaceAll(exa, "$code", "\\$code")
 	}
 
 	return "{}"
