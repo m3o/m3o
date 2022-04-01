@@ -1,3 +1,18 @@
+const ContentSecurityPolicy = `
+  frame-ancestors 'self';
+`
+
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN'
+  },
+  {
+    key: 'Content-Security-Policy',
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+  },
+]
+
 module.exports = {
   reactStrictMode: true,
   webpack(config) {
@@ -16,6 +31,14 @@ module.exports = {
       {
         source: '/:api/overview',
         destination: '/:api',
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
       },
     ]
   },
