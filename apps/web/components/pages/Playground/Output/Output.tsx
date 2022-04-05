@@ -16,7 +16,7 @@ export function Output({ data, currentTab, onTabClick }: Props) {
         <Buttons currentTab={currentTab} onButtonClick={onTabClick} />
       </div>
       {data && currentTab === OutputTypes.Response && (
-        <div className="w-full">
+        <div className="w-full h-full">
           <CodeBlock code={JSON.stringify(data, null, 2)} language="json" />
         </div>
       )}

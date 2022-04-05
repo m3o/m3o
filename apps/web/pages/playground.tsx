@@ -47,7 +47,7 @@ function EndpointParams({
       const item: SchemaObject = properties[key]
 
       if (item.type === 'object' && item.properties) {
-        return <div>{createParamsTree(item.properties!)}</div>
+        return <div key={key}>{createParamsTree(item.properties!)}</div>
       }
 
       if (item.type === 'string' || item.type === 'number') {
@@ -55,6 +55,7 @@ function EndpointParams({
           <TextInput
             name={key}
             label={key}
+            key={key}
             placeholder={item.description}
             type={item.type === 'number' ? 'number' : 'text'}
             variant="grey"
@@ -65,7 +66,7 @@ function EndpointParams({
         )
       }
 
-      return <div>{key}</div>
+      return null
     })
   }
 
@@ -95,7 +96,7 @@ export default function Playground() {
   const { data, isLoading } = useListApis()
   const { api, isFetchingApi } = useFetchSelectedApi(selectedApi)
   const { setSelectedEndpoint, setRequestPayload, selectedEndpoint, run } =
-    usePlaygroundService(api?.name)
+    usePlaygroundService()
 
   useEffect(() => {
     if (data && selectedApi && !selectedEndpoint) {
@@ -125,7 +126,7 @@ export default function Playground() {
           name={item.name}
         />
       ))
-  }, [data, selectedApi])
+  }, [data, selectedApi, api])
 
   if (isLoading || !data) {
     return (
@@ -176,7 +177,7 @@ export default function Playground() {
                     </div>
                     <Button
                       className="font-mono text-sm"
-                      onClick={() => run.mutate()}
+                      onClick={() => run.mutate(api?.name)}
                       loading={run.isLoading}
                       disabled={isFetchingApi}>
                       Run Request
