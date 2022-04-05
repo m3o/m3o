@@ -101,7 +101,7 @@ export default function Playground() {
   useEffect(() => {
     if (data && selectedApi && !selectedEndpoint) {
       const item = data.find(item => item.name === selectedApi)!
-      setSelectedEndpoint((item?.endpoints || [])[0].name)
+      setSelectedEndpoint(item.endpoints![0].name)
     }
   }, [selectedApi, data, selectedEndpoint])
 
@@ -126,7 +126,7 @@ export default function Playground() {
           name={item.name}
         />
       ))
-  }, [data, selectedApi, api])
+  }, [data, selectedApi, api, selectedEndpoint])
 
   if (isLoading || !data) {
     return (
@@ -143,6 +143,8 @@ export default function Playground() {
     }))
   }
 
+  console.log(run.error)
+
   return (
     <MainLayout>
       <section className="h-screen overflow-hidden grid grid-cols-6">
@@ -152,8 +154,8 @@ export default function Playground() {
             setSelectedApi(name)
             setRequestPayload({})
             setSelectedEndpoint('')
-            // runRequestMutation.reset()
-            // runRequestMutation.error = ''
+            run.reset()
+            run.error = ''
           }}
           selectedService={selectedApi}
         />
@@ -183,7 +185,7 @@ export default function Playground() {
                       Run Request
                     </Button>
                   </div>
-                  <div className="grid grid-cols-4 overflow-hidden">
+                  <div className="grid grid-cols-4 overflow-hidden flex-grow">
                     <div className="border-r border-zinc-800 p-6">
                       <h2 className="font-bold mb-4">Params</h2>
                       {selectedEndpoint && api && (
@@ -199,6 +201,11 @@ export default function Playground() {
                     <div className="col-span-3 overflow-scroll flex flex-col">
                       <Output
                         data={run.data}
+                        error={
+                          run.error
+                            ? (run.error as { detail: string }).detail
+                            : ''
+                        }
                         isFetching={run.isLoading}
                         key={selectedApi}
                         currentTab={currentTab}
