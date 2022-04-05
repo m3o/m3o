@@ -11,15 +11,16 @@ type Props = {
 
 export function Output({ data, currentTab, onTabClick }: Props) {
   return (
-    <div className="w-full">
-      <div className="border-b border-zinc-800">
+    <div className="relative">
+      <div className="border-b border-zinc-800 sticky top-0 bg-zinc-900">
         <Buttons currentTab={currentTab} onButtonClick={onTabClick} />
       </div>
       {data && currentTab === OutputTypes.Response && (
-        <div className="w-full h-full">
+        <div className="overflow-scroll">
           <CodeBlock code={JSON.stringify(data, null, 2)} language="json" />
         </div>
       )}
+      {currentTab === OutputTypes.CodeSnippets && <p>Coming soon</p>}
     </div>
   )
 }

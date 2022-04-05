@@ -157,14 +157,14 @@ export default function Playground() {
           }}
           selectedService={selectedApi}
         />
-        <div className="col-span-5">
+        <div className="col-span-5 flex flex-col overflow-hidden">
           {selectedApi ? (
             <>
               <div className="py-2 px-6 border-b border-zinc-800 w-full">
                 <div className="flex overflow-x-scroll">{endpoints}</div>
               </div>
               {selectedEndpoint && (
-                <div className="h-full">
+                <>
                   <div className="flex justify-between border-b border-zinc-800 items-center px-6 py-2">
                     <div>
                       <p className="text-sm text-zinc-400">
@@ -183,7 +183,7 @@ export default function Playground() {
                       Run Request
                     </Button>
                   </div>
-                  <div className="grid grid-cols-4 h-full">
+                  <div className="grid grid-cols-4 overflow-hidden">
                     <div className="border-r border-zinc-800 p-6">
                       <h2 className="font-bold mb-4">Params</h2>
                       {selectedEndpoint && api && (
@@ -196,7 +196,7 @@ export default function Playground() {
                         />
                       )}
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-3 overflow-scroll flex flex-col">
                       <Output
                         data={run.data}
                         isFetching={run.isLoading}
@@ -206,7 +206,7 @@ export default function Playground() {
                       />
                     </div>
                   </div>
-                </div>
+                </>
               )}
             </>
           ) : (
