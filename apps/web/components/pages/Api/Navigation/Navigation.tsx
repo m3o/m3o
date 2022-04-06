@@ -34,7 +34,7 @@ export const Navigation: FC<Props> = ({ onDownloadsClick }) => {
 
   return (
     <div className="flex justify-between items-center">
-      <ul className="tabs">
+      <ul className="tabs no-border">
         {SERVICE_LINKS.map(item => (
           <li key={item.name}>
             <Link

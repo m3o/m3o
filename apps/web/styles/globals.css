@@ -7,7 +7,7 @@ a {
 }
 
 .btn {
-  @apply py-4 px-8 bg-zinc-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-zinc-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white text-sm;
+  @apply py-4 px-8 bg-indigo-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-indigo-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white text-sm;
 }
 
 .btn.small {
@@ -37,6 +37,10 @@ a {
 
 .tabs {
   @apply flex items-center font-medium text-sm pt-4 px-6 border-b tbc;
+}
+
+.tabs.no-border {
+  @apply border-b-0 px-0;
 }
 
 .tab {
