@@ -1,4 +1,5 @@
 import type { SchemaObject } from 'openapi3-ts'
+import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { useQuery } from 'react-query'
 import { useState, useEffect, useMemo } from 'react'
@@ -8,6 +9,7 @@ import { useListApis, usePlaygroundService } from '@/hooks'
 import { fetchSingleService } from '@/lib/api/m3o/services/explore'
 import { getEndpointName } from '@/utils/api'
 import { Modal, LinkButton } from '@/components/ui'
+import { REDIRECT_TO_KEY } from '@/lib/constants'
 import {
   Output,
   ServicesSidebar,
@@ -102,6 +104,7 @@ function EndpointParams({
 }
 
 export default function Playground({ user }: WithAuthProps) {
+  const router = useRouter()
   const [selectedApi, setSelectedApi] = useState('')
   const [currentTab, setCurrentTab] = useState(OutputTypes.Response)
   const { data, isLoading } = useListApis()
@@ -164,7 +167,12 @@ export default function Playground({ user }: WithAuthProps) {
       <MainLayout>
         <Modal open={!user}>
           <p>To use the playground, first please login:</p>
-          <LinkButton href="/login" className="inline-block mt-4">
+          <LinkButton
+            href="/login"
+            className="inline-block mt-4"
+            onClick={() => {
+              window.sessionStorage.setItem(REDIRECT_TO_KEY, router.asPath)
+            }}>
             Login
           </LinkButton>
         </Modal>
