@@ -26,12 +26,12 @@ const BANNER_LINKS: BannerLink[] = [
 
 export function Banner({ heading, subHeading }: BannerProps): ReactElement {
   return (
-    <section className="px-4 md:px-0 py-12 md:py-36 text-zinc-600 dark:text-zinc-400">
+    <section className="px-4 md:px-0 py-12 md:pt-36 mt:pb-10 text-zinc-600 dark:text-zinc-400">
       <div className="md:max-w-4xl lg:max-w-7xl text-center mx-auto w-11/12 mb-10">
-        <GradientHeading className="text-4xl md:text-5xl lg:text-6xl mb-6 max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl mb-6 max-w-4xl mx-auto font-bold text-white">
           {heading}
-        </GradientHeading>
-        <h2 className="text-md md:text-lg lg:text-xl max-w-3xl mx-auto text-zinc-300">
+        </h1>
+        <h2 className="text-md md:text-lg max-w-2xl mx-auto text-zinc-300">
           {subHeading}
         </h2>
         <div className="mt-10 md:flex items-center max-w-lg mx-auto">

@@ -4,7 +4,9 @@ export const SubscribeSection: FC = () => {
   return (
     <section className="bg-white dark:bg-zinc-800">
       <div className="m3o-container sm py-36 text-left">
-        <h4 className="font-bold text-4xl">Subscribe to the latest updates</h4>
+        <h4 className="font-bold text-4xl text-white">
+          Subscribe to the latest updates
+        </h4>
         <form
           action="https://micro.us8.list-manage.com/subscribe/post?u=f2a5263ff3a56a297fa473628&amp;id=e8d0dec6a3"
           method="post"
