@@ -15,12 +15,12 @@ export interface BannerProps {
 
 const BANNER_LINKS: BannerLink[] = [
   {
-    text: 'Get Started',
-    link: Routes.SignUp,
-  },
-  {
     text: 'Explore APIs',
     link: Routes.Explore,
+  },
+  {
+    text: 'Playground',
+    link: '/playground',
   },
 ]
 
@@ -31,7 +31,7 @@ export function Banner({ heading, subHeading }: BannerProps): ReactElement {
         <GradientHeading className="text-4xl md:text-5xl lg:text-6xl mb-6 max-w-4xl mx-auto">
           {heading}
         </GradientHeading>
-        <h2 className="text-md md:text-lg lg:text-xl font-medium max-w-3xl mx-auto">
+        <h2 className="text-md md:text-lg lg:text-xl max-w-3xl mx-auto text-zinc-300">
           {subHeading}
         </h2>
         <div className="mt-10 md:flex items-center max-w-lg mx-auto">
