@@ -13,7 +13,7 @@ export const DeleteKeyConfirmationModal: FC<Props> = ({
 }) => {
   const revokeKey = useRevokeKey({
     onSuccess: () => {
-      props.closeModal()
+      props.closeModal && props.closeModal()
     },
   })
 

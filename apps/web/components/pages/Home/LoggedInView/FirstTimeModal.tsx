@@ -34,7 +34,7 @@ export const FirstTimeModal: FC<ModalProps> = props => {
       <p className="my-4 dark:text-zinc-400">
         TLDR; use our API&apos;s to rapidly develop your application
       </p>
-      <Button onClick={() => props.closeModal()}>Got it, thanks</Button>
+      <Button onClick={props.closeModal}>Got it, thanks</Button>
     </Modal>
   )
 }
