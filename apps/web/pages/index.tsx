@@ -13,14 +13,14 @@ interface Props extends WithAuthProps {
 }
 
 const SERVICES_NAMES = [
+  'ip',
+  'weather',
+  'nft',
+  'function',
   'app',
   'user',
   'db',
-  'function',
-  'event',
-  'sms',
   'email',
-  'search',
   'space',
 ]
 
@@ -30,8 +30,8 @@ export const getServerSideProps = withAuth(async context => {
   return {
     props: {
       apiToken: context.req.cookies[AuthCookieNames.ApiToken] || '',
-      services: services.filter(service =>
-        SERVICES_NAMES.includes(service.name),
+      services: SERVICES_NAMES.map(name =>
+        services.find(item => item.name === name),
       ),
       user: context.req.user,
     } as Props,
