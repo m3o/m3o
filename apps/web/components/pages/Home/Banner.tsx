@@ -20,7 +20,7 @@ const BANNER_LINKS: BannerLink[] = [
   },
   {
     text: 'Playground',
-    link: '/playground',
+    link: Routes.Playground,
   },
 ]
 

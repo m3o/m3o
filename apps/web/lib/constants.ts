@@ -38,6 +38,7 @@ export enum Routes {
   UserKeys = '/account/keys',
   UserBilling = '/account/billing',
   UserUsage = '/account/usage',
+  Playground = '/playground',
   Pricing = '/pricing',
   Trending = '/trending',
   SubscriptionCardDetails = '/subscriptions',
