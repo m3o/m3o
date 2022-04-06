@@ -22,7 +22,7 @@ export const Header: FC = () => {
   const user = useUser()
 
   const navigationLinks = useMemo(
-    () => (user ? LOGGED_IN_HEADER_LINKS : LOGGED_OUT_HEADER_LINKS),
+    () => (user ? LOGGED_OUT_HEADER_LINKS : LOGGED_OUT_HEADER_LINKS),
     [user],
   )
 
