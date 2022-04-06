@@ -73,9 +73,9 @@ const FAQs: FAQItem[] = [
     content: (
       <>
         <p className="mb-6">
-          Each account has a credit based balance. Any request made to
-          a an API will be debited from the balance in real time. When your
-          balance is zero requests to any API will return a blocked status.
+          Each account has a credit based balance. Any request made to a an API
+          will be debited from the balance in real time. When your balance is
+          zero requests to any API will return a blocked status.
         </p>
         <p>
           Additional API calls beyond the free quota are charged at 0.000001
@@ -90,16 +90,15 @@ const FAQs: FAQItem[] = [
     content: (
       <>
         <p className="mb-6">
-          The majority of our APIs are free, with a 1000 request per month
-          quota on the free tier. Third party APIs or calls that perform
-          specific functions such as SMS or email are charged for and billed per
-          request.
+          The majority of our APIs are free, with a 1000 request per month quota
+          on the free tier. Third party APIs or calls that perform specific
+          functions such as SMS or email are charged for and billed per request.
         </p>
         <p>
           Our free tier is rate limited to 10 requests per second. This can be
-          unlocked by upgrading to the Pro subscription. We also invoke fair usage
-          limits on compute and storage. During the beta period no hard limits are
-          enforced, we will reach out if there are any issues.
+          unlocked by upgrading to the Pro subscription. We also invoke fair
+          usage limits on compute and storage. During the beta period no hard
+          limits are enforced, we will reach out if there are any issues.
         </p>
       </>
     ),
@@ -128,7 +127,7 @@ export function Faqs() {
 
   return (
     <div>
-      <h2 className="font-bold text-3xl text-center gradient-text">FAQs</h2>
+      <h2 className="font-bold text-3xl text-center text-white">FAQs</h2>
       {FAQs.map(item => (
         <AccordionItem
           title={item.title}

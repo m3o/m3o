@@ -4,12 +4,12 @@ import classnames from 'classnames'
 import XIcon from '@heroicons/react/outline/XIcon'
 
 export interface ModalProps {
-  closeModal: VoidFunction
+  closeModal?: VoidFunction
   open: boolean
 }
 
 export const Modal: FC<ModalProps> = ({ closeModal, open, children }) => {
-  const classes = classnames('fixed z-50 inset-0 overflow-y-auto flex', {
+  const classes = classnames('fixed z-50 inset-0 overflow-y-auto', {
     flex: open,
     hidden: !open,
   })
@@ -38,9 +38,11 @@ export const Modal: FC<ModalProps> = ({ closeModal, open, children }) => {
         onClick={closeModal}
       />
       <div className=" bg-white rounded-lg text-left shadow-xl transform transition-all sm:max-w-lg sm:w-full m-auto p-8 relative dark:bg-zinc-800 ">
-        <button onClick={closeModal} className="w-6 absolute right-8 top-8">
-          <XIcon />
-        </button>
+        {closeModal && (
+          <button onClick={closeModal} className="w-6 absolute right-8 top-8">
+            <XIcon />
+          </button>
+        )}
         {children}
       </div>
     </div>
