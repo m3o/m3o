@@ -354,19 +354,11 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 	return strings.Join(output, "\n")
 }
 
-func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi3.SchemaRef, examples map[string]interface{}) string {
+func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exa map[string]interface{}) string {
 
 	var requestAtrr = `{{ .parameter }}: {{ .value }}`
-	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .type }} {{ .values }}`
-	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
-	var jsonType = "map[string]interface{}"
-	var stringType = "string"
-	var int32Type = "int32"
-	var int64Type = "int64"
-	var floatType = "float32"
-	var doubleType = "float64"
-	var boolType = "bool"
-	// var pointerType = "*"
+	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .message }}`
+	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .message }}`
 
 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
 		t, err := template.New(tmpName).Parse(temp)
@@ -384,160 +376,172 @@ func schemaToGoExample(serviceName, typeName string, schemas map[string]*openapi
 		return tb.String()
 	}
 
-	typesMapper := func(t string) string {
-		switch t {
-		case "STRING":
-			return stringType
-		case "INT32":
-			return int32Type
-		case "INT64":
-			return int64Type
-		case "FLOAT":
-			return floatType
-		case "DOUBLE":
-			return doubleType
-		case "BOOL":
-			return boolType
-		case "JSON":
-			return jsonType
-		default:
-			return t
-		}
-	}
-
-	output := []string{}
-	// just a reminder, typeName here has [endpoint]Request signature
-	protoMessage := schemas[typeName]
-
-	for p, meta := range protoMessage.Value.Properties {
-
+	var traverse func(string, string, *openapi3.SchemaRef, interface{}) string
+	traverse = func(p, message string, metaData *openapi3.SchemaRef, attrValue interface{}) string {
 		o := ""
 
-		// skip the loop if property doesn't exist
-		if examples[p] == nil {
-			continue
-		}
-
-		switch meta.Value.Type {
+		switch metaData.Value.Type {
 		case "string":
 			payload := map[string]interface{}{
 				"parameter": strcase.UpperCamelCase(p),
-				"value":     fmt.Sprintf("%q", examples[p]),
+				"value":     fmt.Sprintf("%q", attrValue),
 			}
 			o = runTemplate("requestAtrr", requestAtrr, payload)
 		case "boolean":
 			payload := map[string]interface{}{
 				"parameter": strcase.UpperCamelCase(p),
-				"value":     examples[p],
+				"value":     attrValue.(bool),
 			}
 			o = runTemplate("requestAtrr", requestAtrr, payload)
 		case "number":
-			switch meta.Value.Format {
+			switch metaData.Value.Format {
 			case "int32", "int64", "float", "double":
 				payload := map[string]interface{}{
 					"parameter": strcase.UpperCamelCase(p),
-					"value":     examples[p],
+					"value":     attrValue,
 				}
 				o = runTemplate("requestAtrr", requestAtrr, payload)
 			}
 		case "array":
+			// TODO(daniel): service contact and evchargers
+			fmt.Println("************** ARRAY *****************")
 			payload := map[string]interface{}{
 				"service":   serviceName,
-				"type":      strcase.UpperCamelCase(p),
-				"values":    populateStruct(examples, serviceName, p),
+				"message":   strcase.UpperCamelCase(p),
 				"parameter": strcase.UpperCamelCase(p),
 			}
 			o = runTemplate("arrRequestAtrr", arrRequestAtrr, payload)
 		case "object":
-			types := detectType2(serviceName, typeName, p)
-			// a Message Type
-			if len(types) == 1 {
-				t := typesMapper(types[0])
-				payload := map[string]interface{}{
-					"service":   serviceName,
-					"type":      strcase.UpperCamelCase(t),
-					"values":    populateStruct(examples, serviceName, p),
-					"parameter": strcase.UpperCamelCase(p),
-				}
-				o = runTemplate("objRequestAtrr", objRequestAtrr, payload)
-			} else {
-				// a Map object
-				// payload := map[string]interface{}{
-				// 	"type1":     typesMapper(types[0]),
-				// 	"type2":     typesMapper(types[1]),
-				// 	"parameter": strcase.UpperCamelCase(p),
-				// }
-				// o = runTemplate("map", mapType, payload)
-				fmt.Println("************** inside case 'object' the else section *********")
+			messageType := detectType2(serviceName, message, p)
+			payload := map[string]interface{}{
+				"service":   serviceName,
+				"message":   strcase.UpperCamelCase(messageType[0]),
+				"parameter": strcase.UpperCamelCase(p),
 			}
+			o += runTemplate("objRequestAtrr", objRequestAtrr, payload) + "{\n"
+			for at, va := range attrValue.(map[string]interface{}) {
+				for p, meta := range metaData.Value.Properties {
+					if p != at {
+						continue
+					}
+
+					o += traverse(p, messageType[0], meta, va) + ",\n"
+				}
+			}
+			o += "}"
+
 		default:
-			// payload := map[string]interface{}{
-			// 	"parameter": strcase.UpperCamelCase(p),
-			// }
-			// o = runTemplate("any", anyType, payload)
 			fmt.Println("*********** WE HAVE AN EXAMPLE THAT USES UNKOWN TYPE ***********")
-			fmt.Printf("In service |%v| typename |%v| parameter |%v|", serviceName, typeName, p)
+			fmt.Printf("In service |%v| endpoint |%v| parameter |%v|", serviceName, endpoint, p)
+		}
+		return o
+	}
+
+	output := []string{}
+
+	endpointSchema := schemas[endpoint+"Request"]
+
+	// loop through attributes of the request example
+	for attr, attrValue := range exa {
+		// loop through endpoint properties
+		for p, metaData := range endpointSchema.Value.Properties {
+			// we ignore property that is not included in the example
+			if p != attr {
+				continue
+			}
+
+			output = append(output, traverse(p, endpoint+"Request", metaData, attrValue)+",")
 		}
 
-		output = append(output, o+",")
 	}
 
 	return strings.Join(output, "\n")
 }
 
-func populateStruct(values map[string]interface{}, serviceName, property string) string {
-	fmt.Println("p:", property)
-	for key, value := range values {
-		if key == property {
-			fmt.Println("k:", key)
-			fmt.Println("v:", value)
-			output := "{"
-			switch val := value.(type) {
-			case map[string]interface{}:
-				output += "\n" + strings.Title(key) + ": {"
-				for ksub, vsub := range val {
-					output += "\n" + strcase.UpperCamelCase(ksub) + ":" + fmt.Sprint(vsub) + ","
-				}
-			case []interface{}:
-				for _, item := range val {
-					output += "\n" + serviceName + "." + strcase.UpperCamelCase(key) + ": {"
-					switch item := item.(type) {
-					case map[string]interface{}:
-						for k, v := range item {
-							output += "\n" + strcase.UpperCamelCase(k) + ":" + fmt.Sprint(v) + ","
-						}
-						output += "\n},"
-					default:
-						output += "\n" + fmt.Sprint(item) + ","
-					}
-				}
-			default:
-				output += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
-			}
+// func populateExamples(values map[string]interface{}, serviceName, property string) string {
+// 	var requestAtrr = `{{ .parameter }}: {{ .value }}`
+// 	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .type }} {{ .values }}`
+// 	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
+// 	var populateMap func(map[string]interface{}) string
+// 	var populateArray func([]interface{}) string
 
-			output += "\n}"
-			// we only populate first example
-			return output
-		}
-	}
-	return ""
-}
+// 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
+// 		t, err := template.New(tmpName).Parse(temp)
+// 		if err != nil {
+// 			fmt.Fprintf(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
+// 			return ""
+// 		}
+// 		var tb bytes.Buffer
+// 		err = t.Execute(&tb, payload)
+// 		if err != nil {
+// 			fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", temp, payload, err)
+// 			return ""
+// 		}
 
-// output := ""
-// 			for key, value := range examples {
-// 				if key == p {
-// 					output += "\n" + strcase.UpperCamelCase(p) + ": []" + serviceName + "." + typeName + "{"
-// 					for _, item := range value.([]interface{}) {
-// 						switch item.(type) {
-// 						case map[string]interface{}:
-// 							output += "\n" + serviceName + "." + typeName + ": {"
-// 							for ksub, vsub := range item.(map[string]interface{}) {
-// 								output += "\n" + strings.Title(ksub) + ":" + fmt.Sprint(vsub)
-// 							}
-// 							output += "\n}"
-// 						default:
-// 							output += "\n" + fmt.Sprint(item)
-// 						}
-// 					}
+// 		return tb.String()
+// 	}
+
+// 	populateMap = func(seg map[string]interface{}) string {
+// 		o := "{"
+
+// 		for key, value := range seg {
+// 			switch value := value.(type) {
+// 			case map[string]interface{}:
+// 				types := detectType2(serviceName, key, p)
+// 				payload := map[string]interface{}{
+// 					"service":   serviceName,
+// 					"type":      strcase.UpperCamelCase(types[0]),
+// 					"values":    populateMap(value),
+// 					"parameter": strcase.UpperCamelCase(key),
 // 				}
+// 				o += "\n" + runTemplate("objRequestAtrr", objRequestAtrr, payload)
+// 			case []interface{}:
+// 				o += populateArray(value)
+// 			default:
+// 				o += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
 // 			}
+// 		}
+// 		o += "\n}"
+// 		return o
+// 	}
+
+// 	populateArray = func(seg []interface{}) string {
+// 		o := "{"
+
+// 		for _, item := range seg {
+// 			o += "\n" + serviceName + "." + strcase.UpperCamelCase("London") + ": {"
+// 			switch item := item.(type) {
+// 			case map[string]interface{}:
+// 				o += populateMap(item)
+// 			case []interface{}:
+// 				o += populateArray(item)
+// 			default:
+// 				o += "\n" + fmt.Sprint(item) + ","
+// 			}
+// 		}
+// 		o += "\n}"
+// 		return o
+// 	}
+
+// 	fmt.Println("p:", property)
+// 	for key, value := range values {
+// 		if key == property {
+// 			fmt.Println("k:", key)
+// 			fmt.Println("v:", value)
+// 			output := "{"
+// 			switch val := value.(type) {
+// 			case map[string]interface{}:
+// 				output += populateMap(val)
+// 			case []interface{}:
+// 				output += populateArray(val)
+// 			default:
+// 				output += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
+// 			}
+
+// 			output += "\n}"
+// 			// we only populate first example
+// 			return output
+// 		}
+// 	}
+// 	return ""
+// }
