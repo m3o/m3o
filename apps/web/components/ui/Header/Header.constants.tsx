@@ -40,11 +40,6 @@ export const LOGGED_OUT_HEADER_LINKS: HeaderLink[] = [
     text: 'Pricing',
   },
   {
-    link: 'https://blog.m3o.com',
-    text: 'Blog',
-    external: true,
-  },
-  {
     link: 'https://status.m3o.com',
     text: 'Status',
     external: true,

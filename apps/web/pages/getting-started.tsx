@@ -130,12 +130,9 @@ const GettingStarted: NextPage<Props> = ({user, examples, requestSchema}) => {
         </Section>
         <Section title="Account Billing">
           <p>
-            The majority of our APIs are free, with a 1000 request per
-            month quota on the free tier. Third party APIs or calls that perform specific
-            functions such as SMS or email are charged for and billed per
-            request. Each account has a credit based balance. Any request made
-            to a paid API will be debited from the balance in real time. When
-            your balance is zero requests to paid APIs will return a blocked
+            Each account has a credit based balance. Any request made
+            to a an API will be debited from the balance in real time. When
+            your balance is zero requests to APIs will return a blocked
             status.
           </p>
           <p className="mt-4">
