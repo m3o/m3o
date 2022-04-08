@@ -19,7 +19,7 @@ const EXTERNAL_LINKS_1: ExternalLink[] = [
     link: 'https://blog.m3o.com',
   },
   {
-    name: 'Contact',
+    name: 'Email',
     link: 'mailto:contact@m3o.com',
   },
   {
