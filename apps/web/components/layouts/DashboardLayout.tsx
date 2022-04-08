@@ -174,13 +174,11 @@ export function DashboardLayout({
                     external: true,
                     icon: UsersIcon,
                   },
-                  isProUser
-                    ? {
-                        text: 'Email',
-                        href: 'mailto:support@m3o.com',
-                        icon: MailIcon,
-                      }
-                    : undefined,
+                  {
+                    text: 'Email',
+                    href: 'mailto:support@m3o.com',
+                    icon: MailIcon,
+                  },
                 ],
               },
             ]}
