@@ -63,6 +63,7 @@ export const ICONS: Icons = {
   crypto: MoonIcon,
   currency: CurrencyDollarIcon,
   db: DatabaseIcon,
+  dns: QuestionMarkCircleIcon,
   email: MailIcon,
   emoji: EmojiHappyIcon,
   evchargers: LightningBoltIcon,
