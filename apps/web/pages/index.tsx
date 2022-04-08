@@ -16,12 +16,12 @@ const SERVICES_NAMES = [
   'ip',
   'weather',
   'nft',
-  'function',
-  'app',
+  'cache',
   'user',
   'db',
+  'sms',
   'email',
-  'space',
+  'geocoding',
 ]
 
 export const getServerSideProps = withAuth(async context => {
