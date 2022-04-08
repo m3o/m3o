@@ -121,7 +121,7 @@ export function DashboardLayout({
           <SidebarItems
             items={[
               {
-                title: 'Public',
+                title: 'Menu',
                 items: [
                   {
                     text: 'Home',
