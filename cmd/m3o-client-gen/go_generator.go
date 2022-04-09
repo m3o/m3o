@@ -356,9 +356,9 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 
 func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exa map[string]interface{}) string {
 
-	var requestAtrr = `{{ .parameter }}: {{ .value }}`
-	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .message }}`
-	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .message }}`
+	var requestAttr = `{{ .parameter }}: {{ .value }}`
+	var arrRequestAttr = `{{ .parameter }}: []{{ .service }}.{{ .message }}`
+	var objRequestAttr = `{{ .parameter }}: &{{ .service }}.{{ .message }}`
 
 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
 		t, err := template.New(tmpName).Parse(temp)
@@ -376,7 +376,7 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 		return tb.String()
 	}
 
-	var traverse func(string, string, *openapi3.SchemaRef, interface{}) string
+	var traverse func(p string, message string, metaData *openapi3.SchemaRef, attrValue interface{}) string
 	traverse = func(p, message string, metaData *openapi3.SchemaRef, attrValue interface{}) string {
 		o := ""
 
@@ -386,13 +386,13 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 				"parameter": strcase.UpperCamelCase(p),
 				"value":     fmt.Sprintf("%q", attrValue),
 			}
-			o = runTemplate("requestAtrr", requestAtrr, payload)
+			o = runTemplate("requestAttr", requestAttr, payload)
 		case "boolean":
 			payload := map[string]interface{}{
 				"parameter": strcase.UpperCamelCase(p),
 				"value":     attrValue.(bool),
 			}
-			o = runTemplate("requestAtrr", requestAtrr, payload)
+			o = runTemplate("requestAttr", requestAttr, payload)
 		case "number":
 			switch metaData.Value.Format {
 			case "int32", "int64", "float", "double":
@@ -400,17 +400,34 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 					"parameter": strcase.UpperCamelCase(p),
 					"value":     attrValue,
 				}
-				o = runTemplate("requestAtrr", requestAtrr, payload)
+				o = runTemplate("requestAttr", requestAttr, payload)
 			}
 		case "array":
 			// TODO(daniel): service contact and evchargers
 			fmt.Println("************** ARRAY *****************")
+			messageType := detectType2(serviceName, message, p)
 			payload := map[string]interface{}{
 				"service":   serviceName,
-				"message":   strcase.UpperCamelCase(p),
+				"message":   strcase.UpperCamelCase(messageType[0]),
 				"parameter": strcase.UpperCamelCase(p),
 			}
-			o = runTemplate("arrRequestAtrr", arrRequestAtrr, payload)
+			o = runTemplate("arrRequestAttr", arrRequestAttr, payload) + "{\n"
+			for _, item := range attrValue.([]interface{}) {
+				o += serviceName + "." + messageType[0] + ": {\n"
+				fmt.Printf("item: %v\n", item)
+				for k, v := range item.(map[string]interface{}) {
+					fmt.Printf("k: %v\n", k)
+					for p, meta := range metaData.Value.Items.Value.Properties {
+						if k != p {
+							continue
+						}
+						fmt.Printf("p: %v, meta: %v\n", p, meta)
+						o += traverse(p, messageType[0], meta, v) + ", "
+					}
+				}
+				o += "},\n"
+			}
+			o += "}"
 		case "object":
 			messageType := detectType2(serviceName, message, p)
 			payload := map[string]interface{}{
@@ -418,7 +435,7 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 				"message":   strcase.UpperCamelCase(messageType[0]),
 				"parameter": strcase.UpperCamelCase(p),
 			}
-			o += runTemplate("objRequestAtrr", objRequestAtrr, payload) + "{\n"
+			o += runTemplate("objRequestAttr", objRequestAttr, payload) + "{\n"
 			for at, va := range attrValue.(map[string]interface{}) {
 				for p, meta := range metaData.Value.Properties {
 					if p != at {
@@ -429,7 +446,6 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 				}
 			}
 			o += "}"
-
 		default:
 			fmt.Println("*********** WE HAVE AN EXAMPLE THAT USES UNKOWN TYPE ***********")
 			fmt.Printf("In service |%v| endpoint |%v| parameter |%v|", serviceName, endpoint, p)
