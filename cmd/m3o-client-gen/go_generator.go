@@ -357,8 +357,16 @@ func (g *goG) schemaToType(serviceName, typeName string, schemas map[string]*ope
 func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exa map[string]interface{}) string {
 
 	var requestAttr = `{{ .parameter }}: {{ .value }}`
+	var primitiveArrRequestAttr = `{{ .parameter }}: []{{ .type }}`
 	var arrRequestAttr = `{{ .parameter }}: []{{ .service }}.{{ .message }}`
 	var objRequestAttr = `{{ .parameter }}: &{{ .service }}.{{ .message }}`
+	var jsonType = "map[string]interface{}"
+	var stringType = "string"
+	var int32Type = "int32"
+	var int64Type = "int64"
+	var floatType = "float32"
+	var doubleType = "float64"
+	var boolType = "bool"
 
 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
 		t, err := template.New(tmpName).Parse(temp)
@@ -374,6 +382,27 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 		}
 
 		return tb.String()
+	}
+
+	typesMapper := func(t string) string {
+		switch t {
+		case "STRING":
+			return stringType
+		case "INT32":
+			return int32Type
+		case "INT64":
+			return int64Type
+		case "FLOAT":
+			return floatType
+		case "DOUBLE":
+			return doubleType
+		case "BOOL":
+			return boolType
+		case "JSON":
+			return jsonType
+		default:
+			return t
+		}
 	}
 
 	var traverse func(p string, message string, metaData *openapi3.SchemaRef, attrValue interface{}) string
@@ -403,29 +432,38 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 				o = runTemplate("requestAttr", requestAttr, payload)
 			}
 		case "array":
-			// TODO(daniel): service contact and evchargers
+			// TODO(daniel): with this approach, we lost the second item (if exists)
+			// see the contact/Create example, the phone has two items and with this
+			// approach we only populate one.
 			fmt.Println("************** ARRAY *****************")
 			messageType := detectType2(serviceName, message, p)
-			payload := map[string]interface{}{
-				"service":   serviceName,
-				"message":   strcase.UpperCamelCase(messageType[0]),
-				"parameter": strcase.UpperCamelCase(p),
-			}
-			o = runTemplate("arrRequestAttr", arrRequestAttr, payload) + "{\n"
 			for _, item := range attrValue.([]interface{}) {
-				o += serviceName + "." + messageType[0] + ": {\n"
-				fmt.Printf("item: %v\n", item)
-				for k, v := range item.(map[string]interface{}) {
-					fmt.Printf("k: %v\n", k)
-					for p, meta := range metaData.Value.Items.Value.Properties {
-						if k != p {
-							continue
-						}
-						fmt.Printf("p: %v, meta: %v\n", p, meta)
-						o += traverse(p, messageType[0], meta, v) + ", "
+				switch item := item.(type) {
+				case map[string]interface{}:
+					payload := map[string]interface{}{
+						"service":   serviceName,
+						"message":   strcase.UpperCamelCase(messageType[0]),
+						"parameter": strcase.UpperCamelCase(p),
 					}
+					o = runTemplate("arrRequestAttr", arrRequestAttr, payload) + "{\n"
+					o += serviceName + "." + messageType[0] + ": {\n"
+					for k, v := range item {
+						for p, meta := range metaData.Value.Items.Value.Properties {
+							if k != p {
+								continue
+							}
+							o += traverse(p, messageType[0], meta, v) + ", "
+						}
+					}
+					o += "},\n"
+				default:
+					payload := map[string]interface{}{
+						"type":      typesMapper(messageType[0]),
+						"parameter": strcase.UpperCamelCase(p),
+					}
+					o = runTemplate("primitiveArrRequestAttr", primitiveArrRequestAttr, payload) + "{\n"
+					o += fmt.Sprintf("%q,\n", item)
 				}
-				o += "},\n"
 			}
 			o += "}"
 		case "object":
@@ -473,91 +511,3 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 
 	return strings.Join(output, "\n")
 }
-
-// func populateExamples(values map[string]interface{}, serviceName, property string) string {
-// 	var requestAtrr = `{{ .parameter }}: {{ .value }}`
-// 	var arrRequestAtrr = `{{ .parameter }}: []{{ .service }}.{{ .type }} {{ .values }}`
-// 	var objRequestAtrr = `{{ .parameter }}: &{{ .service }}.{{ .type }} {{ .values }}`
-// 	var populateMap func(map[string]interface{}) string
-// 	var populateArray func([]interface{}) string
-
-// 	runTemplate := func(tmpName, temp string, payload map[string]interface{}) string {
-// 		t, err := template.New(tmpName).Parse(temp)
-// 		if err != nil {
-// 			fmt.Fprintf(os.Stderr, "failed to parse %s - err: %v\n", temp, err)
-// 			return ""
-// 		}
-// 		var tb bytes.Buffer
-// 		err = t.Execute(&tb, payload)
-// 		if err != nil {
-// 			fmt.Fprintf(os.Stderr, "faild to apply parsed template %s to payload %v - err: %v\n", temp, payload, err)
-// 			return ""
-// 		}
-
-// 		return tb.String()
-// 	}
-
-// 	populateMap = func(seg map[string]interface{}) string {
-// 		o := "{"
-
-// 		for key, value := range seg {
-// 			switch value := value.(type) {
-// 			case map[string]interface{}:
-// 				types := detectType2(serviceName, key, p)
-// 				payload := map[string]interface{}{
-// 					"service":   serviceName,
-// 					"type":      strcase.UpperCamelCase(types[0]),
-// 					"values":    populateMap(value),
-// 					"parameter": strcase.UpperCamelCase(key),
-// 				}
-// 				o += "\n" + runTemplate("objRequestAtrr", objRequestAtrr, payload)
-// 			case []interface{}:
-// 				o += populateArray(value)
-// 			default:
-// 				o += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
-// 			}
-// 		}
-// 		o += "\n}"
-// 		return o
-// 	}
-
-// 	populateArray = func(seg []interface{}) string {
-// 		o := "{"
-
-// 		for _, item := range seg {
-// 			o += "\n" + serviceName + "." + strcase.UpperCamelCase("London") + ": {"
-// 			switch item := item.(type) {
-// 			case map[string]interface{}:
-// 				o += populateMap(item)
-// 			case []interface{}:
-// 				o += populateArray(item)
-// 			default:
-// 				o += "\n" + fmt.Sprint(item) + ","
-// 			}
-// 		}
-// 		o += "\n}"
-// 		return o
-// 	}
-
-// 	fmt.Println("p:", property)
-// 	for key, value := range values {
-// 		if key == property {
-// 			fmt.Println("k:", key)
-// 			fmt.Println("v:", value)
-// 			output := "{"
-// 			switch val := value.(type) {
-// 			case map[string]interface{}:
-// 				output += populateMap(val)
-// 			case []interface{}:
-// 				output += populateArray(val)
-// 			default:
-// 				output += "\n" + strcase.UpperCamelCase(key) + ":" + fmt.Sprint(value) + ","
-// 			}
-
-// 			output += "\n}"
-// 			// we only populate first example
-// 			return output
-// 		}
-// 	}
-// 	return ""
-// }
