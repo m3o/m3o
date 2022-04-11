@@ -7,7 +7,11 @@ package main
 // {{ end }}
 // `
 
-const dartServiceTemplate = `{{ $service := .service }}import 'dart:convert';
+const dartServiceTemplate = `
+{{- $service := .service }}
+{{- if serviceHasStream $service.Spec $service.Name }}
+import 'dart:convert';
+{{- end }}
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../client/client.dart';
 

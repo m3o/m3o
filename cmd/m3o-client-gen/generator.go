@@ -103,6 +103,16 @@ func funcMap() map[string]interface{} {
 			// this is primarily used in dart template.
 			return strings.HasSuffix(typeName, "Response")
 		},
+		// Similar to isStream, this function checks if a service has
+		// a stream endpoint or not
+		"serviceHasStream": func(spec *openapi3.Swagger, service string) bool {
+			for _, v := range spec.Paths {
+				if _, ok := v.Post.Responses["stream"]; ok {
+					return true
+				}
+			}
+			return false
+		},
 		"requestTypeToResponseType": func(requestType string) string {
 			parts := camelcase.Split(requestType)
 			return strings.Join(parts[1:len(parts)-1], "") + "Response"
