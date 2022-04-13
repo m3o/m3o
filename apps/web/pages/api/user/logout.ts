@@ -56,11 +56,11 @@ export default async function handler(
     const error = e as AxiosError
     const data = error.response?.data as ApiError
 
-    if (data.Id === 'v1.Revoke' && data.Code === 404) {
+    if (data.id === 'v1.Revoke' && data.code === 404) {
       // Handle logout anyway...
       handleLogout(req, res)
     } else {
-      res.status(data.Code || 500).json(data)
+      res.status(data.code || 500).json(data)
     }
   }
 }

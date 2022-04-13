@@ -29,7 +29,7 @@ export function useSubscribeToTier({
         return response
       } catch (e) {
         const error = e as AxiosError
-        throw (error.response!.data as ApiError).Detail
+        throw (error.response!.data as ApiError).detail
       }
     },
     {

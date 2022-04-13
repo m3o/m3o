@@ -14,7 +14,7 @@ export function useRunApp() {
         await m3o.app.run(fields)
       } catch (e) {
         const error = e as AxiosError
-        throw (error.response!.data as ApiError).Detail
+        throw (error.response!.data as ApiError).detail
       }
     },
     {

@@ -43,6 +43,6 @@ export default async function handler(
   } catch (e) {
     const error = e as AxiosError
     const data = error.response?.data as ApiError
-    res.status(data.Code).send(data)
+    res.status(data.code).send(data)
   }
 }

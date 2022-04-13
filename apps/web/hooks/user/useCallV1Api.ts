@@ -49,7 +49,7 @@ export function useCallV1Api() {
     } catch (e) {
       const error = e as ApiError
 
-      if (error.Code === 401) {
+      if (error.code === 401) {
         await mutateAsync(cookies[AuthCookieNames.ApiTokenId])
         removeCookie(AuthCookieNames.ApiToken)
         removeCookie(AuthCookieNames.ApiTokenId)
@@ -58,7 +58,7 @@ export function useCallV1Api() {
         return response
       }
 
-      throw error.Detail
+      throw error.detail
     }
   })
 }

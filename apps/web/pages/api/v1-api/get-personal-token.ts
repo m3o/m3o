@@ -30,6 +30,6 @@ export default async function handler(
     res.send({ token: response.api_key })
   } catch (e) {
     const error = e as ApiError
-    res.status(error.Code || 500).send(error)
+    res.status(error.code || 500).send(error)
   }
 }
