@@ -1,16 +1,9 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { AxiosError } from 'axios'
 import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 import { useForm, Controller } from 'react-hook-form'
-import {
-  OAuthSignInButtons,
-  Alert,
-  Button,
-  Card,
-  TextInput,
-} from '@/components/ui'
+import { OAuthSignInButtons, Alert, Button, TextInput } from '@/components/ui'
 import { MainLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import { useLogin } from '@/hooks'
@@ -73,6 +66,8 @@ const Login: NextPage = () => {
     }
   }, [])
 
+  // console.log(loginMutation.error?.response?.data.detail)
+
   return (
     <>
       <NextSeo
@@ -118,12 +113,7 @@ const Login: NextPage = () => {
                     type="error"
                     className="mb-4"
                     testId="login-error-alert">
-                    {
-                      (
-                        (loginMutation.error as AxiosError).response
-                          ?.data as ApiError
-                      ).Detail
-                    }
+                    {loginMutation.error as string}
                   </Alert>
                 )}
                 <Button
@@ -135,16 +125,12 @@ const Login: NextPage = () => {
                 <p className="my-4 text-zinc-700 dark:text-zinc-300">
                   Not registered yet?
                   <Link href="/register">
-                    <a className="inline-block ml-2 dark:text-pink-400">
-                      Create an account
-                    </a>
+                    <a className="inline-block ml-2">Create an account</a>
                   </Link>
                 </p>
                 <p>
                   <Link href="/reset-password">
-                    <a className="dark:text-pink-400">
-                      Forgotten your password?
-                    </a>
+                    <a>Forgotten your password?</a>
                   </Link>
                 </p>
               </form>

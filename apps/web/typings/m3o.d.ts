@@ -115,8 +115,8 @@ interface Adjustment {
 }
 
 interface ApiError {
-  Id: string
-  Code: number
-  Detail: string
-  Status: string
+  id: string
+  code: number
+  detail: string
+  status: string
 }

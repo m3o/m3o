@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import { useRef } from 'react'
 import { NextSeo } from 'next-seo'
 import { MainLayout } from '@/components/layouts'
-import { Card } from '@/components/ui'
 import {
   ResetPasswordForm,
   ResetPasswordFormFields,
@@ -29,20 +28,16 @@ const ResetPassword: NextPage = () => {
         canonical="https://m3o.com/reset-password"
       />
       <MainLayout>
-        <div className="h-screen bg-zinc-100 dark:bg-zinc-800">
+        <div className="h-screen">
           <div className="m3o-container pt-6">
             <div className="md:flex max-w-2xl mx-auto items-center justify-center md:w-full">
-              <Card className="p-6 w-full">
-                <h1 className="font-black text-xl text-black mb-6 dark:text-white">
+              <div className="p-10 w-11/12 max-w-lg tbgc rounded-lg">
+                <h1 className="font-bold text-xl text-black mb-6 dark:text-white">
                   Reset your password
                 </h1>
                 {fetchRecoveryCode.isSuccess ? (
                   <VerifyCode
-                    error={
-                      resetPassword.error
-                        ? (resetPassword.error as ApiError).Detail
-                        : undefined
-                    }
+                    error={resetPassword.error}
                     isLoading={resetPassword.isLoading}
                     onSubmit={values =>
                       resetPassword.mutate({
@@ -53,16 +48,12 @@ const ResetPassword: NextPage = () => {
                   />
                 ) : (
                   <ResetPasswordForm
-                    error={
-                      fetchRecoveryCode.error
-                        ? (fetchRecoveryCode.error as ApiError).Detail
-                        : undefined
-                    }
+                    error={fetchRecoveryCode.error}
                     onSubmit={onResetPasswordFormSubmit}
                     isLoading={fetchRecoveryCode.isLoading}
                   />
                 )}
-              </Card>
+              </div>
             </div>
           </div>
         </div>

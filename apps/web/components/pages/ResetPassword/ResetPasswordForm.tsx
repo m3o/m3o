@@ -7,7 +7,7 @@ export interface ResetPasswordFormFields {
 }
 
 interface Props {
-  error?: string
+  error: string | null
   onSubmit: (values: ResetPasswordFormFields) => void
   isLoading: boolean
 }

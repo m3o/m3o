@@ -1,7 +1,7 @@
 import { m3oInstance } from '@/lib/api/m3o/api'
 import { useCookies } from 'react-cookie'
-import { AuthCookieNames } from '@/lib/constants'
 import { useEffect } from 'react'
+import { AuthCookieNames } from '@/lib/constants'
 
 export function useM3OApi() {
   const [cookies] = useCookies()

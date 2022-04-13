@@ -9,7 +9,7 @@ interface Fields {
 
 interface Props {
   onSubmit: (values: Fields) => void
-  error?: string
+  error: string | null
   isLoading: boolean
 }
 
@@ -18,7 +18,7 @@ export const VerifyCode: FC<Props> = ({ onSubmit, isLoading, error }) => {
 
   return (
     <>
-      <p className="mb-4 text-zinc-500">
+      <p className="mb-4 text-white">
         Please check your email (including your spam folder) to find your
         security code
       </p>

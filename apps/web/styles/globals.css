@@ -24,7 +24,7 @@ a {
 }
 
 .input {
-  @apply border block py-4 px-6 w-full rounded-lg text-sm focus:border-indigo-800 transition-colors dark:border-zinc-600 dark:bg-transparent appearance-none font-light placeholder:text-zinc-500;
+  @apply border block py-4 px-6 w-full rounded-lg text-sm focus:border-indigo-800 transition-colors dark:border-zinc-600 dark:bg-transparent appearance-none font-light placeholder:text-zinc-500 text-white;
 }
 
 .input.grey {
