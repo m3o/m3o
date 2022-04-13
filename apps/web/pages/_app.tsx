@@ -34,12 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             const e = error as AxiosError
 
             if ((e.response?.data as ApiError).detail) {
-              toast.error(e.response?.data.detail, {
-                style: {
-                  background: '#333',
-                  color: '#fff',
-                },
-              })
+              toast.error(e.response?.data.detail)
             }
           },
         }),
@@ -88,7 +83,14 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Hydrate>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
-            <Toaster />
+            <Toaster
+              toastOptions={{
+                style: {
+                  background: '#333',
+                  color: '#fff',
+                },
+              }}
+            />
           </ToastProvider>
         </CookiesProvider>
       </UserProvider>
