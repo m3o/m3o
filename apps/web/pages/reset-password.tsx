@@ -37,7 +37,6 @@ const ResetPassword: NextPage = () => {
                 </h1>
                 {fetchRecoveryCode.isSuccess ? (
                   <VerifyCode
-                    error={resetPassword.error}
                     isLoading={resetPassword.isLoading}
                     onSubmit={values =>
                       resetPassword.mutate({
@@ -48,7 +47,6 @@ const ResetPassword: NextPage = () => {
                   />
                 ) : (
                   <ResetPasswordForm
-                    error={fetchRecoveryCode.error}
                     onSubmit={onResetPasswordFormSubmit}
                     isLoading={fetchRecoveryCode.isLoading}
                   />

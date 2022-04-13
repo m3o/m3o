@@ -19,19 +19,12 @@ export function useSubscribeToTier({
   const queryClient = useQueryClient()
 
   return useMutation(
-    async ({ card_id, id }: MutationProps) => {
-      try {
-        const response = await m3oApi.post(BillingApiRoutes.SubscribeTier, {
-          card_id,
-          id,
-        })
+    ({ card_id, id }: MutationProps) =>
+      m3oApi.post(BillingApiRoutes.SubscribeTier, {
+        card_id,
+        id,
+      }),
 
-        return response
-      } catch (e) {
-        const error = e as AxiosError
-        throw (error.response!.data as ApiError).detail
-      }
-    },
     {
       onSuccess: () => {
         if (onSuccess) {

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { TextInput, Button, Alert } from '@/components/ui'
+import { TextInput, Button } from '@/components/ui'
 
 interface Fields {
   token: string
@@ -9,11 +9,10 @@ interface Fields {
 
 interface Props {
   onSubmit: (values: Fields) => void
-  error: string | null
   isLoading: boolean
 }
 
-export const VerifyCode: FC<Props> = ({ onSubmit, isLoading, error }) => {
+export const VerifyCode: FC<Props> = ({ onSubmit, isLoading }) => {
   const { control, handleSubmit } = useForm<Fields>()
 
   return (
@@ -22,11 +21,6 @@ export const VerifyCode: FC<Props> = ({ onSubmit, isLoading, error }) => {
         Please check your email (including your spam folder) to find your
         security code
       </p>
-      {error && (
-        <Alert type="error" className="mb-4">
-          {error}
-        </Alert>
-      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}

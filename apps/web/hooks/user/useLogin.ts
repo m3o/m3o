@@ -9,35 +9,25 @@ import { shouldRedirectOnLogin, redirectToCloud } from '@/lib/redirect'
 export function useLogin() {
   const router = useRouter()
 
-  return useMutation(
-    async (values: LoginFormFields) => {
-      try {
-        return await loginUser(values)
-      } catch (e) {
-        const error = e as AxiosError
-        throw error.response?.data.detail
+  return useMutation((values: LoginFormFields) => loginUser(values), {
+    onSuccess: () => {
+      const pathToReturnTo = sessionStorage.getItem(GET_STARTED_STORAGE_KEY)
+      const subscriptionPath = sessionStorage.getItem(
+        SessionStorageKeys.SubscriptionFlow,
+      )
+
+      if (subscriptionPath) {
+        // Assume the user has come from clicking a subscription
+        router.push(`/subscriptions?tier=${subscriptionPath}`)
+        return
+      }
+
+      if (shouldRedirectOnLogin()) {
+        redirectToCloud()
+      } else {
+        router.push(pathToReturnTo ? pathToReturnTo : '/')
+        sessionStorage.deleteItem(GET_STARTED_STORAGE_KEY)
       }
     },
-    {
-      onSuccess: () => {
-        const pathToReturnTo = sessionStorage.getItem(GET_STARTED_STORAGE_KEY)
-        const subscriptionPath = sessionStorage.getItem(
-          SessionStorageKeys.SubscriptionFlow,
-        )
-
-        if (subscriptionPath) {
-          // Assume the user has come from clicking a subscription
-          router.push(`/subscriptions?tier=${subscriptionPath}`)
-          return
-        }
-
-        if (shouldRedirectOnLogin()) {
-          redirectToCloud()
-        } else {
-          router.push(pathToReturnTo ? pathToReturnTo : '/')
-          sessionStorage.deleteItem(GET_STARTED_STORAGE_KEY)
-        }
-      },
-    },
-  )
+  })
 }

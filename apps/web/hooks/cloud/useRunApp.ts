@@ -8,19 +8,9 @@ export function useRunApp() {
   const m3o = useM3OClient()
   const router = useRouter()
 
-  return useMutation(
-    async (fields: RunRequest) => {
-      try {
-        await m3o.app.run(fields)
-      } catch (e) {
-        const error = e as AxiosError
-        throw (error.response!.data as ApiError).detail
-      }
+  return useMutation((fields: RunRequest) => m3o.app.run(fields), {
+    onSuccess: () => {
+      router.push('/cloud/apps')
     },
-    {
-      onSuccess: () => {
-        router.push('/cloud/apps')
-      },
-    },
-  )
+  })
 }

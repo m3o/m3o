@@ -9,14 +9,8 @@ export function useAddUser() {
   const router = useRouter()
 
   return useMutation(
-    async (fields: CreateRequest) => {
-      try {
-        await m3o.user.create({ ...fields, username: fields.email })
-      } catch (e) {
-        const error = e as AxiosError
-        throw (error.response!.data as ApiError).detail
-      }
-    },
+    (fields: CreateRequest) =>
+      m3o.user.create({ ...fields, username: fields.email }),
     {
       onSuccess: () => {
         router.push('/cloud/users')

@@ -108,14 +108,6 @@ const Login: NextPage = () => {
                     <TextInput {...field} label="Password" type="password" />
                   )}
                 />
-                {loginMutation.error && (
-                  <Alert
-                    type="error"
-                    className="mb-4"
-                    testId="login-error-alert">
-                    {loginMutation.error as string}
-                  </Alert>
-                )}
                 <Button
                   loading={loginMutation.isLoading}
                   className="w-full mb-8 justify-center"

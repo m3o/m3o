@@ -18,14 +18,7 @@ export function useResetPassword(): UseMutationResult<
   const m3oApi = useM3OApi()
 
   return useMutation(
-    async payload => {
-      try {
-        return await m3oApi.post('/onboarding/signup/resetPassword', payload)
-      } catch (e) {
-        const error = e as AxiosError
-        throw (error.response?.data as ApiError).detail
-      }
-    },
+    payload => m3oApi.post('/onboarding/signup/resetPassword', payload),
     {
       onSuccess: () => {
         router.push(Routes.Login)
