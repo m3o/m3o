@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
@@ -332,14 +331,6 @@ func (d *dartG) ExampleAndReadmeEdit(examplesPath, serviceName, endpoint, title 
 	_, err = f.Write(b.Bytes())
 	if err != nil {
 		fmt.Println("Failed to append to schema file", err)
-		os.Exit(1)
-	}
-
-	cmd := exec.Command("dart", "format", ".")
-	cmd.Dir = filepath.Join(examplesPath, "dart", serviceName, endpoint)
-	outp, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Printf("Problem with '%v' example '%v': %v\n", serviceName, endpoint, string(outp))
 		os.Exit(1)
 	}
 }
