@@ -435,7 +435,7 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 			// TODO(daniel): with this approach, we lost the second item (if exists)
 			// see the contact/Create example, the phone has two items and with this
 			// approach we only populate one.
-			fmt.Println("************** ARRAY *****************")
+
 			messageType := detectType2(serviceName, message, p)
 			for _, item := range attrValue.([]interface{}) {
 				switch item := item.(type) {
