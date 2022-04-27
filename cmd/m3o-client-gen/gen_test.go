@@ -313,8 +313,7 @@ const timeExample = `{
 	}
 }`
 
-const timeExp = `Location: London,
-`
+const timeExp = `Location: "London",`
 
 func TestExample(t *testing.T) {
 
