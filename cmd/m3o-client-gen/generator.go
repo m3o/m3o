@@ -157,7 +157,7 @@ func funcMap() map[string]interface{} {
 			return strcase.LowerCamelCase(t)
 		},
 		"goExampleRequest": func(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exampleJSON map[string]interface{}) string {
-			return schemaToGoExample(serviceName, strings.Title(endpoint), schemas, exampleJSON)
+			return schemaToGoExample(serviceName, strings.Title(endpoint)+"Request", schemas, exampleJSON)
 		},
 		"tsExampleRequest": func(serviceName, endpoint string, schemas map[string]*openapi3.SchemaRef, exampleJSON map[string]interface{}) string {
 			bs, _ := json.MarshalIndent(exampleJSON, "", "  ")

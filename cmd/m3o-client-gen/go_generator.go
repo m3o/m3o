@@ -493,7 +493,11 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 
 	output := []string{}
 
-	endpointSchema := schemas[endpoint+"Request"]
+	endpointSchema, ok := schemas[endpoint]
+	if !ok {
+		fmt.Printf("endpoint %v doesn't exist", endpoint)
+		os.Exit(1)
+	}
 
 	// loop through attributes of the request example
 	for attr, attrValue := range exa {
@@ -504,7 +508,7 @@ func schemaToGoExample(serviceName, endpoint string, schemas map[string]*openapi
 				continue
 			}
 
-			output = append(output, traverse(p, endpoint+"Request", metaData, attrValue)+",")
+			output = append(output, traverse(p, endpoint, metaData, attrValue)+",")
 		}
 
 	}
