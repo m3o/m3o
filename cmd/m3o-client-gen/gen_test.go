@@ -195,7 +195,7 @@ func TestTimeExample(t *testing.T) {
 		t.Fatal("boo")
 	}
 
-	res := schemaToGoExample("time", "Now", spec.Components.Schemas, map[string]interface{}{
+	res := schemaToGoExample("time", "NowRequest", spec.Components.Schemas, map[string]interface{}{
 		"location": "London",
 	})
 	if strings.TrimSpace(res) != strings.TrimSpace(timeExp) {
@@ -203,7 +203,7 @@ func TestTimeExample(t *testing.T) {
 	}
 
 	fmt.Println(spec.Components.Schemas)
-	res = schemaToGoExample("time", "Zone", spec.Components.Schemas, map[string]interface{}{
+	res = schemaToGoExample("time", "ZoneRequest", spec.Components.Schemas, map[string]interface{}{
 		"location": "London",
 	})
 	if strings.TrimSpace(res) != strings.TrimSpace(timeExp) {
@@ -354,7 +354,7 @@ func TestExample(t *testing.T) {
 		t.Log("boo")
 	}
 	fmt.Println(spec.Components.Schemas)
-	res = schemaToGoExample("file", "Delete", spec.Components.Schemas, map[string]interface{}{
+	res = schemaToGoExample("file", "DeleteRequest", spec.Components.Schemas, map[string]interface{}{
 		"project": "examples",
 		"path":    "/document/text-files/file.txt",
 	})
