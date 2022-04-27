@@ -56,8 +56,8 @@ export default function Home({
         <Landing
           heading="Universal Public API Interface"
           services={services}
-          subHeading="Explore, discover and consume public APIs as simpler programmable
-          building blocks all on one platform for a 10x developer experience."
+          subHeading="Explore, discover and consume public APIs as simple programmable
+          building blocks"
         />
       )}
     </>
