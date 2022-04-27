@@ -1,7 +1,5 @@
-import type { FC, ReactElement } from 'react'
-import { useState, useCallback, useEffect } from 'react'
-import { useQuery } from 'react-query'
-import { Spinner } from '@/components/ui'
+import type { FC, ReactElement, FormEvent } from 'react'
+import { useState, useCallback } from 'react'
 import { searchServices } from '@/lib/api/m3o/services/explore'
 import {
   CategoriesFilter,
@@ -9,34 +7,24 @@ import {
   ExploreResults,
   MobileFilters,
 } from '@/components/pages/Explore'
-import { useDebounce, useUpdateSearchUrl } from '@/hooks'
 import { fetchCategories } from '@/lib/api/m3o/services/explore'
 import { withAuth } from '@/lib/api/m3o/withAuth'
-import { FiltersButton, ShowHideResultsButton } from './Buttons'
+import { ShowCategoryMobileMenuButton } from './Buttons'
 
 export interface ExploreProps {
   categories: string[]
   header: ReactElement
   initialSearchTerm: string
-  initialCategories: string[]
   services: ExploreAPI[]
 }
 
 export const exploreGetServerSideProps = withAuth(async context => {
-  const selectedCategories = ((context.query.categories as string) || '')
-    .split(',')
-    .filter(item => !!item)
-
   const categories = await fetchCategories()
-  const services = await searchServices(
-    context.query.search as string,
-    selectedCategories,
-  )
+  const services = await searchServices(context.query.search as string, [])
 
   return {
     props: {
-      categories: categories.sort(),
-      initialCategories: selectedCategories,
+      categories,
       initialSearchTerm: context.query.search || '',
       services,
       user: context.req.user,
@@ -48,103 +36,56 @@ export const Explore: FC<ExploreProps> = ({
   categories,
   header,
   services,
-  initialCategories,
   initialSearchTerm,
 }: ExploreProps) => {
-  const [shouldShowMore, setShouldShowMore] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm)
-  const [updatedSearchText, setUpdatedSearchTerm] = useState(initialSearchTerm)
-  const debouncedValue = useDebounce<string>(updatedSearchText, 400)
-  const [selectedCategories, setSelectedCategories] =
-    useState(initialCategories)
-  const categoriesLength = selectedCategories.length
 
-  useUpdateSearchUrl(searchTerm, selectedCategories)
+  const handleCategoryClick = useCallback(() => {
+    setShowMobileMenu(() => false)
+  }, [])
 
-  const { data = [], isFetching } = useQuery(
-    ['explore', searchTerm, selectedCategories],
-    () => searchServices(searchTerm, selectedCategories),
-    {
-      initialData: services,
-    },
+  const categoriesItems = (
+    <CategoriesFilter
+      categories={categories}
+      onCategoryClick={handleCategoryClick}
+    />
   )
 
-  const onCheckboxSelect = useCallback((category: string) => {
-    setShowMobileMenu(false)
-
-    setSelectedCategories(prevSelected =>
-      prevSelected.includes(category)
-        ? prevSelected.filter(item => item !== category)
-        : [...prevSelected, category],
-    )
+  const handleSearch = useCallback((event: FormEvent) => {
+    event.preventDefault()
+    const formData = new FormData(event.target as HTMLFormElement)
+    window.location.href = `/explore?search=${formData.get('search') as string}`
   }, [])
-
-  const onClearAllClick = useCallback(() => {
-    setShowMobileMenu(false)
-    setSelectedCategories([])
-  }, [])
-
-  useEffect(() => {
-    setSearchTerm(debouncedValue)
-  }, [debouncedValue])
 
   return (
     <>
-      <header className="py-10 px-4 md:py-12 border-b dark:border-zinc-800 border-zinc-200">
-        <div className="m3o-container sm">
+      <header className="py-10 px-4 md:pt-16 md:pb-0">
+        <div className="m3o-container sm md:flex justify-between">
           {header}
-          <div className="mt-4 md:mt-8">
+          <div className="mt-4 md:mt-0">
             <ExploreSearch
-              handleChange={event => {
-                setUpdatedSearchTerm(event.target.value)
-              }}
-              value={updatedSearchText}
+              handleSubmit={handleSearch}
+              initialSearchTerm={initialSearchTerm}
             />
           </div>
         </div>
       </header>
-      <div className="bg-zinc-50 pt-20 dark:bg-zinc-900">
+      <div className="bg-zinc-50 pt-16 dark:bg-zinc-900 pb-20">
         <div className="m3o-container sm">
-          <div className="md:grid md:grid-cols-5">
-            {/*
-            <aside className="hidden md:block">
-              <CategoriesFilter
-                categories={categories}
-                onClearAllClick={onClearAllClick}
-                handleCategoryChange={onCheckboxSelect}
-                selectedCategories={selectedCategories}
-              />
-            </aside>
-            */}
-            <div className="col-span-6 pb-6">
-              {isFetching ? (
-                <div className="flex justify-center w-full">
-                  <Spinner className="scale-125 transform" />
-                </div>
-              ) : (
-                <ExploreResults services={data} />
-              )}
+          <div className="md:grid md:grid-cols-6 gap-10">
+            <aside className="hidden md:block">{categoriesItems}</aside>
+            <div className="col-span-5 pb-6">
+              <ExploreResults services={services} />
             </div>
           </div>
         </div>
       </div>
-      {/*
-      <FiltersButton
-        onClick={() => setShowMobileMenu(true)}
-        selectedCategoriesLength={categoriesLength}
-      />
+      <ShowCategoryMobileMenuButton onClick={() => setShowMobileMenu(true)} />
       <MobileFilters
         isOpen={showMobileMenu}
         onClose={() => setShowMobileMenu(false)}>
-        <CategoriesFilter
-          categories={categories}
-          handleCategoryChange={onCheckboxSelect}
-          onClearAllClick={onClearAllClick}
-          selectedCategories={selectedCategories}
-        />
+        {categoriesItems}
       </MobileFilters>
-      */}
     </>
   )
 }

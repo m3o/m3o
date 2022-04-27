@@ -1,36 +1,50 @@
-import type { FC } from 'react'
-import { CategoryCheckbox } from './CategoryCheckbox'
-import { ClearAllButton } from '@/components/ui'
+import type { ReactElement, PropsWithChildren } from 'react'
+import Link from 'next/link'
 
 export interface Props {
   categories: string[]
-  handleCategoryChange: (category: string) => void
-  onClearAllClick: VoidFunction
-  selectedCategories: string[]
+  onCategoryClick: VoidFunction
 }
 
-export const CategoriesFilter: FC<Props> = ({
-  categories,
-  handleCategoryChange,
-  onClearAllClick,
-  selectedCategories,
-}) => {
+interface CategoryLinkProps {
+  href: string
+  onClick: Props['onCategoryClick']
+}
+
+function CategoryLink({
+  children,
+  onClick,
+  href,
+}: PropsWithChildren<CategoryLinkProps>) {
   return (
-    <div>
+    <Link href={href}>
+      <a className="block capitalize mb-4" onClick={onClick}>
+        {children}
+      </a>
+    </Link>
+  )
+}
+
+export function CategoriesFilter({
+  categories,
+  onCategoryClick,
+}: Props): ReactElement {
+  return (
+    <>
+      <CategoryLink onClick={onCategoryClick} href="/explore">
+        All APIs
+      </CategoryLink>
       <h3 className="text-zinc-800 mb-4 font-bold dark:text-white">
         Categories
       </h3>
-      {!!selectedCategories.length && (
-        <ClearAllButton onClick={onClearAllClick} />
-      )}
       {categories.map(category => (
-        <CategoryCheckbox
-          label={category}
-          key={category}
-          onChange={handleCategoryChange}
-          checked={selectedCategories.includes(category)}
-        />
+        <CategoryLink
+          onClick={onCategoryClick}
+          href={`/explore/${category}`}
+          key={category}>
+          {category}
+        </CategoryLink>
       ))}
-    </div>
+    </>
   )
 }

@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 export const OfferApiBanner: FC = () => {
   return (
-    <section className="bg-white text-white py-6 text-center md:py-16 border-t border-b border-solid border-zinc-300 dark:bg-zinc-800 dark:border-zinc-600">
+    <section className="bg-white text-white py-6 text-center md:py-16 dark:bg-zinc-800 dark:border-zinc-600">
       <div className="container px-6 mx-auto max-w-xl">
         <h1 className="font-bold text-2xl md:text-3xl mb-6 text-black dark:text-white">
           Offer your API on the M3O platform to an expanded audience
@@ -10,11 +10,11 @@ export const OfferApiBanner: FC = () => {
         <p className="mb-4 pt-6">
           <a
             href="https://forms.gle/9SQV6DdLNDzSRQ477"
-            className="btn border"
+            className="btn"
             target="_blank"
             rel="noreferrer">
             Get in touch
-        </a>
+          </a>
         </p>
       </div>
     </section>

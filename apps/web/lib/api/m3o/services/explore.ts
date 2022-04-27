@@ -110,5 +110,5 @@ export async function fetchCategories() {
     '/publicapi/explore/ListCategories',
   )
 
-  return response.data.categories
+  return response.data.categories.sort()
 }
