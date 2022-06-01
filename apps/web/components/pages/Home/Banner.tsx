@@ -1,11 +1,10 @@
 import type { ReactElement } from 'react'
 import Link from 'next/link'
-import { Routes } from '@/lib/constants'
 import { GradientHeading } from '../../ui/GradientHeading'
 
 interface BannerLink {
   text: string
-  link: Routes
+  link: string
 }
 
 export interface BannerProps {
