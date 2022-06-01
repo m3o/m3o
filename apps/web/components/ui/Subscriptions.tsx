@@ -19,11 +19,11 @@ export function Subscriptions(): ReactElement {
           '1GB Space storage',
         ]}
         button={
-          <Link href="/register">
+          <Link href="https://discord.gg/TBR9bRjd6Z">
             <a
               className="btn block w-full text-center"
               data-testid="subscription-free-start-button">
-              Get Started
+              Request Access
             </a>
           </Link>
         }
@@ -42,11 +42,11 @@ export function Subscriptions(): ReactElement {
           'Community support',
         ]}
         button={
-          <Link href="/register?subscription=solo">
+          <Link href="https://discord.gg/TBR9bRjd6Z">
             <a
               className="btn block w-full text-center"
               data-testid="subscription-solo-start-button">
-              Choose Solo
+              Request Access
             </a>
           </Link>
         }
@@ -65,11 +65,11 @@ export function Subscriptions(): ReactElement {
           'Email support',
         ]}
         button={
-          <Link href="/register?subscription=pro">
+          <Link href="https://discord.gg/TBR9bRjd6Z">
             <a
               className="btn block w-full text-center"
               data-testid="subscription-pro-start-button">
-              Choose Pro
+              Request Access
             </a>
           </Link>
         }

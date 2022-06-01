@@ -15,8 +15,8 @@ export interface BannerProps {
 
 const BANNER_LINKS: BannerLink[] = [
   {
-    text: 'Get Started',
-    link: Routes.SignUp,
+    text: 'Request Access',
+    link: 'https://discord.gg/TBR9bRjd6Z',
   },
 ]
 

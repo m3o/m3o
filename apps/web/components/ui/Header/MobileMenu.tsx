@@ -93,8 +93,8 @@ export const MobileMenu: FC<MobileMenuProps> = ({ onClose, user }) => {
         )}
         {!user && (
           <div className="py-4 px-5">
-            <Link href="/register">
-              <a className="w-full btn mt-2 block text-center">Sign up</a>
+            <Link href="https://discord.gg/TBR9bRjd6Z">
+              <a className="w-full btn mt-2 block text-center">Request Access</a>
             </Link>
             <p className="mt-6 text-center text-sm font-medium text-zinc-500">
               Existing customer?{` `}
