@@ -1,5 +1,4 @@
 import requests
-puts req.inspect
 import json
 import os
 
