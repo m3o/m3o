@@ -1,0 +1,131 @@
+{
+  "create": [
+    {
+      "title": "Create an object",
+      "run_check": false,
+      "request": {
+        "object": "<file bytes>",
+        "name": "images/file.jpg",
+        "visibility": "public"
+      },
+      "response": {
+	    "url": "https://example.com/foo/bar/file.jpg"
+      },
+      "shell_request": "curl \"https://api.m3o.com/v1/space/Create\" \\\n-H \"Authorization: Bearer $M3O_API_TOKEN\" \\\n-Fobject=@file.jpg -Fname=images/file.jpg -Fvisibility=public"
+    }
+  ],
+  "update": [
+    {
+      "title": "Update an object",
+      "run_check": false,
+      "request": {
+        "object": "<file bytes>",
+        "name": "images/file.jpg",
+        "visibility": "public"
+      },
+      "shell_request": "curl \"https://api.m3o.com/v1/space/Update\" \\\n-H \"Authorization: Bearer $M3O_API_TOKEN\" \\\n-Fobject=@file.jpg -Fname=images/file.jpg -Fvisibility=public",
+      "response": {
+        "url": "https://example.com/foo/bar/images/file.jpg"
+      }
+    }
+  ],
+  "delete": [
+    {
+      "title": "Delete an object",
+      "run_check": false,
+      "request": {
+        "name": "images/file.jpg"
+      },
+      "response": {
+      }
+    }
+  ],
+  "list": [
+    {
+      "title": "List objects with prefix",
+      "run_check": false,
+      "request": {
+        "prefix": "images/"
+      },
+      "response": {
+        "objects": [
+          {
+            "name": "images/file.jpg",
+            "modified": "2021-12-10T14:28:23.220874511Z",
+            "created": "2021-12-10T14:28:23.220874511Z",
+            "visibility": "public",
+            "url": "https://example.com/foo/bar/images/file.jpg"
+          },
+          {
+            "name": "images/file2.jpg",
+            "modified": "2021-12-10T14:27:23.220874511Z",
+            "created": "2021-12-10T14:27:23.220874511Z",
+            "visibility": "public",
+            "url": "https://example.com/foo/bar/images/file2.jpg"
+          }
+        ]
+      }
+    }
+  ],
+  "head": [
+    {
+      "title": "Head an object",
+      "run_check": false,
+      "request": {
+        "name": "images/file.jpg"
+      },
+      "response": {
+        "object": {
+          "name": "images/file.jpg",
+          "modified": "2021-12-10T14:28:23.220874511Z",
+          "created": "2021-12-10T14:28:23.220874511Z",
+          "url": "https://example.com/foo/bar/images/file.jpg",
+          "visibility": "public"
+        }
+      }
+    }
+  ],
+  "read": [
+    {
+      "title": "Read an object",
+      "run_check": false,
+      "request": {
+        "name": "images/file.jpg"
+      },
+      "response": {
+        "object": {
+          "name": "images/file.jpg",
+          "modified": "2021-12-10T14:28:23.220874511Z",
+          "created": "2021-12-10T14:28:23.220874511Z",
+          "url": "https://example.com/foo/bar/images/file.jpg",
+          "visibility": "public",
+          "data": "<file bytes>"
+        }
+      }
+    }
+  ],
+  "download": [
+    {
+      "title": "Download an object",
+      "run_check": false,
+      "request": {
+        "name": "images/file.jpg"
+      },
+      "response": {
+          "url": "https://example.com/foo/bar/images/file.jpg"
+      }
+    }
+  ],
+  "upload": [
+    {
+      "title": "Upload an object",
+      "run_check": false,
+      "request": {
+        "name": "images/file.jpg"
+      },
+      "response": {
+        "url": "https://example.com/foo/bar/images/file.jpg"
+      }
+    }
+  ]
+}

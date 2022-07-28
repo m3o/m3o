@@ -1,0 +1,135 @@
+syntax = "proto3";
+import "google/protobuf/struct.proto";
+
+package db;
+
+option go_package = "./proto;db";
+
+service Db {
+	rpc Create(CreateRequest) returns (CreateResponse) {}
+	rpc Read(ReadRequest) returns (ReadResponse) {}
+	rpc Update(UpdateRequest) returns (UpdateResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+	rpc Truncate(TruncateRequest) returns (TruncateResponse) {}
+	rpc Count(CountRequest) returns (CountResponse) {}
+	rpc RenameTable(RenameTableRequest) returns (RenameTableResponse) {}
+	rpc ListTables(ListTablesRequest) returns (ListTablesResponse) {}
+	rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
+}
+
+
+// Read data from a table. Lookup can be by ID or via querying any field in the record.
+message ReadRequest {
+	// Optional table name. Defaults to 'default'
+	string table = 1;
+	// Read by id. Equivalent to 'id == "your-id"'
+	string id = 2;
+	// Examples: 'age >= 18', 'age >= 18 and verified == true'
+	// Comparison operators: '==', '!=', '<', '>', '<=', '>='
+	// Logical operator: 'and'
+	// Dot access is supported, eg: 'user.age == 11'
+	// Accessing list elements is not supported yet.
+	string query = 3;
+	int32 offset = 4;
+	// Maximum number of records to return. Default limit is 25.
+	// Maximum limit is 1000. Anything higher will return an error.
+	int32 limit = 5;
+	// field name to order by
+	string orderBy = 6;
+	// 'asc' (default), 'desc'
+	string order = 7;
+}
+
+message ReadResponse {
+	// JSON encoded records
+	repeated google.protobuf.Struct records = 1;
+}
+
+// Create a record in the database. Optionally include an "id" field otherwise it's set automatically.
+message CreateRequest {
+	// Optional table name. Defaults to 'default'
+	string table = 1;
+	// JSON encoded record or records (can be array or object)
+	google.protobuf.Struct record = 2;
+	// optional record id to use
+	string id = 3;
+}
+
+message CreateResponse {
+	// The id of the record (either specified or automatically created)
+	string id = 1;
+}
+
+// Update a record in the database. Include an "id" in the record to update.
+message UpdateRequest {
+	// Optional table name. Defaults to 'default'
+	string table = 1;
+	// The id of the record. If not specified it is inferred from the 'id' field of the record
+	string id = 2;
+	// record, JSON object
+	google.protobuf.Struct record = 3;
+}
+
+message UpdateResponse {}
+
+// Delete a record in the database by id.
+message DeleteRequest {
+	// Optional table name. Defaults to 'default'
+	string table = 1;
+	// id of the record
+	string id = 2;
+}
+
+message DeleteResponse {
+
+}
+
+// Truncate the records in a table
+message TruncateRequest {
+	string table = 1;
+}
+
+message TruncateResponse {
+}
+
+// Count records in a table
+message CountRequest {
+	// specify the table name
+	string table = 1;
+}
+
+message CountResponse {
+	// the number of records in the table
+	int32 count = 1;
+}
+
+// Rename a table
+message RenameTableRequest {
+	// current table name
+	string from = 1;
+	// new table name
+	string to = 2;
+}
+
+message RenameTableResponse {
+
+}
+
+// List tables in the DB
+message ListTablesRequest {
+
+}
+
+message ListTablesResponse {
+	// list of tables
+	repeated string tables = 1;
+}
+
+// Drop a table in the DB
+message DropTableRequest {
+	string table = 1;
+}
+
+message DropTableResponse {
+}
+

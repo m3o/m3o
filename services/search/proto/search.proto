@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+package search;
+
+option go_package = "./proto;search";
+
+service Search {
+	rpc Index(IndexRequest) returns (IndexResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+	rpc Search(SearchRequest) returns (SearchResponse) {}
+	rpc CreateIndex(CreateIndexRequest) returns (CreateIndexResponse) {}
+	rpc DeleteIndex(DeleteIndexRequest) returns (DeleteIndexResponse) {}
+}
+
+// Index a record i.e. insert a document to search for.
+message IndexRequest {
+	// The index this record belongs to
+	string index = 1;
+	// The data to index
+	google.protobuf.Struct data = 2;
+	// Optional ID for the record
+	string id = 3;
+}
+
+message Record {
+	// The ID for this record. If blank, one will be generated
+	string id = 1;
+	// The JSON contents of the record
+	google.protobuf.Struct data = 2;
+}
+
+message IndexResponse {
+	// the indexed record
+	Record record = 1;
+}
+
+// Delete a record given its ID
+message DeleteRequest {
+	// The ID of the record to delete
+	string id = 1;
+	// The index the record belongs to
+	string index = 2;
+}
+
+message DeleteResponse {}
+
+// Search for records in a given in index
+message SearchRequest {
+	// The index the record belongs to
+	string index = 1;
+
+	// The query. See docs for query language examples
+	string query = 2;
+}
+
+message SearchResponse {
+	// The matching records
+	repeated Record records = 1;
+
+}
+
+// Create an index by name
+message CreateIndexRequest {
+	// The name of the index
+	string index = 1;
+}
+
+message Field {
+	// The name of the field. Use a `.` separator to define nested fields e.g. foo.bar
+	string name = 1;
+	// The type of the field - string, number
+	string type = 2;
+}
+
+message CreateIndexResponse {}
+
+// Delete an index by name
+message DeleteIndexRequest {
+	// The name of the index to delete
+	string index = 1;
+}
+
+message DeleteIndexResponse {}
