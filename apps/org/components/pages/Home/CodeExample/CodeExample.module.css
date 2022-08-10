@@ -1,0 +1,13 @@
+.root {
+  @apply text-sm;
+}
+
+.copyBlock,
+.copyBlock span,
+.copyBlock code span {
+  @apply bg-zinc-800 !important;
+}
+
+.copyBlock {
+  min-height: 500px;
+}

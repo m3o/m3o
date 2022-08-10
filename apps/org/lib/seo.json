@@ -1,0 +1,98 @@
+{
+  "about": {
+    "title": "About Us",
+    "description": "See how M3O became the company it is today."
+  },
+  "account": {
+    "billing": {
+      "title": "Account - Billing"
+    },
+    "dashboard": {
+      "title": "Account - Dashboard"
+    },
+    "keys": {
+      "title": "Account - Tokens"
+    },
+    "usage": {
+      "title": "Account - Usage"
+    }
+  },
+  "cloud": {
+    "users": {
+      "main": {
+        "title": "Cloud - Users"
+      },
+      "add": {
+        "title": "Cloud - Users - Add"
+      }
+    },
+    "functions": {
+      "main": {
+        "title": "Cloud - Functions"
+      },
+      "add": {
+        "title": "Cloud - Functions - Add"
+      }
+    },
+    "database": {
+      "main": {
+        "title": "Cloud - Database"
+      },
+      "add": {
+        "title": "Cloud - Database - Add"
+      }
+    },
+    "apps": {
+      "main": {
+        "title": "Cloud - Apps"
+      },
+      "add": {
+        "title": "Cloud - Apps - Add"
+      }
+    }
+  },
+  "client": {
+    "title": "Client",
+    "description": "M3O API Client"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Your M3O overview dashboard"
+  },
+  "explore": {
+    "title": "Explore",
+    "description": "Explore the public API catalog."
+  },
+  "gettingStarted": {
+    "title": "Getting Started",
+    "description": "A guide to using the Micro APIs"
+  },
+  "home": {
+    "description": "Your personal dashboard",
+    "title": "Home"
+  },
+  "landing": {
+    "description": "Explore, discover and consume public APIs as simpler programmable building blocks for a 10x better developer experience.",
+    "title": "Universal Micro Services"
+  },
+  "login": {
+    "description": "Login to Micro to start using our public APIs",
+    "title": "Login"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "description": "Subscription plans and API pricing information"
+  },
+  "register": {
+    "title": "Register",
+    "description": "Create a free account and get started now"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Reset your password"
+  },
+  "trending": {
+    "title": "Trending",
+    "description": "See the most popular APIs and users using them"
+  }
+}

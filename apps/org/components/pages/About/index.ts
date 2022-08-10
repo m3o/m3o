@@ -1,0 +1,6 @@
+export { AboutUs } from './AboutUs'
+export { AWSComparison } from './AWSComparison'
+export { Banner } from './Banner'
+export { Investors } from './Investors'
+export { OfferApiBanner } from './OfferApiBanner'
+export { SellingPoints } from './SellingPoints'

@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  @apply text-blue-600 dark:text-blue-300 hover:underline;
+}
+
+.btn {
+  @apply py-4 px-8 bg-indigo-800 rounded-lg text-white hover:bg-indigo-600 transition-colors font-medium dark:bg-indigo-700 dark:hover:bg-indigo-600 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800 dark:text-white text-sm;
+}
+
+.btn.small {
+  @apply py-2 px-6;
+}
+
+.inverse-btn {
+  @apply bg-indigo-600 text-sm rounded-md flex items-center hover:shadow-md hover:no-underline dark:border-indigo-300 text-white;
+}
+
+.btn:active,
+.inverse-btn:active {
+  @apply scale-95;
+}
+
+.input {
+  @apply border block py-4 px-6 w-full rounded-lg text-sm focus:border-indigo-800 transition-colors dark:border-zinc-600 dark:bg-transparent appearance-none font-light placeholder:text-zinc-500 text-white;
+}
+
+.input.grey {
+  @apply bg-zinc-800 border-0;
+}
+
+.m3o-container {
+  @apply container px-4 md:px-6 mx-auto max-w-screen-xl relative w-11/12 md:w-10/12;
+}
+
+.tabs {
+  @apply flex items-center font-medium text-sm pt-4 px-6 border-b tbc;
+}
+
+.tabs.no-border {
+  @apply border-b-0 px-0;
+}
+
+.tab {
+  @apply border-transparent text-zinc-600 dark:text-zinc-300 py-2 mr-8 border-b-2 border-solid block text-sm;
+}
+
+.tab.selected {
+  @apply border-indigo-600 text-zinc-600 dark:text-zinc-300 dark:border-indigo-400 font-bold;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-indigo-800 via-purple-500 to-pink-500 bg-clip-text text-transparent;
+}
+
+.box {
+  @apply bg-zinc-50 dark:bg-zinc-800 border dark:border-zinc-700 border-zinc-300;
+}
+
+/* Toggle border colour */
+.tbc {
+  @apply dark:border-zinc-700 border-zinc-200;
+}
+
+.tbgc {
+  @apply bg-zinc-100 dark:bg-zinc-800;
+}
+
+.ttc {
+  @apply text-zinc-600 dark:text-zinc-300;
+}
+
+.gradient-bg {
+  @apply bg-gradient-to-r from-indigo-800 via-purple-500 to-pink-500;
+}
+
+.description-heading {
+  @apply text-lg font-medium uppercase text-zinc-600 dark:text-white;
+}
+
+.card {
+  @apply bg-white rounded-md dark:bg-zinc-800 overflow-hidden border;
+}
+
+/* Stripe */
+.stripe-card {
+  @apply p-6 rounded-lg dark:bg-zinc-700 bg-zinc-200;
+}
+
+.stripe-card input {
+  @apply ttc;
+}
+
+option {
+  @apply dark:text-black;
+}
+
+.sidebar {
+  max-height: 640px;
+  overflow: scroll;
+}
+.endpoint-caller {
+  max-height: 640px;
+}
+
+.api-max-width {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.endpoint-card {
+  @apply border-t dark:border-zinc-700 pt-6 md:py-10;
+}
+
+.endpoint {
+  max-width: 15rem;
+  min-width: 15rem;
+}

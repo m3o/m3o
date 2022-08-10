@@ -1,0 +1,21 @@
+.root p {
+  @apply mb-3 leading-6 text-sm;
+}
+
+/* dark: didn't seem to work above */
+:global(.dark) .root p,
+:global(.dark) .root ul {
+  @apply text-zinc-400;
+}
+
+.root ul {
+  @apply list-disc pl-6 mb-3;
+}
+
+.root code {
+  @apply text-sm text-indigo-400 whitespace-pre-line;
+}
+
+.root h2 {
+  @apply font-bold mb-4;
+}
