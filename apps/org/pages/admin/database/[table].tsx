@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from '@heroicons/react/outline'
 import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
-import { DatabaseTable } from '@/components/pages/Cloud'
+import { DatabaseTable } from '@/components/pages/Admin'
 import { useM3OClient } from '@/hooks'
 import { Button, FullSpinner } from '@/components/ui'
 import { QueryKeys } from '@/lib/constants'
@@ -40,7 +40,7 @@ export default function CloudDatabaseTable() {
     () => m3o.db.dropTable({ table: tableName }),
     {
       onSuccess: () => {
-        router.push('/cloud/database')
+        router.push('/admin/database')
         queryClient.invalidateQueries(QueryKeys.CloudDatabaseTables)
       },
     },
@@ -73,11 +73,11 @@ export default function CloudDatabaseTable() {
 
   return (
     <>
-      <NextSeo title={`${seo.cloud.database.main.title} - ${tableName}`} />
+      <NextSeo title={`${seo.admin.database.main.title} - ${tableName}`} />
       <DashboardLayout>
         <div className="p-6 border-b tbc flex items-center justify-between">
           <h1 className="text-2xl font-medium gradient-text flex items-center">
-            <Link href="/cloud/database">
+            <Link href="/admin/database">
               <a className="ttc">
                 <ArrowLeftIcon className="w-4 mr-4" />
               </a>

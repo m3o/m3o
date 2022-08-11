@@ -17,37 +17,37 @@
       "title": "Account - Usage"
     }
   },
-  "cloud": {
+  "admin": {
     "users": {
       "main": {
-        "title": "Cloud - Users"
+        "title": "Admin - Users"
       },
       "add": {
-        "title": "Cloud - Users - Add"
+        "title": "Admin - Users - Add"
       }
     },
     "functions": {
       "main": {
-        "title": "Cloud - Functions"
+        "title": "Admin - Functions"
       },
       "add": {
-        "title": "Cloud - Functions - Add"
+        "title": "Admin - Functions - Add"
       }
     },
     "database": {
       "main": {
-        "title": "Cloud - Database"
+        "title": "Admin - Database"
       },
       "add": {
-        "title": "Cloud - Database - Add"
+        "title": "Admin - Database - Add"
       }
     },
     "apps": {
       "main": {
-        "title": "Cloud - Apps"
+        "title": "Admin - Apps"
       },
       "add": {
-        "title": "Cloud - Apps - Add"
+        "title": "Admin - Apps - Add"
       }
     }
   },

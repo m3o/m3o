@@ -62,7 +62,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
                 className={classNames('capitalize', {
                   'gradient-text font-bold': subscriptionLevel === 'pro',
                 })}>
-                {subscriptionLevel == 'free' ? 'dev' : subscriptionLevel}
+                {subscriptionLevel}
               </p>
             )}
           </div>

@@ -8,7 +8,7 @@ export function Subscriptions(): ReactElement {
     <div className="grid xl:grid-cols-4 mt-10 text-left gap-4">
       <Subscription
         cost="Free to start"
-        plan={SubscriptionPlans.Dev}
+        plan={SubscriptionPlans.Free}
         description="For small projects"
         features={[
           'Top-up via credit card',
@@ -32,7 +32,7 @@ export function Subscriptions(): ReactElement {
         plan={SubscriptionPlans.Solo}
         description="For creators and individuals"
         features={[
-          'Everything in Dev plus',
+          'Everything in Free plus',
           '5M messages',
           '1000 users',
           '10,000 posts',

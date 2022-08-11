@@ -16,7 +16,7 @@ export function SubscriptionPlanBubble({ plan }: Props): ReactElement {
           'bg-zinc-700': plan === SubscriptionPlans.Free,
         },
       )}>
-      {plan == SubscriptionPlans.Free ? SubscriptionPlans.Dev : plan}
+      {plan}
     </span>
   )
 }

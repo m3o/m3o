@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { FunctionEditSource } from '../../../components/pages/Cloud/Functions/FunctionEditSource'
+import { FunctionEditSource } from '../../../components/pages/Admin/Functions/FunctionEditSource'
 
 export default {
   title: 'Cloud/Functions/FunctionEditSource',

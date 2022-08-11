@@ -15,7 +15,7 @@ import { createApiClient } from '@/lib/api-client'
 import {
   AddFunctionForm,
   EnvironmentVariablesForm,
-} from '@/components/pages/Cloud'
+} from '@/components/pages/Admin'
 
 type Props = {
   user: Account
@@ -88,17 +88,17 @@ export default function CloudAddFunctionFromSource({
     },
     {
       onSuccess: () => {
-        router.push('/cloud/functions')
+        router.push('/admin/functions')
       },
     },
   )
 
   return (
     <>
-      <NextSeo {...seo.cloud.functions.add} />
+      <NextSeo {...seo.admin.functions.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
-          <BackButtonLink href="/cloud/functions">
+          <BackButtonLink href="/admin/functions">
             Back to functions
           </BackButtonLink>
           <h1 className="text-3xl font-medium mb-6 gradient-text">

@@ -1,6 +1,6 @@
 import type { Service } from 'm3o/app'
 import type { ReactElement } from 'react'
-import { Status, AppStatus } from '@/components/pages/Cloud'
+import { Status, AppStatus } from '@/components/pages/Admin'
 import { NextSeo } from 'next-seo'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 import { DashboardLayout } from '@/components/layouts'
@@ -9,7 +9,7 @@ import seo from '@/lib/seo.json'
 import { BackButtonLink, Button, Tabs } from '@/components/ui'
 import { AuthCookieNames } from '@/lib/constants'
 import { createApiClient } from '@/lib/api-client'
-import { Logs } from '@/components/pages/Cloud'
+import { Logs } from '@/components/pages/Admin'
 import { useFetchSingleApp, useUpdateApp, useDeleteApp } from '@/hooks'
 
 interface Props {
@@ -51,10 +51,10 @@ export default function CloudApp({ app }: Props): ReactElement {
 
   return (
     <>
-      <NextSeo title={`${seo.cloud.apps.main.title} - ${app.name}`} />
+      <NextSeo title={`${seo.admin.apps.main.title} - ${app.name}`} />
       <DashboardLayout>
         <div className="p-6 md:p-10 max-w-7xl mx-auto">
-          <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
+          <BackButtonLink href="/admin/apps">Back to apps</BackButtonLink>
           <div className="md:grid grid-cols-4 ">
             <div className="col-span-3">
               <h1 className="font-bold text-3xl mb-2">{data.name}</h1>

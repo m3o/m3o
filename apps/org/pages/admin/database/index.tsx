@@ -3,7 +3,7 @@ import { DashboardLayout } from '@/components/layouts'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchDbTables } from '@/hooks'
-import { DatabaseTableItem } from '@/components/pages/Cloud'
+import { DatabaseTableItem } from '@/components/pages/Admin'
 import { Spinner, LinkButton } from '@/components/ui'
 
 export const getServerSideProps = withAuth(async context => {
@@ -28,13 +28,13 @@ export default function CloudDatabase() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.functions.main} />
+      <NextSeo {...seo.admin.functions.main} />
       <DashboardLayout>
         <div className="px-6 py-4 border-b tbc flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-medium gradient-text">
             Database
           </h1>
-          {/* <LinkButton href="/cloud/database/add" className="text-sm">
+          {/* <LinkButton href="/admin/database/add" className="text-sm">
             Add
           </LinkButton> */}
         </div>

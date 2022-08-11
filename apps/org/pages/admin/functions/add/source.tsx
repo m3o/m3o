@@ -8,7 +8,7 @@ import seo from '@/lib/seo.json'
 import { AuthCookieNames } from '@/lib/constants'
 import { useM3OClient } from '@/hooks'
 import { createApiClient } from '@/lib/api-client'
-import { FunctionCreateFromSource } from '@/components/pages/Cloud'
+import { FunctionCreateFromSource } from '@/components/pages/Admin'
 
 interface Props {
   user: Account
@@ -50,14 +50,14 @@ export default function CloudAddFunctionFromSource() {
     },
     {
       onSuccess: () => {
-        router.push('/cloud/functions')
+        router.push('/admin/functions')
       },
     },
   )
 
   return (
     <>
-      <NextSeo {...seo.cloud.functions.add} />
+      <NextSeo {...seo.admin.functions.add} />
       <DashboardLayout>
         <FunctionCreateFromSource
           onSubmit={values => createMutation.mutate(values)}

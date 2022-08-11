@@ -15,7 +15,7 @@ import {
   Status,
   AppStatus,
   NoServiceResults,
-} from '@/components/pages/Cloud'
+} from '@/components/pages/Admin'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -61,7 +61,7 @@ export default function CloudApps() {
             row.original.status !== 'Deploying'
           ) {
             return (
-              <Link href={`/cloud/apps/${row.original.name}`}>{value}</Link>
+              <Link href={`/admin/apps/${row.original.name}`}>{value}</Link>
             )
           }
 
@@ -96,7 +96,7 @@ export default function CloudApps() {
 
   function renderApps() {
     if (data?.length === 0) {
-      return <NoServiceResults serviceName="apps" startLink="/cloud/apps/add" />
+      return <NoServiceResults serviceName="apps" startLink="/admin/apps/add" />
     }
 
     return (
@@ -114,7 +114,7 @@ export default function CloudApps() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.apps.main} />
+      <NextSeo {...seo.admin.apps.main} />
       <DashboardLayout>
         <div className="px-6 py-4 border-b tbc">
           <div className="flex items-center justify-between">
@@ -122,7 +122,7 @@ export default function CloudApps() {
               Apps
             </h1>
             {!!data?.length && (
-              <LinkButton href="/cloud/apps/add" className="text-sm">
+              <LinkButton href="/admin/apps/add" className="text-sm">
                 Add
               </LinkButton>
             )}

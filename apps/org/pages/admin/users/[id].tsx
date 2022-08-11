@@ -5,7 +5,7 @@ import { QueryKeys } from '@/lib/constants'
 import { FullSpinner, BackButtonLink } from '@/components/ui'
 import { useM3OClient } from '@/hooks'
 import { DashboardLayout } from '@/components/layouts'
-import { UserDetailRow } from '@/components/pages/Cloud'
+import { UserDetailRow } from '@/components/pages/Admin'
 
 type UserAccount = {
   created: string
@@ -36,7 +36,7 @@ export default function UserPage() {
         <FullSpinner />
       ) : (
         <div className="p-6 md:p-10">
-          <BackButtonLink href="/cloud/users">Back to users</BackButtonLink>
+          <BackButtonLink href="/admin/users">Back to users</BackButtonLink>
           <h1 className="text-3xl font-medium mb-6 gradient-text">
             {data.email || data.username}
           </h1>

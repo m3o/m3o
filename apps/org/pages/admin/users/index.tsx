@@ -4,7 +4,7 @@ import { LinkButton, FullSpinner } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useFetchUsers, useDeleteUsers } from '@/hooks'
-import { UsersTable } from '@/components/pages/Cloud'
+import { UsersTable } from '@/components/pages/Admin'
 
 export const getServerSideProps = withAuth(async context => {
   if (!context.req.user) {
@@ -40,13 +40,13 @@ export default function CloudUsers() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.users.main} />
+      <NextSeo {...seo.admin.users.main} />
       <DashboardLayout>
         <div className="px-6 py-4 border-b tbc flex justify-between items-center">
           <h1 className="text-2xl md:text-3xl font-medium gradient-text">
             Users
           </h1>
-          <LinkButton href="/cloud/users/add" className="text-sm">
+          <LinkButton href="/admin/users/add" className="text-sm">
             Add
           </LinkButton>
         </div>

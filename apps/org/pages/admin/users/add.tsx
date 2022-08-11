@@ -41,7 +41,7 @@ export default function CloudAddUser() {
       <NextSeo {...seo.about} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
-          <BackButtonLink href="/cloud/users">Back to Users</BackButtonLink>
+          <BackButtonLink href="/admin/users">Back to Users</BackButtonLink>
           <h1 className="text-3xl font-medium mb-6 gradient-text">Add User</h1>
           {addUserMutation.error && (
             <Alert type="error" className="mb-8">

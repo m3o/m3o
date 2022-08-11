@@ -13,7 +13,7 @@ export function useAddUser() {
       m3o.user.create({ ...fields, username: fields.email }),
     {
       onSuccess: () => {
-        router.push('/cloud/users')
+        router.push('/admin/users')
       },
     },
   )

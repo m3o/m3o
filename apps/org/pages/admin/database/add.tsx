@@ -45,7 +45,7 @@ export default function CloudDatabaseAdd() {
     (payload: CreateRequest) => m3o.db.create(payload),
     {
       onSuccess: () => {
-        router.push('/cloud/database')
+        router.push('/admin/database')
       },
     },
   )
@@ -75,10 +75,10 @@ export default function CloudDatabaseAdd() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.database.add} />
+      <NextSeo {...seo.admin.database.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10 max-w-xl">
-          <BackButtonLink href="/cloud/database">
+          <BackButtonLink href="/admin/database">
             Back to database
           </BackButtonLink>
           <h1 className="text-3xl font-medium mb-6 gradient-text">

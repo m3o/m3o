@@ -9,7 +9,7 @@ import { FullSpinner, LinkButton } from '@/components/ui'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 import seo from '@/lib/seo.json'
 import { useM3OClient } from '@/hooks'
-import { NoServiceResults, Table } from '@/components/pages/Cloud'
+import { NoServiceResults, Table } from '@/components/pages/Admin'
 import { QueryKeys } from '@/lib/constants'
 
 type FunctionItem = Required<Func> & { id: string }
@@ -71,7 +71,7 @@ export default function CloudFunctions() {
             original: { id },
           },
           value,
-        }) => <Link href={`/cloud/functions/edit/${id}`}>{value}</Link>,
+        }) => <Link href={`/admin/functions/edit/${id}`}>{value}</Link>,
       },
       {
         Header: 'URL',
@@ -121,7 +121,7 @@ export default function CloudFunctions() {
     if (data?.length === 0) {
       return (
         <NoServiceResults
-          startLink="/cloud/functions/add"
+          startLink="/admin/functions/add"
           serviceName="Functions"
         />
       )
@@ -139,13 +139,13 @@ export default function CloudFunctions() {
 
   return (
     <>
-      <NextSeo {...seo.cloud.functions.main} />
+      <NextSeo {...seo.admin.functions.main} />
       <DashboardLayout>
         <div className="px-6 py-4 border-b tbc flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-medium gradient-text">
             Functions
           </h1>
-          <LinkButton href="/cloud/functions/add" className="text-sm">
+          <LinkButton href="/admin/functions/add" className="text-sm">
             Add
           </LinkButton>
         </div>

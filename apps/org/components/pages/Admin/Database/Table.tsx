@@ -1,6 +1,6 @@
 import type { Column } from 'react-table'
 import { useMemo } from 'react'
-import { Table } from '@/components/pages/Cloud'
+import { Table } from '@/components/pages/Admin'
 
 type DatabaseItem = Record<string, unknown> & { id: string }
 

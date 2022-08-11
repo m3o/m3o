@@ -1,7 +1,7 @@
 import type {
   FunctionEditSourceProps,
   RepoFunctionEditProps,
-} from '@/components/pages/Cloud'
+} from '@/components/pages/Admin'
 import { useRef, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
@@ -35,14 +35,14 @@ export const getServerSideProps = withAuth(async context => {
 })
 
 const SourceCodeFunctionEdit = dynamic<FunctionEditSourceProps>(
-  () => import('@/components/pages/Cloud').then(mod => mod.FunctionEditSource),
+  () => import('@/components/pages/Admin').then(mod => mod.FunctionEditSource),
   {
     ssr: false,
   },
 )
 
 const RepoCodeFunctionEdit = dynamic<RepoFunctionEditProps>(
-  () => import('@/components/pages/Cloud').then(mod => mod.RepoFunctionEdit),
+  () => import('@/components/pages/Admin').then(mod => mod.RepoFunctionEdit),
   {
     ssr: false,
   },

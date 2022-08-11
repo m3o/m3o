@@ -10,7 +10,7 @@ export function useDeleteApp(name: string) {
   return useMutation(() => m3o.app.delete({ name }), {
     onSuccess: () => {
       queryClient.invalidateQueries(['apps', name])
-      router.push('/cloud/apps')
+      router.push('/admin/apps')
     },
   })
 }

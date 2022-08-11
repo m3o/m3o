@@ -10,7 +10,7 @@ export function useRunApp() {
 
   return useMutation((fields: RunRequest) => m3o.app.run(fields), {
     onSuccess: () => {
-      router.push('/cloud/apps')
+      router.push('/admin/apps')
     },
   })
 }

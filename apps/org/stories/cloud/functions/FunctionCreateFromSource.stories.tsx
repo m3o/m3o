@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { FunctionCreateFromSource } from '../../../components/pages/Cloud/Functions/FunctionCreateFromSource'
+import { FunctionCreateFromSource } from '../../../components/pages/Admin/Functions/FunctionCreateFromSource'
 
 export default {
   title: 'Cloud/Functions/FunctionCreateFromSource',

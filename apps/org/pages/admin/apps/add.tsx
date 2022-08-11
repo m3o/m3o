@@ -11,7 +11,7 @@ import { BackButtonLink, Button } from '@/components/ui'
 import {
   EnvironmentVariablesForm,
   AppDetailsForm,
-} from '@/components/pages/Cloud'
+} from '@/components/pages/Admin'
 import { createApiClient } from '@/lib/api-client'
 
 interface Props {
@@ -61,10 +61,10 @@ export default function CloudAddApp({ regions }: Props) {
 
   return (
     <>
-      <NextSeo {...seo.cloud.apps.add} />
+      <NextSeo {...seo.admin.apps.add} />
       <DashboardLayout>
         <div className="p-6 md:p-10">
-          <BackButtonLink href="/cloud/apps">Back to apps</BackButtonLink>
+          <BackButtonLink href="/admin/apps">Back to apps</BackButtonLink>
           <h1 className="text-3xl font-medium mb-6 gradient-text">Add App</h1>
           <div className="max-w-3xl">
             <FormProvider {...formMethods}>

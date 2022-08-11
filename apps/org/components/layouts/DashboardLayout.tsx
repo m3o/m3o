@@ -177,31 +177,6 @@ export function DashboardLayout({
                  ],
               },
               // {
-              //   title: 'Cloud',
-              //   items: [
-              //     {
-              //       text: 'Apps',
-              //       href: '/cloud/apps',
-              //       icon: ServerIcon,
-              //     },
-              //     {
-              //       text: 'Database',
-              //       href: '/cloud/database',
-              //       icon: DatabaseIcon,
-              //     },
-              //     {
-              //       text: 'Functions',
-              //       href: '/cloud/functions',
-              //       icon: CodeIcon,
-              //     },
-              //     {
-              //       text: 'Users',
-              //       href: '/cloud/users',
-              //       icon: UserGroupIcon,
-              //     },
-              //   ],
-              // },
-              // {
               //  title: 'Support',
               //  items: [
               //    {
