@@ -135,6 +135,11 @@ export function DashboardLayout({
                     icon: TerminalIcon,
                   },
                   {
+                    text: 'Groups',
+                    href: 'https://distributed.m3o.app',
+                    icon: UserGroupIcon,
+                  },
+                  {
                     text: 'Services',
                     href: '/services',
                     icon: SearchIcon,

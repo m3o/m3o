@@ -18,7 +18,7 @@ export function useRecentlyViewed(): UseRecentlyViewed {
     setRecentlyViewedKeys(prevItems => {
       const removedFromPrevious = prevItems.filter(item => item !== apiName)
       const newItems = [apiName, ...removedFromPrevious]
-      return newItems.slice(0, 5)
+      return newItems.slice(0, 3)
     })
   }, [])
 

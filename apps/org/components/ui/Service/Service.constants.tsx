@@ -68,6 +68,7 @@ export const ICONS: Icons = {
   dns: QuestionMarkCircleIcon,
   email: MailIcon,
   emoji: EmojiHappyIcon,
+  ethereum: MoonIcon,
   evchargers: LightningBoltIcon,
   event: ShareIcon,
   file: DocumentIcon,

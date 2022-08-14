@@ -4,6 +4,7 @@ import { APIKey } from './Widgets/APIKey'
 import { DashboardLayout } from '@/components/layouts'
 import { Subscription, RecentlyViewed } from '@/components/pages/Home'
 import { Balance } from '@/components/ui'
+import { UserGroupIcon } from '@heroicons/react/outline'
 
 interface LoggedInViewProps {
   apiToken: string
@@ -15,7 +16,9 @@ export const LoggedInView: FC<LoggedInViewProps> = ({ apiToken, user }) => {
     <DashboardLayout>
       <div className="p-6 lg:p-10 md:grid gap-6 lg:grid-cols-3 xl:grid-cols-7">
         <div className="lg:col-span-2 xl:col-span-5 md:px-10">
-          <APIKey apiToken={apiToken} />
+          <span class="text-4xl">Welcome to M3O</span>
+        </div>
+        <div className="lg:col-span-2 xl:col-span-5 md:px-10">
           <LegacyUsage />
         </div>
         <div className="rounded-lg xl:col-span-2 mt-6 md:mt-0">
