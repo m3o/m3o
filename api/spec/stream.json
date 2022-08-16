@@ -136,7 +136,7 @@
         "type": "object"
       },
       "CreateChannelRequest": {
-        "description": "Create a channel with a given name and description. Channels are created automatically but \n this allows you to specify a description that's persisted for the lifetime of the channel.",
+        "description": "Create a channel by name",
         "properties": {
           "description": {
             "description": "description for the channel",

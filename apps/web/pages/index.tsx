@@ -13,15 +13,15 @@ interface Props extends WithAuthProps {
 }
 
 const SERVICES_NAMES = [
+  'bitcoin',
   'crypto',
-  'currency',
   'nft',
-  'cache',
-  'user',
+  'currency',
   'db',
-  'sms',
   'email',
-  'geocoding',
+  'sms',
+  'user',
+  'wallet',
 ]
 
 export const getServerSideProps = withAuth(async context => {

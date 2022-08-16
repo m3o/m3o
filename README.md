@@ -23,7 +23,7 @@ Here are the main features:
 
 ## Services
 
-So far there are over 60+ APIs. Here are some of the highlights:
+So far there are over 60+ services. Here are some of the highlights:
 
 ### ☁️ Cloud
 
@@ -58,9 +58,9 @@ See the full list at [m3o.com/explore](https://m3o.com/explore).
 ## Getting Started
 
 - Head to [m3o.com](https://m3o.com) and signup for a free account.
-- Browse the APIs on the [Explore](https://m3o.com/explore) page.
-- Call any API using your token in the `Authorization: Bearer [Token]` header
-- All APIs are available through one endpoint: `https://api.m3o.com/v1/*`.
+- Browse services on the [Explore](https://m3o.com/explore) page.
+- Call any service using your token in the `Authorization: Bearer [Token]` header
+- All services are available through one API endpoint: `https://api.m3o.com/v1/*`.
 - Use [m3o-cli](https://github.com/m3o/m3o-cli), [m3o-js](https://github.com/m3o/m3o-js) and [m3o-go](https://github.com/m3o/m3o-go) clients for development
 
 ## Quick Start

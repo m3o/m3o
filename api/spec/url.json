@@ -1,6 +1,16 @@
 {
   "components": {
     "requestBodies": {
+      "UrlCreateRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateRequest"
+            }
+          }
+        },
+        "description": "UrlCreateRequest"
+      },
       "UrlDeleteRequest": {
         "content": {
           "application/json": {
@@ -21,15 +31,15 @@
         },
         "description": "UrlListRequest"
       },
-      "UrlProxyRequest": {
+      "UrlResolveRequest": {
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ProxyRequest"
+              "$ref": "#/components/schemas/ResolveRequest"
             }
           }
         },
-        "description": "UrlProxyRequest"
+        "description": "UrlResolveRequest"
       },
       "UrlShortenRequest": {
         "content": {
@@ -40,6 +50,16 @@
           }
         },
         "description": "UrlShortenRequest"
+      },
+      "UrlUpdateRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateRequest"
+            }
+          }
+        },
+        "description": "UrlUpdateRequest"
       }
     },
     "responses": {
@@ -75,6 +95,16 @@
         },
         "description": "Error from the Micro API"
       },
+      "UrlCreateResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateResponse"
+            }
+          }
+        },
+        "description": "UrlCreateResponse"
+      },
       "UrlDeleteResponse": {
         "content": {
           "application/json": {
@@ -95,15 +125,15 @@
         },
         "description": "UrlListResponse"
       },
-      "UrlProxyResponse": {
+      "UrlResolveResponse": {
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ProxyResponse"
+              "$ref": "#/components/schemas/ResolveResponse"
             }
           }
         },
-        "description": "UrlProxyResponse"
+        "description": "UrlResolveResponse"
       },
       "UrlShortenResponse": {
         "content": {
@@ -114,13 +144,75 @@
           }
         },
         "description": "UrlShortenResponse"
+      },
+      "UrlUpdateResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateResponse"
+            }
+          }
+        },
+        "description": "UrlUpdateResponse"
       }
     },
     "schemas": {
+      "CreateRequest": {
+        "description": "Create a URL",
+        "properties": {
+          "destinationURL": {
+            "description": "destination url",
+            "type": "string"
+          },
+          "id": {
+            "description": "a unique id e.g uuid or my-url",
+            "type": "string"
+          }
+        },
+        "title": "CreateRequest",
+        "type": "object"
+      },
+      "CreateResponse": {
+        "properties": {
+          "url": {
+            "properties": {
+              "created": {
+                "description": "time of creation",
+                "type": "string"
+              },
+              "destinationURL": {
+                "description": "destination url",
+                "type": "string"
+              },
+              "hitCount": {
+                "description": "The number of times the short URL has been resolved",
+                "format": "int64",
+                "type": "number"
+              },
+              "id": {
+                "description": "url id",
+                "type": "string"
+              },
+              "shortURL": {
+                "description": "shortened url",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "title": "CreateResponse",
+        "type": "object"
+      },
       "DeleteRequest": {
         "description": "Delete a URL",
         "properties": {
+          "id": {
+            "description": "delete by id",
+            "type": "string"
+          },
           "shortURL": {
+            "description": "delete by shortURL",
             "type": "string"
           }
         },
@@ -159,6 +251,10 @@
                 "format": "int64",
                 "type": "number"
               },
+              "id": {
+                "description": "url id",
+                "type": "string"
+              },
               "shortURL": {
                 "description": "shortened url",
                 "type": "string"
@@ -170,28 +266,28 @@
         "title": "ListResponse",
         "type": "object"
       },
-      "ProxyRequest": {
-        "description": "Proxy returns the destination URL of a short URL.",
+      "ResolveRequest": {
+        "description": "Resolve returns the destination URL of a short URL.",
         "properties": {
           "shortURL": {
-            "description": "short url ID, without the domain, eg. if your short URL is\n `m3o.one/u/someshorturlid` then pass in `someshorturlid`",
+            "description": "short url to resolve",
             "type": "string"
           }
         },
-        "title": "ProxyRequest",
+        "title": "ResolveRequest",
         "type": "object"
       },
-      "ProxyResponse": {
+      "ResolveResponse": {
         "properties": {
           "destinationURL": {
             "type": "string"
           }
         },
-        "title": "ProxyResponse",
+        "title": "ResolveResponse",
         "type": "object"
       },
       "ShortenRequest": {
-        "description": "Shorten a long URL",
+        "description": "Shorten a URL",
         "properties": {
           "destinationURL": {
             "description": "the url to shorten",
@@ -226,12 +322,39 @@
             "format": "int64",
             "type": "number"
           },
+          "id": {
+            "description": "url id",
+            "type": "string"
+          },
           "shortURL": {
             "description": "shortened url",
             "type": "string"
           }
         },
         "title": "URLPair",
+        "type": "object"
+      },
+      "UpdateRequest": {
+        "description": "Update the destination for a short URL",
+        "properties": {
+          "destinationURL": {
+            "description": "the destination to update to",
+            "type": "string"
+          },
+          "id": {
+            "description": "update by id",
+            "type": "string"
+          },
+          "shortURL": {
+            "description": "update by short url",
+            "type": "string"
+          }
+        },
+        "title": "UpdateRequest",
+        "type": "object"
+      },
+      "UpdateResponse": {
+        "title": "UpdateResponse",
         "type": "object"
       }
     },
@@ -256,6 +379,38 @@
   },
   "openapi": "3.0.0",
   "paths": {
+    "/url/Url/Create": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UrlCreateRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UrlCreateResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Url.Create(CreateRequest)"
+      }
+    },
     "/url/Url/Delete": {
       "parameters": [
         {
@@ -320,7 +475,7 @@
         "summary": "Url.List(ListRequest)"
       }
     },
-    "/url/Url/Proxy": {
+    "/url/Url/Resolve": {
       "parameters": [
         {
           "in": "header",
@@ -334,11 +489,11 @@
       ],
       "post": {
         "requestBody": {
-          "$ref": "#/components/requestBodies/UrlProxyRequest"
+          "$ref": "#/components/requestBodies/UrlResolveRequest"
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/UrlProxyResponse"
+            "$ref": "#/components/responses/UrlResolveResponse"
           },
           "default": {
             "$ref": "#/components/responses/MicroAPIError"
@@ -349,7 +504,7 @@
             "MicroAPIToken": []
           }
         ],
-        "summary": "Url.Proxy(ProxyRequest)"
+        "summary": "Url.Resolve(ResolveRequest)"
       }
     },
     "/url/Url/Shorten": {
@@ -382,6 +537,38 @@
           }
         ],
         "summary": "Url.Shorten(ShortenRequest)"
+      }
+    },
+    "/url/Url/Update": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UrlUpdateRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UrlUpdateResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Url.Update(UpdateRequest)"
       }
     }
   },

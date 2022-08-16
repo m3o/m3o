@@ -1,6 +1,16 @@
 {
   "components": {
     "requestBodies": {
+      "QrCodesRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CodesRequest"
+            }
+          }
+        },
+        "description": "QrCodesRequest"
+      },
       "QrGenerateRequest": {
         "content": {
           "application/json": {
@@ -45,6 +55,16 @@
         },
         "description": "Error from the Micro API"
       },
+      "QrCodesResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CodesResponse"
+            }
+          }
+        },
+        "description": "QrCodesResponse"
+      },
       "QrGenerateResponse": {
         "content": {
           "application/json": {
@@ -57,6 +77,61 @@
       }
     },
     "schemas": {
+      "Code": {
+        "properties": {
+          "created": {
+            "description": "time of creation",
+            "type": "string"
+          },
+          "file": {
+            "description": "file name",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "description": "text of the QR code",
+            "type": "string"
+          }
+        },
+        "title": "Code",
+        "type": "object"
+      },
+      "CodesRequest": {
+        "description": "List your QR codes",
+        "title": "CodesRequest",
+        "type": "object"
+      },
+      "CodesResponse": {
+        "properties": {
+          "codes": {
+            "items": {
+              "properties": {
+                "created": {
+                  "description": "time of creation",
+                  "type": "string"
+                },
+                "file": {
+                  "description": "file name",
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "description": "text of the QR code",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "CodesResponse",
+        "type": "object"
+      },
       "GenerateRequest": {
         "description": "Generate a QR code with a specific text and size",
         "properties": {
@@ -105,6 +180,38 @@
   },
   "openapi": "3.0.0",
   "paths": {
+    "/qr/Qr/Codes": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QrCodesRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/QrCodesResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Qr.Codes(CodesRequest)"
+      }
+    },
     "/qr/Qr/Generate": {
       "parameters": [
         {

@@ -1,0 +1,909 @@
+{
+  "components": {
+    "requestBodies": {
+      "WalletBalanceRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceRequest"
+            }
+          }
+        },
+        "description": "WalletBalanceRequest"
+      },
+      "WalletCreateRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateRequest"
+            }
+          }
+        },
+        "description": "WalletCreateRequest"
+      },
+      "WalletCreditRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreditRequest"
+            }
+          }
+        },
+        "description": "WalletCreditRequest"
+      },
+      "WalletDebitRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DebitRequest"
+            }
+          }
+        },
+        "description": "WalletDebitRequest"
+      },
+      "WalletDeleteRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteRequest"
+            }
+          }
+        },
+        "description": "WalletDeleteRequest"
+      },
+      "WalletListRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListRequest"
+            }
+          }
+        },
+        "description": "WalletListRequest"
+      },
+      "WalletReadRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReadRequest"
+            }
+          }
+        },
+        "description": "WalletReadRequest"
+      },
+      "WalletTransactionsRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionsRequest"
+            }
+          }
+        },
+        "description": "WalletTransactionsRequest"
+      },
+      "WalletTransferRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransferRequest"
+            }
+          }
+        },
+        "description": "WalletTransferRequest"
+      }
+    },
+    "responses": {
+      "MicroAPIError": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "Code": {
+                  "description": "Error code",
+                  "example": 500,
+                  "type": "number"
+                },
+                "Detail": {
+                  "description": "Error detail",
+                  "example": "service not found",
+                  "type": "string"
+                },
+                "Id": {
+                  "description": "Error ID",
+                  "type": "string"
+                },
+                "Status": {
+                  "description": "Error status message",
+                  "example": "Internal Server Error",
+                  "type": "string"
+                }
+              },
+              "title": "MicroAPIError",
+              "type": "object"
+            }
+          }
+        },
+        "description": "Error from the Micro API"
+      },
+      "WalletBalanceResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceResponse"
+            }
+          }
+        },
+        "description": "WalletBalanceResponse"
+      },
+      "WalletCreateResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateResponse"
+            }
+          }
+        },
+        "description": "WalletCreateResponse"
+      },
+      "WalletCreditResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreditResponse"
+            }
+          }
+        },
+        "description": "WalletCreditResponse"
+      },
+      "WalletDebitResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DebitResponse"
+            }
+          }
+        },
+        "description": "WalletDebitResponse"
+      },
+      "WalletDeleteResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteResponse"
+            }
+          }
+        },
+        "description": "WalletDeleteResponse"
+      },
+      "WalletListResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListResponse"
+            }
+          }
+        },
+        "description": "WalletListResponse"
+      },
+      "WalletReadResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReadResponse"
+            }
+          }
+        },
+        "description": "WalletReadResponse"
+      },
+      "WalletTransactionsResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionsResponse"
+            }
+          }
+        },
+        "description": "WalletTransactionsResponse"
+      },
+      "WalletTransferResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransferResponse"
+            }
+          }
+        },
+        "description": "WalletTransferResponse"
+      }
+    },
+    "schemas": {
+      "Account": {
+        "properties": {
+          "balance": {
+            "description": "current balance",
+            "format": "int64",
+            "type": "number"
+          },
+          "description": {
+            "description": "description of the wallet",
+            "type": "string"
+          },
+          "id": {
+            "description": "wallet id",
+            "type": "string"
+          },
+          "name": {
+            "description": "name of the wallet",
+            "type": "string"
+          }
+        },
+        "title": "Account",
+        "type": "object"
+      },
+      "BalanceRequest": {
+        "description": "Get the balance of a wallet",
+        "properties": {
+          "id": {
+            "description": "wallet id",
+            "type": "string"
+          }
+        },
+        "title": "BalanceRequest",
+        "type": "object"
+      },
+      "BalanceResponse": {
+        "properties": {
+          "balance": {
+            "description": "current balance",
+            "format": "int64",
+            "type": "number"
+          }
+        },
+        "title": "BalanceResponse",
+        "type": "object"
+      },
+      "CreateRequest": {
+        "description": "Create a new wallet",
+        "properties": {
+          "description": {
+            "description": "description for wallet",
+            "type": "string"
+          },
+          "id": {
+            "description": "optional id",
+            "type": "string"
+          },
+          "name": {
+            "description": "name of the wallet",
+            "type": "string"
+          }
+        },
+        "title": "CreateRequest",
+        "type": "object"
+      },
+      "CreateResponse": {
+        "properties": {
+          "account": {
+            "description": "the wallet created",
+            "properties": {
+              "balance": {
+                "description": "current balance",
+                "format": "int64",
+                "type": "number"
+              },
+              "description": {
+                "description": "description of the wallet",
+                "type": "string"
+              },
+              "id": {
+                "description": "wallet id",
+                "type": "string"
+              },
+              "name": {
+                "description": "name of the wallet",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "title": "CreateResponse",
+        "type": "object"
+      },
+      "CreditRequest": {
+        "description": "Add credit to a wallet",
+        "properties": {
+          "amount": {
+            "description": "amount to credit",
+            "format": "int64",
+            "type": "number"
+          },
+          "id": {
+            "description": "wallet id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "description": "idempotency key",
+            "type": "string"
+          },
+          "reference": {
+            "description": "reference note",
+            "type": "string"
+          },
+          "visible": {
+            "description": "if the transaction is visible",
+            "type": "boolean"
+          }
+        },
+        "title": "CreditRequest",
+        "type": "object"
+      },
+      "CreditResponse": {
+        "properties": {
+          "balance": {
+            "description": "the new balance",
+            "format": "int64",
+            "type": "number"
+          }
+        },
+        "title": "CreditResponse",
+        "type": "object"
+      },
+      "DebitRequest": {
+        "description": "Debit a wallet",
+        "properties": {
+          "amount": {
+            "description": "amount to debit",
+            "format": "int64",
+            "type": "number"
+          },
+          "id": {
+            "description": "wallet",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "description": "idempotency key",
+            "type": "string"
+          },
+          "reference": {
+            "description": "reference note",
+            "type": "string"
+          },
+          "visible": {
+            "description": "if the transaction is visible",
+            "type": "boolean"
+          }
+        },
+        "title": "DebitRequest",
+        "type": "object"
+      },
+      "DebitResponse": {
+        "properties": {
+          "balance": {
+            "description": "the new balance",
+            "format": "int64",
+            "type": "number"
+          }
+        },
+        "title": "DebitResponse",
+        "type": "object"
+      },
+      "DeleteRequest": {
+        "description": "Delete a wallet",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "title": "DeleteRequest",
+        "type": "object"
+      },
+      "DeleteResponse": {
+        "title": "DeleteResponse",
+        "type": "object"
+      },
+      "ListRequest": {
+        "description": "List your wallets",
+        "title": "ListRequest",
+        "type": "object"
+      },
+      "ListResponse": {
+        "properties": {
+          "accounts": {
+            "items": {
+              "properties": {
+                "balance": {
+                  "description": "current balance",
+                  "format": "int64",
+                  "type": "number"
+                },
+                "description": {
+                  "description": "description of the wallet",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "wallet id",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "name of the wallet",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "ListResponse",
+        "type": "object"
+      },
+      "ReadRequest": {
+        "description": "Get wallet by id",
+        "properties": {
+          "id": {
+            "description": "wallet id",
+            "type": "string"
+          }
+        },
+        "title": "ReadRequest",
+        "type": "object"
+      },
+      "ReadResponse": {
+        "properties": {
+          "account": {
+            "properties": {
+              "balance": {
+                "description": "current balance",
+                "format": "int64",
+                "type": "number"
+              },
+              "description": {
+                "description": "description of the wallet",
+                "type": "string"
+              },
+              "id": {
+                "description": "wallet id",
+                "type": "string"
+              },
+              "name": {
+                "description": "name of the wallet",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "title": "ReadResponse",
+        "type": "object"
+      },
+      "Transaction": {
+        "properties": {
+          "amount": {
+            "description": "amount in transaction",
+            "format": "int64",
+            "type": "number"
+          },
+          "created": {
+            "description": "time of transaction",
+            "type": "string"
+          },
+          "id": {
+            "description": "unique id of transaction",
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "associated metadata",
+            "type": "object"
+          },
+          "reference": {
+            "description": "reference note",
+            "type": "string"
+          }
+        },
+        "title": "Transaction",
+        "type": "object"
+      },
+      "TransactionsRequest": {
+        "description": "List the transactions for a wallet",
+        "properties": {
+          "id": {
+            "description": "wallet id",
+            "type": "string"
+          }
+        },
+        "title": "TransactionsRequest",
+        "type": "object"
+      },
+      "TransactionsResponse": {
+        "properties": {
+          "transactions": {
+            "description": "list of transactions",
+            "items": {
+              "properties": {
+                "amount": {
+                  "description": "amount in transaction",
+                  "format": "int64",
+                  "type": "number"
+                },
+                "created": {
+                  "description": "time of transaction",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "unique id of transaction",
+                  "type": "string"
+                },
+                "metadata": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "associated metadata",
+                  "type": "object"
+                },
+                "reference": {
+                  "description": "reference note",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "title": "TransactionsResponse",
+        "type": "object"
+      },
+      "TransferRequest": {
+        "description": "Make a transfer from one wallet to another",
+        "properties": {
+          "amount": {
+            "description": "amount to transfer",
+            "format": "int64",
+            "type": "number"
+          },
+          "from_id": {
+            "description": "from wallet id",
+            "type": "string"
+          },
+          "reference": {
+            "description": "reference",
+            "type": "string"
+          },
+          "to_id": {
+            "description": "to wallet id",
+            "type": "string"
+          },
+          "visible": {
+            "description": "visible?",
+            "type": "boolean"
+          }
+        },
+        "title": "TransferRequest",
+        "type": "object"
+      },
+      "TransferResponse": {
+        "title": "TransferResponse",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "M3OAPIToken": {
+        "bearerFormat": "token",
+        "description": "M3O API token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Generated by protoc-gen-openapi",
+    "title": "Wallet",
+    "version": "1",
+    "x-logo": {
+      "altText": "M3O logo",
+      "backgroundColor": "#000000",
+      "url": "https://raw.githubusercontent.com/m3o/m3o/main/images/logo.png"
+    }
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/wallet/Wallet/Balance": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletBalanceRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletBalanceResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Balance(BalanceRequest)"
+      }
+    },
+    "/wallet/Wallet/Create": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletCreateRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletCreateResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Create(CreateRequest)"
+      }
+    },
+    "/wallet/Wallet/Credit": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletCreditRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletCreditResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Credit(CreditRequest)"
+      }
+    },
+    "/wallet/Wallet/Debit": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletDebitRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletDebitResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Debit(DebitRequest)"
+      }
+    },
+    "/wallet/Wallet/Delete": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletDeleteRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletDeleteResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Delete(DeleteRequest)"
+      }
+    },
+    "/wallet/Wallet/List": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletListRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.List(ListRequest)"
+      }
+    },
+    "/wallet/Wallet/Read": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletReadRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletReadResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Read(ReadRequest)"
+      }
+    },
+    "/wallet/Wallet/Transactions": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletTransactionsRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletTransactionsResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Transactions(TransactionsRequest)"
+      }
+    },
+    "/wallet/Wallet/Transfer": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WalletTransferRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/WalletTransferResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Wallet.Transfer(TransferRequest)"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.m3o.com/v1",
+      "description": "M3O platform"
+    }
+  ]
+}

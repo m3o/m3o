@@ -218,18 +218,18 @@
     },
     "schemas": {
       "CreateRequest": {
-        "description": "Create a new chat room",
+        "description": "Create a new group",
         "properties": {
           "description": {
             "description": "chat description",
             "type": "string"
           },
           "name": {
-            "description": "name of the room",
+            "description": "name of the group",
             "type": "string"
           },
           "private": {
-            "description": "whether its a private room",
+            "description": "whether its a private group",
             "type": "boolean"
           },
           "user_ids": {
@@ -245,8 +245,8 @@
       },
       "CreateResponse": {
         "properties": {
-          "room": {
-            "description": "the unique chat room",
+          "group": {
+            "description": "the unique group",
             "properties": {
               "created_at": {
                 "description": "time of creation",
@@ -257,7 +257,7 @@
                 "type": "string"
               },
               "id": {
-                "description": "unique room id",
+                "description": "unique group id",
                 "type": "string"
               },
               "name": {
@@ -265,7 +265,7 @@
                 "type": "string"
               },
               "private": {
-                "description": "whether its a private room",
+                "description": "whether its a private group",
                 "type": "boolean"
               },
               "user_ids": {
@@ -283,10 +283,10 @@
         "type": "object"
       },
       "DeleteRequest": {
-        "description": "Delete a chat room",
+        "description": "Delete a group",
         "properties": {
-          "room_id": {
-            "description": "the chat room id to delete",
+          "group_id": {
+            "description": "the group id to delete",
             "type": "string"
           }
         },
@@ -295,7 +295,7 @@
       },
       "DeleteResponse": {
         "properties": {
-          "room": {
+          "group": {
             "properties": {
               "created_at": {
                 "description": "time of creation",
@@ -306,7 +306,7 @@
                 "type": "string"
               },
               "id": {
-                "description": "unique room id",
+                "description": "unique group id",
                 "type": "string"
               },
               "name": {
@@ -314,7 +314,7 @@
                 "type": "string"
               },
               "private": {
-                "description": "whether its a private room",
+                "description": "whether its a private group",
                 "type": "boolean"
               },
               "user_ids": {
@@ -331,11 +331,44 @@
         "title": "DeleteResponse",
         "type": "object"
       },
+      "Group": {
+        "properties": {
+          "created_at": {
+            "description": "time of creation",
+            "type": "string"
+          },
+          "description": {
+            "description": "description of the that",
+            "type": "string"
+          },
+          "id": {
+            "description": "unique group id",
+            "type": "string"
+          },
+          "name": {
+            "description": "name of the chat",
+            "type": "string"
+          },
+          "private": {
+            "description": "whether its a private group",
+            "type": "boolean"
+          },
+          "user_ids": {
+            "description": "list of users",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "Group",
+        "type": "object"
+      },
       "HistoryRequest": {
         "description": "List the messages in a chat",
         "properties": {
-          "room_id": {
-            "description": "the chat room id to get",
+          "group_id": {
+            "description": "the group id to get",
             "type": "string"
           }
         },
@@ -346,19 +379,19 @@
         "description": "HistoryResponse contains the historical messages in a chat",
         "properties": {
           "messages": {
-            "description": "messages in the chat room",
+            "description": "messages in the group",
             "items": {
               "properties": {
                 "client": {
                   "description": "a client side id, should be validated by the server to make the request retry safe",
                   "type": "string"
                 },
-                "id": {
-                  "description": "id of the message, allocated by the server",
+                "group_id": {
+                  "description": "id of the chat the message is being sent to / from",
                   "type": "string"
                 },
-                "room_id": {
-                  "description": "id of the chat the message is being sent to / from",
+                "id": {
+                  "description": "id of the message, allocated by the server",
                   "type": "string"
                 },
                 "sent_at": {
@@ -387,10 +420,10 @@
         "type": "object"
       },
       "InviteRequest": {
-        "description": "Invite a user to a chat room",
+        "description": "Invite a user to a group",
         "properties": {
-          "room_id": {
-            "description": "the room id",
+          "group_id": {
+            "description": "the group id",
             "type": "string"
           },
           "user_id": {
@@ -403,7 +436,7 @@
       },
       "InviteResponse": {
         "properties": {
-          "room": {
+          "group": {
             "properties": {
               "created_at": {
                 "description": "time of creation",
@@ -414,7 +447,7 @@
                 "type": "string"
               },
               "id": {
-                "description": "unique room id",
+                "description": "unique group id",
                 "type": "string"
               },
               "name": {
@@ -422,7 +455,7 @@
                 "type": "string"
               },
               "private": {
-                "description": "whether its a private room",
+                "description": "whether its a private group",
                 "type": "boolean"
               },
               "user_ids": {
@@ -440,10 +473,10 @@
         "type": "object"
       },
       "JoinRequest": {
-        "description": "Join a chat room",
+        "description": "Join a group",
         "properties": {
-          "room_id": {
-            "description": "chat room to join",
+          "group_id": {
+            "description": "group to join",
             "type": "string"
           },
           "user_id": {
@@ -462,12 +495,12 @@
                 "description": "a client side id, should be validated by the server to make the request retry safe",
                 "type": "string"
               },
-              "id": {
-                "description": "id of the message, allocated by the server",
+              "group_id": {
+                "description": "id of the chat the message is being sent to / from",
                 "type": "string"
               },
-              "room_id": {
-                "description": "id of the chat the message is being sent to / from",
+              "id": {
+                "description": "id of the message, allocated by the server",
                 "type": "string"
               },
               "sent_at": {
@@ -494,10 +527,10 @@
         "type": "object"
       },
       "KickRequest": {
-        "description": "Kick a user from a chat room",
+        "description": "Kick a user from a group",
         "properties": {
-          "room_id": {
-            "description": "the chat room id",
+          "group_id": {
+            "description": "the group id",
             "type": "string"
           },
           "user_id": {
@@ -510,7 +543,7 @@
       },
       "KickResponse": {
         "properties": {
-          "room": {
+          "group": {
             "properties": {
               "created_at": {
                 "description": "time of creation",
@@ -521,7 +554,7 @@
                 "type": "string"
               },
               "id": {
-                "description": "unique room id",
+                "description": "unique group id",
                 "type": "string"
               },
               "name": {
@@ -529,7 +562,7 @@
                 "type": "string"
               },
               "private": {
-                "description": "whether its a private room",
+                "description": "whether its a private group",
                 "type": "boolean"
               },
               "user_ids": {
@@ -547,10 +580,10 @@
         "type": "object"
       },
       "LeaveRequest": {
-        "description": "Leave a chat room",
+        "description": "Leave a group",
         "properties": {
-          "room_id": {
-            "description": "the chat room id",
+          "group_id": {
+            "description": "the group id",
             "type": "string"
           },
           "user_id": {
@@ -563,7 +596,7 @@
       },
       "LeaveResponse": {
         "properties": {
-          "room": {
+          "group": {
             "properties": {
               "created_at": {
                 "description": "time of creation",
@@ -574,7 +607,7 @@
                 "type": "string"
               },
               "id": {
-                "description": "unique room id",
+                "description": "unique group id",
                 "type": "string"
               },
               "name": {
@@ -582,7 +615,7 @@
                 "type": "string"
               },
               "private": {
-                "description": "whether its a private room",
+                "description": "whether its a private group",
                 "type": "boolean"
               },
               "user_ids": {
@@ -612,7 +645,7 @@
       },
       "ListResponse": {
         "properties": {
-          "rooms": {
+          "groups": {
             "items": {
               "properties": {
                 "created_at": {
@@ -624,7 +657,7 @@
                   "type": "string"
                 },
                 "id": {
-                  "description": "unique room id",
+                  "description": "unique group id",
                   "type": "string"
                 },
                 "name": {
@@ -632,7 +665,7 @@
                   "type": "string"
                 },
                 "private": {
-                  "description": "whether its a private room",
+                  "description": "whether its a private group",
                   "type": "boolean"
                 },
                 "user_ids": {
@@ -658,12 +691,12 @@
             "description": "a client side id, should be validated by the server to make the request retry safe",
             "type": "string"
           },
-          "id": {
-            "description": "id of the message, allocated by the server",
+          "group_id": {
+            "description": "id of the chat the message is being sent to / from",
             "type": "string"
           },
-          "room_id": {
-            "description": "id of the chat the message is being sent to / from",
+          "id": {
+            "description": "id of the message, allocated by the server",
             "type": "string"
           },
           "sent_at": {
@@ -686,39 +719,6 @@
         "title": "Message",
         "type": "object"
       },
-      "Room": {
-        "properties": {
-          "created_at": {
-            "description": "time of creation",
-            "type": "string"
-          },
-          "description": {
-            "description": "description of the that",
-            "type": "string"
-          },
-          "id": {
-            "description": "unique room id",
-            "type": "string"
-          },
-          "name": {
-            "description": "name of the chat",
-            "type": "string"
-          },
-          "private": {
-            "description": "whether its a private room",
-            "type": "boolean"
-          },
-          "user_ids": {
-            "description": "list of users",
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          }
-        },
-        "title": "Room",
-        "type": "object"
-      },
       "SendRequest": {
         "description": "Connect to a chat to receive a stream of messages\n Send a message to a chat",
         "properties": {
@@ -726,8 +726,8 @@
             "description": "a client side id, should be validated by the server to make the request retry safe",
             "type": "string"
           },
-          "room_id": {
-            "description": "id of the chat room the message is being sent to / from",
+          "group_id": {
+            "description": "id of the group the message is being sent to / from",
             "type": "string"
           },
           "subject": {
@@ -755,12 +755,12 @@
                 "description": "a client side id, should be validated by the server to make the request retry safe",
                 "type": "string"
               },
-              "id": {
-                "description": "id of the message, allocated by the server",
+              "group_id": {
+                "description": "id of the chat the message is being sent to / from",
                 "type": "string"
               },
-              "room_id": {
-                "description": "id of the chat the message is being sent to / from",
+              "id": {
+                "description": "id of the message, allocated by the server",
                 "type": "string"
               },
               "sent_at": {

@@ -953,6 +953,10 @@
           "order_by": {
             "description": "order by \"sale_date\", \"sale_count\", \"sale_price\", \"total_price\"",
             "type": "string"
+          },
+          "owner": {
+            "description": "owner wallet address",
+            "type": "string"
           }
         },
         "title": "AssetsRequest",
@@ -1677,6 +1681,10 @@
           "offset": {
             "format": "int32",
             "type": "number"
+          },
+          "owner": {
+            "description": "owner wallet address",
+            "type": "string"
           }
         },
         "title": "CollectionsRequest",

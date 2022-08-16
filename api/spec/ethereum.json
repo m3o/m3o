@@ -1,0 +1,354 @@
+{
+  "components": {
+    "requestBodies": {
+      "EthereumBalanceRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceRequest"
+            }
+          }
+        },
+        "description": "EthereumBalanceRequest"
+      },
+      "EthereumBroadcastRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BroadcastRequest"
+            }
+          }
+        },
+        "description": "EthereumBroadcastRequest"
+      },
+      "EthereumTransactionRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionRequest"
+            }
+          }
+        },
+        "description": "EthereumTransactionRequest"
+      }
+    },
+    "responses": {
+      "EthereumBalanceResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceResponse"
+            }
+          }
+        },
+        "description": "EthereumBalanceResponse"
+      },
+      "EthereumBroadcastResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BroadcastResponse"
+            }
+          }
+        },
+        "description": "EthereumBroadcastResponse"
+      },
+      "EthereumTransactionResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            }
+          }
+        },
+        "description": "EthereumTransactionResponse"
+      },
+      "MicroAPIError": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "Code": {
+                  "description": "Error code",
+                  "example": 500,
+                  "type": "number"
+                },
+                "Detail": {
+                  "description": "Error detail",
+                  "example": "service not found",
+                  "type": "string"
+                },
+                "Id": {
+                  "description": "Error ID",
+                  "type": "string"
+                },
+                "Status": {
+                  "description": "Error status message",
+                  "example": "Internal Server Error",
+                  "type": "string"
+                }
+              },
+              "title": "MicroAPIError",
+              "type": "object"
+            }
+          }
+        },
+        "description": "Error from the Micro API"
+      }
+    },
+    "schemas": {
+      "BalanceRequest": {
+        "description": "Get the balance of an ethereum wallet",
+        "properties": {
+          "address": {
+            "description": "address of wallet",
+            "type": "string"
+          }
+        },
+        "title": "BalanceRequest",
+        "type": "object"
+      },
+      "BalanceResponse": {
+        "properties": {
+          "balance": {
+            "description": "the account balance (in wei)",
+            "format": "int64",
+            "type": "number"
+          }
+        },
+        "title": "BalanceResponse",
+        "type": "object"
+      },
+      "BroadcastRequest": {
+        "description": "Broadcast presigned transaction to ethereum network",
+        "properties": {
+          "hex": {
+            "description": "raw transaction data to broadcast",
+            "type": "string"
+          }
+        },
+        "title": "BroadcastRequest",
+        "type": "object"
+      },
+      "BroadcastResponse": {
+        "properties": {
+          "hash": {
+            "description": "the transaction hash",
+            "type": "string"
+          }
+        },
+        "title": "BroadcastResponse",
+        "type": "object"
+      },
+      "TransactionRequest": {
+        "description": "Get transaction details by hash",
+        "properties": {
+          "hash": {
+            "description": "tx hash",
+            "type": "string"
+          }
+        },
+        "title": "TransactionRequest",
+        "type": "object"
+      },
+      "TransactionResponse": {
+        "properties": {
+          "block_hash": {
+            "description": "the block hash",
+            "type": "string"
+          },
+          "block_number": {
+            "description": "the block number",
+            "type": "string"
+          },
+          "chain_id": {
+            "description": "chain id",
+            "type": "string"
+          },
+          "from_address": {
+            "description": "sent from",
+            "type": "string"
+          },
+          "gas": {
+            "description": "gas",
+            "type": "string"
+          },
+          "gas_price": {
+            "description": "gas price",
+            "type": "string"
+          },
+          "hash": {
+            "description": "tx hash",
+            "type": "string"
+          },
+          "input": {
+            "description": "input",
+            "type": "string"
+          },
+          "max_fee_per_gas": {
+            "description": "max fee per gas",
+            "type": "string"
+          },
+          "max_priority_fee_per_gas": {
+            "description": "max priority fee per gas",
+            "type": "string"
+          },
+          "nonce": {
+            "description": "the nonce",
+            "type": "string"
+          },
+          "r": {
+            "type": "string"
+          },
+          "s": {
+            "type": "string"
+          },
+          "to_address": {
+            "description": "to address",
+            "type": "string"
+          },
+          "tx_index": {
+            "description": "transaction index",
+            "type": "string"
+          },
+          "type": {
+            "description": "type of transaction",
+            "type": "string"
+          },
+          "v": {
+            "type": "string"
+          },
+          "value": {
+            "description": "value of transaction",
+            "type": "string"
+          }
+        },
+        "title": "TransactionResponse",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "M3OAPIToken": {
+        "bearerFormat": "token",
+        "description": "M3O API token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Generated by protoc-gen-openapi",
+    "title": "Ethereum",
+    "version": "1",
+    "x-logo": {
+      "altText": "M3O logo",
+      "backgroundColor": "#000000",
+      "url": "https://raw.githubusercontent.com/m3o/m3o/main/images/logo.png"
+    }
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/ethereum/Ethereum/Balance": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EthereumBalanceRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EthereumBalanceResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ethereum.Balance(BalanceRequest)"
+      }
+    },
+    "/ethereum/Ethereum/Broadcast": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EthereumBroadcastRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EthereumBroadcastResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ethereum.Broadcast(BroadcastRequest)"
+      }
+    },
+    "/ethereum/Ethereum/Transaction": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EthereumTransactionRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EthereumTransactionResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ethereum.Transaction(TransactionRequest)"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.m3o.com/v1",
+      "description": "M3O platform"
+    }
+  ]
+}

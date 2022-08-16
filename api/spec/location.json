@@ -250,7 +250,7 @@
             },
             "type": "object"
           },
-          "numEntities": {
+          "limit": {
             "description": "Maximum number of entities to return",
             "format": "int64",
             "type": "number"
