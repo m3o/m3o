@@ -78,6 +78,7 @@ export enum SubscriptionPlans {
   Solo = 'solo',
   Pro = 'pro',
   Business = 'business',
+  Enterprise = 'enterprise',
 }
 
 export enum TimeSelections {
