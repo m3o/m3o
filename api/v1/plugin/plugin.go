@@ -57,5 +57,6 @@ func Register() {
 	plugin.Register(plugin.NewPlugin(
 		plugin.WithName("v1"),
 		plugin.WithInit(p.Init),
+		plugin.WithHandler(p.Handler),
 	))
 }
