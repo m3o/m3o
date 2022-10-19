@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package ai;
+
+option go_package = "./proto;ai";
+
+service Ai {
+	rpc Call(CallRequest) returns (CallResponse) {}
+	rpc Check(CheckRequest) returns (CheckResponse) {}
+	rpc Moderate(ModerateRequest) returns (ModerateResponse) {}
+}
+
+// Make a request to the AI
+message CallRequest {
+	// text to pass in
+	string text = 1;
+}
+
+// Response from the AI
+message CallResponse {
+	// text returned
+	string text = 2;
+}
+
+// Check or edit text/code
+message CheckRequest {
+	// text/code to check
+	string text = 1;
+	// instruction hint e.g check the grammar
+	string instruction = 2;
+}
+
+message CheckResponse {
+	// response output
+	string text = 2;
+}
+
+// Moderate hate speech
+message ModerateRequest {
+	// text to check
+	string text = 1;
+}
+
+message ModerateResponse {
+	// whether it was flagged or not
+	bool flagged = 1;
+	// categories tested and identified
+	map<string,bool> categories = 2;
+	// related scores
+	map<string,double> scores = 3;
+}

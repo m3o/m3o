@@ -1,0 +1,308 @@
+{
+  "components": {
+    "requestBodies": {
+      "AiCallRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CallRequest"
+            }
+          }
+        },
+        "description": "AiCallRequest"
+      },
+      "AiCheckRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CheckRequest"
+            }
+          }
+        },
+        "description": "AiCheckRequest"
+      },
+      "AiModerateRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModerateRequest"
+            }
+          }
+        },
+        "description": "AiModerateRequest"
+      }
+    },
+    "responses": {
+      "AiCallResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CallResponse"
+            }
+          }
+        },
+        "description": "AiCallResponse"
+      },
+      "AiCheckResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CheckResponse"
+            }
+          }
+        },
+        "description": "AiCheckResponse"
+      },
+      "AiModerateResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModerateResponse"
+            }
+          }
+        },
+        "description": "AiModerateResponse"
+      },
+      "MicroAPIError": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "Code": {
+                  "description": "Error code",
+                  "example": 500,
+                  "type": "number"
+                },
+                "Detail": {
+                  "description": "Error detail",
+                  "example": "service not found",
+                  "type": "string"
+                },
+                "Id": {
+                  "description": "Error ID",
+                  "type": "string"
+                },
+                "Status": {
+                  "description": "Error status message",
+                  "example": "Internal Server Error",
+                  "type": "string"
+                }
+              },
+              "title": "MicroAPIError",
+              "type": "object"
+            }
+          }
+        },
+        "description": "Error from the Micro API"
+      }
+    },
+    "schemas": {
+      "CallRequest": {
+        "description": "Make a request to the AI",
+        "properties": {
+          "text": {
+            "description": "text to pass in",
+            "type": "string"
+          }
+        },
+        "title": "CallRequest",
+        "type": "object"
+      },
+      "CallResponse": {
+        "description": "Response from the AI",
+        "properties": {
+          "text": {
+            "description": "text returned",
+            "type": "string"
+          }
+        },
+        "title": "CallResponse",
+        "type": "object"
+      },
+      "CheckRequest": {
+        "description": "Check or edit text/code",
+        "properties": {
+          "instruction": {
+            "description": "instruction hint e.g check the grammar",
+            "type": "string"
+          },
+          "text": {
+            "description": "text/code to check",
+            "type": "string"
+          }
+        },
+        "title": "CheckRequest",
+        "type": "object"
+      },
+      "CheckResponse": {
+        "properties": {
+          "text": {
+            "description": "response output",
+            "type": "string"
+          }
+        },
+        "title": "CheckResponse",
+        "type": "object"
+      },
+      "ModerateRequest": {
+        "description": "Moderate hate speech",
+        "properties": {
+          "text": {
+            "description": "text to check",
+            "type": "string"
+          }
+        },
+        "title": "ModerateRequest",
+        "type": "object"
+      },
+      "ModerateResponse": {
+        "properties": {
+          "categories": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "categories tested and identified",
+            "type": "object"
+          },
+          "flagged": {
+            "description": "whether it was flagged or not",
+            "type": "boolean"
+          },
+          "scores": {
+            "additionalProperties": {
+              "format": "double",
+              "type": "number"
+            },
+            "description": "related scores",
+            "type": "object"
+          }
+        },
+        "title": "ModerateResponse",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "M3OAPIToken": {
+        "bearerFormat": "token",
+        "description": "M3O API token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Generated by protoc-gen-openapi",
+    "title": "Ai",
+    "version": "1",
+    "x-logo": {
+      "altText": "M3O logo",
+      "backgroundColor": "#000000",
+      "url": "https://raw.githubusercontent.com/m3o/m3o/main/images/logo.png"
+    }
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/ai/Ai/Call": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AiCallRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AiCallResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ai.Call(CallRequest)"
+      }
+    },
+    "/ai/Ai/Check": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AiCheckRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AiCheckResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ai.Check(CheckRequest)"
+      }
+    },
+    "/ai/Ai/Moderate": {
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Micro-Namespace",
+          "required": true,
+          "schema": {
+            "default": "micro",
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AiModerateRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AiModerateResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/MicroAPIError"
+          }
+        },
+        "security": [
+          {
+            "MicroAPIToken": []
+          }
+        ],
+        "summary": "Ai.Moderate(ModerateRequest)"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.m3o.com/v1",
+      "description": "M3O platform"
+    }
+  ]
+}
