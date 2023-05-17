@@ -10,8 +10,8 @@ require (
 	github.com/google/go-github/v38 v38.1.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
-	github.com/micro/micro/v3 v3.18.0
-	github.com/micro/services v1.4.2-0.20230514074209-a57d3fab7232
+	github.com/micro/micro/v3 v3.18.3-0.20230517112315-d051312fb5a0
+	github.com/micro/services v1.5.1-0.20230517115341-8c69d9662d82
 	github.com/onsi/gomega v1.18.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/robfig/cron/v3 v3.0.1
