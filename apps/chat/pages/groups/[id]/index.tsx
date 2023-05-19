@@ -675,11 +675,13 @@ export default function Group() {
               <span>⚙️</span>
             </p>
           ) : null}
+          {/*
           {chat ? (
             <p onClick={createWhiteboard}>
               <span>✏️</span>
             </p>
           ) : null}
+          */}
         </div>
 
         {chat ? (

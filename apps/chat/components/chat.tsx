@@ -109,7 +109,7 @@ export default class Chat extends Component<Props, State> {
   render() {
     return (
       <div className={styles.container}>
-        {this.renderStream()}
+        {/* {this.renderStream()} */}
 
         <div
           onClick={() => this.setState({ showEmojiPicker: false })}
