@@ -115,7 +115,7 @@ jobs:
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         run: |
           # sync the clients to m3o-go/
-          rsync -avz --delete clients/go/ ../m3o-go/
+          rsync -avz clients/go/ ../m3o-go/
           # sync the examples to m3o-go/examples
           rsync -avz --delete examples/go/ ../m3o-go/examples/
           # remove the .git directory
