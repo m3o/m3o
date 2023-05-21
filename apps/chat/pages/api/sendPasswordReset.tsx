@@ -1,4 +1,3 @@
-import sengrid from '@sendgrid/mail'
 import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../lib/micro'
 
@@ -44,7 +43,7 @@ export default async function handler(
 
   try {
     const dynamicTemplateData = { name: user.first_name, code }
-    await sengrid.send({
+    await call('/emails/Send', {
       to: user.email,
       from,
       dynamicTemplateData,
