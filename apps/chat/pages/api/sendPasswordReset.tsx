@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../lib/micro'
 
-sengrid.setApiKey(process.env.SENDGRID_API_KEY)
 const templateId = 'd-02aefa32b6de484aa850d794cb8cf471'
 const from = 'support@m3o.com'
 

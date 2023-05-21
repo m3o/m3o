@@ -1,9 +1,7 @@
-import sengrid from '@sendgrid/mail'
 import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../../../lib/micro'
 import TokenFromReq from '../../../../lib/token'
 
-sengrid.setApiKey(process.env.SENDGRID_API_KEY)
 const templateId = 'd-cad7d433f25341c9b69616e81c6df09d'
 const from = 'support@m3o.com'
 
@@ -107,7 +105,7 @@ export default async function handler(
             group: group.name,
             link,
           }
-          await sengrid.send({
+          await call('/emails/Send', {
             to: body.email,
             from,
             dynamicTemplateData,
