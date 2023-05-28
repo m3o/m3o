@@ -24,7 +24,7 @@ builds:
   - arm64
   goarm:
   - 7
-  main: ./cmd/api-publisher
+  main: ./tools/api-publisher
 - binary: client-generator
   id: client-generator
   env:
@@ -41,7 +41,7 @@ builds:
   - arm64
   goarm:
   - 7
-  main: ./cmd/client-generator
+  main: ./tools/client-generator
 - binary: protoc-gen-openapi
   id: protoc-gen-openapi
   env:
@@ -58,7 +58,7 @@ builds:
   - arm64
   goarm:
   - 7
-  main: ./cmd/protoc-gen-openapi
+  main: ./tools/protoc-gen-openapi
 archives:
 - name_template: '{{.ProjectName}}-{{.Tag}}-{{.Os}}-{{.Arch}}{{if .Arm}}{{.Arm}}{{end}}'
   replacements:
