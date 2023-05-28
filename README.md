@@ -133,6 +133,6 @@ See the [m3o-cli](https://github.com/m3o/m3o-cli/tree/main/examples) for example
 
 APIs are developed using the [Micro](https://micro.dev) platform
 
-## Enterprise
+## Self Hosting 
 
 If you're interested in self hosting [contact us](mailto:contact@m3o.com)
