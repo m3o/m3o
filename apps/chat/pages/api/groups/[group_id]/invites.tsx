@@ -99,19 +99,17 @@ export default async function handler(
       try {
         const protocol = req.headers.referer.split('://')[0]
         const link = `${protocol}://${req.headers.host}/login?code=${invite.code}&email=${body.email}`
-        if (process.env.SENDGRIND_API_KEY?.length > 0) {
-          const dynamicTemplateData = {
-            inviter: user.first_name,
-            group: group.name,
-            link,
-          }
-          await call('/emails/Send', {
-            to: body.email,
-            from,
-            dynamicTemplateData,
-            templateId,
-          })
+        const dynamicTemplateData = {
+          inviter: user.first_name,
+          group: group.name,
+          link,
         }
+        await call('/emails/Send', {
+          to: body.email,
+          from,
+          dynamicTemplateData,
+          templateId,
+        })
         res.status(201).json(invite)
       } catch (error) {
         console.warn(`Error sending email: ${error}`)
