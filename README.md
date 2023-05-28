@@ -1,6 +1,6 @@
 # M3O [![License](https://img.shields.io/:license-apache-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Serverless Micro services cloud
+Serverless Micro services gateway 
 
 ## Overview
 
@@ -133,6 +133,6 @@ See the [m3o-cli](https://github.com/m3o/m3o-cli/tree/main/examples) for example
 
 APIs are developed using the [Micro](https://micro.dev) platform
 
-## Enterprise
+## Self Hosting 
 
 If you're interested in self hosting [contact us](mailto:contact@m3o.com)
