@@ -6,7 +6,7 @@ on:
       - beta
     paths:
       - '.github/workflows/generate.yml'
-      - 'cmd/**'
+      - 'tools/**'
   repository_dispatch:
     types: [micro_services]
 
@@ -64,12 +64,12 @@ jobs:
           go install
 
       - name: Install openapi plugin
-        working-directory: m3o/cmd/protoc-gen-openapi
+        working-directory: m3o/tools/protoc-gen-openapi
         run: |
           go install
 
       - name: Install api publisher
-        working-directory: m3o/cmd/api-publisher
+        working-directory: m3o/tools/api-publisher
         run: |
           go install
 
@@ -78,7 +78,7 @@ jobs:
         run: |
           # build the client generator
           pwd
-          cd cmd/client-generator;
+          cd tools/client-generator;
           go install
           cd ../../
           # delete existing cmd directory
