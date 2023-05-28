@@ -7,7 +7,7 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
-	"m3o.dev/cmd/protoc-gen-openapi/converter"
+	"m3o.dev/tools/protoc-gen-openapi/converter"
 )
 
 func main() {
