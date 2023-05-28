@@ -82,9 +82,9 @@ jobs:
           go install
           cd ../../
           # delete existing cmd directory
-          rm -rf ../services/cmd
+          rm -rf ../services/tools
           # copy our command directory in
-          cp -r cmd ../services/
+          cp -r tools ../services/
 
       - name: install prettier
         working-directory: services

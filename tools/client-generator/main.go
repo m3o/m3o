@@ -589,7 +589,7 @@ func nodeIndexFile(workDir, tsPath string, services []service) {
 		fmt.Println(fmt.Sprintf("Problem with prettifying clients index.ts '%v", string(outp)))
 		os.Exit(1)
 	}
-	tsFiles := filepath.Join(workDir, "cmd", "client-generator", "ts")
+	tsFiles := filepath.Join(workDir, "tools", "client-generator", "ts")
 	cmd = exec.Command("cp", filepath.Join(tsFiles, "package.json"), filepath.Join(tsFiles, ".gitignore"),
 		filepath.Join(tsFiles, "package-lock.json"), filepath.Join(tsFiles, "package-lock.json"),
 		filepath.Join(tsFiles, "build.js"), filepath.Join(tsFiles, "tsconfig.es.json"),
