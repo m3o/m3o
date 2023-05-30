@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--openssl-legacy-provider --inspect --trace-warnings' next dev",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
-    "start": "NODE_OPTIONS='--openssl-legacy-provider --inspect' next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "export": "next export",
     "prepare": "cd ../../ && husky install apps/chat/.husky",
     "tsc": "tsc --noEmit",
