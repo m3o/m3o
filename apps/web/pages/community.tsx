@@ -78,12 +78,12 @@ const CommunityPage: NextPage<WithAuthProps> = ({
 		    <a
 		      data-testid={`service-link-functions`}
 		      className="font-bold text-zinc-900 pointer-events-auto dark:text-white">
-		     Mastodon
+		     Micro
 		    </a>
 		  </Link>
 		</h3>
 		<p className="truncate text-zinc-500 dark:text-zinc-300 mb-6">
-		  Start a discussion in the fediverse
+		  Start a discussion on Micro
 		</p>
 	      </div>
 	    </div>
