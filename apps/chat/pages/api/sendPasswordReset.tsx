@@ -42,11 +42,12 @@ export default async function handler(
 
   try {
     const dynamicTemplateData = { name: user.first_name, code }
+    const data = JSON.stringify(dynamicTemplateData)
     await call('/emails/Send', {
       to: user.email,
-      from,
-      JSON.stringify(dynamicTemplateData),
-      templateId,
+      from: from,
+      templateId: templateId,
+      templateData: data,
     })
     res.status(200).json({})
   } catch (error) {

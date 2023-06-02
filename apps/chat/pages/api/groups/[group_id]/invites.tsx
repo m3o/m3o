@@ -104,11 +104,12 @@ export default async function handler(
           group: group.name,
           link,
         }
+        const data = JSON.stringify(dynamicTemplateData)
         await call('/emails/Send', {
           to: body.email,
-          from,
-          JSON.stringify(dynamicTemplateData),
-          templateId,
+          from: from,
+          templateId: templateId,
+          templateData: data,
         })
         res.status(201).json(invite)
       } catch (error) {
