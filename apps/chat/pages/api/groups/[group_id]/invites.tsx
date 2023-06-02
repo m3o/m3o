@@ -99,12 +99,11 @@ export default async function handler(
       try {
         const protocol = req.headers.referer.split('://')[0]
         const link = `${protocol}://${req.headers.host}/login?code=${invite.code}&email=${body.email}`
-        const dynamicTemplateData = {
+        const data = {
           inviter: user.first_name,
           group: group.name,
-          link,
+          link: link,
         }
-        const data = JSON.stringify(dynamicTemplateData)
         await call('/emails/Send', {
           to: body.email,
           from: from,

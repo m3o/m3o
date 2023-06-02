@@ -41,8 +41,7 @@ export default async function handler(
   }
 
   try {
-    const dynamicTemplateData = { name: user.first_name, code }
-    const data = JSON.stringify(dynamicTemplateData)
+    const data = { name: user.first_name, code }
     await call('/emails/Send', {
       to: user.email,
       from: from,
