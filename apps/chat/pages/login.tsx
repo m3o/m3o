@@ -36,6 +36,13 @@ export default function Login() {
     }
   }, [router.query.code])
 
+  useEffect(() => {
+    const signupVal = router.query.signup
+    if (signupVal?.length > 0) {
+      setIsSignup(true)
+    }
+  }, [router.query.signup])
+  
   function onSubmit(e: React.FormEvent): void {
     e.preventDefault()
 
@@ -89,8 +96,8 @@ export default function Login() {
       </Head>
 
       <div className={styles.inner}>
-        <img className={styles.logo} src="/logo.png" height="100px" width="100px" alt="Micro Logo" />
-        <h1 className={styles.title}>Micro</h1>
+        <img className={styles.logo} src="/logo.png" height="75px" width="75px" alt="Micro Logo" />
+        <h1 className={styles.title}>Chat</h1>
         {error ? (
           <p className={styles.error}>{JSON.stringify(error, null, 2)}</p>
         ) : null}
