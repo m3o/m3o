@@ -126,6 +126,7 @@ func (e *Emails) sendEmail(from, to, templateID string, sendAt int64, templateDa
 	}
 
 	reqBody, _ := json.Marshal(reqMap)
+	log.Infof("Sending email to %v with template %v data %v\n", to, templateID, templateData)
 
 	req, err := http.NewRequest("POST", "https://api.sendgrid.com/v3/mail/send", bytes.NewBuffer(reqBody))
 	if err != nil {
