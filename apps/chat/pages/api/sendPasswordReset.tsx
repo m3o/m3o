@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../lib/micro'
 
 const templateId = 'd-02aefa32b6de484aa850d794cb8cf471'
-const from = 'support@m3o.com'
+const from = 'Micro Chat <support@m3o.com>'
 
 export default async function handler(
   req: NextApiRequest,
@@ -45,7 +45,7 @@ export default async function handler(
     await call('/emails/Send', {
       to: user.email,
       from,
-      dynamicTemplateData,
+      JSON.stringify(dynamicTemplateData),
       templateId,
     })
     res.status(200).json({})
