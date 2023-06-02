@@ -104,11 +104,12 @@ export default async function handler(
           group: group.name,
           link: link,
         }
+        const bytes = btoa(JSON.stringify(data))
         await call('/emails/Send', {
           to: body.email,
           from: from,
           templateId: templateId,
-          templateData: data,
+          templateData: bytes,
         })
         res.status(201).json(invite)
       } catch (error) {

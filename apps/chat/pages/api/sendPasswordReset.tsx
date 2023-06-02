@@ -42,11 +42,12 @@ export default async function handler(
 
   try {
     const data = { name: user.first_name, code }
+    const bytes = btoa(JSON.stringify(data))
     await call('/emails/Send', {
       to: user.email,
       from: from,
       templateId: templateId,
-      templateData: data,
+      templateData: bytes,
     })
     res.status(200).json({})
   } catch (error) {
