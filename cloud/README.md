@@ -83,23 +83,23 @@ micro config set micro.platform.resource_requests.memory 1000
 ## Run the m3o services
 
 ```
-micro run github.com/m3o/backend/alert
-micro run github.com/m3o/backend/balance
-micro run github.com/m3o/backend/customers
-micro run github.com/m3o/backend/emails
-micro run github.com/m3o/backend/endtoend
-micro run github.com/m3o/backend/internal
-micro run github.com/m3o/backend/mailchimp
-micro run github.com/m3o/backend/mixpanel
-micro run github.com/m3o/backend/oauth
-micro run github.com/m3o/backend/onboarding
-micro run github.com/m3o/backend/pkg
-micro run github.com/m3o/backend/publicapi
-micro run github.com/m3o/backend/status
-micro run github.com/m3o/backend/stripe
-micro run github.com/m3o/backend/usage
-micro run github.com/m3o/backend/v1
-micro run github.com/m3o/backend/admin
-micro run github.com/m3o/backend/billing
-micro run github.com/m3o/backend/projects
+micro run github.com/m3o/m3o/api/alert
+micro run github.com/m3o/m3o/api/balance
+micro run github.com/m3o/m3o/api/customers
+micro run github.com/m3o/m3o/api/emails
+micro run github.com/m3o/m3o/api/endtoend
+micro run github.com/m3o/m3o/api/internal
+micro run github.com/m3o/m3o/api/mailchimp
+micro run github.com/m3o/m3o/api/mixpanel
+micro run github.com/m3o/m3o/api/oauth
+micro run github.com/m3o/m3o/api/onboarding
+micro run github.com/m3o/m3o/api/pkg
+micro run github.com/m3o/m3o/api/publicapi
+micro run github.com/m3o/m3o/api/status
+micro run github.com/m3o/m3o/api/stripe
+micro run github.com/m3o/m3o/api/usage
+micro run github.com/m3o/m3o/api/v1
+micro run github.com/m3o/m3o/api/admin
+micro run github.com/m3o/m3o/api/billing
+micro run github.com/m3o/m3o/api/projects
 ```
