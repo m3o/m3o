@@ -37,8 +37,6 @@ config:
   m3o:grafana_postgres_password:
     secure: AAABAJcwNN6R7hEJy9WAIM+11SyzATIb9uRjYlVPU/BUXjI3OdyC3KQuJYjRoOtkBtNvSB4TDWegjoKsCUcqnA==
   m3o:internal-host: internal.production.m3o.com
-  m3o:metabase_db_password:
-    secure: AAABAANgCM6OlI0v//PVlIk/Hk3/K7rhEatOhDzrp6YwkjkiejNqgAdHAFFAGlwnKw2BSJ+/PWSXnhUGey2TNA==
   m3o:patroni_admin_password:
     secure: AAABAG6iggfpr7fx3PCT0J/uLGaE77iAS9izyJ7bi32AcBJmZYSoFv3tzJhmniOC8WaSpx4SuFNvi1QizKh3mw==
   m3o:patroni_replication_password:
