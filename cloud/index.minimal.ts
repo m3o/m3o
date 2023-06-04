@@ -6,5 +6,3 @@ import "./micro";
 import "./etcd";
 import "./nginx";
 import "./kata";
-import "./mongodb";
-

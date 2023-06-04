@@ -17,8 +17,6 @@ config:
     secure: AAABADAOMQH8Nv7SZNHmOYuAy6hNslxNJlaqjueW+lxTan3d+hAQ6U+B7CPIdZxI2GZXZZCu/as=
   gcp:s3_secret_key:
     secure: AAABAKAUb++ZuXHU/ReU8FFbnEQkiRFwQYzsvZPo8WFyaTntyfNYeW7TdhhiVm/J7nU6oPBVrLE8bksh9aKAPrWzrSDHHpdp
-  m3o:analytics_db_password:
-    secure: AAABANWpgWi/6n7WoYUrYtCEFrcQiqe2UM0elqz2+kQMB1ZA89NawiKY2UCZSh2ZEJ9ttiP5S480JN59QzIhSg==
   m3o:api-hosts: api.m3o.com
   m3o:web-hosts: web.m3o.com
   m3o:ca-crt:
@@ -32,19 +30,7 @@ config:
     secure: AAABAKE58iQSSctgLwHqyMr2+8rILmS0afqPgu2JrNKSaZsG1FhWxC87EN8cL5F1jtSFYIGSqZ+zw3FW8vCtvgaLD595yB7Wn8dGcAulu0RW9CW6oviloiA9c9a2G6delnGX8+G6uHQ=
   m3o:google_oauth_secret_id:
     secure: AAABAC0Id73fCGCMtWoXz+7q7vWSffFK95hZYqtuQnlNi7bF+yn1qURWNlz5m+IMWjZpCFEvEKs=
-  m3o:grafana-admin-pass:
-    secure: AAABAOTsIv+VWTPMzm0VgtT1TQFXdyHtFEAiAzvrvmTECBuWDqrud5k6CZ2cPJOgk+o371mRndhICkt5Xq+SxQ==
-  m3o:grafana_postgres_password:
-    secure: AAABAJcwNN6R7hEJy9WAIM+11SyzATIb9uRjYlVPU/BUXjI3OdyC3KQuJYjRoOtkBtNvSB4TDWegjoKsCUcqnA==
   m3o:internal-host: internal.production.m3o.com
-  m3o:patroni_admin_password:
-    secure: AAABAG6iggfpr7fx3PCT0J/uLGaE77iAS9izyJ7bi32AcBJmZYSoFv3tzJhmniOC8WaSpx4SuFNvi1QizKh3mw==
-  m3o:patroni_replication_password:
-    secure: AAABAJMoPI8mozjTgIoXFou04ySUwdjoey1GU4jnkuJQKCH2oRT283Eg/RpszGrCiGFXEAx7m6hper88R+EJKQ==
-  m3o:patroni_superuser_password:
-    secure: AAABAKYbMzq6tUKOVdeO5KD6kGMrOZK8DkzHS1vclhrmZ/fLN0KeSV3a3ohPlEiJLzA1KjpIqIRdCAQ3yMQAKA==
-  m3o:promscale_postgres_password:
-    secure: AAABAEg7t1jbItbNQ4Ze1rFKAwtGcTp8EaKYe2uTiJn5KSQcLqRFr5aXOik2kK2pYRLmc7E92sKGZyohkmJ6hQ==
   m3o:proxy-hosts: proxy.m3o.com
   m3o:slack-alerts-webhook:
     secure: AAABACViCFh+hoqS2YNbDCpTaHQWBIr95p/CSJgZJPYc2uR9ZS4ynkMa3GEsqPq5OrKuN5sX5qT8yfGNrsTQLw+LnuKOcof/pnhCdZ/FC95/gLgytcm70oQI1D89oOrh0RSj/KSAeHe/TkzOa60u

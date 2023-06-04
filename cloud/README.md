@@ -52,14 +52,6 @@ Download the kubeconfig and then set the API and Proxy DNS records to the values
 
 Set the wildcard DNS record to the IP from Tailscale. TODO: Document this step more.
 
-## Set config for the analytics service
-
-```
-password=$(pulumi config get analytics_db_password)
-postgres="host=timescale.timescale user=analytics dbname=analytics sslmode=require password=$password"
-micro config set analytics.postgres \$postgres
-```
-
 ### Login using default credentials
 
 ```
