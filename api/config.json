@@ -38,11 +38,6 @@
   "endtoend": {
     "email": "xxx@cloudmailin.net"
   },
-  "mailchimp": {
-    "api_key": "",
-    "block_list": [],
-    "main_list_id": "xxx"
-  },
   "mixpanel": {
     "ignoreList": "",
     "project": "",
