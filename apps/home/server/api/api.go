@@ -146,7 +146,7 @@ func Client(r *http.Request) *m3o.Client {
 
 	if v := r.Header.Get("Authorization"); strings.HasPrefix(v, "Bearer") {
 		token = strings.TrimSpace(strings.TrimPrefix(v, "Bearer"))
-	} else if c, err := r.Cookie("micro_token"); err != nil && len(c.Value) > 0 {
+	} else if c, err := r.Cookie("micro_token"); err == nil && len(c.Value) > 0 {
 		token = c.Value
 	} else {
 		// global token
