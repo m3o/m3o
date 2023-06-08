@@ -10,6 +10,7 @@ require (
 	github.com/google/go-github/v38 v38.1.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
+	github.com/kevinburke/twilio-go v0.0.0-20210327194925-1623146bcf73
 	github.com/micro/micro/v3 v3.18.3-0.20230517112315-d051312fb5a0
 	github.com/micro/services v1.5.1-0.20230517115341-8c69d9662d82
 	github.com/onsi/gomega v1.18.1
@@ -51,6 +52,9 @@ require (
 	github.com/jackc/pgx/v4 v4.17.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/kevinburke/go-types v0.0.0-20201208005256-aee49f568a20 // indirect
+	github.com/kevinburke/go.uuid v1.2.0 // indirect
+	github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c // indirect
 	github.com/mattn/go-sqlite3 v1.14.15 // indirect
 	github.com/miekg/dns v1.1.43 // indirect
 	github.com/nightlyone/lockfile v1.0.0 // indirect
@@ -63,6 +67,8 @@ require (
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/stoewer/go-strcase v1.2.0 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
+	github.com/ttacon/libphonenumber v1.2.1 // indirect
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
@@ -70,6 +76,7 @@ require (
 	go.uber.org/atomic v1.6.0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/net v0.8.0 // indirect
+	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect

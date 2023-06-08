@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package twilio;
+
+option go_package = "./proto;twilio";
+
+service Twilio {
+	rpc SendSms(SendSmsRequest) returns (SendSmsResponse) {}
+}
+
+// Send an SMS.
+message SendSmsRequest {
+	// who is the message from? The message will be suffixed with "Sent from <from>"
+	string from = 1;
+	// the destination phone number including the international dialling code (e.g. +44)
+	string to = 2;
+	// the main body of the message to send
+	string message = 3;
+}
+
+message SendSmsResponse {
+	// will return "ok" if successful
+	string status = 1;
+	// any additional info
+	string info = 2;
+}
