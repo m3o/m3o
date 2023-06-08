@@ -17,10 +17,7 @@ const SERVICES_NAMES = [
   'app',
   'cache',
   'db',
-  'email',
-  'sms',
   'image',
-  'geocoding',
   'user'
 ]
 
