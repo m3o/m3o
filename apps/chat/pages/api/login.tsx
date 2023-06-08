@@ -13,6 +13,8 @@ export default async function handler(
 ) {
   const params: RequestBody = JSON.parse(req.body)
 
+  console.log(params)
+
   try {
     const rsp = await call('/users/login', params)
     res.setHeader('Set-Cookie', serialize('token', rsp.token, { path: '/' }))
