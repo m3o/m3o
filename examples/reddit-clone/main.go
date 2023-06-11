@@ -11,13 +11,13 @@ import (
 	"strings"
 	"time"
 
-	m3o "github.com/micro/services/clients/go"
-	db "github.com/micro/services/clients/go/db"
-	user "github.com/micro/services/clients/go/user"
 	uuid "github.com/satori/go.uuid"
+	m3o "go.m3o.com"
+	db "go.m3o.com/db"
+	user "go.m3o.com/user"
 )
 
-var client = m3o.NewClient(os.Getenv("M3O_API_TOKEN"))
+var client = m3o.New(os.Getenv("M3O_API_TOKEN"))
 
 // csv of user ids
 var mods = os.Getenv("REDDIT_MODS")
@@ -91,7 +91,7 @@ func vote(w http.ResponseWriter, req *http.Request, upvote bool, isComment bool,
 	if isComment {
 		table = "comments"
 	}
-	rsp, err := client.DbService.Read(&db.ReadRequest{
+	rsp, err := client.Db.Read(&db.ReadRequest{
 		Table: table,
 		Id:    t.Id,
 	})
@@ -103,7 +103,7 @@ func vote(w http.ResponseWriter, req *http.Request, upvote bool, isComment bool,
 	}
 
 	// auth
-	sessionRsp, err := client.UserService.ReadSession(&user.ReadSessionRequest{
+	sessionRsp, err := client.User.ReadSession(&user.ReadSessionRequest{
 		SessionId: t.SessionID,
 	})
 	if err != nil {
@@ -116,7 +116,7 @@ func vote(w http.ResponseWriter, req *http.Request, upvote bool, isComment bool,
 	// prevent double votes
 	checkTable := table + "votecheck"
 	checkId := t.Id + sessionRsp.Session.UserId
-	checkRsp, err := client.DbService.Read(&db.ReadRequest{
+	checkRsp, err := client.Db.Read(&db.ReadRequest{
 		Table: checkTable,
 		Id:    checkId,
 	})
@@ -133,7 +133,7 @@ func vote(w http.ResponseWriter, req *http.Request, upvote bool, isComment bool,
 	}
 
 	if !mod {
-		_, err = client.DbService.Create(&db.CreateRequest{
+		_, err = client.Db.Create(&db.CreateRequest{
 			Table: checkTable,
 			Record: map[string]interface{}{
 				"id": checkId,
@@ -160,7 +160,7 @@ func vote(w http.ResponseWriter, req *http.Request, upvote bool, isComment bool,
 	obj[key] = obj[key].(float64) + val
 	obj["score"] = obj["upvotes"].(float64) - obj["downvotes"].(float64)
 
-	_, err = client.DbService.Update(&db.UpdateRequest{
+	_, err = client.Db.Update(&db.UpdateRequest{
 		Table:  table,
 		Id:     t.Id,
 		Record: obj,
@@ -208,11 +208,11 @@ func login(w http.ResponseWriter, req *http.Request) {
 		respond(w, err, err)
 		return
 	}
-	_, err = client.UserService.Read(&user.ReadRequest{
+	_, err = client.User.Read(&user.ReadRequest{
 		Username: t.Username,
 	})
 	if err != nil {
-		createRsp, err := client.UserService.Create(&user.CreateRequest{
+		createRsp, err := client.User.Create(&user.CreateRequest{
 			Username: t.Username,
 			Email:    t.Username + "@" + t.Username + ".com",
 			Password: t.Password,
@@ -222,7 +222,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 	}
-	logRsp, err := client.UserService.Login(&user.LoginRequest{
+	logRsp, err := client.User.Login(&user.LoginRequest{
 		Username: t.Username,
 		Password: t.Password,
 	})
@@ -240,12 +240,12 @@ func readSession(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, fmt.Sprintf("%v", err.Error()))
 	}
-	rsp, err := client.UserService.ReadSession(&t)
+	rsp, err := client.User.ReadSession(&t)
 	if err != nil {
 		respond(w, rsp, err)
 		return
 	}
-	readRsp, err := client.UserService.Read(&user.ReadRequest{
+	readRsp, err := client.User.Read(&user.ReadRequest{
 		Id: rsp.Session.UserId,
 	})
 	respond(w, map[string]interface{}{
@@ -289,7 +289,7 @@ func post(w http.ResponseWriter, req *http.Request) {
 	userID := ""
 	userName := ""
 	if t.SessionID != "" {
-		rsp, err := client.UserService.ReadSession(&user.ReadSessionRequest{
+		rsp, err := client.User.ReadSession(&user.ReadSessionRequest{
 			SessionId: t.SessionID,
 		})
 		if err != nil {
@@ -297,7 +297,7 @@ func post(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		userID = rsp.Session.UserId
-		readRsp, err := client.UserService.Read(&user.ReadRequest{
+		readRsp, err := client.User.Read(&user.ReadRequest{
 			Id: userID,
 		})
 		if err != nil {
@@ -306,7 +306,7 @@ func post(w http.ResponseWriter, req *http.Request) {
 		}
 		userName = readRsp.Account.Username
 	}
-	client.DbService.Create(&db.CreateRequest{
+	client.Db.Create(&db.CreateRequest{
 		Table: "posts",
 		Record: map[string]interface{}{
 			"id":        uuid.NewV4(),
@@ -340,7 +340,7 @@ func comment(w http.ResponseWriter, req *http.Request) {
 	userName := ""
 	// get user if available
 	if t.SessionID != "" {
-		rsp, err := client.UserService.ReadSession(&user.ReadSessionRequest{
+		rsp, err := client.User.ReadSession(&user.ReadSessionRequest{
 			SessionId: t.SessionID,
 		})
 		if err != nil {
@@ -348,7 +348,7 @@ func comment(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		userID = rsp.Session.UserId
-		readRsp, err := client.UserService.Read(&user.ReadRequest{
+		readRsp, err := client.User.Read(&user.ReadRequest{
 			Id: userID,
 		})
 		if err != nil {
@@ -363,7 +363,7 @@ func comment(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// get post to update comment counter
-	readRsp, err := client.DbService.Read(&db.ReadRequest{
+	readRsp, err := client.Db.Read(&db.ReadRequest{
 		Table: "posts",
 		Id:    t.Comment.PostId,
 	})
@@ -381,7 +381,7 @@ func comment(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// create comment
-	_, err = client.DbService.Create(&db.CreateRequest{
+	_, err = client.Db.Create(&db.CreateRequest{
 		Table: "comments",
 		Record: map[string]interface{}{
 			"id":        uuid.NewV4(),
@@ -408,7 +408,7 @@ func comment(w http.ResponseWriter, req *http.Request) {
 	}
 	oldCount++
 	readRsp.Records[0]["commentCount"] = oldCount
-	_, err = client.DbService.Update(&db.UpdateRequest{
+	_, err = client.Db.Update(&db.UpdateRequest{
 		Table:  "posts",
 		Id:     t.Comment.PostId,
 		Record: readRsp.Records[0],
@@ -483,7 +483,7 @@ func posts(w http.ResponseWriter, req *http.Request) {
 		r.Query = query
 	}
 
-	rsp, err := client.DbService.Read(r)
+	rsp, err := client.Db.Read(r)
 	sort.Slice(rsp.Records, func(i, j int) bool {
 		return score(rsp.Records[i]) > score(rsp.Records[j])
 	})
@@ -501,7 +501,7 @@ func comments(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, fmt.Sprintf("%v", err.Error()))
 	}
-	rsp, err := client.DbService.Read(&db.ReadRequest{
+	rsp, err := client.Db.Read(&db.ReadRequest{
 		Table:   "comments",
 		Order:   "desc",
 		Query:   "postId == '" + t.PostId + "'",
