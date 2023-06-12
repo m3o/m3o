@@ -9,12 +9,12 @@ export const Balance: FC = () => {
 
   return (
     <div className="bg-zinc-600 dark:bg-zinc-800 text-white">
-      <h5 className="font-bold text-xl mb-4">Credits</h5>
+      <h5 className="font-bold text-xl mb-4">Balance</h5>
       {isLoading ? (
         <Spinner />
       ) : (
         <p className="text-3xl dark:text-white">
-          {data.toFixed(6)}
+          ${data.toFixed(6)}
         </p>
       )}
       <Link href={Routes.UserBilling}>

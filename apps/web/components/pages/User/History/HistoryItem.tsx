@@ -14,7 +14,7 @@ export const HistoryItem: FC<Adjustment> = ({
     <div className="p-4 mt-2 text-black rounded-md flex items-center justify-between bg-white dark:bg-zinc-900">
       <div>
         <p className="font-normal dark:text-white">
-          {delta / 1000000} credits
+          ${delta / 1000000} credit
         </p>
         <p className="font-bold dark:text-white">
           {reference}
