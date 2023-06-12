@@ -136,7 +136,7 @@ const Overview: NextPage<Props> = ({
           {features.map(feature => (
               <tr className="border-t border-zinc-300">
                 <td className="py-2 w-9/12 text-sm">{feature.title}</td>
-                <td className="py-2 w-3/12 text-sm">{feature.price === 'Free' ? 'Base' : '$' + feature.price}</td>
+                <td className="py-2 w-3/12 text-sm">{feature.price === 'Free' ? 'Base' : feature.price}</td>
                 {/* <td className="py-2 w-2/12 text-sm">{feature.quota}</td> */}
               </tr>
           ))}
