@@ -57,6 +57,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
             <p className="font-bold overflow-hidden text-ellipsis">
               {user.name}
             </p>
+{/*
             {subscriptionLevel && (
               <p
                 className={classNames('capitalize', {
@@ -65,6 +66,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
                 {subscriptionLevel}
               </p>
             )}
+*/}
           </div>
           <div className="px-4 py-2 tbc border-b text-sm text-zinc-700">
             <p className="dark:text-white">Balance</p>

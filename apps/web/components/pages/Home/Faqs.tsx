@@ -65,11 +65,11 @@ const FAQs: FAQItem[] = [
     ),
   },
   {
-    title: 'How do subscription quotas work?',
+    title: 'How do request quotas work?',
     content: (
       <>
         <p className="mb-6">
-          Subscription quotas provides usage limits for each plan. These are hard limits 
+          Request quotas provides usage limits for each api. These are hard limits 
 	  applied on a per request basis when calling M3O APIs. If a quota is exceeded 
           further requests will be blocked e.g adding DB records, uploading images, etc.
         </p>

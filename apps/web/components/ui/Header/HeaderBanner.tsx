@@ -13,7 +13,7 @@ export function HeaderBanner() {
     const hideBanner = sessionStorage.getItem(SessionStorageKeys.HideBanner)
 
     if (!hideBanner) {
-      setShow(true)
+      setShow(false)
     }
   }, [])
 

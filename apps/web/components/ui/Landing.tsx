@@ -29,13 +29,13 @@ export function Landing({
       </WhatIsM3O>
       <SellingPoints />
       <HowToGetStarted />
-      <Pricing />
+      {/* <Pricing /> */}
       <section className="py-20">
         <div className="m3o-container">
           <Faqs />
         </div>
       </section>
-      <SubscribeSection />
+      {/* <SubscribeSection /> */}
    </MainLayout>
   )
 }
