@@ -17,7 +17,7 @@ declare global {
 
 export const pageview = (url: string) => {
   if (process.env.NODE_ENV !== 'production') return
-  window.gtag('config', 'UA-70478210-4', {
+  window.gtag('config', 'G-D55EX352JF', {
     page_path: url,
   })
 }
