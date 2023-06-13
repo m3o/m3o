@@ -24,7 +24,7 @@ class MyDocument extends Document {
             <>
               <script
                 async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-70478210-4"
+                src="https://www.googletagmanager.com/gtag/js?id=G-D55EX352JF"
               />
               <script
                 dangerouslySetInnerHTML={{
@@ -35,7 +35,7 @@ class MyDocument extends Document {
       }
       gtag('js', new Date());
   
-      gtag('config', 'UA-70478210-4');
+      gtag('config', 'G-D55EX352JF');
     `,
                 }}
               />
