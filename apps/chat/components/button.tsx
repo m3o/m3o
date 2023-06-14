@@ -10,13 +10,7 @@ export function Button({
     showLoader?: boolean
 }) {
     return (
-        <button
-            {...props}
-            className={[
-                className,
-                'bg-black text-white p-4 text-sm rounded-md flex items-center justify-center',
-            ].join(' ')}
-        >
+        <button {...props} className={[className, 'btn'].join(' ')}>
             {showLoader ? <Loader /> : children}
         </button>
     )

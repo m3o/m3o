@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Layout from '../components/layout'
+import { CenteredLoader } from '../components/loader'
 import { useGroups } from '../lib/group'
 import { acceptInvite, rejectInvite, Invite, useInvites } from '../lib/invites'
 import { useUser } from '../lib/user'
@@ -8,18 +10,44 @@ import styles from './index.module.scss'
 
 export default function Home() {
     const router = useRouter()
-    const userLoader = useUser()
+    const user = useUser()
     const groupsLoader = useGroups()
     const invitesLoader = useInvites()
 
-    if (userLoader.error || groupsLoader.error || invitesLoader.error) {
-        router.push('/login')
-        return <div />
+    useEffect(() => {
+        if (user.isError) {
+            router.push('/login')
+        }
+    }, [user.isError, router])
+
+    if (user.isLoading || !user.data) {
+        return <CenteredLoader />
     }
 
-    if (userLoader.loading || groupsLoader.loading || invitesLoader.loading) {
-        return <Layout loading={true} />
-    }
+    return (
+        <>
+            <header className="py-2 px-4 flex justify-between">
+                <Link href="/">
+                    <img
+                        src="/logo.png"
+                        height="35px"
+                        width="35px"
+                        alt="Logo"
+                    />
+                </Link>
+                <Link
+                    href="/logout"
+                    className="text-sm text-black hover:underline"
+                >
+                    Logout
+                </Link>
+            </header>
+            <h1>Welcome {user.data!.profile.firstName}</h1>
+            <Link href="/groups/new" className="btn">
+                New group
+            </Link>
+        </>
+    )
 
     function accept(invite: Invite) {
         acceptInvite(invite.id)

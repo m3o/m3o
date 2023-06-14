@@ -8,11 +8,11 @@ import { Button } from '../components/button'
 import { Input } from '../components/form/input'
 import { PublicLayout } from '../layouts/public'
 import { api } from '../lib/api'
-import type { LoginFields } from '../types/user'
+import type { LoginFields, UserAccount } from '../types/user'
 
 const login = async (values: LoginFields) => {
     try {
-        const response = await api.post('/login', values)
+        const response = await api.post<{ user: UserAccount }>('/login', values)
         return response.data.user
     } catch (error) {
         const _error = error as AxiosError

@@ -78,3 +78,7 @@ select:-webkit-autofill:focus {
 .emoji-mart-preview {
     display: none;
 }
+
+.btn {
+    @apply bg-black text-white p-4 text-sm rounded-md inline-flex items-center justify-center;
+}
