@@ -1,28 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { m3o } from '../../lib/m3o'
+import { authenticatedHandler } from '../../lib/authentication'
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    if (!req.cookies.session) {
-        res.status(401).send({
-            message: 'Unauthorized',
-        })
-
-        return
-    }
-
+export default authenticatedHandler(async function handler(_, res, user) {
     try {
-        const { session } = await m3o.user.readSession({
-            session_id: req.cookies.session,
-        })
-
-        const { account } = await m3o.user.read({
-            id: session.userId,
-        })
-
-        res.json({ user: account! })
+        res.json({ user })
     } catch (error) {
         console.error(error)
     }
@@ -94,4 +74,4 @@ export default async function handler(
     // // delete the user
     // await call('/users/delete', { id: user.id })
     // res.status(200).json({})
-}
+})

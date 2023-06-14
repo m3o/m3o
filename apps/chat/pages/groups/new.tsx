@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { MainLayout } from '../../layouts/main'
 import { useGroups, createGroup } from '../../lib/group'
 import styles from './new.module.scss'
+import { useMutation } from '@tanstack/react-query'
+import { api } from '../../lib/api'
 
 export default function Home() {
     const router = useRouter()
@@ -10,6 +12,12 @@ export default function Home() {
 
     const [name, setName] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
+
+    const { mutate } = useMutation({
+        mutationFn: (values: { name: string }) => {
+            return api.post('/groups', values)
+        },
+    })
 
     // todo: improve error handling
     if (groupsLoader.error) {
@@ -22,8 +30,8 @@ export default function Home() {
         setLoading(true)
 
         try {
-            await createGroup(name)
-            router.push('/')
+            mutate({ name })
+            // router.push('/')
         } catch ({ error, code }) {
             console.warn(error)
             setLoading(false)

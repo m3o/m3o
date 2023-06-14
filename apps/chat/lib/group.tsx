@@ -1,14 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import useSWR from 'swr'
+import type { Group } from '../types/groups'
+import { api } from './api'
 import { Message } from './message'
-import { User } from './user'
-
-export interface Group {
-    id: string
-    name: string
-    members?: User[]
-    threads?: Thread[]
-    websocket?: Websocket
-}
 
 export interface Websocket {
     topic: string
@@ -25,23 +19,24 @@ export interface Thread {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-export function useGroups(): {
-    groups?: Group[]
-    loading: boolean
-    error: Error
-} {
-    const { data, error } = useSWR('/api/groups', fetcher)
-
-    return {
-        groups: error ? undefined : data,
-        loading: !error && !data,
-        error: error,
-    }
+async function fetchAllUsersGroups() {
+    const response = await api.get<{ groups: Group[] }>('/groups')
+    return response.data.groups
 }
 
-export function useGroup(
-    id: string
-): { group?: Group; loading: boolean; error: Error; mutate: Function } {
+export function useGroups() {
+    return useQuery({
+        queryKey: ['groups'],
+        queryFn: fetchAllUsersGroups,
+    })
+}
+
+export function useGroup(id: string): {
+    group?: Group
+    loading: boolean
+    error: Error
+    mutate: Function
+} {
     const { data, error, mutate } = useSWR('/api/groups/' + id, fetcher)
 
     return {

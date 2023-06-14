@@ -43,9 +43,7 @@ export default function Home() {
                 </Link>
             </header>
             <h1>Welcome {user.data!.profile.firstName}</h1>
-            <Link href="/groups/new" className="btn">
-                New group
-            </Link>
+            <Link href="/groups/new">New group</Link>
         </>
     )
 
