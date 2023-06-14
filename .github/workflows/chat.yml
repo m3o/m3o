@@ -30,4 +30,4 @@ jobs:
         run: |
           docker tag m3o/chat registry.digitalocean.com/m3o/chat:live
           docker push registry.digitalocean.com/m3o/chat:live
-          #doctl apps create-deployment ${{ secrets.DIGITALOCEAN_CHAT_ID }}
+          doctl apps create-deployment ${{ secrets.DIGITALOCEAN_CHAT_ID }}
