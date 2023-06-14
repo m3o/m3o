@@ -1,5 +1,5 @@
-import Picker from '@emoji-mart/react'
 import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 // import 'emoji-mart/css/emoji-mart.css'
 import moment from 'moment'
 import { Component } from 'react'
@@ -145,8 +145,8 @@ export default class Chat extends Component<Props, State> {
                         <p
                             onClick={() =>
                                 this.setState({
-                                    showEmojiPicker: !this.state
-                                        .showEmojiPicker,
+                                    showEmojiPicker:
+                                        !this.state.showEmojiPicker,
                                 })
                             }
                         >
