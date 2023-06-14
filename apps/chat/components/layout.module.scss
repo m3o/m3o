@@ -1,87 +1,88 @@
 $color: #a38b7b;
 
 .loadingContainer {
-  img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 80px;
-  }
+    img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 80px;
+    }
 }
 
 .container {
-  height: 100vh;
-  width: 100vw;
+    height: 100vh;
+    width: 100vw;
 
-  main {
-    overflow: hidden;
-    height: inherit;
+    main {
+        overflow: hidden;
+        height: inherit;
 
-    .inner {
-      width: 100%;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
+        .inner {
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
 
-      form {
-        display: flex;
-        flex-direction: column;
-        max-width: 400px;
-      }
+            form {
+                display: flex;
+                flex-direction: column;
+                max-width: 400px;
+            }
+        }
     }
-  }
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 60px;
-
-  img {
-    height: 35px;
-    margin-top: auto;
-    margin-bottom: auto;
-    cursor: pointer;
-  }
-
-  select {
-    width: 200px;
-    padding-left: 10px;
-    border: none;
-    outline: none;
-  }
-
-  nav {
     display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60px;
+    align-items: center;
 
-    a {
-      margin-top: auto;
-      margin-bottom: auto;
-      font-size: 10pt;
-      font-weight: 500;
-      color: #28262c;
-      text-decoration: none;
-
-      &:hover {
-        color: #333333;
-      }
+    img {
+        height: 35px;
+        margin-top: auto;
+        margin-bottom: auto;
+        cursor: pointer;
     }
-  }
+
+    select {
+        width: 200px;
+        padding-left: 10px;
+        border: none;
+        outline: none;
+    }
+
+    nav {
+        display: flex;
+
+        a {
+            margin-top: auto;
+            margin-bottom: auto;
+            font-size: 10pt;
+            font-weight: 500;
+            color: #28262c;
+            text-decoration: none;
+
+            &:hover {
+                color: #333333;
+            }
+        }
+    }
 }
 
 .headerImage {
-  width: 6rem;
-  height: 6rem;
+    width: 6rem;
+    height: 6rem;
 }
 
 .headerHomeImage {
-  width: 8rem;
-  height: 8rem;
+    width: 8rem;
+    height: 8rem;
 }
 
 .backToHome {
-  margin: 3rem 0 0;
+    margin: 3rem 0 0;
 }

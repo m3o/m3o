@@ -3,12 +3,12 @@ import Layout from '../components/layout'
 import { logout } from '../lib/user'
 
 export default function Logout() {
-  const router = useRouter()
+    const router = useRouter()
+    const { loading } = logout()
 
-  const { loading } = logout()
-  if (!loading) {
-    router.push('/login')
-  }
+    if (!loading) {
+        router.push('/login')
+    }
 
-  return <Layout loading={true} />
+    return <Layout loading={true} />
 }
