@@ -278,9 +278,9 @@ export default function Group() {
         }
     }
 
-    function createWhiteboard() {
-        chatUI.current?.SendMessage('whiteboard')
-    }
+    // function createWhiteboard() {
+    //     chatUI.current?.SendMessage('whiteboard')
+    // }
 
     async function sendInvite() {
         const email = window.prompt(

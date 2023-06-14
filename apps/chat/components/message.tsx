@@ -40,8 +40,6 @@ export default function Message({ data }: Props) {
         const id = urlComps[urlComps.length - 1]
         inner = (
             <iframe
-                frameBorder="0"
-                allowTransparency
                 allow="encrypted-media;"
                 src={`https://open.spotify.com/embed/${type}/${id}`}
             />
@@ -88,9 +86,8 @@ export default function Message({ data }: Props) {
 
 function parseQuery(queryString) {
     const query = {}
-    const pairs = (queryString[0] === '?'
-        ? queryString.substr(1)
-        : queryString
+    const pairs = (
+        queryString[0] === '?' ? queryString.substr(1) : queryString
     ).split('&')
     for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i].split('=')

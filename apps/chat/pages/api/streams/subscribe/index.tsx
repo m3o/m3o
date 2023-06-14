@@ -1,8 +1,8 @@
-import { NextApiRequest } from 'next'
+// import { NextApiRequest } from 'next'
 import WebSocket from 'ws'
 import { APIKey, BaseURL } from '../../../../lib/micro'
 
-export default async function handler(req: NextApiRequest) {
+export default async function handler() {
     return new Promise((resolve) => {
         let wsToMicro = null
         let connectionClosed = false
@@ -25,14 +25,14 @@ export default async function handler(req: NextApiRequest) {
         })
         wss.on('connection', (wss) => {
             wss.on('message', (data) => {
-                let protocol = 'ws'
+                // let protocol = 'ws'
 
-                if (
-                    req.headers.referer &&
-                    req.headers.referer.startsWith('https:')
-                ) {
-                    protocol = 'wss'
-                }
+                // if (
+                //     req.headers.referer &&
+                //     req.headers.referer.startsWith('https:')
+                // ) {
+                //     protocol = 'wss'
+                // }
 
                 console.log(
                     'connecting to ' +
@@ -95,21 +95,21 @@ export default async function handler(req: NextApiRequest) {
             })
         })
 
-        wss.handleUpgrade(req, req.socket, req.headers, (wssInput) => {
-            wssInput.on('error', (error) => {
-                console.error(
-                    'connection error on upgraded socket ' +
-                        JSON.stringify(error)
-                )
-                if (wsToMicro) {
-                    wsToMicro.close()
-                }
-                if (wss) {
-                    wss.close()
-                }
-            })
-            wss.emit('connection', wssInput, req)
-        })
+        // wss.handleUpgrade(req, req.socket, req.headers, (wssInput) => {
+        //     wssInput.on('error', (error) => {
+        //         console.error(
+        //             'connection error on upgraded socket ' +
+        //                 JSON.stringify(error)
+        //         )
+        //         if (wsToMicro) {
+        //             wsToMicro.close()
+        //         }
+        //         if (wss) {
+        //             wss.close()
+        //         }
+        //     })
+        //     wss.emit('connection', wssInput, req)
+        // })
 
         function checkClosed() {
             if (connectionClosed) {
