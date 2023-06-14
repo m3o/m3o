@@ -12,11 +12,6 @@ export default function Home() {
     const groupsLoader = useGroups()
     const invitesLoader = useInvites()
 
-    process.on('uncaughtException', function (err) {
-        console.log(err)
-        console.error(err.stack)
-    })
-
     if (userLoader.error || groupsLoader.error || invitesLoader.error) {
         router.push('/login')
         return <div />

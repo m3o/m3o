@@ -1,30 +1,44 @@
 import { serialize } from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
-import call from '../../lib/micro'
-
-interface RequestBody {
-    email?: string
-    password?: string
-}
+import { m3o } from '../../lib/m3o'
+import type { M3OError } from '../../types/m3o'
+import type { LoginFields } from '../../types/user'
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log(req.body)
-
-    const params: RequestBody = JSON.parse(req.body)
-
-    console.log(params)
+    const _body = req.body as LoginFields
 
     try {
-        const rsp = await call('/users/login', params)
-        res.setHeader(
-            'Set-Cookie',
-            serialize('token', rsp.token, { path: '/' })
-        )
-        res.status(200).json(rsp)
-    } catch ({ error, code }) {
-        res.status(code).json({ error })
+        // Login the user
+        const { session } = await m3o.user.login({
+            email: _body.email,
+            password: _body.password,
+        })
+
+        // Get the users details
+        const user = await m3o.user.read({
+            id: session.userId,
+        })
+
+        // Set the session in the cookie
+        const cookie = serialize('session', session.id, {
+            httpOnly: true,
+            path: '/',
+        })
+
+        res.setHeader('Set-Cookie', cookie)
+
+        res.send({
+            user: user.account!,
+        })
+    } catch (error) {
+        console.log('[USER LOGIN]: Error')
+        const _error = error as M3OError
+
+        res.status(_error.code).send({
+            message: _error.detail,
+        })
     }
 }

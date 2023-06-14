@@ -20,6 +20,8 @@
     "@giphy/js-fetch-api": "^4.9.3",
     "@giphy/react-components": "^6.9.4",
     "@sendgrid/mail": "^7.7.0",
+    "@tanstack/react-query": "^4.29.13",
+    "@tanstack/react-query-devtools": "^4.29.13",
     "@types/twilio": "^3.19.2",
     "@types/twilio-video": "^2.7.3",
     "axios": "^1.4.0",
@@ -45,6 +47,7 @@
     "ws": "^8.13.0"
   },
   "devDependencies": {
+    "@types/cookie": "^0.5.1",
     "@types/node": "^20.3.0",
     "@types/react": "^18.2.12",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
