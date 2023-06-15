@@ -1,68 +1,40 @@
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { MainLayout } from '../../layouts/main'
-import { useGroups, createGroup } from '../../lib/group'
-import styles from './new.module.scss'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import { Button } from '../../components/button'
+import { Input } from '../../components/form/input'
+import { MainLayout } from '../../layouts/main'
 import { api } from '../../lib/api'
 
-export default function Home() {
+export default function Page() {
     const router = useRouter()
-    const groupsLoader = useGroups()
+    const { register, handleSubmit } = useForm<{ name: string }>()
 
-    const [name, setName] = useState<string>('')
-    const [loading, setLoading] = useState<boolean>(false)
-
-    const { mutate } = useMutation({
+    const { mutate, isLoading } = useMutation({
         mutationFn: (values: { name: string }) => {
-            return api.post('/groups', values)
+            return api.post<{ group: { id: string } }>('/groups', values)
+        },
+        onSuccess(response) {
+            router.push(`/groups/${response.data.group.id}`)
         },
     })
 
-    // todo: improve error handling
-    if (groupsLoader.error) {
-        router.push('/error')
-        return <div />
-    }
-
-    async function onSubmit(e: React.FormEvent) {
-        e.preventDefault()
-        setLoading(true)
-
-        try {
-            mutate({ name })
-            // router.push('/')
-        } catch ({ error, code }) {
-            console.warn(error)
-            setLoading(false)
-        }
-    }
-
     return (
         <MainLayout>
-            <h1 className={styles.title}>
-                {groupsLoader.groups?.length
-                    ? 'Create a group'
-                    : 'Create your first group'}
+            <h1 className="font-black text-black text-3xl mb-10">
+                Create a group
             </h1>
 
-            <form onSubmit={onSubmit}>
-                <label>Name</label>
-                <input
-                    required
-                    type="text"
-                    value={name}
-                    minLength={1}
-                    maxLength={100}
-                    disabled={loading}
-                    onChange={(e) => setName(e.target.value || '')}
+            <form onSubmit={handleSubmit((values) => mutate(values))}>
+                <Input
+                    {...register('name', {
+                        required: 'Please provide the name of the group',
+                    })}
+                    label="Group name"
                 />
-
-                <input
-                    type="submit"
-                    value="Create group"
-                    disabled={loading || name.length === 0}
-                />
+                <Button type="submit" showLoader={isLoading}>
+                    Create
+                </Button>
             </form>
         </MainLayout>
     )

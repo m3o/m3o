@@ -80,5 +80,9 @@ select:-webkit-autofill:focus {
 }
 
 .btn {
-    @apply bg-black text-white p-4 text-sm rounded-md inline-flex items-center justify-center;
+    @apply bg-black text-white p-4 px-8 text-sm rounded-full inline-flex items-center justify-center;
+}
+
+.btn.thin {
+    @apply py-2 px-3;
 }

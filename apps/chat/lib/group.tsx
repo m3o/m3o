@@ -28,6 +28,7 @@ export function useGroups() {
     return useQuery({
         queryKey: ['groups'],
         queryFn: fetchAllUsersGroups,
+        initialData: [],
     })
 }
 

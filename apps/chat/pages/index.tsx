@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import Layout from '../components/layout'
 import { CenteredLoader } from '../components/loader'
+import { MainLayout } from '../layouts/main'
 import { useGroups } from '../lib/group'
 import { acceptInvite, rejectInvite, Invite, useInvites } from '../lib/invites'
 import { useUser } from '../lib/user'
@@ -11,7 +13,7 @@ import styles from './index.module.scss'
 export default function Home() {
     const router = useRouter()
     const user = useUser()
-    const groupsLoader = useGroups()
+    const groups = useGroups()
     const invitesLoader = useInvites()
 
     useEffect(() => {
@@ -25,26 +27,31 @@ export default function Home() {
     }
 
     return (
-        <>
-            <header className="py-2 px-4 flex justify-between">
-                <Link href="/">
-                    <img
-                        src="/logo.png"
-                        height="35px"
-                        width="35px"
-                        alt="Logo"
-                    />
+        <MainLayout>
+            <div className="flex items-center justify-between mb-10">
+                <h1 className="font-black text-2xl md:text-4xl">
+                    Welcome {user.data!.profile.firstName}
+                </h1>
+                <Link href="/groups/new" className="btn">
+                    New Community
                 </Link>
-                <Link
-                    href="/logout"
-                    className="text-sm text-black hover:underline"
-                >
-                    Logout
-                </Link>
-            </header>
-            <h1>Welcome {user.data!.profile.firstName}</h1>
-            <Link href="/groups/new">New group</Link>
-        </>
+            </div>
+            <div>
+                <h2 className="font-medium mb-4">Your Communities</h2>
+                <div className="max-w-2xl">
+                    {groups.data?.map((group) => (
+                        <Link
+                            key={group.id}
+                            href={`/groups/${group.id}`}
+                            className="flex justify-between items-center p-6 rounded-md border border-zinc-200 mb-4 last:mb-0 w-full hover:bg-zinc-50 text-black group"
+                        >
+                            <p>{group.name}</p>
+                            <ArrowRightIcon className="w-4 group-hover:translate-x-2 transition" />
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </MainLayout>
     )
 
     function accept(invite: Invite) {
@@ -98,22 +105,6 @@ export default function Home() {
                                 </button>
                             </div>
                         ))}
-                    </div>
-                ) : null}
-
-                {groupsLoader.groups?.length ? (
-                    <div>
-                        <h2 className={styles.h2}>Your Groups</h2>
-                        <div className={styles.groups}>
-                            {groupsLoader.groups?.map((g) => (
-                                <div key={g.id} className={styles.group}>
-                                    <p>{g.name}</p>
-                                    <Link href={`/groups/${g.id}`}>
-                                        <button>Enter</button>
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 ) : null}
             </div>
