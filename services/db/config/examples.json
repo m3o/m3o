@@ -1,0 +1,119 @@
+{
+  "create": [
+    {
+      "title": "Create a record",
+      "run_check": true,
+      "request": {
+        "table": "example",
+        "record": {
+          "id": "1",
+          "name": "Jane",
+          "age": 42,
+          "isActive": true
+        }
+      },
+      "response": {
+        "id": "1"
+      }
+    }
+  ],
+  "update": [
+    {
+      "title": "Update a record",
+      "run_check": true,
+      "request": {
+        "table": "example",
+        "record": {
+          "id": "1",
+          "age": 43
+        }
+      },
+      "response": {}
+    }
+  ],
+  "read": [
+    {
+      "title": "Read records",
+      "run_check": true,
+      "idempotent": true,
+      "request": {
+        "table": "example",
+        "query": "age == 43"
+      },
+      "response": {
+        "records": [
+          {
+            "id": "1",
+            "name": "Jane",
+            "age": 43,
+            "isActive": true
+          }
+        ]
+      }
+    }
+  ],
+  "delete": [
+    {
+      "title": "Delete a record",
+      "run_check": true,
+      "request": {
+        "table": "example",
+        "id": "1"
+      },
+      "response": {}
+    }
+  ],
+  "truncate": [
+    {
+      "title": "Truncate table",
+      "run_check": false,
+      "request": {
+        "table": "example"
+      },
+      "response": {}
+    }
+  ],
+  "dropTable": [
+    {
+      "title": "Drop table",
+      "run_check": false,
+      "request": {
+        "table": "example"
+      },
+      "response": {}
+    }
+  ],
+  "count": [
+    {
+      "title": "Count entries in a table",
+      "run_check": false,
+      "request": {
+        "table": "example"
+      },
+      "response": {
+        "count": 31
+      }
+    }
+  ],
+  "listTables": [
+    {
+      "title": "List tables",
+      "run_check": false,
+      "request": {},
+      "response": {
+        "tables": ["example", "example2"]
+      }
+    }
+  ],
+  "renameTable": [
+    {
+      "title": "Rename table",
+      "run_check": false,
+      "request": {
+        "from": "examples2",
+        "to": "examples3"
+      },
+      "response": {}
+    }
+  ]
+}

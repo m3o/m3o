@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package avatar;
+
+option go_package = "./proto;avatar";
+
+service Avatar {
+  rpc Generate(GenerateRequest) returns (GenerateResponse) {}
+}
+
+// Generate an unique avatar
+message GenerateRequest {
+  // avatar's gender: `male` or `female`; default is `male`
+  string gender = 1;
+  // avatar's username, unique username will generate the unique avatar;
+  // if empty, every request generates a random avatar;
+  // if upload == true, username will be the CDN filename rather than a random uuid string
+  string username = 2;
+  // encode format of avatar image: `png` or `jpeg`; default is `jpeg`
+  string format = 3;
+  // set to true to upload to the M3O CDN and receive the url
+  bool upload = 4;
+}
+
+message GenerateResponse {
+  // M3O's CDN url of the avatar image
+  string url = 1;
+  // base64 encoded string of the avatar image
+  string base64 = 2;
+}

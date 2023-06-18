@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package id;
+
+option go_package = "./proto;id";
+
+service Id {
+	rpc Generate(GenerateRequest) returns (GenerateResponse) {}
+	rpc Types(TypesRequest) returns (TypesResponse) {}
+}
+
+// Generate a unique ID. Defaults to uuid.
+message GenerateRequest {
+	// type of id; call 'Types' endpoint for available types
+	string type = 1;
+}
+
+message GenerateResponse {
+	// the unique id generated
+	string id = 1;
+	// the type of id generated
+	string type = 2;
+}
+
+// List the types of IDs available.
+message TypesRequest {}
+
+message TypesResponse {
+	repeated string types = 1;
+}

@@ -1,0 +1,119 @@
+{
+  "index": [
+    {
+      "title": "Index a record",
+      "run_check": false,
+      "request": {
+        "index": "customers",
+        "data": {
+          "name": "John Doe",
+          "age": 37,
+          "starsign": "Leo"
+        }
+      },
+      "response": {
+        "record": {
+          "id": "0d5aab12-c716-4174-8c3a-f4222b337292",
+          "data": {
+            "name": "John Doe",
+            "age": 37,
+            "starsign": "Leo"
+          }
+        }
+      }
+    }
+  ],
+  "search": [
+    {
+      "title": "Search for a record",
+      "run_check": false,
+      "request": {
+        "index": "customers",
+        "query": "name == 'John'"
+      },
+      "response": {
+        "records": [
+          {
+            "id": "1234",
+            "data": {
+              "name": "John Doe",
+              "age": 37,
+              "starsign": "Leo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Search on multiple fields (AND)",
+      "run_check": false,
+      "request": {
+        "index": "customers",
+        "query": "name == 'John' AND starsign == 'Leo'"
+      },
+      "response": {
+        "records": [
+          {
+            "id": "1234",
+            "data": {
+              "name": "John Doe",
+              "age": 37,
+              "starsign": "Leo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Search on multiple fields (OR)",
+      "run_check": false,
+      "request": {
+        "index": "customers",
+        "query": "name == 'John' OR name == 'Jane'"
+      },
+      "response": {
+        "records": [
+          {
+            "id": "1234",
+            "data": {
+              "name": "John Doe",
+              "age": 37,
+              "starsign": "Leo"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "delete": [
+    {
+      "title": "Delete a record",
+      "run_check": false,
+      "request": {
+        "id": "1234",
+        "index": "customers"
+      },
+      "response": {}
+    }
+  ],
+  "createIndex": [
+    {
+      "title": "Create an index",
+      "run_check": false,
+      "request": {
+        "index": "customers"
+      },
+      "response": {}
+    }
+  ],
+  "deleteIndex": [
+    {
+      "title": "Delete an index",
+      "run_check": false,
+      "request": {
+        "index": "customers"
+      },
+      "response": {}
+    }
+  ]
+}

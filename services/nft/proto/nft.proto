@@ -1,0 +1,218 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+package nft;
+
+option go_package = "./proto;nft";
+
+service Nft {
+	rpc Assets(AssetsRequest) returns (AssetsResponse) {}
+	rpc Create(CreateRequest) returns (CreateResponse) {}
+	rpc Collections(CollectionsRequest) returns (CollectionsResponse) {}
+	rpc Asset(AssetRequest) returns (AssetResponse) {}
+	rpc Collection(CollectionRequest) returns (CollectionResponse) {}
+}
+
+// Create your own NFT (coming soon)
+message CreateRequest {
+	// name of the NFT
+	string name = 1;
+	// description
+	string description = 2;
+	// image data
+	bytes image = 3;
+	// data if not image
+	bytes data = 4;
+}
+
+message CreateResponse {
+	Asset asset = 1;
+}
+
+// Get a list of collections
+message CollectionsRequest {
+	int32 limit = 1;
+	int32 offset = 2;
+	// owner wallet address
+	string owner = 3;
+}
+
+message CollectionsResponse {
+	repeated Collection collections = 1;
+}
+
+message Asset {
+	// id of the asset
+	int32 id = 1;
+	// the token id
+	string token_id = 2;
+	// name of the asset
+	string name = 3;
+	// related description
+	string description = 4;
+	// the image url
+	string image_url = 5;
+	// number of sales
+	int32 sales = 6;
+	// the permalink
+	string permalink = 7;
+	// asset contract
+	Contract contract = 8;
+	// associated collection
+	Collection collection = 9;
+	// Creator of the NFT
+	User creator = 10;
+	// Owner of the NFT
+	User owner = 11;
+	// is it a presale
+	bool presale = 12;
+	// last time sold
+	Sale last_sale = 13;
+	// listing date
+	string listing_date = 14;
+	// traits associated with the item
+	repeated google.protobuf.Struct traits = 15;
+}
+
+message Contract {
+	// name of contract
+	string name = 1;
+	// ethereum address
+	string address = 2;
+	// type of contract e.g "semi-fungible"
+	string type = 3;
+	// timestamp of creation
+	string created_at = 4;
+	// owner id
+	int32 owner = 5;
+	// aka "ERC1155"
+	string schema = 6;
+	// related symbol
+	string symbol = 7;
+	// description of contract
+	string description = 8;
+	// payout address
+	string payout_address = 9;
+	// seller fees
+	string seller_fees = 10;
+}
+
+message Collection {
+	// name of the collection
+	string name = 1;
+	// description of the collection
+	string description = 2;
+	// collection slug
+	string slug = 3;
+	// an image for the collection
+	string image_url = 4;
+	// creation time
+	string created_at = 5;
+	// payout address for the collection's royalties
+	string payout_address = 6;
+	// external link to the original website for the collection
+	string external_link = 7;
+	// image used in the banner for the collection
+	string banner_image_url = 8;
+	// the fees that get paid out when a sale is made
+	string seller_fees = 9;
+	// the collection's approval status on OpenSea
+	string safelist_request_status = 10;
+	// a list of the contracts associated with this collection
+	repeated Contract primary_asset_contracts = 11;
+	// listing of all the trait types available within this collection
+	google.protobuf.Struct traits = 12;
+	// the payment tokens accepted for this collection
+	repeated Token payment_tokens = 13;
+	// approved editors for this collection
+	repeated string editors = 14;
+	// sales statistics associated with the collection
+	google.protobuf.Struct stats = 15;
+}
+
+message User {
+	string username = 1;
+	string profile_url = 2;
+	string address = 3;
+}
+
+message Sale {
+	string asset_token_id = 1;
+	int32 asset_decimals = 2;
+	string event_type = 3;
+	string event_timestamp = 4;
+	string total_price = 5;
+	string quantity = 6;
+	string created_at = 7;
+	Transaction transaction = 8;
+	Token payment_token = 9;
+}
+
+message Transaction {
+	int32 id = 1;
+	string timestamp = 2;
+	string block_hash = 3;
+	string block_number = 4;
+	User from_account = 5;
+	User to_account = 6;
+	string transaction_hash = 7;
+	string transaction_index = 8;
+}
+
+message Token {
+	int32 id = 1;
+	string name = 2;
+	string symbol = 3;
+	string address = 4;
+	string image_url = 5;
+	int32 decimals = 6;
+	string eth_price = 7;
+	string usd_price = 8;
+}
+
+// Return a list of assets
+message AssetsRequest {
+	// limit returned assets
+	int32 limit = 1;
+	// DEPRECATED offset for pagination, please use cursor instead
+	int32 offset = 2 [deprecated = true];
+	// order "asc" or "desc"
+	string order = 3;
+	// order by "sale_date", "sale_count", "sale_price", "total_price"
+	string order_by = 4;
+	// limit to members of a collection by slug name (case sensitive)
+	string collection = 5;
+	// A cursor pointing to the page to retrieve
+	string cursor = 6;
+	// owner wallet address
+	string owner = 7;
+}
+
+message AssetsResponse {
+	// list of assets
+	repeated Asset assets = 1;
+	// A cursor to be supplied to retrieve the next page of results
+	string next = 2;
+	// A cursor to be supplied to retrieve the previous page of results
+	string previous = 3;
+}
+
+// Get a single asset by the contract
+message AssetRequest {
+	string contract_address = 1;
+	string token_id = 2;
+}
+
+message AssetResponse {
+	Asset asset = 1;
+}
+
+// Get a collection by its slug
+message CollectionRequest {
+	string slug = 1;
+}
+
+message CollectionResponse {
+	Collection collection = 1;
+}

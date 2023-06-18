@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package sms;
+
+option go_package = "./proto;sms";
+
+service Sms {
+	rpc Send(SendRequest) returns (SendResponse) {}
+}
+
+// Send an SMS.
+message SendRequest {
+	// who is the message from? The message will be suffixed with "Sent from <from>"
+	string from = 1;
+	// the destination phone number including the international dialling code (e.g. +44)
+	string to = 2;
+	// the main body of the message to send
+	string message = 3;
+}
+
+message SendResponse {
+	// will return "ok" if successful
+	string status = 1;
+	// any additional info
+	string info = 2;
+}

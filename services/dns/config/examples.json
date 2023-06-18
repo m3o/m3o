@@ -1,0 +1,66 @@
+{
+  "query": [
+    {
+      "title": "Make a dns query",
+      "description": "Make a dns query over https",
+      "request": {
+        "name": "google.com"
+      },
+      "response": {
+		"status": 0,
+		"TC": false,
+		"RD": true,
+		"RA": true,
+		"AD": false,
+		"CD": false,
+		"question": [
+			{
+				"name": "google.com.",
+				"type": 1
+			}
+		],
+		"answer": [
+			{
+				"name": "google.com.",
+				"type": 1,
+				"TTL": 117,
+				"data": "142.250.178.14"
+			}
+		],
+		"provider": "google"
+      }
+    }
+  ],
+  "whois": [
+    {
+      "title": "Whois query",
+      "description": "Make a whois query",
+      "request": {
+        "domain": "x.com"
+      },
+      "response": {
+        "id": "1026563_DOMAIN_COM-VRSN",
+        "domain": "x.com",
+        "whois_server": "whois.godaddy.com",
+        "registrar_url": "https://www.godaddy.com",
+        "created": "1993-04-02T05:00:00Z",
+        "updated": "2022-10-04T00:33:10Z",
+        "expiry": "2026-10-20T19:56:17Z",
+        "registrar": "GoDaddy.com, LLC",
+        "registrar_id": "146",
+        "abuse_email": "abuse@godaddy.com",
+        "abuse_phone": "+1.4806242505",
+        "status": [
+                "clientdeleteprohibited",
+                "clientrenewprohibited",
+                "clienttransferprohibited",
+                "clientupdateprohibited"
+        ],
+        "nameservers": [
+                "ns71.domaincontrol.com",
+                "ns72.domaincontrol.com"
+        ]
+      }
+    }
+  ]
+}
