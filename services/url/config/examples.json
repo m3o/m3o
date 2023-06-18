@@ -1,0 +1,71 @@
+{
+    "create": [{
+        "title": "Create a URL",
+        "run_check": false,
+        "request": {
+	    "id": "my-site",
+            "destinationURL": "https://mysite.com/this-is-a-rather-long-web-address"
+        },
+        "response": {
+            "url": {
+	        "id": "my-site",
+                "shortURL": "https://m3o.one/u/my-site",
+                "destinationURL": "https://mysite.com/this-is-a-rather-long-web-address",
+                "created": "2022-03-01T16:04:11.341277162Z",
+                "hitCount": "0"
+            }
+        }
+    }],
+    "list": [{
+        "title": "List your shortened URLs",
+        "description": "List the token holder's shortened URLs",
+        "run_check": false,
+        "request": {
+        },
+        "response": {
+            "urlPairs": [{
+                "shortURL": "https://m3o.one/u/f8f3f83f3f83g",
+                "destinationURL": "https://mysite.com/this-is-a-rather-long-web-address",
+                "created": "2022-03-01T16:04:11.341277162Z",
+                "hitCount": "4"
+            }]
+        }
+    }],
+    "update": [{
+        "title": "Update a short URL",
+        "run_check": false,
+        "request": {
+            "shortURL": "https://m3o.one/u/f8f3f83f3f83g",
+            "destinationURL": "https://mynewsite.com/this-is-a-rather-long-web-address"
+        },
+        "response": {}
+    }],
+    "shorten": [{
+        "title": "Shorten a long URL",
+        "run_check": false,
+        "request": {
+            "destinationURL": "https://mysite.com/this-is-a-rather-long-web-address"
+        },
+        "response": {
+            "shortURL": "https://m3o.one/u/f8f3f83f3f83g"
+        }
+    }],
+    "resolve": [{
+        "title": "Resolve a short URL to a long destination URL",
+        "run_check": false,
+        "request": {
+            "shortURL": "https://m3o.one/u/ck6SGVkYp"
+        },
+        "response": {
+            "destinationURL": "https://mysite.com/this-is-a-rather-long-web-address"
+        }
+    }],
+    "delete": [{
+        "title": "Delete a shortened URL",
+        "run_check": false,
+        "request": {
+            "shortURL": "https://m3o.one/u/f8f3f83f3f83g"
+        },
+        "response": {}
+    }]
+}

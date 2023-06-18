@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package twitter;
+
+option go_package = "./proto;twitter";
+
+service Twitter {
+	rpc Timeline(TimelineRequest) returns (TimelineResponse) {}
+	rpc Search(SearchRequest) returns (SearchResponse) {}
+	rpc User(UserRequest) returns (UserResponse) {}
+	rpc Trends(TrendsRequest) returns (TrendsResponse) {}
+}
+
+message Tweet {
+	// id of the tweet
+	int64 id = 1;
+	// text of the tweet
+	string text = 2;
+	// username of the person who tweeted
+	string username = 3;
+	// time of tweet
+	string created_at = 4;
+	// number of times retweeted
+	int64 retweeted_count = 7;
+	// number of times favourited
+	int64 favourited_count = 8;
+}
+
+message Profile {
+	// the user id
+	int64 id = 1;
+	// display name of the user
+	string name = 2;
+	// the username
+	string username = 3;
+	// the user description
+	string description = 4;
+	// the account creation date
+	string created_at = 5;
+	// the user's location
+	string location = 6;
+	// the follower count
+	int64 followers = 7;
+	// if the account is private
+	bool private = 8;
+	// if the account is verified
+	bool verified = 9;
+	// The user's profile picture
+	string image_url = 10;
+}
+
+message Trend {
+	// name of the trend
+	string name = 1;
+	// the twitter url
+	string url = 2;
+	// the volume of tweets in last 24 hours
+	int64 tweet_volume = 3;
+}
+
+// Get the timeline for a given user
+message TimelineRequest {
+	// the username to request the timeline for
+	string username = 1;
+	// number of tweets to return. default: 20
+	int32 limit = 2;
+}
+
+message TimelineResponse {
+	// The recent tweets for the user
+	repeated Tweet tweets = 1;
+}
+
+// Search for tweets with a simple query
+message SearchRequest {
+	// the query to search for
+	string query = 1;
+	// number of tweets to return. default: 20
+	int32 limit = 2;
+}
+
+message SearchResponse {
+	// the related tweets for the search
+	repeated Tweet tweets = 2;
+}
+
+// Get a user's twitter profile
+message UserRequest {
+	// the username to lookup
+	string username = 1;
+}
+
+message UserResponse {
+	// the current user status
+	Tweet status = 1; 
+	// The requested user profile
+	Profile profile = 2;
+}
+
+// Get the current global trending topics
+message TrendsRequest {
+}
+
+message TrendsResponse {
+	// a list of trending topics 
+	repeated Trend trends = 1;
+}

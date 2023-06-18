@@ -1,0 +1,45 @@
+
+{
+    "price": [{
+        "title": "Get a stock price",
+        "description": "Returns the last traded price of a stock",
+        "request": {
+            "symbol": "AAPL"
+        },
+        "response": {
+            "symbol": "AAPL",
+            "price": 131.265
+        }
+    }],
+    "quote": [{
+        "title": "Get a stock quote",
+        "description": "Returns the last quote for a stock including bid and ask prices",
+        "request": {
+            "symbol": "AAPL"
+        },
+        "response": {
+            "symbol": "AAPL",
+            "ask": 131.12,
+            "bid": 131.11,
+            "ask_size": 7,
+            "bid_size": 4,
+            "timestamp": "2021-06-18T13:49:23.678Z"
+        }
+    }],
+    "history": [{
+        "title": "Get historic data",
+        "description": "Returns historic stock data for a given date",
+        "request": {
+            "stock": "AAPL",
+            "date": "2020-10-01"
+        },
+        "response": {
+            "symbol": "AAPL",
+            "open": 117.64,
+            "close": 116.79,
+            "high": 117.72,
+            "low": 115.83,
+            "date": "2020-10-01"
+        }
+    }]
+}

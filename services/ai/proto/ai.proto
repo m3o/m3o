@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package ai;
+
+option go_package = "./proto;ai";
+
+service Ai {
+	rpc Complete(CompleteRequest) returns (CompleteResponse) {}
+	rpc Edit(EditRequest) returns (EditResponse) {}
+	rpc Moderate(ModerateRequest) returns (ModerateResponse) {}
+	rpc Generate(GenerateRequest) returns (GenerateResponse) {}
+}
+
+// Make a request to the AI
+message CompleteRequest {
+	// input to pass in
+	string text = 1;
+}
+
+// Response from the AI
+message CompleteResponse {
+	// text returned
+	string text = 2;
+}
+
+// Edit or edit prompt/code
+message EditRequest {
+	// text/code to check
+	string text = 1;
+	// instruction hint e.g check the grammar
+	string instruction = 2;
+}
+
+message EditResponse {
+	// response output
+	string text = 2;
+}
+
+// Moderate hate speech
+message ModerateRequest {
+	// text to check
+	string text = 1;
+}
+
+message ModerateResponse {
+	// whether it was flagged or not
+	bool flagged = 1;
+	// categories tested and identified
+	map<string,bool> categories = 2;
+	// related scores
+	map<string,double> scores = 3;
+}
+
+// Generate an image from prompt
+message GenerateRequest {
+	// text description of image
+	string text = 1;
+	// number of images to generate (max 10)
+	int32 limit = 2;
+	// size of image 256x256, 512x512, 1024x1024
+	string size = 3;
+}
+
+message Image {
+	// image url
+	string url = 1;
+	// base64 encoded
+	string base64 = 2;
+}
+
+message GenerateResponse {
+	// image urls
+	repeated Image images = 1;
+}

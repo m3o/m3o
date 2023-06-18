@@ -1,0 +1,28 @@
+
+{
+    "call": [{
+        "title": "Call helloworld",
+        "description": "Call the helloworld service and get a message back",
+        "run_check": true,
+        "idempotent": true,
+        "request": {
+            "name": "John"
+        },
+        "response": {
+            "message": "Hello John"
+        }
+    }],
+    "stream": [{
+        "title": "Stream helloworld",
+        "description": "Streams responses from the server using websockets",
+        "run_check": true,
+        "idempotent": true,
+        "request": {
+            "name": "John",
+            "messages": 10
+        },
+        "response": {
+            "message": "Hello John"
+        }
+    }]
+}

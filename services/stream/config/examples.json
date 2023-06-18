@@ -1,0 +1,57 @@
+
+{
+    "createChannel": [{
+        "title": "Create Channel",
+        "description": "Create a channel with name and description",
+        "run_check": true,
+        "request": {
+            "name": "general",
+            "description": "The channel for all things"
+        },
+        "response": {}
+    }],
+    "sendMessage": [{
+        "title": "Send message",
+        "description": "Send a message to a channel",
+        "run_check": true,
+        "request": {
+            "channel": "general",
+            "text": "Hey checkout this tweet https://twitter.com/m3oservices/status/1455291054295498752"
+        },
+        "response": {}
+    }],
+    "listMessages": [{
+        "title": "List messages",
+        "description": "List messages for a channel",
+        "run_check": false,
+        "request": {
+            "channel": "general"
+        },
+        "response": {
+            "messages": [
+                {
+                        "id": "e6099dca-22af-440e-bdbf-e14525af9824",
+                        "text": "Hey checkout this tweet https://twitter.com/m3oservices/status/1455291054295498752",
+                        "timestamp": "2021-11-03T14:34:40.333401738Z",
+                        "channel": "general",
+                        "metadata": {}
+                }
+            ]
+        }
+    }],
+    "listChannels": [{
+        "title": "List channels",
+        "description": "List all the channels",
+        "run_check": true,
+        "request": {},
+        "response": {
+            "channels": [
+                {
+                        "name": "general",
+            		"description": "The channel for all things",
+                        "last_active": "2021-11-03T14:35:07.594972213Z"
+                }
+            ]
+        }
+    }]
+}

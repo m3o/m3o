@@ -1,0 +1,281 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./proto;user";
+
+service User {
+	rpc Create(CreateRequest) returns (CreateResponse) {}
+	rpc Read(ReadRequest) returns (ReadResponse) {}
+	rpc Update(UpdateRequest) returns (UpdateResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+	rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse) {}
+	rpc Login(LoginRequest) returns (LoginResponse) {}
+	rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+	rpc LogoutAll(LogoutAllRequest) returns (LogoutAllResponse) {}
+	rpc ReadSession(ReadSessionRequest) returns(ReadSessionResponse) {}
+	rpc VerifyEmail(VerifyEmailRequest) returns(VerifyEmailResponse) {}
+	rpc SendVerificationEmail(SendVerificationEmailRequest) returns (SendVerificationEmailResponse) {}
+	rpc SendPasswordResetEmail(SendPasswordResetEmailRequest) returns (SendPasswordResetEmailResponse) {}
+	rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
+	rpc List(ListRequest) returns(ListResponse) {}
+	rpc SendMagicLink(SendMagicLinkRequest) returns (SendMagicLinkResponse) {}
+	rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {}
+}
+
+message Account {
+	// unique account id
+	string id = 1;
+	// alphanumeric username
+	string username = 2;
+	// an email address
+	string email = 3;
+	// unix timestamp
+	int64 created = 4;
+	// unix timestamp
+	int64 updated = 5;
+	// if the account is verified
+	bool verified = 6;
+	// date of verification
+	int64 verification_date = 7;
+	// Store any custom data you want about your users in this fields.
+	map<string,string> profile = 8;
+}
+
+message Session {
+	// the session id
+	string id = 1;
+	// the associated user id
+	string userId = 2;
+	// unix timestamp
+	int64 created = 4;
+	// unix timestamp
+	int64 expires = 5;
+}
+
+// Create a new user account. The email address and username for the account must be unique.
+message CreateRequest {
+	// optional account id
+	string id = 1;
+	// the username
+	string username = 2;
+	// the email address
+	string email = 3;
+	// the user password
+	string password = 4;
+	// optional user profile as map<string,string>
+	map<string,string> profile = 5;
+	
+}
+
+message CreateResponse {
+	Account account = 1;
+}
+
+// Delete an account by id
+message DeleteRequest {
+	// the account id
+	string id = 1;
+}
+
+message DeleteResponse {
+}
+
+// Read an account by id, username or email. Only one need to be specified.
+message ReadRequest {
+	// the account id
+	string id = 1;
+	// the account username
+	string username = 2;
+	// the account email
+	string email = 3;
+}
+
+message ReadResponse {
+	Account account = 1;
+}
+
+// Update the account username or email
+message UpdateRequest {
+	// the account id
+	string id = 1;
+	// the new username
+	string username = 2;
+	// the new email address
+	string email = 3;
+	// the user profile as map<string,string>
+	map<string,string> profile = 4;
+}
+
+message UpdateResponse {
+}
+
+// Update the account password
+message UpdatePasswordRequest {
+	// the account id
+	string userId = 1;
+	// the old password
+	string old_password = 2;
+	// the new password
+	string new_password = 3;
+	// confirm new password
+	string confirm_password = 4;
+}
+
+message UpdatePasswordResponse {
+}
+
+// Read a session by the session id. In the event it has expired or is not found and error is returned.
+message ReadSessionRequest {
+	// The unique session id
+	string session_id = 1;
+}
+
+message ReadSessionResponse {
+	// the session for the user
+	Session session = 1;
+}
+
+
+// Login using username or email. The response will return a new session for successful login, 
+// 401 in the case of login failure and 500 for any other error
+message LoginRequest {
+    // The username of the user
+    string username = 1;
+    // The email address of the user
+    string email = 2;
+    // The password of the user
+    string password = 3;
+}
+
+message LoginResponse {
+    // The session of the logged in  user
+    Session session = 1;
+}
+
+// Logout a user account
+message LogoutRequest {
+	// the session id for the user to logout
+	string session_id = 1;
+}
+
+message LogoutResponse {
+}
+
+// Logout of all user's sessions
+message LogoutAllRequest {
+	// the user to logout
+	string user_id = 1;
+}
+
+message LogoutAllResponse {
+}
+
+
+// Verify the email address of an account from a token sent in an email to the user.
+message VerifyEmailRequest {
+	// The token from the verification email
+	string token = 1;
+}
+
+message VerifyEmailResponse{
+
+}
+
+// Send a verification email to a user.
+message SendVerificationEmailRequest{
+	// email address to send the verification code
+	string email = 1;
+	// subject of the email
+	string subject = 2;
+	// Text content of the email. Include '$micro_verification_link' which will be replaced by a verification link
+	string text_content = 3;
+	// The url to redirect to after successful verification
+	string redirect_url = 4;
+	// The url to redirect to incase of failure
+	string failure_redirect_url = 5;
+	// Display name of the sender for the email. Note: the email address will still be 'noreply@email.m3ocontent.com'
+	string from_name = 6;
+}
+
+message SendVerificationEmailResponse{}
+
+// Send an email with a verification code to reset password.
+// Call "ResetPassword" endpoint once user provides the code.
+message SendPasswordResetEmailRequest {
+	// email address to send reset for
+	string email = 1;
+	// subject of the email
+	string subject = 2;
+	// Text content of the email. Don't forget to include the string '$code' which will be replaced by the real verification link
+	// HTML emails are not available currently.
+	string text_content = 3;
+	// Display name of the sender for the email. Note: the email address will still be 'noreply@email.m3ocontent.com'
+	string from_name = 4;
+	// Number of secs that the password reset email is valid for, defaults to 1800 secs (30 mins)
+	int64 expiration = 5;
+}
+
+message SendPasswordResetEmailResponse {
+}
+
+// Reset password with the code sent by the "SendPasswordResetEmail" endpoint.
+message ResetPasswordRequest {
+	// the email to reset the password for
+	string email = 1;
+	// The code from the verification email
+	string code = 2;
+	// the new password
+	string new_password = 3;
+	// confirm new password
+	string confirm_password = 4;
+}
+
+message ResetPasswordResponse {}
+
+// List all users. Returns a paged list of results
+message ListRequest {
+	uint32 offset = 1;
+	// Maximum number of records to return. Default limit is 25.
+	// Maximum limit is 1000. Anything higher will return an error.
+	uint32 limit = 2;
+}
+
+message ListResponse {
+	repeated Account users = 1;
+}
+
+// Login using email only - Passwordless
+message SendMagicLinkRequest {
+	// the email address of the user
+	string email = 1;
+	string subject = 2;
+	// Text content of the email. Don't forget to include the string '$micro_verification_link' which will be replaced by the real verification link
+	// HTML emails are not available currently.
+	string text_content = 3;
+	// Display name of the sender for the email. Note: the email address will still be 'support@m3o.com'
+	string from_name = 4;
+	// Your web site address, example www.example.com or user.example.com
+	string address = 5;
+	// Endpoint name where your http request handler handles MagicLink by 
+	// calling M3O VerifyToken endpoint. You can return as a result a success, 
+	// failed or redirect to another page. 
+	string endpoint = 6;
+}
+
+message SendMagicLinkResponse {}
+
+// Check whether the token attached to MagicLink is valid or not.
+// Ideally, you need to call this endpoint from your http request  
+// handler that handles the endpoint which is specified in the 
+// SendMagicLink request. 
+message VerifyTokenRequest {
+	string token = 1;
+}
+
+message VerifyTokenResponse {
+	bool is_valid = 1;
+	Session session = 2;
+	string message = 3;
+}
+

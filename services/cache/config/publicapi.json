@@ -1,0 +1,9 @@
+{
+  "name": "cache",
+  "icon": "💭",
+  "category": "storage",
+  "display_name": "Cache",
+  "pricing": {
+    "Cache.Set": 100
+  }
+}

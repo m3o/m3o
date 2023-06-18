@@ -6,9 +6,8 @@ on:
       - beta
     paths:
       - '.github/workflows/generate.yml'
+      - 'services/**'
       - 'tools/**'
-  repository_dispatch:
-    types: [micro_services]
 
 jobs:
   generate:
@@ -29,12 +28,6 @@ jobs:
         with:
           path: m3o
           ref: ${{ github.ref }}
-
-      - name: Check services repo
-        uses: actions/checkout@v2
-        with:
-          repository: 'micro/services'
-          path: services
 
       - name: Check micro repo
         uses: actions/checkout@v2
