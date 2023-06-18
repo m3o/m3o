@@ -5,7 +5,7 @@ on:
       - main
       - beta
     paths:
-      - '.github/workflows/docker.yml'
+      - '.github/workflows/platform.yml'
       - 'platform/**'
   repository_dispatch:
     types: [micro_release]
