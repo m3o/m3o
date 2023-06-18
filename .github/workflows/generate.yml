@@ -77,7 +77,7 @@ jobs:
           # delete existing cmd directory
           rm -rf ../services/tools
           # copy our command directory in
-          cp -r tools ../services/
+          cp -r tools ../services/tools
 
       - name: install prettier
         working-directory: services
