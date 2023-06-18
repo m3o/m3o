@@ -7,9 +7,9 @@ import (
 	"sync"
 
 	"github.com/go-redis/redis/v8"
-	"m3o.dev/platform/plugins/postgres"
-	"m3o.dev/platform/plugins/redis/blocklist"
-	"m3o.dev/platform/plugins/s3"
+	"m3o.dev/platform/plugin/postgres"
+	"m3o.dev/platform/plugin/redis/blocklist"
+	"m3o.dev/platform/plugin/s3"
 	"github.com/micro/micro/v3/profile"
 	auth2 "github.com/micro/micro/v3/service/api/auth"
 	"github.com/micro/micro/v3/service/auth"
@@ -25,9 +25,9 @@ import (
 	"github.com/micro/micro/v3/service/runtime/kubernetes"
 	"github.com/micro/micro/v3/service/store"
 	"github.com/urfave/cli/v2"
-	"m3o.dev/platform/plugins/etcd"
-	redisBroker "m3o.dev/platform/plugins/redis/broker"
-	redisstream "m3o.dev/platform/plugins/redis/stream"
+	"m3o.dev/platform/plugin/etcd"
+	redisBroker "m3o.dev/platform/plugin/redis/broker"
+	redisstream "m3o.dev/platform/plugin/redis/stream"
 )
 
 func init() {
