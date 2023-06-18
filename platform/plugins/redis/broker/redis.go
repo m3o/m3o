@@ -35,6 +35,7 @@ type subscriber struct {
 	opts   broker.SubscribeOptions
 	broker *redisBroker
 	topic  string
+	queue  string
 }
 
 func (s *subscriber) Options() broker.SubscribeOptions {
@@ -82,7 +83,13 @@ func (r *redisBroker) Publish(topic string, m *broker.Message, opts ...broker.Pu
 		return err
 	}
 
-	return r.redisClient.Publish(context.Background(), topic, payload).Err()
+	return r.redisClient.XAdd(context.Background(), &redis.XAddArgs{
+		Stream: topic,
+		Values: []string{"event", string(payload)},
+		MaxLen: 1,
+		Approx: true,
+	}).Err()
+
 }
 
 func (r *redisBroker) Subscribe(topic string, h broker.Handler, opts ...broker.SubscribeOption) (broker.Subscriber, error) {
@@ -98,43 +105,120 @@ func (r *redisBroker) Subscribe(topic string, h broker.Handler, opts ...broker.S
 		o(&opt)
 	}
 
-	err := r.consume(topic, h, opt.ErrorHandler)
+	group := opt.Queue
+	if len(group) == 0 {
+		group = uuid.New().String()
+	}
+
+	err := r.consumeWithGroup(topic, group, h, opt.ErrorHandler)
 	if err != nil {
 		return nil, err
 	}
-
 	s := subscriber{
 		opts:   opt,
 		broker: r,
 		topic:  topic,
+		queue:  group,
 	}
 	return &s, nil
+
 }
 
 func (r *redisBroker) String() string {
 	return "redis"
 }
 
-func (r *redisBroker) consume(topic string, h broker.Handler, eh broker.ErrorHandler) error {
+func (r *redisBroker) consumeWithGroup(topic, group string, h broker.Handler, eh broker.ErrorHandler) error {
 	topic = fmt.Sprintf("broker-%s", topic)
+	lastRead := "$"
 
-	pubsub := r.redisClient.Subscribe(context.Background(), topic)
-
+	if err := callWithRetry(func() error {
+		return r.redisClient.XGroupCreateMkStream(context.Background(), topic, group, lastRead).Err()
+	}, 2); err != nil {
+		if !strings.HasPrefix(err.Error(), "BUSYGROUP") {
+			return err
+		}
+	}
+	consumerName := uuid.New().String()
 	go func() {
 		defer func() {
-			pubsub.Close()
+			// try to clean up the consumer
+			if err := callWithRetry(func() error {
+				return r.redisClient.XGroupDelConsumer(context.Background(), topic, group, consumerName).Err()
+			}, 2); err != nil {
+				logger.Errorf("Error deleting consumer %s", err)
+			}
 		}()
-
+		// only stop processing if we get an error while from the handler, in all other cases continue
+		start := "-"
 		for {
-			ev, err := pubsub.Receive(context.TODO())
+			// sweep up any old pending messages
+			var pendingCmd *redis.XPendingExtCmd
+			err := callWithRetry(func() error {
+				pendingCmd = r.redisClient.XPendingExt(context.Background(), &redis.XPendingExtArgs{
+					Stream: topic,
+					Group:  group,
+					Start:  start,
+					End:    "+",
+					Count:  50,
+				})
+				return pendingCmd.Err()
+			}, 2)
+			if err != nil && err != redis.Nil {
+				logger.Errorf("Error finding pending messages %s", err)
+				return
+			}
+			pend := pendingCmd.Val()
+			if len(pend) == 0 {
+				break
+			}
+			pendingIDs := make([]string, len(pend))
+			for i, p := range pend {
+				pendingIDs[i] = p.ID
+			}
+			var claimCmd *redis.XMessageSliceCmd
+			err = callWithRetry(func() error {
+				claimCmd = r.redisClient.XClaim(context.Background(), &redis.XClaimArgs{
+					Stream:   topic,
+					Group:    group,
+					Consumer: consumerName,
+					MinIdle:  60 * time.Second,
+					Messages: pendingIDs,
+				})
+				return claimCmd.Err()
+			}, 2)
 			if err != nil {
-				logger.Errorf("Error retrieving message %v", err)
-				time.Sleep(time.Second)
+				logger.Errorf("Error claiming message %s", err)
 				continue
 			}
-
-			if err := r.processMessages(msg, topic, h, eh); err == errHandler {
+			msgs := claimCmd.Val()
+			if err := r.processMessages(msgs, topic, group, h, eh); err == errHandler {
 				logger.Errorf("Error processing message %s", err)
+				return
+			}
+			if len(pendingIDs) < 50 {
+				break
+			}
+			start = incrementID(pendingIDs[49])
+		}
+		for {
+			res := r.redisClient.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+				Group:    group,
+				Consumer: consumerName,
+				Streams:  []string{topic, ">"},
+				Block:    readGroupTimeout,
+			})
+			sl, err := res.Result()
+			if err != nil {
+				logger.Errorf("Error reading from stream %s", err)
+				sleepWithJitter(2 * time.Second)
+				continue
+			}
+			if sl == nil || len(sl) == 0 || len(sl[0].Messages) == 0 {
+				logger.Errorf("No data received from stream")
+				continue
+			}
+			if err := r.processMessages(sl[0].Messages, topic, group, h, eh); err == errHandler {
 				return
 			}
 		}
