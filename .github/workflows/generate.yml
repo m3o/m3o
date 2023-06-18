@@ -75,17 +75,17 @@ jobs:
           go install
           cd ../../
           # delete existing cmd directory
-          rm -rf ../services/tools
+          rm -rf services/tools
           # copy our command directory in
-          cp -r tools ../services/tools
+          cp -r tools services/
 
       - name: install prettier
-        working-directory: services
+        working-directory: ./m3o/services
         run: |
           sudo npm install -g prettier
 
       - name: Generate Go and JS packages
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/main'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
           client-generator .
 
       - name: Generate beta package
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/beta'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -104,15 +104,15 @@ jobs:
           client-generator .
 
       - name: Adjust generated things before pushing
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         run: |
           # sync the clients to m3o-go/
-          rsync -avz clients/go/ ../m3o-go/
+          rsync -avz clients/go/ ../../m3o-go/
           # sync the examples to m3o-go/examples
-          rsync -avz --delete examples/go/ ../m3o-go/examples/
+          rsync -avz --delete examples/go/ ../../m3o-go/examples/
           # remove the .git directory
-          rm -rf ../m3o-go/.git
+          rm -rf ../../m3o-go/.git
           #  move the js examples
           mkdir clients/ts/examples
           mv examples/js/* clients/ts/examples/
@@ -151,7 +151,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/clients/ts/'
+          source_file: './m3o/services/clients/ts/'
           destination_repo: 'm3o/m3o-js'
           destination_branch: ${{ steps.extract_branch.outputs.branch }}
           github_server: 'github.com'
@@ -165,7 +165,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'services/examples/curl/'
+          source_file: './m3o/services/examples/curl/'
           destination_repo: 'm3o/m3o-sh'
           destination_folder: 'examples'
           destination_branch: '${{ steps.extract_branch.outputs.branch }}'
@@ -175,13 +175,13 @@ jobs:
           commit_message: 'Commit from m3o/m3o action'
 
       - name: install postman converter
-        working-directory: services
+        working-directory: ./m3o/services
         run: |
           sudo npm install -g openapi-to-postmanv2
           openapi2postmanv2 -h
 
       - name: Generate openapi spec and publish the api
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/main'
         run: |
           api-publisher .
@@ -189,7 +189,7 @@ jobs:
           MICRO_ADMIN_TOKEN: ${{ secrets.MICRO_ADMIN_TOKEN }}
 
       - name: publish npm clients
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/main'
         run: |
           git status
@@ -200,7 +200,7 @@ jobs:
           npm publish --access public
 
       - name: publish npm beta clients
-        working-directory: services
+        working-directory: ./m3o/services
         if: github.ref == 'refs/heads/beta'
         run: |
           git status
