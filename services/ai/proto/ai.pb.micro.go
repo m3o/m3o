@@ -43,6 +43,7 @@ func NewAiEndpoints() []*api.Endpoint {
 
 type AiService interface {
 	Complete(ctx context.Context, in *CompleteRequest, opts ...client.CallOption) (*CompleteResponse, error)
+	Chat(ctx context.Context, in *ChatRequest, opts ...client.CallOption) (*ChatResponse, error)
 	Edit(ctx context.Context, in *EditRequest, opts ...client.CallOption) (*EditResponse, error)
 	Moderate(ctx context.Context, in *ModerateRequest, opts ...client.CallOption) (*ModerateResponse, error)
 	Generate(ctx context.Context, in *GenerateRequest, opts ...client.CallOption) (*GenerateResponse, error)
@@ -63,6 +64,16 @@ func NewAiService(name string, c client.Client) AiService {
 func (c *aiService) Complete(ctx context.Context, in *CompleteRequest, opts ...client.CallOption) (*CompleteResponse, error) {
 	req := c.c.NewRequest(c.name, "Ai.Complete", in)
 	out := new(CompleteResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aiService) Chat(ctx context.Context, in *ChatRequest, opts ...client.CallOption) (*ChatResponse, error) {
+	req := c.c.NewRequest(c.name, "Ai.Chat", in)
+	out := new(ChatResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,6 +115,7 @@ func (c *aiService) Generate(ctx context.Context, in *GenerateRequest, opts ...c
 
 type AiHandler interface {
 	Complete(context.Context, *CompleteRequest, *CompleteResponse) error
+	Chat(context.Context, *ChatRequest, *ChatResponse) error
 	Edit(context.Context, *EditRequest, *EditResponse) error
 	Moderate(context.Context, *ModerateRequest, *ModerateResponse) error
 	Generate(context.Context, *GenerateRequest, *GenerateResponse) error
@@ -112,6 +124,7 @@ type AiHandler interface {
 func RegisterAiHandler(s server.Server, hdlr AiHandler, opts ...server.HandlerOption) error {
 	type ai interface {
 		Complete(ctx context.Context, in *CompleteRequest, out *CompleteResponse) error
+		Chat(ctx context.Context, in *ChatRequest, out *ChatResponse) error
 		Edit(ctx context.Context, in *EditRequest, out *EditResponse) error
 		Moderate(ctx context.Context, in *ModerateRequest, out *ModerateResponse) error
 		Generate(ctx context.Context, in *GenerateRequest, out *GenerateResponse) error
@@ -129,6 +142,10 @@ type aiHandler struct {
 
 func (h *aiHandler) Complete(ctx context.Context, in *CompleteRequest, out *CompleteResponse) error {
 	return h.AiHandler.Complete(ctx, in, out)
+}
+
+func (h *aiHandler) Chat(ctx context.Context, in *ChatRequest, out *ChatResponse) error {
+	return h.AiHandler.Chat(ctx, in, out)
 }
 
 func (h *aiHandler) Edit(ctx context.Context, in *EditRequest, out *EditResponse) error {
