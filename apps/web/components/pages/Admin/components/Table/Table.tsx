@@ -199,7 +199,7 @@ export function Table<T extends ExpectedObject>({
               return (
                 <div
                   {...row.getRowProps()}
-                  className="hover:bg-zinc-100 text-zinc-600 group h-10">
+                  className="hover:bg-zinc-700 text-white group h-10">
                   {row.cells.map(cell => {
                     return (
                       <div
