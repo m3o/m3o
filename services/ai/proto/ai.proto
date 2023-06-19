@@ -6,9 +6,34 @@ option go_package = "./proto;ai";
 
 service Ai {
 	rpc Complete(CompleteRequest) returns (CompleteResponse) {}
+	rpc Chat(ChatRequest) returns (ChatResponse) {}
 	rpc Edit(EditRequest) returns (EditResponse) {}
 	rpc Moderate(ModerateRequest) returns (ModerateResponse) {}
 	rpc Generate(GenerateRequest) returns (GenerateResponse) {}
+}
+
+message Context {
+	// prompt used
+	string prompt = 1;
+	// response for prompt
+	string reply = 2;
+}
+
+// Make a request to ChatGPT
+message ChatRequest {
+	// the prompt
+	string prompt = 1;
+	// the model e.g gpt-3.5-turbo-16k
+	string model = 2;
+	// role e.g system or user
+	string role = 3;
+	// context for the call
+	repeated Context context = 4;
+}
+
+message ChatResponse {
+	// the response
+	string reply = 1;
 }
 
 // Make a request to the AI

@@ -2,17 +2,22 @@ package handler
 
 import (
 	"context"
+	"fmt"
+	"hash/fnv"
 	"time"
 
 	"github.com/micro/micro/v3/service/config"
 	"github.com/micro/micro/v3/service/errors"
 	log "github.com/micro/micro/v3/service/logger"
+	"github.com/sashabaranov/go-openai"
 	pb "m3o.dev/services/ai/proto"
 	"m3o.dev/services/pkg/api"
 	"m3o.dev/services/pkg/tenant"
 )
 
-type Ai struct{}
+type Ai struct {
+	Client *openai.Client
+}
 
 // Return a new handler
 func New() *Ai {
@@ -26,8 +31,70 @@ func New() *Ai {
 	}
 	api.SetKey("Authorization", "Bearer "+key)
 	api.SetCache(true, time.Minute*10)
+	client := openai.NewClient(key)
 
-	return &Ai{}
+	return &Ai{Client: client}
+}
+
+func User(id string) string {
+	hasher := fnv.New128()
+	hasher.Write([]byte(id))
+	return fmt.Sprintf("%x", hasher.Sum(nil))
+}
+
+func (e *Ai) Chat(ctx context.Context, req *pb.ChatRequest, rsp *pb.ChatResponse) error {
+	if len(req.Model) == 0 {
+		req.Model = openai.GPT3Dot5Turbo
+	}
+	if len(req.Prompt) == 0 {
+		return errors.BadRequest("ai.chat", "missing prompt")
+	}
+	if len(req.Role) == 0 {
+		req.Role = openai.ChatMessageRoleUser
+	}
+
+	message := []openai.ChatCompletionMessage{}
+
+	for _, c := range req.Context {
+		// set the user message
+		message = append(message, openai.ChatCompletionMessage{
+			Role:    openai.ChatMessageRoleUser,
+			Content: c.Prompt,
+		})
+		// set the assistant response
+		message = append(message, openai.ChatCompletionMessage{
+			Role:    openai.ChatMessageRoleAssistant,
+			Content: c.Reply,
+		})
+	}
+
+	message = append(message, openai.ChatCompletionMessage{
+		Role:    req.Role,
+		Content: req.Prompt,
+	})
+
+	user := "user"
+	tnt, ok := tenant.FromContext(ctx)
+	if ok {
+		user = User(tnt)
+	}
+
+	resp, err := e.Client.CreateChatCompletion(
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model:    req.Model,
+			Messages: message,
+			User:     user,
+		},
+	)
+
+	if err != nil {
+		return errors.InternalServerError("ai.chat", err.Error())
+	}
+
+	// set response
+	rsp.Reply = resp.Choices[0].Message.Content
+	return nil
 }
 
 func (e *Ai) Complete(ctx context.Context, req *pb.CompleteRequest, rsp *pb.CompleteResponse) error {
