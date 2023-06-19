@@ -39,7 +39,7 @@ export const EndpointCard: FC<Props> = ({
       <div className="md:grid md:grid-cols-2">
         <div className="pb-4">
           <p className="mr-6 mt-4 float-right text-xs text-indigo-400">
-            {price === 'Free' ? '$0.000001' : '$' + price} per request
+            {price === 'Free' ? '$0.000001' : price} per request
           </p>
           <h3 className="font-medium text-3xl mb-2">
             {splitEndpointTitle(title)}
