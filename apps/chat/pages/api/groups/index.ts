@@ -5,15 +5,26 @@ import { m3o } from '../../../lib/m3o'
 import type { M3OError } from '../../../types/m3o'
 import type { UserAccount } from '../../../types/user'
 
+type RequestBody = {
+    name?: string
+    paid?: boolean
+    currency?: string
+    amount?: number
+}
+
 async function createGroup(
     req: NextApiRequest,
     res: NextApiResponse,
     user: UserAccount
 ) {
-    if (!req.body.name) {
+    const { name, paid } = req.body as RequestBody
+
+    if (!name) {
         res.status(422).send({
             message: 'Please provide the groups name',
         })
+
+        return
     }
 
     try {
@@ -21,8 +32,8 @@ async function createGroup(
         const group = await m3o.db.create({
             table: tableNames.groups,
             record: {
-                name: req.body.name,
-                paid: false,
+                name,
+                paid,
             },
         })
 

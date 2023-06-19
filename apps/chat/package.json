@@ -26,6 +26,7 @@
     "@types/twilio": "^3.19.2",
     "@types/twilio-video": "^2.7.3",
     "axios": "^1.4.0",
+    "clsx": "^1.2.1",
     "cookie": "^0.5.0",
     "date-fns": "^2.30.0",
     "emoji-mart": "^5.5.2",

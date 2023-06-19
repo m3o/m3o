@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { createRef, useState } from 'react'
-import ChatUI from '../../../components/chat'
+import ChatUI from '../../../components/stream'
 import Layout from '../../../components/layout'
 import {
     createThread,

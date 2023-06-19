@@ -7,9 +7,11 @@ export function GroupLayout({
     showLoader,
 }: PropsWithChildren<{ showLoader: boolean }>) {
     return (
-        <>
+        <div className="h-full">
             <Header />
-            {showLoader ? <CenteredLoader /> : children}
-        </>
+            <div className="h-[calc(100%-54px)]">
+                {showLoader ? <CenteredLoader /> : children}
+            </div>
+        </div>
     )
 }

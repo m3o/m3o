@@ -6,12 +6,17 @@ import { Input } from '../../components/form/input'
 import { MainLayout } from '../../layouts/main'
 import { api } from '../../lib/api'
 
+type NewGroupFields = {
+    name: string
+    paid: boolean
+}
+
 export default function Page() {
     const router = useRouter()
-    const { register, handleSubmit } = useForm<{ name: string }>()
+    const { register, handleSubmit } = useForm<NewGroupFields>()
 
     const { mutate, isLoading } = useMutation({
-        mutationFn: (values: { name: string }) => {
+        mutationFn: (values: NewGroupFields) => {
             return api.post<{ group: { id: string } }>('/groups', values)
         },
         onSuccess(response) {
@@ -25,13 +30,21 @@ export default function Page() {
                 Create a group
             </h1>
 
-            <form onSubmit={handleSubmit((values) => mutate(values))}>
+            <form
+                onSubmit={handleSubmit((values) => {
+                    mutate(values)
+                })}
+            >
                 <Input
                     {...register('name', {
                         required: 'Please provide the name of the group',
                     })}
                     label="Group name"
                 />
+                <label className="block mb-10">
+                    <input type="checkbox" {...register('paid')} />
+                    Would you like users to have to pay to enter the chat?
+                </label>
                 <Button type="submit" showLoader={isLoading}>
                     Create
                 </Button>

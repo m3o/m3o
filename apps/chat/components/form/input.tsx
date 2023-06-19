@@ -2,11 +2,11 @@ import { type ComponentProps, forwardRef } from 'react'
 
 export const Input = forwardRef<
     HTMLInputElement,
-    ComponentProps<'input'> & { label: string; error?: string }
->(function InputComponent({ label, error, ...props }, ref) {
+    ComponentProps<'input'> & { label?: string; error?: string }
+>(function InputComponent({ label = '', error, ...props }, ref) {
     return (
         <div className="w-full mb-6 last:mb-0">
-            <label className="block text-xs mb-2">{label}</label>
+            {label && <label className="block text-xs mb-2">{label}</label>}
             <input
                 {...props}
                 ref={ref}
