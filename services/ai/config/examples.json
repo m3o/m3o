@@ -1,13 +1,13 @@
 {
     "chat": [{
-        "title": "Chat with ChatGPT",
+        "title": "Chat with chat gpt",
         "run_check": false,
         "request": {
           "prompt": "who is leonardo davinci",
 	  "model": "gpt-3.5-turbo"
         },
         "response": {
-	  "reply": "\n\nLeonardo da Vinci was an Italian Renaissance architect, musician, inventor, engineer, and painter."
+	  "reply": "Leonardo da Vinci was an Italian Renaissance architect, musician, inventor, engineer, and painter."
         }
     }],
     "complete": [{
