@@ -24,7 +24,6 @@ Here are a few APIs:
 - [**Apps**](https://m3o.com/app) - Serverless app deployment
 - [**Cache**](https://m3o.com/cache) - In-memory data storage
 - [**DB**](https://m3o.com/db) - Serverless postgres database 
-- [**Email**](https://m3o.com/email) - Send emails in a flash
 - [**Events**](https://m3o.com/event) - Push event notifications
 - [**Users**](https://m3o.com/user) - Account management and authentication 
 - [**Weather**](https://m3o.com/weather) - Real time weather info and forecast
