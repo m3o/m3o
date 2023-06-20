@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <ThemeProvider
                     attribute="class"
                     enableSystem={false}
-                    >
+                    defaultTheme="dark">
                     <Component {...pageProps} />
                   </ThemeProvider>
                 </Tracker>
