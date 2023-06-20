@@ -132,7 +132,3 @@ See the [m3o-cli](https://github.com/m3o/m3o-cli/tree/main/examples) for example
 ## Development
 
 APIs are developed using the [Micro](https://micro.dev) platform
-
-## Self Hosting 
-
-If you're interested in self hosting [contact us](mailto:contact@m3o.com)
