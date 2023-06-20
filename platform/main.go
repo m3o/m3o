@@ -8,7 +8,6 @@ import (
 	_ "github.com/micro/micro/v3/client/web"
 	_ "github.com/micro/micro/v3/cmd/server"
 	_ "github.com/micro/micro/v3/cmd/service"
-	_ "github.com/micro/micro/v3/cmd/usage"
 
 	// load platform profile
 	_ "m3o.dev/platform/profile"
