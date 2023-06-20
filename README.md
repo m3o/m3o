@@ -21,13 +21,13 @@ Here are the main features:
 Here are a few APIs:
 
 - [**AI**](https://m3o.com/ai) - GPT powered by OpenAI
-- [**Cache**](https://m3o.com/cache) - Fast access key-value storage
+- [**Apps**](https://m3o.com/app) - Serverless app deployment
+- [**Cache**](https://m3o.com/cache) - In-memory data storage
 - [**DB**](https://m3o.com/db) - Serverless postgres database 
-- [**SMS**](https://m3o.com/sms) - Send an SMS message
 - [**Email**](https://m3o.com/email) - Send emails in a flash
-- [**Geocoding**](https://m3o.com/geocoding) - Address lookup and reverse resolution
+- [**Events**](https://m3o.com/event) - Push event notifications
+- [**Users**](https://m3o.com/user) - Account management and authentication 
 - [**Weather**](https://m3o.com/weather) - Real time weather info and forecast
-- [**User**](https://m3o.com/user) - Account management and authentication 
 
 ## Getting Started
 
