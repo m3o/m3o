@@ -6,7 +6,7 @@ A platform build of [Micro](https://github.com/micro/micro)
 
 This build of Micro includes the platform profile. It's leveraging highly available and 
 distributed infrastructure in a cloud based environment. The platform image is hosted 
-at `ghcr.io/micro/platform`. It makes use of kubernetes, redis, etcd, postgres and more.
+at `ghcr.io/m3o/platform`. It makes use of kubernetes, redis, etcd, postgres and more.
 
 ## Dependencies
 
@@ -20,3 +20,7 @@ at `ghcr.io/micro/platform`. It makes use of kubernetes, redis, etcd, postgres a
 See the profile for how to configure dependencies via env vars
 
 Build this binary or use the `ghcr.io/m3o/platform` image.
+
+### Cloud
+
+The `../cloud` directory contains a pulumi deployment for the platform.
