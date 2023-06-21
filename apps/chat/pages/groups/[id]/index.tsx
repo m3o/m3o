@@ -1,17 +1,12 @@
-import {
-    ArrowLeftIcon,
-    CogIcon,
-    PlusCircleIcon,
-} from '@heroicons/react/24/outline'
+import { CogIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { AddTopicModal } from '../../../components/add-topic-modal'
+import { Stream } from '../../../components/stream'
 import { GroupLayout } from '../../../layouts/group'
 import { useGroup } from '../../../lib/api/groups'
 import { useGroupTopics } from '../../../lib/api/topics/hooks/useGroupTopics'
-import { Stream } from '../../../components/stream'
 
 function GroupSidebarTitle({
     onButtonClick,
@@ -44,17 +39,9 @@ export default function Page() {
     return (
         <GroupLayout showLoader={isLoading || isLoadingTopics}>
             {data && (
-                <div className="max-w-7xl mx-auto h-full">
-                    <div className="flex items-center justify-between p-4">
-                        <h1 className="font-black text-2xl flex items-center  gap-3">
-                            <Link
-                                href="/"
-                                className="text-sm flex items-center gap-2 text-black"
-                            >
-                                <ArrowLeftIcon className="w-4" />
-                            </Link>
-                            {data.name}
-                        </h1>
+                <div className="h-full bg-zinc-50 flex-grow">
+                    <div className="flex items-center justify-between px-6 py-4">
+                        <h1 className="font-black text-xl">{data.name}</h1>
                         <div className="flex items-center gap-4">
                             <button className="border border-zinc-200 p-2 rounded-full hover:bg-zinc-50">
                                 <CogIcon className="w-5" />
@@ -62,9 +49,8 @@ export default function Page() {
                             <button className="btn thin">Invite</button>
                         </div>
                     </div>
-
-                    <section className="flex h-[calc(100%-79.5px)]">
-                        <aside className=" h-full w-3/12 p-4">
+                    <section className="flex h-[calc(100%-79px)]">
+                        <aside className="h-full w-3/12 p-4">
                             <GroupSidebarTitle
                                 title="Topics"
                                 onButtonClick={() => {
@@ -79,7 +65,7 @@ export default function Page() {
                                             {
                                                 'bg-black text-white':
                                                     topic.id === selectedTopic,
-                                                'text-zinc-400':
+                                                'text-zinc-600':
                                                     topic.id !== selectedTopic,
                                             }
                                         )}

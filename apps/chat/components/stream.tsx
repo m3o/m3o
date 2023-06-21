@@ -15,254 +15,176 @@ import {
     useGetStreamItemsFromContext,
     useSendMessageStreamItem,
 } from '@/lib/api/stream'
+import { XCircleIcon } from '@heroicons/react/24/solid'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import { useForm } from 'react-hook-form'
-// import { useSendMessage } from '@/lib/api/stream'
+import { CommandCenter, type Command } from './command-center'
+import { SelectedCommand } from './selected-command'
+import { useCreateGroup } from '@/lib/api/groups'
+import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 
-// interface Props {
-//     // chatType, e.g. 'thread' or 'chat'
-//     chatType: string
-//     // if the chat is a thread, this is that threads ID
-//     chatID: string
-//     // any mesages preloaded
-//     messages?: Msg[]
-//     // participants in the conversation
-//     participants?: User[]
-// }
+const commands = [
+    {
+        command: '/communities create',
+        description: 'This is a description',
+        prompts: ['Please provide the name of your new community'],
+    },
+    {
+        command: '/communities switch',
+        description: 'Switch to a different community',
+    },
+    {
+        command: '/topics create',
+        description: 'Create a topic',
+        prompts: ['Please provide the name of the topic', 'These are shit'],
+    },
+]
 
-// interface State {
-//     messages: Msg[]
-//     message: string
-//     listening: boolean
-//     joinedAudio: boolean
-//     joinedVideo: boolean
-//     onlineUserIDs: string[]
-//     showEmojiPicker: boolean
-// }
+export function Stream() {
+    const queryClient = useQueryClient()
+    const router = useRouter()
+    const [showCommandCenter, setShowCommandCenter] = useState(false)
+    const [selectedCommand, setSelectedCommand] = useState<Command | undefined>(
+        undefined
+    )
+    const [currentPrompt, setCurrentPrompt] = useState(0)
 
-// export default class Chat extends Component<Props, State> {
-//     constructor(props: Props) {
-//         super(props)
-//         this.state = {
-//             message: '',
-//             messages: props.messages || [],
-//             // listen automatically except for mobile
-//             listening: !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
-//             joinedAudio: false,
-//             joinedVideo: false,
-//             onlineUserIDs: [],
-//             showEmojiPicker: false,
-//         }
-//         this.SendMessage = this.SendMessage.bind(this)
-//         this.onSubmit = this.onSubmit.bind(this)
-//         this.setSeen = this.setSeen.bind(this)
-//     }
-
-//     SendMessage(text: string) {
-//         const resource = { type: this.props.chatType, id: this.props.chatID }
-//         const message = { id: uuid(), text }
-
-//         createMessage(resource, message).catch((err) => {
-//             alert(`Error sending message: ${err}`)
-//             this.setState({
-//                 messages: this.state.messages.filter(
-//                     (m) => m.id !== message.id
-//                 ),
-//             })
-//         })
-
-//         this.setState({
-//             messages: [
-//                 ...this.state.messages,
-//                 {
-//                     ...message,
-//                     sent_at: Date.now(),
-//                     author: this.props.participants?.find(
-//                         (p) => p.current_user
-//                     ),
-//                 },
-//             ],
-//         })
-//     }
-
-//     componentDidMount() {
-//         this.setSeen()
-//     }
-
-//     componentDidUpdate(prevProps: Props, prevState: State) {
-//         if (prevProps?.messages !== this.props.messages) {
-//             this.setState({
-//                 messages: [
-//                     ...this.state.messages,
-//                     ...this.props.messages,
-//                 ].filter(
-//                     (x, xi, arr) =>
-//                         !arr.slice(xi + 1).some((y) => y.id === x.id)
-//                 ),
-//             })
-//         }
-
-//         if (
-//             this.state.messages !== prevState.messages ||
-//             this.props.messages !== prevProps?.messages
-//         )
-//             this.setSeen()
-//     }
-
-//     async setSeen() {
-//         try {
-//             await setSeen(this.props.chatType, this.props.chatID)
-//         } catch (error) {
-//             console.error(`Error setting seen: ${error}`)
-//         }
-//     }
-
-//     onSubmit(e: React.FormEvent<HTMLFormElement>) {
-//         e.preventDefault()
-//         this.SendMessage(this.state.message)
-//         this.setState({ message: '' })
-//     }
-
-//     render() {
-//         return (
-//             <div className={styles.container}>
-//                 {/* {this.renderStream()} */}
-
-//                 <div
-//                     onClick={() => this.setState({ showEmojiPicker: false })}
-//                     className={styles.messages}
-//                 >
-//                     {this.state.messages.sort(sortMessages).map((m) => (
-//                         <Message key={m.id} data={m} />
-//                     ))}
-//                 </div>
-
-//                 <div className={styles.compose}>
-//                     <form onSubmit={this.onSubmit}>
-//                         <input
-//                             required
-//                             // ref={r => r?.focus()}
-//                             type="text"
-//                             value={this.state.message}
-//                             placeholder="Send a message"
-//                             onChange={(e) =>
-//                                 this.setState({ message: e.target.value || '' })
-//                             }
-//                         />
-
-//                         <p
-//                             onClick={() =>
-//                                 this.setState({
-//                                     showEmojiPicker:
-//                                         !this.state.showEmojiPicker,
-//                                 })
-//                             }
-//                         >
-//                             <span>🙂</span>
-//                         </p>
-//                     </form>
-//                     {this.state.showEmojiPicker ? (
-//                         <Picker
-//                             // showPreview={false}
-//                             style={{
-//                                 position: 'absolute',
-//                                 bottom: '70px',
-//                                 right: '20px',
-//                             }}
-//                             theme="light"
-//                             data={data}
-//                             onEmojiSelect={(e) =>
-//                                 this.setState({
-//                                     message: this.state.message + e.native,
-//                                     showEmojiPicker: false,
-//                                 })
-//                             }
-//                         />
-//                     ) : null}
-//                 </div>
-//             </div>
-//         )
-//     }
-
-//     renderStream(): JSX.Element {
-//         const { joinedAudio, joinedVideo } = this.state
-//         const toggleAudio = () => this.setState({ joinedAudio: !joinedAudio })
-//         const toggleVideo = () => this.setState({ joinedVideo: !joinedVideo })
-
-//         const roomID =
-//             this.props.chatType === 'thread'
-//                 ? this.props.chatID
-//                 : this.props.participants
-//                       .sort((a, b) => (a.id > b.id ? 1 : -1))
-//                       .map((a) => a.id)
-//                       .join('-')
-
-//         return (
-//             <div className={styles.stream}>
-//                 <div className={styles.streamButtons}>
-//                     <p
-//                         onClick={toggleAudio}
-//                         className={[
-//                             styles.button,
-//                             joinedAudio ? styles.buttonActive : '',
-//                         ].join(' ')}
-//                     >
-//                         🎙️
-//                     </p>
-//                     <p
-//                         onClick={toggleVideo}
-//                         className={[
-//                             styles.button,
-//                             joinedVideo ? styles.buttonActive : '',
-//                         ].join(' ')}
-//                     >
-//                         📹
-//                     </p>
-//                 </div>
-
-//                 <Stream
-//                     roomID={roomID}
-//                     audio={joinedAudio}
-//                     video={joinedVideo}
-//                     className={styles.media}
-//                     participants={this.props.participants}
-//                 />
-//             </div>
-//         )
-//     }
-// }
-
-// function sortMessages(a: Msg, b: Msg): number {
-//     return moment(a.sent_at).isAfter(b.sent_at) ? -1 : 1
-// }
-
-export function Stream({
-    groupId,
-    topicId,
-}: {
-    groupId: string
-    topicId: string
-}) {
-    const { register, handleSubmit } = useForm<{ message: string }>()
-
-    const { mutate, isLoading } = useSendMessageStreamItem({
-        groupId,
-        contextId: topicId,
+    const { register, handleSubmit, watch, setValue } = useForm<{
+        command: string
+    }>({
+        defaultValues: {
+            command: '',
+        },
     })
 
-    const { data } = useGetStreamItemsFromContext({
-        groupId,
-        contextId: topicId,
-    })
+    const createGroup = useCreateGroup()
+
+    const command = watch('command')
+
+    useEffect(() => {
+        if (command.charAt(0) === '/' && !selectedCommand) {
+            setShowCommandCenter(true)
+        } else {
+            setShowCommandCenter(false)
+        }
+    }, [command, selectedCommand])
+
+    const filteredCommands = commands.filter((item) =>
+        item.command.includes(command)
+    )
+
+    const selectCommand = (command: Command) => {
+        setSelectedCommand(command)
+        setShowCommandCenter(false)
+        setValue('command', '')
+    }
+
+    const returnPlaceholder = () => {
+        if (selectedCommand) {
+            const command = commands.find(
+                (item) => item.command === selectedCommand.command
+            )
+
+            if (command.prompts) {
+                return command.prompts[currentPrompt]
+            }
+        }
+
+        return "Start by sending a message or typing '/'"
+    }
+
+    const onFormSubmit = ({ command }: { command: string }) => {
+        if (selectedCommand) {
+            if (!selectedCommand.prompts) {
+                alert('No prompts go!')
+                return
+            }
+
+            if ((selectedCommand.prompts || []).length - 1 === currentPrompt) {
+                if (selectedCommand.command === '/communities create') {
+                    createGroup.mutate(
+                        {
+                            name: command,
+                            paid: false,
+                        },
+                        {
+                            onSuccess(response) {
+                                queryClient.invalidateQueries(['groups'])
+                                router.push(`/groups/${response.data.group.id}`)
+                            },
+                        }
+                    )
+                }
+                return
+            } else {
+                setCurrentPrompt((prev) => prev + 1)
+                setValue('command', '')
+            }
+        } else {
+            if (command.charAt(0) === '/') {
+                alert('Please provide a valid command')
+                setValue('command', '')
+                return
+            }
+
+            alert('go with messge')
+        }
+    }
 
     return (
-        <div className="w-9/12 flex flex-col p-4">
-            <div></div>
+        <div className="w-full flex flex-col p-4">
             <div className="mt-auto">
-                <form onSubmit={handleSubmit(mutate)}>
+                {showCommandCenter && (
+                    <CommandCenter
+                        commands={filteredCommands}
+                        onCommandClick={(item) => selectCommand(item)}
+                    />
+                )}
+                <form
+                    onSubmit={handleSubmit(onFormSubmit)}
+                    className="bg-white flex gap-2 w-full border border-zinc-200 rounded-md"
+                >
+                    {selectedCommand && (
+                        <SelectedCommand
+                            onCancelClick={() => setSelectedCommand(undefined)}
+                        >
+                            {selectedCommand.command}
+                        </SelectedCommand>
+                    )}
                     <input
-                        {...register('message')}
-                        placeholder="Send message"
-                        className="w-full border border-zinc-200 rounded-md p-2"
+                        {...register('command', {
+                            required: true,
+                        })}
+                        onKeyDown={(event) => {
+                            if (event.code === 'Tab') {
+                                event.preventDefault()
+                                if (filteredCommands.length === 1) {
+                                    selectCommand(filteredCommands[0])
+                                } else {
+                                    const [validCommand] = new Set([
+                                        ...filteredCommands
+                                            .filter((item) =>
+                                                item.command.includes(command)
+                                            )
+                                            .map(
+                                                (item) =>
+                                                    item.command.split(' ')[0]
+                                            ),
+                                    ])
+
+                                    if (validCommand) {
+                                        setValue('command', `${validCommand} `)
+                                    }
+                                }
+                            }
+
+                            if (event.code === 'Escape') {
+                                setSelectedCommand(undefined)
+                            }
+                        }}
+                        placeholder={returnPlaceholder()}
+                        className="flex-grow p-2 rounded-md"
                     />
                 </form>
             </div>
