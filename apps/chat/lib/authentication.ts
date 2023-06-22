@@ -6,11 +6,12 @@ import { m3o } from './m3o'
 type Callback = (
     req: NextApiRequest,
     res: NextApiResponse,
-    user: UserAccount
+    user: UserAccount,
+    sessionId: string
 ) => void
 /* eslint-enable */
 
-const sendAuthorized = (res: NextApiResponse) =>
+const sendUnauthorized = (res: NextApiResponse) =>
     res.status(401).send({
         message: 'Unauthorized',
     })
@@ -18,7 +19,7 @@ const sendAuthorized = (res: NextApiResponse) =>
 export function authenticatedHandler(cb: Callback) {
     return async function handler(req: NextApiRequest, res: NextApiResponse) {
         if (!req.cookies.session) {
-            sendAuthorized(res)
+            sendUnauthorized(res)
             return
         }
 
@@ -31,9 +32,9 @@ export function authenticatedHandler(cb: Callback) {
                 id: session.userId,
             })
 
-            return cb(req, res, account as UserAccount)
+            return cb(req, res, account as UserAccount, req.cookies.session)
         } catch (error) {
-            sendAuthorized(res)
+            sendUnauthorized(res)
         }
     }
 }

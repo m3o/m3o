@@ -1,14 +1,28 @@
-import { useRouter } from 'next/router'
-import Layout from '../components/layout'
-import { logout } from '../lib/user'
+import { useMutation } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { api } from '@/lib/api'
+import { CenteredLoader } from '../components/loader'
 
 export default function Logout() {
-    const router = useRouter()
-    const { loading } = logout()
+    const { isLoading, mutate } = useMutation({
+        async mutationFn() {
+            return api.post('/logout')
+        },
+    })
 
-    if (!loading) {
-        router.push('/login')
+    useEffect(() => {
+        mutate()
+    }, [mutate])
+
+    useEffect(() => {
+        if (!isLoading) {
+            window.location.href = '/login'
+        }
+    }, [isLoading])
+
+    if (isLoading) {
+        return <CenteredLoader />
     }
 
-    return <Layout loading={true} />
+    return null
 }

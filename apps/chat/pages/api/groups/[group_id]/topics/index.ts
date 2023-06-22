@@ -36,9 +36,9 @@ async function createTopic(req: NextApiRequest, res: NextApiResponse) {
         const topic = await topicsDb.getById(response.id)
 
         res.json({ topic })
-        return
     } catch (error) {
-        console.log(error)
+        console.error({ error })
+        res.status(500)
     }
 }
 
@@ -58,13 +58,11 @@ export async function getGroupTopics(
 
 export default authenticatedHandler(async function handler(req, res) {
     if (req.method === 'POST') {
-        createTopic(req, res)
-        return
+        return createTopic(req, res)
     }
 
     if (req.method === 'GET') {
-        getGroupTopics(req, res)
-        return
+        return getGroupTopics(req, res)
     }
 
     res.status(405).json({

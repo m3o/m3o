@@ -11,4 +11,13 @@ export const groupsDb = {
 
         return (records as Group[])[0]
     },
+
+    async getByIds(ids: string[]) {
+        const { records = [] } = await m3o.db.read({
+            table: tableNames.groups,
+            query: `id == ${ids.map((id) => `"${id}"`).join(' or id ==')}`,
+        })
+
+        return records
+    },
 }

@@ -197,7 +197,7 @@ export function Stream({ topicId }: { topicId: string }) {
 
     return (
         <div className="w-full flex flex-col p-4 bg-white">
-            {stream.isLoading && <CenteredLoader />}
+            {stream.isFetching && <CenteredLoader />}
             <div className="mt-auto">
                 {showCommandCenter && (
                     <CommandCenter

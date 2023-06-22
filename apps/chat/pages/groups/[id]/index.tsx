@@ -1,13 +1,15 @@
 import { CogIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { io, Socket } from 'socket.io-client'
+import { useEffect, useState } from 'react'
 import { AddTopicModal } from '../../../components/add-topic-modal'
 import { Stream } from '../../../components/stream'
 import { GroupLayout } from '../../../layouts/group'
 import { useGroup } from '../../../lib/api/groups'
 import { useGroupTopics } from '../../../lib/api/topics/hooks/useGroupTopics'
 import { InviteUserModal } from 'components/invite-user-modal'
+import { api } from '@/lib/api'
 
 function GroupSidebarTitle({
     onButtonClick,
@@ -26,6 +28,8 @@ function GroupSidebarTitle({
     )
 }
 
+let socket: Socket
+
 export default function Page() {
     const [showInviteModal, setShowInviteModal] = useState(false)
     const [selectedTopic, setSelectedTopic] = useState('')
@@ -37,6 +41,20 @@ export default function Page() {
 
     const { data, isLoading } = useGroup(groupId)
     const { data: topics, isLoading: isLoadingTopics } = useGroupTopics(groupId)
+
+    useEffect(() => {
+        // if (selectedTopic) {
+        api.get('/socket').finally(() => {
+            socket = io()
+        })
+        // }
+
+        return () => {
+            if (socket) {
+                socket.close()
+            }
+        }
+    }, [selectedTopic])
 
     return (
         <GroupLayout showLoader={isLoading || isLoadingTopics}>
