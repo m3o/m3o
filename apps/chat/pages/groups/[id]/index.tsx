@@ -7,6 +7,7 @@ import { Stream } from '../../../components/stream'
 import { GroupLayout } from '../../../layouts/group'
 import { useGroup } from '../../../lib/api/groups'
 import { useGroupTopics } from '../../../lib/api/topics/hooks/useGroupTopics'
+import { InviteUserModal } from 'components/invite-user-modal'
 
 function GroupSidebarTitle({
     onButtonClick,
@@ -26,6 +27,7 @@ function GroupSidebarTitle({
 }
 
 export default function Page() {
+    const [showInviteModal, setShowInviteModal] = useState(false)
     const [selectedTopic, setSelectedTopic] = useState('')
     const [showAddTopicModal, setShowAddTopicModal] = useState(false)
     const {
@@ -46,7 +48,12 @@ export default function Page() {
                             <button className="border border-zinc-200 p-2 rounded-full hover:bg-zinc-50">
                                 <CogIcon className="w-5" />
                             </button>
-                            <button className="btn thin">Invite</button>
+                            <button
+                                className="btn thin"
+                                onClick={() => setShowInviteModal(true)}
+                            >
+                                Invite
+                            </button>
                         </div>
                     </div>
                     <section className="flex h-[calc(100%-79px)]">
@@ -78,7 +85,7 @@ export default function Page() {
                                     </button>
                                 ))}
                             </div>
-                            <GroupSidebarTitle
+                            {/* <GroupSidebarTitle
                                 title="Events"
                                 onButtonClick={() => {
                                     console.log('events')
@@ -89,9 +96,9 @@ export default function Page() {
                                 onButtonClick={() => {
                                     console.log('lists')
                                 }}
-                            />
+                            /> */}
                         </aside>
-                        <Stream groupId={groupId} topicId={selectedTopic} />
+                        <Stream topicId={selectedTopic} />
                     </section>
                 </div>
             )}
@@ -100,6 +107,15 @@ export default function Page() {
                     open={true}
                     onClose={() => {
                         setShowAddTopicModal(false)
+                    }}
+                    groupId={id as string}
+                />
+            )}
+            {showInviteModal && (
+                <InviteUserModal
+                    open={true}
+                    onClose={() => {
+                        setShowInviteModal(false)
                     }}
                     groupId={id as string}
                 />

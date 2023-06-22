@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form'
-import { useCreateTopic } from '@/lib/api/topics'
+import { useInviteUser } from '@/lib/api/groups'
 import { Button } from './button'
 import { Input } from './form/input'
 import { Modal, type ModalProps } from './modal'
 
-type CreateTopicFormFields = { name: string }
+type CreateTopicFormFields = { email: string }
 
-export function AddTopicModal({
+export function InviteUserModal({
     groupId,
     ...rest
 }: ModalProps & { groupId: string }) {
@@ -15,11 +15,11 @@ export function AddTopicModal({
         register,
         formState: { errors },
     } = useForm<CreateTopicFormFields>()
-    const { mutate, isLoading } = useCreateTopic(groupId)
+    const { mutate, isLoading } = useInviteUser(groupId)
 
     return (
         <Modal {...rest}>
-            <h3 className="font-medium text-xl mb-4">Add Topic</h3>
+            <h3 className="font-medium text-xl mb-4">Invite User</h3>
             <form
                 onSubmit={handleSubmit((values) => {
                     mutate(values, {
@@ -30,13 +30,14 @@ export function AddTopicModal({
                 })}
             >
                 <Input
-                    {...register('name', {
-                        required: 'Please provide your topic name',
+                    {...register('email', {
+                        required: 'Please provide the email address',
                     })}
-                    label="Name"
-                    error={errors.name?.message}
+                    label="Email address"
+                    placeholder="Please provide an email address"
+                    error={errors.email?.message}
                 />
-                <Button showLoader={isLoading}>Create</Button>
+                <Button showLoader={isLoading}>Submit</Button>
             </form>
         </Modal>
     )

@@ -3,4 +3,5 @@ export const tableNames = {
     groups: 'groups',
     topics: 'topics',
     stream_items: 'stream_items',
+    invites: 'invites',
 } as const

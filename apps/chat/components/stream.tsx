@@ -16,13 +16,16 @@ import {
     useSendMessageStreamItem,
 } from '@/lib/api/stream'
 import { XCircleIcon } from '@heroicons/react/24/solid'
-import { useEffect, useMemo, useReducer, useState } from 'react'
+import { createElement, useEffect, useMemo, useReducer, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { CommandCenter, type Command } from './command-center'
 import { SelectedCommand } from './selected-command'
-import { useCreateGroup } from '@/lib/api/groups'
+import { useCreateGroup, useGetStream } from '@/lib/api/groups'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
+import { useSendMessage } from '@/lib/api/messages'
+import { useCreateTopic } from '@/lib/api/topics'
+import { CenteredLoader } from './loader'
 
 const commands = [
     {
@@ -37,13 +40,19 @@ const commands = [
     {
         command: '/topics create',
         description: 'Create a topic',
-        prompts: ['Please provide the name of the topic', 'These are shit'],
+        prompts: ['Please provide the name of the topic'],
+    },
+    {
+        command: '/hop2',
+        description: 'Jump to a defined destination provided by hop2.io',
+        prompts: ['Please provide the destination'],
     },
 ]
 
-export function Stream() {
+export function Stream({ topicId }: { topicId: string }) {
     const queryClient = useQueryClient()
     const router = useRouter()
+    const groupId = router.query.id as string
     const [showCommandCenter, setShowCommandCenter] = useState(false)
     const [selectedCommand, setSelectedCommand] = useState<Command | undefined>(
         undefined
@@ -60,6 +69,17 @@ export function Stream() {
 
     const createGroup = useCreateGroup()
 
+    const sendMessage = useSendMessage({
+        groupId,
+        topicId,
+    })
+
+    const stream = useGetStream({
+        groupId,
+        contextId: topicId,
+    })
+
+    const createTopic = useCreateTopic(groupId)
     const command = watch('command')
 
     useEffect(() => {
@@ -80,6 +100,11 @@ export function Stream() {
         setValue('command', '')
     }
 
+    const resetFormSection = () => {
+        setValue('command', '')
+        setSelectedCommand(undefined)
+    }
+
     const returnPlaceholder = () => {
         if (selectedCommand) {
             const command = commands.find(
@@ -94,6 +119,45 @@ export function Stream() {
         return "Start by sending a message or typing '/'"
     }
 
+    const handleCommunityCreate = () => {
+        createGroup.mutate(
+            {
+                name: command,
+                paid: false,
+            },
+            {
+                onSuccess(response) {
+                    queryClient.invalidateQueries(['groups'])
+                    router.push(`/groups/${response.data.group.id}`)
+                },
+            }
+        )
+    }
+
+    const handleTopicCreate = () => {
+        createTopic.mutate(
+            {
+                name: command,
+            },
+            {
+                onSuccess() {
+                    resetFormSection()
+                },
+            }
+        )
+    }
+
+    const handleHop2Command = () => {
+        const a = document.createElement('a') as HTMLAnchorElement
+        a.setAttribute('href', `https://go.hop2.io?q=${command}`)
+        a.setAttribute('target', '_blank')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        setSelectedCommand(undefined)
+        setValue('command', '')
+    }
+
     const onFormSubmit = ({ command }: { command: string }) => {
         if (selectedCommand) {
             if (!selectedCommand.prompts) {
@@ -103,18 +167,15 @@ export function Stream() {
 
             if ((selectedCommand.prompts || []).length - 1 === currentPrompt) {
                 if (selectedCommand.command === '/communities create') {
-                    createGroup.mutate(
-                        {
-                            name: command,
-                            paid: false,
-                        },
-                        {
-                            onSuccess(response) {
-                                queryClient.invalidateQueries(['groups'])
-                                router.push(`/groups/${response.data.group.id}`)
-                            },
-                        }
-                    )
+                    handleCommunityCreate()
+                }
+
+                if (selectedCommand.command === '/topics create') {
+                    handleTopicCreate()
+                }
+
+                if (selectedCommand.command === '/hop2') {
+                    handleHop2Command()
                 }
                 return
             } else {
@@ -128,12 +189,15 @@ export function Stream() {
                 return
             }
 
-            alert('go with messge')
+            sendMessage.mutate({
+                message: command,
+            })
         }
     }
 
     return (
-        <div className="w-full flex flex-col p-4">
+        <div className="w-full flex flex-col p-4 bg-white">
+            {stream.isLoading && <CenteredLoader />}
             <div className="mt-auto">
                 {showCommandCenter && (
                     <CommandCenter
@@ -157,8 +221,18 @@ export function Stream() {
                             required: true,
                         })}
                         onKeyDown={(event) => {
+                            console.log(event.code)
+                            if (event.code === 'ArrowUp') {
+                                return
+                            }
+
                             if (event.code === 'Tab') {
                                 event.preventDefault()
+
+                                if (command === '/') {
+                                    return
+                                }
+
                                 if (filteredCommands.length === 1) {
                                     selectCommand(filteredCommands[0])
                                 } else {
@@ -184,7 +258,7 @@ export function Stream() {
                             }
                         }}
                         placeholder={returnPlaceholder()}
-                        className="flex-grow p-2 rounded-md"
+                        className="flex-grow p-2 rounded-md text-sm"
                     />
                 </form>
             </div>
