@@ -13,12 +13,12 @@ interface Props extends WithAuthProps {
 }
 
 const SERVICES_NAMES = [
-  'ai',
   'app',
   'cache',
   'db',
   'event',
-  'user'
+  'user',
+  'space'
 ]
 
 export const getServerSideProps = withAuth(async context => {
