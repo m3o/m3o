@@ -29,20 +29,11 @@ var (
 	// dot com host
 	ComHost = "m3o.com"
 
-	// dev host
-	DevHost = "m3o.dev"
-
-	// host to proxy for URLs
-	URLHost = "m3o.one"
-
 	// host to proxy for Apps
 	AppHost = "m3o.app"
 
 	// host to proxy for Functions
 	FunctionHost = "m3o.sh"
-
-	// host of go vanity
-	GoHost = "go.m3o.com"
 
 	// home host
 	HomeHost = "home.m3o.com"
@@ -362,10 +353,6 @@ func (h *Handler) urlProxy(w http.ResponseWriter, r *http.Request) {
 		if len(r.Host) > 0 {
 			log.Printf("[url/proxy] Host is set from r.Host %v", r.Host)
 			uri.Host = r.Host
-		} else {
-			log.Printf("[url/proxy] Host is nil, defaulting to: %v", URLHost)
-			uri.Host = URLHost
-			uri.Scheme = "https"
 		}
 	}
 
@@ -554,18 +541,6 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// m3o.dev
-	if r.Host == DevHost {
-		h.vanity1.ServeHTTP(w, r)
-		return
-	}
-
-	// go.m3o.com
-	if r.Host == GoHost {
-		h.vanity2.ServeHTTP(w, r)
-		return
-	}
-
 	// if it's /url then resolve by id
 	if strings.HasPrefix(r.URL.Path, "/url/") {
 		h.urlProxy(w, r)
@@ -585,14 +560,12 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.server.ServeHTTP(w, r)
 }
 
-func New(server *server.Server, vanity1, vanity2 http.Handler) *Handler {
+func New(server *server.Server) *Handler {
 	h := &Handler{
 		client:  client.NewClient(&client.Options{Token: APIKey}),
 		appMap:  make(map[string]*backend),
 		funcMap: make(map[string]*backend),
 		server:  server,
-		vanity1: vanity1,
-		vanity2: vanity2,
 	}
 	if err := h.loadApps(); err != nil {
 		log.Printf("Error loading apps: %v", err)

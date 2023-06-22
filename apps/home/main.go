@@ -7,18 +7,14 @@ import (
 	"github.com/gorilla/handlers"
 	"m3o.dev/apps/home/handler"
 	"m3o.dev/apps/home/server"
-	"m3o.dev/apps/home/vanity"
 )
 
 func main() {
 	// the home server
 	srv := server.New()
 
-	van1 := vanity.Handler("./config/m3o-dev.yaml")
-	van2 := vanity.Handler("./config/go-m3o-com.yaml")
-
 	// new handler
-	hdr := handler.New(srv, van1, van2)
+	hdr := handler.New(srv)
 
 	// register handler
 	http.Handle("/", handlers.CombinedLoggingHandler(os.Stdout, hdr))
