@@ -1,5 +1,0 @@
-host: m3o.dev
-
-paths:
-  /:
-    repo: https://github.com/m3o/m3o
