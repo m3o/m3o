@@ -6,15 +6,11 @@ import (
 
 	"github.com/gorilla/handlers"
 	"m3o.dev/apps/home/handler"
-	"m3o.dev/apps/home/server"
 )
 
 func main() {
-	// the home server
-	srv := server.New()
-
 	// new handler
-	hdr := handler.New(srv)
+	hdr := handler.New()
 
 	// register handler
 	http.Handle("/", handlers.CombinedLoggingHandler(os.Stdout, hdr))

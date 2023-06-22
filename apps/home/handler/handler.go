@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"m3o.dev/api/client"
-	"m3o.dev/apps/home/server"
 )
 
 var (
@@ -34,9 +33,6 @@ var (
 
 	// host to proxy for Functions
 	FunctionHost = "m3o.sh"
-
-	// home host
-	HomeHost = "home.m3o.com"
 
 	// host for user auth
 	UserHost = "user.m3o.com"
@@ -58,12 +54,6 @@ type Handler struct {
 	client      *client.Client
 	lastUpdated time.Time
 	appList     []*App
-
-	// the home server
-	server *server.Server
-
-	// vanity handlers
-	vanity1, vanity2 http.Handler
 }
 
 type backend struct {
@@ -529,12 +519,6 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// home.m3o.com
-	if r.Host == HomeHost {
-		h.server.ServeHTTP(w, r)
-		return
-	}
-
 	// user.m3o.com
 	if r.Host == UserHost {
 		h.userProxy(w, r)
@@ -555,17 +539,13 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strings.HasPrefix(r.URL.Path, "/u/") {
 		h.urlProxy(w, r)
 	}
-
-	// load the home server
-	h.server.ServeHTTP(w, r)
 }
 
-func New(server *server.Server) *Handler {
+func New() *Handler {
 	h := &Handler{
 		client:  client.NewClient(&client.Options{Token: APIKey}),
 		appMap:  make(map[string]*backend),
 		funcMap: make(map[string]*backend),
-		server:  server,
 	}
 	if err := h.loadApps(); err != nil {
 		log.Printf("Error loading apps: %v", err)
