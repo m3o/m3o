@@ -4,8 +4,8 @@
   "category": "storage",
   "display_name": "Space",
   "pricing": {
-    "Space.Create": 1000,
-    "Space.Upload": 1000,
-    "Space.Update": 1000
+    "Space.Create": 10000,
+    "Space.Upload": 10000,
+    "Space.Update": 10000
   }
 }
