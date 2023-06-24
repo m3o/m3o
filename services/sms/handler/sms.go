@@ -27,6 +27,7 @@ const (
 type Sent struct {
 	UserID      string
 	TwilioMsgID string
+	Timestamp   time.Time
 }
 
 type Sms struct{}
@@ -55,6 +56,15 @@ func (e *Sms) Send(ctx context.Context, req *pb.SendRequest, rsp *pb.SendRespons
 
 			logger.Error("Request to send from %v blocked by account: %v tenant: %v", req.From, acc, tnt)
 			return errors.BadRequest("sms.send", "sender blocked")
+		}
+	}
+
+	// check banned words list
+	for _, word := range BanWords {
+		if strings.Contains(strings.ToLower(req.Message), strings.ToLower(word)) {
+			acc, _ := auth.AccountFromContext(ctx)
+			logger.Error("Request message %s to send from %v blocked by account: %v tenant: %v", req.Message, req.From, acc, tnt)
+			return errors.BadRequest("sms.send", "message blocked")
 		}
 	}
 
@@ -102,6 +112,7 @@ func (e *Sms) Send(ctx context.Context, req *pb.SendRequest, rsp *pb.SendRespons
 	sent := Sent{
 		UserID:      tnt,
 		TwilioMsgID: twMsg.Sid,
+		Timestamp:   time.Now(),
 	}
 
 	b, _ := json.Marshal(&sent)
