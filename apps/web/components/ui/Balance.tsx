@@ -13,8 +13,8 @@ export const Balance: FC = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <p className="text-3xl dark:text-white">
-          ${data.toFixed(6)}
+        <p className="text-xl p-3 bg-zinc-200 dark:bg-zinc-700 rounded-md dark:text-white">
+          {data.toFixed(6)} USD
         </p>
       )}
       <Link href={Routes.UserBilling}>
