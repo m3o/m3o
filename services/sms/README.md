@@ -4,4 +4,4 @@ Send SMS messages
 
 Send SMS messages in seconds. Integrate into any product for verification codes, links, reminders and more. 
 
-Please see the SMS policy for banned use cases https://m3o.one/u/sms-policy
+For the SMS policy see https://m3o.one/url/sms-policy
