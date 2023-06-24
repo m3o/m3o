@@ -36,6 +36,9 @@ var (
 
 	// host for user auth
 	UserHost = "user.m3o.com"
+
+	// URLHost
+	URLHost = "m3o.one"
 )
 
 type App struct {
@@ -522,6 +525,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// user.m3o.com
 	if r.Host == UserHost {
 		h.userProxy(w, r)
+		return
+	}
+
+	if r.Host == URLHost {
+		h.urlProxy(w, r)
 		return
 	}
 
