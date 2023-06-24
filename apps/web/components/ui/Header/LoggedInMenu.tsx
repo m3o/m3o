@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRightIcon, UserIcon } from '@heroicons/react/outline'
+import { ArrowRightIcon, CogIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
@@ -41,7 +41,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
         className="flex items-center rounded-full border px-2 py-2 dark:bg-zinc-800 font-medium text-zinc-900 tbc dark:text-white"
         aria-haspopup="true"
         onClick={() => setOpen(!open)}>
-        <UserIcon className="w-4" />
+        <CogIcon className="w-4" />
         <ChevronDownIcon className={chevronClasses} />
       </button>
       {open && (
@@ -68,6 +68,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
             )}
 */}
           </div>
+{/*
           <div className="px-4 py-2 tbc border-b text-sm text-zinc-700">
             <p className="dark:text-white">Balance</p>
             {currentBalance.isLoading ? (
@@ -78,6 +79,7 @@ export const LoggedInMenu: FC<LoggedInMenuProps> = ({ user }) => {
               </span>
             )}
           </div>
+*/}
           <div className="py-1" role="none">
             {LOGGED_IN_MENU_ITEMS.map(item => (
               <Link href={item.link} key={item.link}>

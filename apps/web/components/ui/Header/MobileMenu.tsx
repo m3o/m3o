@@ -24,6 +24,7 @@ export const MobileMenu: FC<MobileMenuProps> = ({ onClose, user }) => {
       <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white dark:bg-zinc-900 divide-y-2 divide-zinc-50 dark:divide-zinc-700 border border-transparent dark:border-zinc-600">
         <div className="pt-5 pb-6 px-5">
           <div className="flex items-center">
+            <p className="pb-1 font-bold">Menu</p>
             <div className="ml-auto">
               <button
                 type="button"
