@@ -49,7 +49,7 @@ const AdminPage: NextPage<WithAuthProps> = ({
             Admin
           </h1>
           <h2 className="text-md md:text-lg lg:text-xl max-w-3xl">
-            Serverless cloud admin
+            M3O Cloud Admin
           </h2>
         </div>
         <div className="md:max-w-4xl lg:max-w-7xl mx-auto w-11/12 mb-10">
