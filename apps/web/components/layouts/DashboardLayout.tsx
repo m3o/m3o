@@ -197,8 +197,8 @@ export function DashboardLayout({
                     icon: SupportIcon,
                   },
                   {
-                    text: 'Community',
-                    href: '/community',
+                    text: 'Contact',
+                    href: '/contact',
                     icon: UsersIcon,
                   },
                   {
