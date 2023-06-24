@@ -27,15 +27,15 @@ const ContactPage: NextPage<WithAuthProps> = ({
   return (
     <>
       <NextSeo
-        title={seo.community.title}
-        description={seo.community.description}
-        canonical="https://m3o.com/community"
+        title={seo.contact.title}
+        description={seo.contact.description}
+        canonical="https://m3o.com/contact"
       />
       <MainLayout>
       <section className="px-4 md:px-0 py-12 md:py-24 text-zinc-600 dark:text-zinc-400">
         <div className="md:max-w-4xl lg:max-w-7xl mx-auto w-11/12 mb-10">
           <h1 className="text-3xl md:text-4xl lg:text-5xl mb-6 max-w-2xl dark:text-white font-bold">
-            Contact
+            Contact Us
           </h1>
           <h2 className="text-md md:text-lg lg:text-xl max-w-3xl">
             Ask questions, share knowledge and stay in sync
