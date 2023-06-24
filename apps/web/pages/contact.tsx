@@ -78,7 +78,7 @@ const ContactPage: NextPage<WithAuthProps> = ({
 		    <a
 		      data-testid={`service-link-functions`}
 		      className="font-bold text-zinc-900 pointer-events-auto dark:text-white">
-		     Micro
+		     Mastodon
 		    </a>
 		  </Link>
 		</h3>
