@@ -21,7 +21,7 @@ export const getServerSideProps = withAuth(async context => {
   }
 })
 
-const CommunityPage: NextPage<WithAuthProps> = ({
+const ContactPage: NextPage<WithAuthProps> = ({
   user
 }) => {
   return (
@@ -35,7 +35,7 @@ const CommunityPage: NextPage<WithAuthProps> = ({
       <section className="px-4 md:px-0 py-12 md:py-24 text-zinc-600 dark:text-zinc-400">
         <div className="md:max-w-4xl lg:max-w-7xl mx-auto w-11/12 mb-10">
           <h1 className="text-3xl md:text-4xl lg:text-5xl mb-6 max-w-2xl dark:text-white font-bold">
-            Community
+            Contact
           </h1>
           <h2 className="text-md md:text-lg lg:text-xl max-w-3xl">
             Ask questions, share knowledge and stay in sync
@@ -61,7 +61,7 @@ const CommunityPage: NextPage<WithAuthProps> = ({
 		  </Link>
 		</h3>
 		<p className="truncate text-zinc-500 dark:text-zinc-300 mb-6">
-		  Chat in real time with other devs
+		  Find us on Discord
 		</p>
 	      </div>
 	    </div>
@@ -83,7 +83,7 @@ const CommunityPage: NextPage<WithAuthProps> = ({
 		  </Link>
 		</h3>
 		<p className="truncate text-zinc-500 dark:text-zinc-300 mb-6">
-		  Start a discussion on Micro
+		  Talk to us on Mastodon
 		</p>
 	      </div>
 	    </div>
@@ -139,4 +139,4 @@ const CommunityPage: NextPage<WithAuthProps> = ({
   )
 }
 
-export default CommunityPage
+export default ContactPage
