@@ -50,7 +50,7 @@ const ServicesPage: NextPage<ExploreProps & WithAuthProps> = ({
         canonical="https://m3o.com/services"
       />
       <DashboardLayout>
-        <Explore {...exploreProps} header={<ExploreHeader title="Services" route="/services" />} />
+        <Explore {...exploreProps} header={<ExploreHeader title="Services" />} />
       </DashboardLayout>
     </>
   )
