@@ -4,6 +4,7 @@ import Link from 'next/link'
 import classNames from 'classnames'
 
 export interface Props {
+  route: string
   categories: string[]
   onCategoryClick: VoidFunction
 }
@@ -37,6 +38,7 @@ function CategoryLink({
 }
 
 export function CategoriesFilter({
+  route,
   categories,
   onCategoryClick,
 }: Props): ReactElement {
@@ -46,8 +48,8 @@ export function CategoriesFilter({
     <>
       <CategoryLink
         onClick={onCategoryClick}
-        href="/explore"
-        selected={router.pathname === '/explore'}>
+        href={route}
+        selected={router.pathname === `${route}`}>
         All APIs
       </CategoryLink>
       <h3 className="text-zinc-800 mb-4 font-bold dark:text-indigo-400 text-lg mt-6">
@@ -55,9 +57,9 @@ export function CategoriesFilter({
       </h3>
       {categories.map(category => (
         <CategoryLink
-          selected={router.asPath === `/explore/${category}`}
+          selected={router.asPath === `${route}/${category}`}
           onClick={onCategoryClick}
-          href={`/explore/${category}`}
+          href={`${route}/${category}`}
           key={category}>
           {category}
         </CategoryLink>

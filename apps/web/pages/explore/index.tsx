@@ -24,7 +24,7 @@ const ExplorePage: NextPage<ExploreProps & WithAuthProps> = ({
         canonical="https://m3o.com/explore"
       />
       <MainLayout>
-        <Explore {...exploreProps} header={<ExploreHeader title="Explore Services" />} />
+        <Explore {...exploreProps} header={<ExploreHeader title="Explore Services" route="/explore" />} />
       </MainLayout>
     </>
   )

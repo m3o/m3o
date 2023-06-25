@@ -17,8 +17,8 @@ export const LOGGED_IN_MENU_ITEMS: MenuItem[] = [
     text: 'Admin',
   },
   {
-    link: Routes.Explore,
-    text: 'Explore',
+    link: Routes.Services,
+    text: 'Services',
   },
   {
     link: Routes.UserUsage,

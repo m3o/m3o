@@ -11,6 +11,7 @@ import { fetchCategories } from '@/lib/api/m3o/services/explore'
 import { withAuth } from '@/lib/api/m3o/withAuth'
 
 export interface ExploreProps {
+  route: string
   categories: string[]
   header: ReactElement
   initialSearchTerm: string
@@ -23,6 +24,7 @@ export const exploreGetServerSideProps = withAuth(async context => {
 
   return {
     props: {
+      route: '/explore',
       categories,
       initialSearchTerm: context.query.search || '',
       services,
@@ -32,6 +34,7 @@ export const exploreGetServerSideProps = withAuth(async context => {
 })
 
 export const Explore: FC<ExploreProps> = ({
+  route,
   categories,
   header,
   services,
@@ -45,6 +48,7 @@ export const Explore: FC<ExploreProps> = ({
 
   const categoriesItems = (
     <CategoriesFilter
+      route={route}
       categories={categories}
       onCategoryClick={handleCategoryClick}
     />
@@ -53,7 +57,7 @@ export const Explore: FC<ExploreProps> = ({
   const handleSearch = useCallback((event: FormEvent) => {
     event.preventDefault()
     const formData = new FormData(event.target as HTMLFormElement)
-    window.location.href = `/explore?search=${formData.get('search') as string}`
+    window.location.href = `${route}?search=${formData.get('search') as string}`
   }, [])
 
   return (

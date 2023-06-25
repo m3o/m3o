@@ -137,8 +137,8 @@ export function DashboardLayout({
                     icon: ServerIcon,
                   },
                   {
-                    text: 'Explore',
-                    href: '/explore',
+                    text: 'Services',
+                    href: '/services',
                     icon: SearchIcon,
                   },
                 ],
