@@ -14,7 +14,7 @@ export const getServerSideProps = withAuth(async context => {
 
   return {
     props: {
-      route: '/explore',
+      route: '/services',
       categories,
       initialSearchTerm: '',
       services,
@@ -34,7 +34,7 @@ const ExploreCategory: NextPage<ExploreProps & WithAuthProps> = ({
         description={seo.explore.description}
       />
       <MainLayout>
-        <Explore {...exploreProps} header={<ExploreHeader title="Explore Services" />} />
+        <Explore {...exploreProps} header={<ExploreHeader title="Services" />} />
       </MainLayout>
     </>
   )

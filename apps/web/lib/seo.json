@@ -67,7 +67,7 @@
   },
   "explore": {
     "title": "Explore",
-    "description": "Explore the public API catalog."
+    "description": "Explore the M3O services catalog"
   },
   "faq": {
     "title": "FAQs",
@@ -100,6 +100,10 @@
   "resetPassword": {
     "title": "Reset Password",
     "description": "Reset your password"
+  },
+  "services": {
+    "title": "Services",
+    "description": "Explore the M3O services catalog"
   },
   "trending": {
     "title": "Trending",

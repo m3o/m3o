@@ -37,6 +37,7 @@ export enum Routes {
   GettingStarted = '/getting-started',
   Login = '/login',
   SignUp = '/register',
+  Services = '/services',
   UserSettings = '/account/settings',
   UserKeys = '/account/tokens',
   UserBilling = '/account/billing',
