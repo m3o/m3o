@@ -68,14 +68,6 @@ export default async function handler(
             res.status(200).json(invites)
             return
         case 'POST': {
-            // limit group sizes to 100
-            if (group.member_ids.length + invites.length >= 100) {
-                res.status(400).json({
-                    error: 'Maximum group size of 24 already reached (including pending invites)',
-                })
-                return
-            }
-
             // parse the request
             let body: any
             try {
