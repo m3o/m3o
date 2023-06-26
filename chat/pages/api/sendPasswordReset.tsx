@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../lib/micro'
 
 const templateId = 'd-02aefa32b6de484aa850d794cb8cf471'
-const from = 'Micro Chat <support@m3o.com>'
+const from = 'M3O Chat <support@m3o.com>'
 
 export default async function handler(
   req: NextApiRequest,
