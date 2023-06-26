@@ -51,7 +51,7 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Login | Micro</title>
+        <title>Login | M3O Chat</title>
       </Head>
 
       <div className={styles.inner}>

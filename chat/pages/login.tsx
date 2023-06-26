@@ -96,7 +96,7 @@ export default function Login() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>Login | Micro</title>
+                <title>Login | M3O Chat</title>
             </Head>
 
             <div className={styles.inner}>
@@ -104,7 +104,7 @@ export default function Login() {
                     className={styles.logo}
                     src="/logo.png"
                     height="50px"
-                    alt="Micro Logo"
+                    alt="M3O Logo"
                 />
                 <h1 className={styles.title}>Chat</h1>
                 {error ? (
