@@ -65,8 +65,7 @@ export default function Layout({
                         <Link href="/">
                             <img
                                 src="/logo.png"
-                                height="35px"
-                                width="35px"
+                                height="30px"
                                 alt="Logo"
                             />
                         </Link>
