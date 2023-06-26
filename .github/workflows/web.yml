@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '.github/workflows/web.yml'
-      - 'apps/web/**'
+      - 'web/**'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
       - name: Docker Build
         run: docker build -t m3o/cloud-next .
-        working-directory: ./apps/web
+        working-directory: ./web
         
       - name: Install doctl
         uses: digitalocean/action-doctl@v2

@@ -1,10 +1,10 @@
-# M3O Home
+# M3O App
 
 The home for apps, functions and more 
 
 ## Overview
 
-The M3O Home app is a single entrypoint for apps, functions and more hosted on the M3O platform.
+The M3O app is a single entrypoint for apps, functions and more hosted on the M3O platform.
 It acts as a launcher for other apps and functions that are UI based.
 
 Supported features:

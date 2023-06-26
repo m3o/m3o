@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '.github/workflows/chat.yml'
-      - 'apps/chat/**'
+      - 'chat/**'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
       - name: Docker Build
         run: docker build -t m3o/chat .
-        working-directory: ./apps/chat
+        working-directory: ./chat
         
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
