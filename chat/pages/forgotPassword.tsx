@@ -55,8 +55,8 @@ export default function Login() {
       </Head>
 
       <div className={styles.inner}>
-        <img className={styles.logo} src="/logo.png" height="100px" width="100px" alt="Micro Logo" />
-        <h1 className={styles.title}>Micro</h1>
+        <img className={styles.logo} src="/logo.png" height="50px" alt="M3O Logo" />
+        <h1 className={styles.title}>Chat</h1>
         {error ? (
           <p className={styles.error}>{JSON.stringify(error, null, 2)}</p>
         ) : null}
