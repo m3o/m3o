@@ -103,8 +103,7 @@ export default function Login() {
                 <img
                     className={styles.logo}
                     src="/logo.png"
-                    height="75px"
-                    width="75px"
+                    height="50px"
                     alt="Micro Logo"
                 />
                 <h1 className={styles.title}>Chat</h1>
