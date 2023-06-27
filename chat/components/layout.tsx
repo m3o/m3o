@@ -71,7 +71,7 @@ export default function Layout({
                         </Link>
 
                         <nav>
-                            <Link href="/">Home</Link>&nbsp;
+                            <Link href="/home">Home</Link>&nbsp;
                             <Link href="/discover">Discover</Link>
                             <Link href="/logout">Logout</Link>
                         </nav>
