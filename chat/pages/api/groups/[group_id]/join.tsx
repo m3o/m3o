@@ -2,9 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../../../lib/micro'
 import TokenFromReq from '../../../../lib/token'
 
-const templateId = 'd-cad7d433f25341c9b69616e81c6df09d'
-const from = 'M3O Chat <support@m3o.com>'
-
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
