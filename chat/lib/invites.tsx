@@ -34,7 +34,7 @@ export function createInvite(groupID: string, email: string): Promise<Invite> {
     })
       .then(async (rsp) => {
         const body = await rsp.json()
-        rsp.status === 201
+        rsp.status === 200
           ? resolve(body)
           : reject(body.error || rsp.statusText)
       })
@@ -49,6 +49,22 @@ export function acceptInvite(id: string): Promise<any> {
         const body = await rsp.json()
         rsp.status === 200
           ? resolve(null)
+          : reject(body.error || rsp.statusText)
+      })
+      .catch((err) => reject(err))
+  })
+}
+
+export function requestInvite(groupID: string, email: string): Promise<Invite> {
+  return new Promise<Invite>((resolve: Function, reject: Function) => {
+    fetch(`/api/groups/${groupID}/join`, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    })
+      .then(async (rsp) => {
+        const body = await rsp.json()
+        rsp.status === 200
+          ? resolve(body)
           : reject(body.error || rsp.statusText)
       })
       .catch((err) => reject(err))

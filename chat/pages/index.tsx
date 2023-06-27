@@ -53,14 +53,17 @@ export default function Home() {
 
                 <div className={styles.titleContainer}>
                     <Link href="/groups/new">
-                        <button>New Group</button>
+                        <button>Create a Group</button>
+                    </Link>
+                    <Link href="/discover">
+                        <button>Join a Group</button>
                     </Link>
                 </div>
 
                 {invitesLoader.invites?.length ? (
                     <div>
                         <h2 className={styles.h2}>Invites:</h2>
-                        {invitesLoader.invites?.map((i) => (
+                        {invitesLoader.invites?.sort((a, b) => a.group.name > b.group.name ? 1 : -1, ).map((i) => (
                             <div key={i.id} className={styles.group}>
                                 <p>{i.group.name}</p>
                                 <button
@@ -84,7 +87,7 @@ export default function Home() {
                     <div>
                         <h2 className={styles.h2}>Your Groups</h2>
                         <div className={styles.groups}>
-                            {groupsLoader.groups?.map((g) => (
+                            {groupsLoader.groups?.sort((a, b) => a.name > b.name ? 1 : -1, ).map((g) => (
                                 <div key={g.id} className={styles.group}>
                                     <p>{g.name}</p>
                                     <Link href={`/groups/${g.id}`}>

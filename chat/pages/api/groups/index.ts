@@ -21,6 +21,7 @@ export default async function handler(
 
     // authenticate the request
     let user: any
+
     try {
         const rsp = await call('/users/validate', { token })
         user = rsp.user

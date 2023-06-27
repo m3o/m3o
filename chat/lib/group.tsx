@@ -39,6 +39,20 @@ export function useGroups(): {
     }
 }
 
+export function useDiscover(): {
+    groups?: Group[]
+    loading: boolean
+    error: Error
+} {
+    const { data, error } = useSWR('/api/discover', fetcher)
+
+    return {
+        groups: error ? undefined : data,
+        loading: !error && !data,
+        error: error,
+    }
+}
+
 export function useGroup(
     id: string
 ): { group?: Group; loading: boolean; error: Error; mutate: Function } {
