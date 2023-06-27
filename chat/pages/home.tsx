@@ -44,14 +44,6 @@ export default function Home() {
         )
     }
 
-    function join(group_id: string) {
-        joinGroup(group_id)
-            .then(() => router.push(`/groups/${group_id}`))
-            .catch((error: string) => {
-                alert(`Error requesting invite: ${error}`)
-            })
-    }
-
     return (
         <Layout>
             <div className={styles.inner}>
