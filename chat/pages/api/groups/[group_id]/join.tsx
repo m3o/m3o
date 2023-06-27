@@ -2,6 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import call from '../../../../lib/micro'
 import TokenFromReq from '../../../../lib/token'
 
+const templateId = 'd-cad7d433f25341c9b69616e81c6df09d'
+const from = 'M3O Chat <support@m3o.com>'
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -10,8 +13,9 @@ export default async function handler(
         query: { group_id },
     } = req
 
-    if (req.method !== 'POST') {
-        res.status(405).json({})
+    // ignore any OPTIONS requests
+    if (!['GET', 'POST']?.includes(req.method)) {
+        res.status(200)
         return
     }
 
@@ -38,52 +42,55 @@ export default async function handler(
     try {
         const rsp = await call('/groups/List', { member_id: user.id })
         group = rsp.groups?.find((g) => g.id === group_id)
-        if (!group) {
-            res.status(403).json({ error: 'Not a member of this group' })
-            return
-        }
     } catch ({ error, code }) {
         console.error(`Error loading groups: ${error}, code: ${code}`)
         res.status(500).json({ error: 'Error loading groups' })
         return
     }
-
-    // parse the request
-    let body: any
-    try {
-        body = JSON.parse(req.body)
-    } catch {
-        body = {}
+    if (group) {
+        res.status(200).json({})
+        return
     }
 
-    // create the thread
-    let conversation: any
+    // load the group
+
     try {
-        const rsp = await call('/threads/CreateConversation', {
-            group_id,
-            topic: body.topic,
-        })
-        conversation = rsp.conversation
+      group = (await call('/groups/Read', { ids: [group_id] })).groups[
+        group_id
+      ]
     } catch ({ error, code }) {
-        res.status(code).json({ error })
+      console.error(`Error reading group: ${error}, code: ${code}`)
+      res.status(500).json({ error: 'Error reading group' })
+      return
+    }
+
+    // add the user as a member of the group
+    try {
+      await call('/groups/AddMember', {
+        group_id: group_id,
+        member_id: user.id,
+      })
+    } catch ({ error, code }) {
+      console.error(`Error adding member ${user.id} to group ${group_id}: ${error}`)
+      res.status(500).json({ error: 'Error accepting invitation' })
+      return
     }
 
     // publish the message to the users in the group
     try {
-        group.member_ids.forEach(async (id: string) => {
-            await call('/streams/Publish', {
-                topic: id,
-                message: JSON.stringify({
-                    type: 'thread.created',
-                    group_id: group.id,
-                    payload: conversation,
-                }),
-            })
+      group.member_ids.forEach(async (id: string) => {
+        await call('/streams/Publish', {
+          topic: id,
+          message: JSON.stringify({
+            type: 'group.user.joined',
+            group_id: group.id,
+            payload: user,
+          }),
         })
-        res.status(201).json(conversation)
+      })
+      res.status(200).json({})
     } catch ({ error, code }) {
-        console.error(`Error publishing to stream: ${error}, code: ${code}`)
-        res.status(500).json({ error: 'Error publishing to stream' })
-        return
+      console.error(`Error publishing to stream: ${error}, code: ${code}`)
+      res.status(500).json({ error: 'Error publishing to stream' })
     }
 }

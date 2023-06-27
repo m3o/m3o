@@ -100,7 +100,7 @@ export default function Group() {
                             ],
                         })
                         break
-                    case 'tread.created':
+                    case 'thread.created':
                         console.log('Thread created: ', message)
                         groupLoader.mutate({
                             ...groupLoader.group,
