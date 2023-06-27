@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
-import { joinGroup, useGroups } from '../lib/group'
+import { useGroups } from '../lib/group'
 import { acceptInvite, rejectInvite, Invite, useInvites } from '../lib/invites'
 import { useUser } from '../lib/user'
 import styles from './index.module.scss'
