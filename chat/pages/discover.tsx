@@ -2,8 +2,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
 import { useDiscover } from '../lib/group'
-import { useUser } from '../lib/user'
 import { requestInvite } from '../lib/invites'
+import { useUser } from '../lib/user'
 import styles from './index.module.scss'
 
 export default function Home() {
