@@ -27,12 +27,12 @@ export default function Layout({
     return (
         <div className={styles.container}>
             <Head>
-                <title>Micro</title>
+                <title>M3O Chat</title>
                 <meta
                     name="description"
                     content="Stay in sync with friends, family and colleagues"
                 />
-                <meta name="og:title" content="Micro" />
+                <meta name="og:title" content="M3O Chat" />
 
                 <link rel="icon" href="/favicon.ico" />
                 <link
