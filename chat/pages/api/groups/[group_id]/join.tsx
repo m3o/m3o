@@ -52,9 +52,7 @@ export default async function handler(
     // load the group
 
     try {
-      group = (await call('/groups/Read', { ids: [group_id] })).groups[
-        group_id
-      ]
+      group = (await call('/groups/Read', { ids: [group_id] })).groups[group_id as string]
     } catch ({ error, code }) {
       console.error(`Error reading group: ${error}, code: ${code}`)
       res.status(500).json({ error: 'Error reading group' })
