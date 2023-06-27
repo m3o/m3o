@@ -25,6 +25,22 @@ export interface Thread {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
+export function joinGroup(groupID: string): Promise<Group> {
+  return new Promise<Group>((resolve: Function, reject: Function) => {
+    fetch(`/api/groups/${groupID}/join`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    })
+      .then(async (rsp) => {
+        const body = await rsp.json()
+        rsp.status === 200
+          ? resolve(body)
+          : reject(body.error || rsp.statusText)
+      })
+      .catch((err) => reject(err))
+  })
+}
+
 export function useGroups(): {
     groups?: Group[]
     loading: boolean
