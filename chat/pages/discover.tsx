@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
-import { useDiscover } from '../lib/group'
-import { requestInvite } from '../lib/invites'
+import { joinGroup, useDiscover } from '../lib/group'
 import { useUser } from '../lib/user'
 import styles from './index.module.scss'
 
@@ -25,8 +24,8 @@ export default function Home() {
         return <Layout loading={true} />
     }
 
-    function request(group_id: string) {
-        requestInvite(group_id)
+    function join(group_id: string) {
+        joinGroup(group_id)
             .then(() => router.push(`/groups/${group_id}`))
             .catch((error: string) => {
                 alert(`Error requesting invite: ${error}`)
@@ -54,7 +53,7 @@ export default function Home() {
                                 <div key={g.id} className={styles.group}>
                                     <p>{g.name}</p>
                                     <button
-                                      onClick={() => request(g.id)}>
+                                      onClick={() => join(g.id)}>
                                        Join
                                     </button>
                                 </div>
