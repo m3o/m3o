@@ -2,11 +2,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
 import { useDiscover } from '../lib/group'
+import { useUser } from '../lib/user'
 import { requestInvite } from '../lib/invites'
 import styles from './index.module.scss'
 
 export default function Home() {
     const router = useRouter()
+    const userLoader = useUser()
     const groupsLoader = useDiscover()
 
     process.on('uncaughtException', function (err) {
@@ -14,12 +16,12 @@ export default function Home() {
         console.error(err.stack)
     })
 
-    if (groupsLoader.error) {
+    if (groupsLoader.error || userLoader.error) {
         router.push('/login')
         return <div />
     }
 
-    if (groupsLoader.loading) {
+    if (groupsLoader.loading || userLoader.loading) {
         return <Layout loading={true} />
     }
 
