@@ -46,11 +46,16 @@ export M3O_API_TOKEN=xxxxxxx
 ### Curl
 
 ```bash
-curl \
-  -H "Authorization: Bearer $M3O_API_TOKEN" \
+curl "https://api.m3o.com/v1/db/Create" \
   -H "Content-Type: application/json" \
-  -d '{"days": 2, "location": "London"}' \
-  https://api.m3o.com/v1/weather/Forecast
+  -H "Authorization: Bearer $M3O_API_TOKEN" \
+  -d '{
+    "table": "notes",
+    "record": {
+      "name": "TODO",
+      "list": ["eat", "sleep", "repeat"]
+    }
+  }'
 ```
 
 Find all the curl examples in [m3o-sh](https://github.com/m3o/m3o-sh)
@@ -62,7 +67,7 @@ Import packages from [go.m3o.com](https://pkg.go.dev/go.m3o.com)
 ```go
 import (
         "go.m3o.com"
-        "go.m3o.com/weather"
+        "go.m3o.com/db"
 )
 ```
 
@@ -70,9 +75,12 @@ Create a new client with your API token and call it
 
 ```go
 client := m3o.New(os.Getenv("M3O_API_TOKEN"))
-rsp, err := client.Weather.Forecast(&weather.ForecastRequest{
-	Days:     2,
-	Location: "London",
+rsp, err := client.Db.Create(&db.CreateRequest{
+        Table: "notes",
+        Record: map[string]interface{}{
+                 "name": "TODO",
+                 "list": []string{"eat", "sleep", "repeat"},
+        },
 })
 fmt.Println(rsp, err)
 ```
@@ -93,9 +101,12 @@ Call app run like so
 const m3o = require("m3o").default(process.env.M3O_API_TOKEN);
 
 async function main() {
-  let rsp = await m3o.weather.forecast({
-    days: 2,
-    location: "London",
+  let rsp = await m3o.db.create({
+    table: "notes",
+    record: {
+      "name": "TODO",
+      "list": ["eat", "sleep", "repeat"]
+    }
   });
   console.log(rsp);
 }
@@ -116,7 +127,7 @@ curl -fssl https://install.m3o.com/cli | /bin/bash
 Example call
 
 ```
-m3o weather forecast --location=London --days=2
+m3o db create --table=notes --record='{"name": "TODO", "list": ["eat", "sleep", "repeat"]}'
 ```
 
 See the [m3o-cli](https://github.com/m3o/m3o-cli/tree/main/examples) for examples
