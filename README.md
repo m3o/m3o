@@ -26,7 +26,7 @@ Here are a few APIs:
 - [**DB**](https://m3o.com/db) - Serverless postgres database 
 - [**Events**](https://m3o.com/event) - Push event notifications
 - [**Users**](https://m3o.com/user) - Account management and authentication 
-- [**Weather**](https://m3o.com/weather) - Real time weather info and forecast
+- [**Space**](https://m3o.com/space) - Infinite cloud storage
 
 ## Getting Started
 
