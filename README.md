@@ -20,7 +20,6 @@ Here are the main features:
 
 Here are a few APIs:
 
-- [**AI**](https://m3o.com/ai) - GPT powered by OpenAI
 - [**Apps**](https://m3o.com/app) - Serverless app deployment
 - [**Cache**](https://m3o.com/cache) - In-memory data storage
 - [**DB**](https://m3o.com/db) - Serverless postgres database 
