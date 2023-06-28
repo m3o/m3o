@@ -30,7 +30,7 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
   const router = useRouter()
   const downloadFile = useDownloadFile()
   const shortDescription = summaryDescription.split('#')[0]
-  const seoTitle = `Micro ${displayName} Service - ${shortDescription.trimEnd()}`
+  const seoTitle = `M3O ${displayName} API - ${shortDescription.trimEnd()}`
   const seoDescription = getDescription(summaryDescription)
   const seoUrl = `https://m3o.com/${router.query.api}`
 
