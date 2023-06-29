@@ -278,10 +278,6 @@ export default function Group() {
         }
     }
 
-    // function createWhiteboard() {
-    //     chatUI.current?.SendMessage('whiteboard')
-    // }
-
     async function sendInvite() {
         const email = window.prompt(
             'Enter the email address of the user you want to invite'
@@ -781,13 +777,6 @@ export default function Group() {
                             <span>⚙️</span>
                         </p>
                     ) : null}
-                    {/*
-          {chat ? (
-            <p onClick={createWhiteboard}>
-              <span>✏️</span>
-            </p>
-          ) : null}
-          */}
                 </div>
 
                 {chat ? (
