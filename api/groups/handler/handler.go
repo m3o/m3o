@@ -119,7 +119,7 @@ func (g *Groups) Delete(ctx context.Context, req *pb.DeleteRequest, rsp *pb.Dele
 	}
 
 	// delete the members
-	if err := g.DB.Delete(&Membership{GroupID: req.Id}).Error; err != gorm.ErrRecordNotFound {
+	if err := g.DB.Where(&Membership{GroupID: req.Id}).Delete.Error; err != gorm.ErrRecordNotFound {
 		return err
 	}
 
