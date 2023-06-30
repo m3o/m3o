@@ -8,6 +8,7 @@ export interface Group {
     members?: User[]
     threads?: Thread[]
     websocket?: Websocket
+    description: string
 }
 
 export interface Websocket {
@@ -82,9 +83,9 @@ export function useGroup(
     }
 }
 
-export function createGroup(name: string): Promise<Group> {
+export function createGroup(name: string, description: string): Promise<Group> {
     return new Promise<Group>((resolve: Function, reject: Function) => {
-        fetch('/api/groups', { method: 'POST', body: JSON.stringify({ name }) })
+        fetch('/api/groups', { method: 'POST', body: JSON.stringify({ name, description }) })
             .then(async (rsp) => {
                 const body = await rsp.json()
                 rsp.status === 201

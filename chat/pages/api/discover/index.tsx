@@ -28,6 +28,7 @@ export default async function handler(
                     id: g.id,
                     name: g.name,
                     members: g.member_ids,
+                    description: g.description,
                 }))
             )
 

@@ -90,6 +90,7 @@ export default function Home() {
                             {groupsLoader.groups?.sort((a, b) => a.name > b.name ? 1 : -1, ).map((g) => (
                                 <div key={g.id} className={styles.group}>
                                     <p>{g.name}</p>
+                                    <small>{g.description}</small>
                                     <Link href={`/groups/${g.id}`}>
                                         <button>Enter</button>
                                     </Link>

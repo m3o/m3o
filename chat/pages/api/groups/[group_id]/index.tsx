@@ -221,6 +221,7 @@ export default async function handler(
     res.status(200).json({
         id: group.id,
         name: group.name,
+        description: group.description,
         members: group.member_ids.map((id) => ({
             ...users[id],
             current_user: users[id].id === user.id,

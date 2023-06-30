@@ -52,6 +52,7 @@ export default function Home() {
                             {groupsLoader.groups?.sort((a, b) => a.name > b.name ? 1 : -1, ).map((g) => (
                                 <div key={g.id} className={styles.group}>
                                     <p>{g.name}</p>
+                                    <small>{g.description}</small>
                                     <button
                                       onClick={() => join(g.id)}>
                                        Join

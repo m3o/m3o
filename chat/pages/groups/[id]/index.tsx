@@ -668,8 +668,10 @@ export default function Group() {
                     className={styles.upper}
                     onClick={() => setSubview('settings')}
                 >
-                    <h1>{groupLoader.group?.name}</h1>
-
+                    <h1>{groupLoader.group?.name}
+                      <br />
+                      <small>{groupLoader.group?.description}</small>
+                    </h1>
                     <div className={styles.initials}>
                         <p>{initials}</p>
                     </div>

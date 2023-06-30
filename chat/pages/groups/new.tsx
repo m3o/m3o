@@ -9,6 +9,7 @@ export default function Home() {
   const groupsLoader = useGroups()
 
   const [name, setName] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
   // todo: improve error handling
@@ -22,7 +23,7 @@ export default function Home() {
     setLoading(true)
 
     try {
-      await createGroup(name)
+      await createGroup(name, description)
       router.push('/')
     } catch ({ error, code }) {
       console.warn(error)
@@ -48,6 +49,16 @@ export default function Home() {
           maxLength={100}
           disabled={loading}
           onChange={(e) => setName(e.target.value || '')}
+        />
+        <br />
+        <label>Description</label>
+        <input
+          required
+          type="text"
+          value={description}
+          maxLength={256}
+          disabled={loading}
+          onChange={(e) => setDescription(e.target.value || '')}
         />
 
         <input

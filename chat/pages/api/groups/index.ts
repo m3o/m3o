@@ -60,6 +60,7 @@ export default async function handler(
                     id: g.id,
                     name: g.name,
                     members: g.member_ids.map((id) => users[id]),
+	            description: g.description,
                 }))
             )
             return
