@@ -22,7 +22,7 @@ Here are a few APIs:
 
 - [**Apps**](https://m3o.com/app) - Serverless app deployment
 - [**Cache**](https://m3o.com/cache) - In-memory data storage
-- [**DB**](https://m3o.com/db) - Serverless postgres database 
+- [**Database**](https://m3o.com/db) - Serverless postgres database 
 - [**Events**](https://m3o.com/event) - Push event notifications
 - [**Users**](https://m3o.com/user) - Account management and authentication 
 - [**Space**](https://m3o.com/space) - Infinite cloud storage
