@@ -2,7 +2,7 @@
   "name": "db",
   "icon": "📦",
   "category": "storage",
-  "display_name": "DB",
+  "display_name": "Database",
   "pricing": {
     "Db.Create": 100,
     "Db.Update": 100
