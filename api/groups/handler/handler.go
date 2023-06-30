@@ -23,6 +23,7 @@ var (
 type Group struct {
 	ID          string
 	Name        string
+	Description string
 	Memberships []Membership
 }
 
@@ -37,7 +38,12 @@ func (g *Group) Serialize() *pb.Group {
 	for i, m := range g.Memberships {
 		memberIDs[i] = m.MemberID
 	}
-	return &pb.Group{Id: g.ID, Name: g.Name, MemberIds: memberIDs}
+	return &pb.Group{
+		Id: g.ID,
+		Name: g.Name,
+		Description: g.Description,
+		MemberIds: memberIDs,
+	}
 }
 
 type Groups struct {
@@ -51,7 +57,7 @@ func (g *Groups) Create(ctx context.Context, req *pb.CreateRequest, rsp *pb.Crea
 	}
 
 	// create the group object
-	group := &Group{ID: uuid.New().String(), Name: req.Name}
+	group := &Group{ID: uuid.New().String(), Name: req.Name, Description: req.Description}
 	if err := g.DB.Create(group).Error; err != nil {
 		return ErrStore
 	}
@@ -102,6 +108,7 @@ func (g *Groups) Update(ctx context.Context, req *pb.UpdateRequest, rsp *pb.Upda
 
 		// update the group
 		group.Name = req.Name
+		group.Description = req.Description
 		if err := tx.Save(&group).Error; err != nil {
 			return ErrStore
 		}
