@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package groups;
-option go_package = "proto;groups";
+option go_package = "./proto;groups";
 
 service Groups {
 	// Create a group
@@ -24,10 +24,12 @@ message Group {
 	string id = 1;
 	string name = 2;
 	repeated string member_ids = 3;
+	string description = 4;
 }
 
 message CreateRequest {
 	string name = 1;
+	string description = 2;
 }
 
 message CreateResponse {
@@ -45,6 +47,7 @@ message ReadResponse {
 message UpdateRequest {
 	string id = 1;
 	string name = 2;
+	string description = 3;
 }
 
 message UpdateResponse {
