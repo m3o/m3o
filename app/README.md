@@ -52,7 +52,7 @@ Set the config values
 
 ```
 micro config set micro.app.domain m3o.app
-micro config set micro.app.domain m3o.sh
+micro config set micro.function.domain m3o.sh
 micro config set micro.url.host_prefix https://m3o.one/u/
 micro config set micro.user.verify_email_url https://user.m3o.com
 ```
