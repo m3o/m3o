@@ -11,8 +11,8 @@ interface ExternalLink {
 
 const EXTERNAL_LINKS_1: ExternalLink[] = [
   {
-    name: 'Chat',
-    link: 'https://m3o.chat',
+    name: 'Blog',
+    link: 'https://blog.m3o.com',
   },
   {
     name: 'Email',
