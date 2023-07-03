@@ -12,7 +12,7 @@ export const WhatIsM3O: FC = ({ children }) => {
         {children}
         <Link href={Routes.Explore} key={Routes.Explore}>
           <a className="inline-flex items-center justify-center btn w-full text-center mt-8 md:w-auto md:mx-auto">
-            Browse all
+            Explore Services
           </a>
          </Link>
       </div>

@@ -14,7 +14,7 @@ export interface BannerProps {
 
 const BANNER_LINKS: BannerLink[] = [
   {
-    text: 'Start for Free',
+    text: 'Get Started',
     link: '/register',
   },
 ]
