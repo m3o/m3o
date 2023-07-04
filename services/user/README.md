@@ -1,4 +1,4 @@
-Authenticate and manage users
+User authentication & management
 
 # User Service
 
