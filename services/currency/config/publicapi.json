@@ -4,8 +4,8 @@
   "category": "finance",
   "display_name": "Currency",
   "pricing": {
-    "Currency.Convert": 1,
-    "Currency.Rates": 10,
-    "Currency.History": 100
+    "Currency.Convert": 5000,
+    "Currency.Rates": 5000,
+    "Currency.History": 5000
   }
 }

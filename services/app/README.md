@@ -1,7 +1,7 @@
-Serverless app deployment
+Container app deployment
 
 # App Service
 
-Deploy serverless apps and services from source. Includes language detection, automatic builds, multiple regions and provides a custom HTTPS URL. 
+Deploy apps and services from a git repo. Includes language detection, automatic container builds, multiple regions and provides a custom HTTPS URL. 
 
-Apps are shutdown when idle. 
+Apps are serverless meaning they are shutdown when idle. Use the Database service to store any data.

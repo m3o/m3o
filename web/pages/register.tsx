@@ -74,7 +74,7 @@ const Register: FC = () => {
                 />
               ) : (
                 <>
-                  <p>Create a free account and get started now</p>
+                  <p>Create an account to get started</p>
                   <SignUpForm
                     onSubmit={onRegister}
                     isLoading={register.isLoading}

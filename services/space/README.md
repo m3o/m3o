@@ -1,4 +1,4 @@
-Infinite cloud storage
+Cloud based object storage
 
 # Space Service
 
