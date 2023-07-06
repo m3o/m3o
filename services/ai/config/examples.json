@@ -3,11 +3,19 @@
         "title": "Chat with chat gpt",
         "run_check": false,
         "request": {
-          "prompt": "who is leonardo davinci",
-	  "model": "gpt-3.5-turbo"
-        },
+          "prompt": "when did he die?",
+          "model": "gpt-3.5-turbo",
+          "context": [{
+            "prompt": "who is leonardo davinci",
+            "reply": "Leonardo da Vinci was an Italian polymath during the Renaissance period. He was born in 1452 in Vinci, Italy, and is renowned for his contributions to various fields such as science, engineering, art, and anatomy. Da Vinci's most famous works include the Mona Lisa and The Last Supper. He is often considered one of the greatest artists and thinkers of all time."
+          },
+          {
+            "prompt": "where is he from?",
+            "reply": "Leonardo da Vinci was from Vinci, a town in Tuscany, Italy."
+          }]
+	},
         "response": {
-	  "reply": "Leonardo da Vinci was an Italian Renaissance architect, musician, inventor, engineer, and painter."
+          "reply": "Leonardo da Vinci passed away on May 2, 1519, in Amboise, Kingdom of France, at the age of 67."
         }
     }],
     "complete": [{
