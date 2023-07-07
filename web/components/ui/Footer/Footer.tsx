@@ -85,7 +85,7 @@ export const Footer: FC = () => {
       </div>
       <div className="text-sm mt-6 md:mt-20">
         <div className="m3o-container sm">
-          <p>© {new Date().getFullYear()} Micro Services Network Limited</p>
+          <p>© {new Date().getFullYear()} Mu.xyz</p>
         </div>
       </div>
     </footer>
