@@ -85,7 +85,7 @@ message Contract {
 	// timestamp of creation
 	string created_at = 4;
 	// owner id
-	int32 owner = 5;
+	string owner = 5;
 	// aka "ERC1155"
 	string schema = 6;
 	// related symbol

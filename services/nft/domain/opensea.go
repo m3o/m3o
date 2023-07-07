@@ -45,7 +45,7 @@ type Contract struct {
 	// timestamp of creation
 	CreatedAt string `json:"created_date,omitempty"`
 	// owner id
-	Owner int32 `json:"owner,omitempty"`
+	Owner interface{} `json:"owner,omitempty"`
 	// aka "ERC1155"
 	Schema string `json:"schema_name,omitempty"`
 	// related symbol

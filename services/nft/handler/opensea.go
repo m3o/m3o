@@ -146,7 +146,7 @@ func contractToPb(contract *domain.Contract) *pb.Contract {
 		Address:       contract.Address,
 		Type:          contract.Type,
 		CreatedAt:     contract.CreatedAt,
-		Owner:         contract.Owner,
+		Owner:         fmt.Sprintf("%v", contract.Owner),
 		Schema:        contract.Schema,
 		Symbol:        contract.Symbol,
 		PayoutAddress: contract.PayoutAddress,
