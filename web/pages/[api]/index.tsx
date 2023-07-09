@@ -142,7 +142,7 @@ const Overview: NextPage<Props> = ({
           ))}
             </tbody>
           </table>
-          <p className="text-zinc-600 text-sm max-w-lg">Base requests are $0.000001 credit request</p>
+          <p className="text-zinc-600 text-sm max-w-lg">Base requests are 0.000001 USD</p>
         </div>
         <div className="flex flex-col">
           <div className="md:mt-20 md:order-1">
