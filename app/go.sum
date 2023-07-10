@@ -4,5 +4,3 @@ github.com/gorilla/handlers v1.5.1 h1:9lRY6j8DEeeBT10CvO9hGW0gmky0BprnvDI5vfhUHH
 github.com/gorilla/handlers v1.5.1/go.mod h1:t8XrUpc4KVXb7HGyJ4/cEnwQiaxrX/hz1Zv/4g96P1Q=
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
-m3o.dev/api/client v0.0.0-20220826112751-546ba4d14049 h1:LrnLAcJ7x+jKWDw1XQuml7kK/VJQXZ6eUTb0kUgiGcM=
-m3o.dev/api/client v0.0.0-20220826112751-546ba4d14049/go.mod h1:RGTbdsT0+OP5yKM6Ez1F8GHqDZJ21+63Ii2Mvyi5kNw=

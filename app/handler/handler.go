@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"m3o.dev/api/client"
+	"m3o.dev/app/client"
 )
 
 var (
