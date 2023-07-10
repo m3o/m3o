@@ -12,9 +12,9 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service/events"
-	"github.com/micro/micro/v3/service/logger"
 	"github.com/pkg/errors"
+	"m3o.dev/platform/service/events"
+	"m3o.dev/platform/service/logger"
 )
 
 var (

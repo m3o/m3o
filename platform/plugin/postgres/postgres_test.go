@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/micro/micro/v3/service/store"
 	"github.com/stretchr/testify/assert"
+	"m3o.dev/platform/service/store"
 )
 
 type testObj struct {

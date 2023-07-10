@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 
-	"github.com/micro/micro/v3/service/broker"
+	"m3o.dev/platform/service/broker"
 )
 
 type optionsKey struct{}

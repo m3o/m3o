@@ -20,8 +20,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/micro/micro/v3/service/store"
 	"github.com/stretchr/testify/assert"
+	"m3o.dev/platform/service/store"
 )
 
 func TestRegexp(t *testing.T) {
