@@ -38,7 +38,7 @@ require (
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
-	github.com/hablullah/go-prayer v1.0.0
+	github.com/hablullah/go-prayer v1.1.1
 	github.com/hailocab/go-geoindex v0.0.0-20160127134810-64631bfe9711
 	github.com/hashicorp/go-version v1.6.0
 	github.com/hashicorp/golang-lru v0.5.3
@@ -167,7 +167,8 @@ require (
 	github.com/google/pprof v0.0.0-20210720184732-4bb14d4b1be1 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.7.0 // indirect
-	github.com/hablullah/go-juliandays v1.0.0 // indirect
+	github.com/hablullah/go-juliandays v1.0.1-0.20220316153050-f56193695a5b // indirect
+	github.com/hablullah/go-sampa v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.6.4 // indirect
 	github.com/hdevalence/ed25519consensus v0.1.0 // indirect

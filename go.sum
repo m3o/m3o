@@ -407,10 +407,12 @@ github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/ad
 github.com/grpc-ecosystem/grpc-gateway v1.8.5/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=
 github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFbcEtjT1g+wF4CSlocrBnw=
 github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542/go.mod h1:Ow0tF8D4Kplbc8s8sSb3V2oUCygFHVp8gC3Dn6U4MNI=
-github.com/hablullah/go-juliandays v1.0.0 h1:A8YM7wIj16SzlKT0SRJc9CD29iiaUzpBLzh5hr0/5p0=
-github.com/hablullah/go-juliandays v1.0.0/go.mod h1:0JOYq4oFOuDja+oospuc61YoX+uNEn7Z6uHYTbBzdGc=
-github.com/hablullah/go-prayer v1.0.0 h1:w5Py1QUgxHl1x20HDwcF+uZsipPxJrnmeoJFy+KcZrY=
-github.com/hablullah/go-prayer v1.0.0/go.mod h1:/frx38qd63RPtqVx8RnnVTUlhgngB0Ral4liRUMOnxU=
+github.com/hablullah/go-juliandays v1.0.1-0.20220316153050-f56193695a5b h1:Qp6WC5idnPxaUQpX50s+1jrrjIqaCSuCu2BkQgGx/tQ=
+github.com/hablullah/go-juliandays v1.0.1-0.20220316153050-f56193695a5b/go.mod h1:0JOYq4oFOuDja+oospuc61YoX+uNEn7Z6uHYTbBzdGc=
+github.com/hablullah/go-prayer v1.1.1 h1:pxIj6mJPSBNe2w3G1XUgkGTRXyGzRkwRUkLAjU1b6os=
+github.com/hablullah/go-prayer v1.1.1/go.mod h1:SIKN4PmnPu/jbvTM/9mepX19FyWvLRcFPyvKfMDsyYw=
+github.com/hablullah/go-sampa v1.0.0 h1:8SiiPC7LktYsBYkoitGGPRL416TDXjkECRZsAkUbgy4=
+github.com/hablullah/go-sampa v1.0.0/go.mod h1:NgDnpqL95HgRPkal510TVk7tI6+aLwO3wJgoj0dQ4Pc=
 github.com/hailocab/go-geoindex v0.0.0-20160127134810-64631bfe9711 h1:Oi8hPOZX0gaM2sPVXse2bMpfOjP47a7O61YuB6Z4sGk=
 github.com/hailocab/go-geoindex v0.0.0-20160127134810-64631bfe9711/go.mod h1:+v2qJ3UZe4q2GfgZO4od004F/cMgJbmPSs7dD/ZMUkY=
 github.com/hashicorp/go-cleanhttp v0.5.1 h1:dH3aiDG9Jvb5r5+bYHsikaOUIpcM0xvgMXVoDkXMzJM=
