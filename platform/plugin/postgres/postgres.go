@@ -30,9 +30,9 @@ import (
 	"time"
 
 	"github.com/lib/pq"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
 	"github.com/pkg/errors"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 )
 
 // DefaultDatabase is the namespace that the sql store

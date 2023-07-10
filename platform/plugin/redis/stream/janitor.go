@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/logger"
 )
 
 var (

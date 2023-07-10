@@ -22,8 +22,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/micro/v3/service/registry"
 	"go.etcd.io/etcd/client/v3"
+	"m3o.dev/platform/service/registry"
 )
 
 type etcdWatcher struct {

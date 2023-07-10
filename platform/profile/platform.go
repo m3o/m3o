@@ -1,5 +1,4 @@
-// Package platform is a profile for running a highly available Micro platform
-package platform
+package profile
 
 import (
 	"crypto/tls"
@@ -7,32 +6,31 @@ import (
 	"sync"
 
 	"github.com/go-redis/redis/v8"
-	"m3o.dev/platform/plugin/postgres"
-	"m3o.dev/platform/plugin/redis/blocklist"
-	"m3o.dev/platform/plugin/s3"
-	"github.com/micro/micro/v3/profile"
-	auth2 "github.com/micro/micro/v3/service/api/auth"
-	"github.com/micro/micro/v3/service/auth"
-	"github.com/micro/micro/v3/service/auth/jwt"
-	"github.com/micro/micro/v3/service/broker"
-	microBuilder "github.com/micro/micro/v3/service/build"
-	"github.com/micro/micro/v3/service/build/golang"
-	"github.com/micro/micro/v3/service/events"
-	evStore "github.com/micro/micro/v3/service/events/store"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/registry"
-	microRuntime "github.com/micro/micro/v3/service/runtime"
-	"github.com/micro/micro/v3/service/runtime/kubernetes"
-	"github.com/micro/micro/v3/service/store"
 	"github.com/urfave/cli/v2"
 	"m3o.dev/platform/plugin/etcd"
+	"m3o.dev/platform/plugin/postgres"
+	"m3o.dev/platform/plugin/redis/blocklist"
 	redisBroker "m3o.dev/platform/plugin/redis/broker"
 	redisstream "m3o.dev/platform/plugin/redis/stream"
+	"m3o.dev/platform/plugin/s3"
+	auth2 "m3o.dev/platform/service/api/auth"
+	"m3o.dev/platform/service/auth"
+	"m3o.dev/platform/service/auth/jwt"
+	"m3o.dev/platform/service/broker"
+	microBuilder "m3o.dev/platform/service/build"
+	"m3o.dev/platform/service/build/golang"
+	"m3o.dev/platform/service/events"
+	evStore "m3o.dev/platform/service/events/store"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/registry"
+	microRuntime "m3o.dev/platform/service/runtime"
+	"m3o.dev/platform/service/runtime/kubernetes"
+	"m3o.dev/platform/service/store"
 )
 
 func init() {
-	profile.Register("platform", Profile)
-	profile.Register("platform_client", ClientProfile)
+	Register("platform", Platform)
+	Register("platform_client", PlatformClient)
 }
 
 var (
@@ -42,7 +40,7 @@ var (
 )
 
 // Profile is for running the micro platform
-var Profile = &profile.Profile{
+var Platform = &Profile{
 	Name: "platform",
 	Setup: func(ctx *cli.Context) error {
 		var retErr error
@@ -52,10 +50,10 @@ var Profile = &profile.Profile{
 			// when the store is created. The cockroach store address contains the location
 			// of certs so it can't be defaulted like the broker and registry.
 			store.DefaultStore = postgres.NewStore(store.Nodes(ctx.String("store_address")))
-			profile.SetupBroker(redisBroker.NewBroker(broker.Addrs(ctx.String("broker_address"))))
-			profile.SetupRegistry(etcd.NewRegistry(registry.Addrs(ctx.String("registry_address"))))
-			profile.SetupJWT(ctx)
-			profile.SetupConfigSecretKey(ctx)
+			SetupBroker(redisBroker.NewBroker(broker.Addrs(ctx.String("broker_address"))))
+			SetupRegistry(etcd.NewRegistry(registry.Addrs(ctx.String("registry_address"))))
+			SetupJWT(ctx)
+			SetupConfigSecretKey(ctx)
 
 			var err error
 			if ctx.Args().Get(1) == "events" {
@@ -134,8 +132,7 @@ func redisStreamOpts(ctx *cli.Context) []redisstream.Option {
 	return opts
 }
 
-// ClientProfile is for clients running on the micro platform
-var ClientProfile = &profile.Profile{
+var PlatformClient = &Profile{
 	Name: "platform_client",
 	Setup: func(ctx *cli.Context) error {
 		var retErr error

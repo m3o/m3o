@@ -19,8 +19,8 @@ package etcd
 import (
 	"context"
 
-	"github.com/micro/micro/v3/service/registry"
 	"go.uber.org/zap"
+	"m3o.dev/platform/service/registry"
 )
 
 type authKey struct{}

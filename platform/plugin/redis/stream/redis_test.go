@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/micro/micro/v3/service/events"
 	"github.com/stretchr/testify/assert"
+	"m3o.dev/platform/service/events"
 )
 
 type testObj struct {
