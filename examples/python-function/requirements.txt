@@ -1,2 +1,0 @@
-functions-framework==3.2.0
-flask==2.1.0
