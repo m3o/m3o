@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	pb "m3o.dev/services/cron/proto"
 	"m3o.dev/services/pkg/tenant"
 	"github.com/robfig/cron/v3"

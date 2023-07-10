@@ -24,13 +24,13 @@ import (
 	"sync"
 
 	"github.com/gorilla/websocket"
-	"github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/context/metadata"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/registry"
-	"github.com/micro/micro/v3/service/router"
-	"github.com/micro/micro/v3/service/server"
+	"m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/context/metadata"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/registry"
+	"m3o.dev/platform/service/router"
+	"m3o.dev/platform/service/server"
 )
 
 type rawFrame struct {

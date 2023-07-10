@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/logger"
 	helloworld "m3o.dev/services/helloworld/proto"
 )
 

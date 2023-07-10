@@ -10,7 +10,7 @@ import (
 	"image/png"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	"github.com/o1egl/govatar"
 
 	pb "m3o.dev/services/avatar/proto"

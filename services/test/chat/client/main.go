@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/context/metadata"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/context/metadata"
+	"m3o.dev/platform/service/logger"
 	chat "m3o.dev/services/test/chat/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

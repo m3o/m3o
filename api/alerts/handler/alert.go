@@ -11,9 +11,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/micro/micro/v3/service/config"
-	log "github.com/micro/micro/v3/service/logger"
-	mstore "github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/config"
+	log "m3o.dev/platform/service/logger"
+	mstore "m3o.dev/platform/service/store"
 	alerts "m3o.dev/api/alerts/proto"
 
 	"github.com/google/uuid"

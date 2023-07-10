@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	api "github.com/micro/micro/v3/proto/api"
-	proto "github.com/micro/micro/v3/proto/debug"
-	"github.com/micro/micro/v3/service/client"
-	goclient "github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/errors"
+	api "m3o.dev/platform/proto/api"
+	proto "m3o.dev/platform/proto/debug"
+	"m3o.dev/platform/service/client"
+	goclient "m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/errors"
 	status "m3o.dev/api/status/proto/status"
 )
 

@@ -4,7 +4,7 @@ package fakes
 import (
 	"sync"
 
-	"github.com/micro/micro/v3/service/events"
+	"m3o.dev/platform/service/events"
 )
 
 type FakeStream struct {

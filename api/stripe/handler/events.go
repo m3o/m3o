@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	mevents "github.com/micro/micro/v3/service/events"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	mevents "m3o.dev/platform/service/events"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	"github.com/stripe/stripe-go/v71"
 	stripeclient "github.com/stripe/stripe-go/v71/client"
 	pevents "m3o.dev/api/pkg/events"

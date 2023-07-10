@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/cache/proto"
 	pauth "m3o.dev/services/pkg/auth"
 	"m3o.dev/services/pkg/cache"

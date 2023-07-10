@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	log "m3o.dev/platform/service/logger"
 	"m3o.dev/api/pkg/tracing"
 	"m3o.dev/api/status/handler"
 )

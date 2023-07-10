@@ -4,8 +4,8 @@ GOPATH:=$(shell go env GOPATH)
 init:
 	go get -u github.com/golang/protobuf/proto
 	go get -u github.com/golang/protobuf/protoc-gen-go
-	go get github.com/micro/micro/v3/cmd/protoc-gen-micro
-	go get github.com/micro/micro/v3/cmd/protoc-gen-openapi
+	go get m3o.dev/platform/cmd/protoc-gen-micro
+	go get m3o.dev/platform/cmd/protoc-gen-openapi
 .PHONY: proto
 proto:
 	protoc --openapi_out=. --proto_path=. --micro_out=. --go_out=. proto/image.proto

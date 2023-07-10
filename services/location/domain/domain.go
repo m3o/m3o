@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	geo "github.com/hailocab/go-geoindex"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	common "m3o.dev/services/location/proto"
 	"m3o.dev/services/pkg/tenant"
 )

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service/api"
+	"m3o.dev/platform/service/api"
 	"m3o.dev/services/github/handler"
 	admin "m3o.dev/services/pkg/service/proto"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
 )
 
 func main() {

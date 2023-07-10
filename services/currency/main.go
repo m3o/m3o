@@ -3,9 +3,9 @@ package main
 import (
 	"time"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/currency/handler"
 	pb "m3o.dev/services/currency/proto"
 	"github.com/patrickmn/go-cache"

@@ -6,9 +6,9 @@ import (
 	"path"
 	"time"
 
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/events"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/events"
+	log "m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/event/proto"
 	"m3o.dev/services/pkg/tenant"
 	"google.golang.org/protobuf/types/known/structpb"

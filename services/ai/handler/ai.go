@@ -6,9 +6,9 @@ import (
 	"hash/fnv"
 	"time"
 
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
 	"github.com/sashabaranov/go-openai"
 	pb "m3o.dev/services/ai/proto"
 	"m3o.dev/services/pkg/api"

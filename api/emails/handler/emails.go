@@ -9,10 +9,10 @@ import (
 	"net/http"
 	"strings"
 
-	mauth "github.com/micro/micro/v3/service/auth"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
+	mauth "m3o.dev/platform/service/auth"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
 	emails "m3o.dev/api/emails/proto"
 )
 

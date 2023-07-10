@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	"m3o.dev/services/pkg/tenant"
 	"m3o.dev/services/stream/domain"
 	pb "m3o.dev/services/stream/proto"

@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/go-redis/redismock/v8"
-	muclient "github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/errors"
+	muclient "m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/errors"
 	. "github.com/onsi/gomega"
 	balance "m3o.dev/api/balance/proto"
 	balancefake "m3o.dev/api/balance/proto/fakes"

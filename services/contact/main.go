@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/store"
 	admin "m3o.dev/services/pkg/service/proto"
 
 	"m3o.dev/services/contact/domain"
 	"m3o.dev/services/contact/handler"
 	pb "m3o.dev/services/contact/proto"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
 )
 
 func main() {

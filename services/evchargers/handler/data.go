@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/logger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

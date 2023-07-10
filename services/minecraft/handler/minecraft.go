@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/iverly/go-mcping/mcping"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	pb "m3o.dev/services/minecraft/proto"
 )
 

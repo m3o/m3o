@@ -12,11 +12,11 @@ import (
 
 	githubapi "github.com/google/go-github/v38/github"
 	"github.com/google/uuid"
-	authproto "github.com/micro/micro/v3/proto/auth"
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/auth"
-	"github.com/micro/micro/v3/service/client"
-	mevents "github.com/micro/micro/v3/service/events"
+	authproto "m3o.dev/platform/proto/auth"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/auth"
+	"m3o.dev/platform/service/client"
+	mevents "m3o.dev/platform/service/events"
 	"github.com/patrickmn/go-cache"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
@@ -26,11 +26,11 @@ import (
 	oauth "m3o.dev/api/oauth/proto"
 	eventspb "m3o.dev/api/pkg/events/proto/customers"
 
-	mconfig "github.com/micro/micro/v3/service/config"
-	cont "github.com/micro/micro/v3/service/context"
-	merrors "github.com/micro/micro/v3/service/errors"
-	logger "github.com/micro/micro/v3/service/logger"
-	model "github.com/micro/micro/v3/service/model"
+	mconfig "m3o.dev/platform/service/config"
+	cont "m3o.dev/platform/service/context"
+	merrors "m3o.dev/platform/service/errors"
+	logger "m3o.dev/platform/service/logger"
+	model "m3o.dev/platform/service/model"
 )
 
 var (

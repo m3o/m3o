@@ -1,9 +1,9 @@
 package handler
 
 import (
-	mevents "github.com/micro/micro/v3/service/events"
-	mstore "github.com/micro/micro/v3/service/store"
-	"github.com/micro/micro/v3/service/store/memory"
+	mevents "m3o.dev/platform/service/events"
+	mstore "m3o.dev/platform/service/store"
+	"m3o.dev/platform/service/store/memory"
 	. "github.com/onsi/gomega"
 	pb "m3o.dev/api/customers/proto"
 	mt "m3o.dev/api/internal/test"

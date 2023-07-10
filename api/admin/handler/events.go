@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/micro/micro/v3/service/client"
-	mevents "github.com/micro/micro/v3/service/events"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/registry"
+	"m3o.dev/platform/service/client"
+	mevents "m3o.dev/platform/service/events"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/registry"
 	pevents "m3o.dev/api/pkg/events"
 	eventspb "m3o.dev/api/pkg/events/proto/customers"
 )

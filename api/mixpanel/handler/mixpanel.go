@@ -9,9 +9,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
 	cpb "m3o.dev/api/customers/proto"
 	pb "m3o.dev/api/mixpanel/proto"
 )

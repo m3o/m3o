@@ -12,9 +12,9 @@ import (
 
 import (
 	context "context"
-	api "github.com/micro/micro/v3/service/api"
-	client "github.com/micro/micro/v3/service/client"
-	server "github.com/micro/micro/v3/service/server"
+	api "m3o.dev/platform/service/api"
+	client "m3o.dev/platform/service/client"
+	server "m3o.dev/platform/service/server"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

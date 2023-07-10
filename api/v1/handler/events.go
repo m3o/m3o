@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	mevents "github.com/micro/micro/v3/service/events"
-	"github.com/micro/micro/v3/service/logger"
+	mevents "m3o.dev/platform/service/events"
+	"m3o.dev/platform/service/logger"
 	pevents "m3o.dev/api/pkg/events"
 	eventspb "m3o.dev/api/pkg/events/proto/customers"
 	requestspb "m3o.dev/api/pkg/events/proto/requests"

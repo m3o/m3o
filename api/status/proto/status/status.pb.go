@@ -8,7 +8,7 @@ package api_status
 
 import (
 	proto "github.com/golang/protobuf/proto"
-	api "github.com/micro/micro/v3/proto/api"
+	api "m3o.dev/platform/proto/api"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

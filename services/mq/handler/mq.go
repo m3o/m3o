@@ -7,8 +7,8 @@ import (
 	"path"
 
 	"github.com/asim/mq/broker"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/mq/proto"
 	"m3o.dev/services/pkg/tenant"
 	"google.golang.org/protobuf/types/known/structpb"

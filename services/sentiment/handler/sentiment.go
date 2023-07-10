@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	"m3o.dev/services/sentiment/model"
 	pb "m3o.dev/services/sentiment/proto"
 )

@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/location/domain"
 	loc "m3o.dev/services/location/proto"
 	"m3o.dev/services/location/subscriber"

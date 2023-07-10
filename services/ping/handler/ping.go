@@ -10,8 +10,8 @@ import (
 	"net/url"
 
 	"github.com/go-ping/ping"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/ping/proto"
 )
 

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service"
-	mauth "github.com/micro/micro/v3/service/auth/client"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	mauth "m3o.dev/platform/service/auth/client"
+	log "m3o.dev/platform/service/logger"
 	"m3o.dev/api/pkg/tracing"
 	"m3o.dev/api/signup/handler"
 )

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/micro/micro/v3/service/auth"
+	"m3o.dev/platform/service/auth"
 )
 
 func ContextWithAccount(issuer, id string) context.Context {

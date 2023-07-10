@@ -4,8 +4,8 @@ import (
 	"m3o.dev/services/secret/handler"
 	pb "m3o.dev/services/secret/proto"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
 )
 
 func main() {

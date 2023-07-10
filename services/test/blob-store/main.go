@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 )
 
 func main() {

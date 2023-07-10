@@ -7,7 +7,7 @@ import (
 
 	"database/sql"
 
-	"github.com/micro/micro/v3/service/auth"
+	"m3o.dev/platform/service/auth"
 	db "m3o.dev/services/db/proto"
 	"google.golang.org/protobuf/types/known/structpb"
 )

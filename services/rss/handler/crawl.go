@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/SlyMarbo/rss"
-	log "github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	log "m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 
 	"m3o.dev/services/rss/parser"
 	pb "m3o.dev/services/rss/proto"

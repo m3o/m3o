@@ -4,8 +4,8 @@ import (
 	"context"
 	"net"
 
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/ip/proto"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )

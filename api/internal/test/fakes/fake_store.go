@@ -4,7 +4,7 @@ package fakes
 import (
 	"sync"
 
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/store"
 )
 
 type FakeStore struct {

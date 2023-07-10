@@ -7,7 +7,7 @@ import (
 	"github.com/likexian/doh-go/dns"
 	"github.com/likexian/whois"
 	"github.com/likexian/whois-parser"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	pb "m3o.dev/services/dns/proto"
 )
 

@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/errors"
 	pb "m3o.dev/api/admin/proto"
 	"m3o.dev/api/pkg/auth"
 )

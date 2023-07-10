@@ -8,12 +8,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
-	model "github.com/micro/micro/v3/service/model"
-	"github.com/micro/micro/v3/service/registry"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
+	model "m3o.dev/platform/service/model"
+	"m3o.dev/platform/service/registry"
+	"m3o.dev/platform/service/store"
 	pb "m3o.dev/api/publicapi/proto"
 )
 

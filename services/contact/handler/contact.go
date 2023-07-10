@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	pauth "m3o.dev/services/pkg/auth"
 	adminpb "m3o.dev/services/pkg/service/proto"
 	"m3o.dev/services/pkg/tenant"

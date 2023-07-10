@@ -10,10 +10,10 @@ import (
 	pb "m3o.dev/services/ip/proto"
 	"m3o.dev/services/pkg/tracing"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	"github.com/oschwald/geoip2-golang"
 )
 

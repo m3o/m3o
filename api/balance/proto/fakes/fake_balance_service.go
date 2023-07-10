@@ -5,7 +5,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/micro/micro/v3/service/client"
+	"m3o.dev/platform/service/client"
 	balance "m3o.dev/api/balance/proto"
 )
 

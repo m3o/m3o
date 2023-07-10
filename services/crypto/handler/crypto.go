@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	pb "m3o.dev/services/crypto/proto"
 	"github.com/patrickmn/go-cache"
 )

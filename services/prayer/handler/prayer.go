@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/hablullah/go-prayer"
-	"github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/errors"
 	geocode "m3o.dev/services/geocoding/proto"
 	pb "m3o.dev/services/prayer/proto"
 	timepb "m3o.dev/services/time/proto"

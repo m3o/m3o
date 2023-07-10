@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/cdipaolo/sentiment"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/logger"
 )
 
 var (

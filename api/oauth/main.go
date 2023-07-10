@@ -3,9 +3,9 @@ package main
 import (
 	"m3o.dev/api/oauth/handler"
 
-	"github.com/micro/micro/v3/service"
-	mauth "github.com/micro/micro/v3/service/auth/client"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	mauth "m3o.dev/platform/service/auth/client"
+	"m3o.dev/platform/service/logger"
 )
 
 func main() {

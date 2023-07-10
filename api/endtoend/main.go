@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
 	"github.com/robfig/cron/v3"
 	"m3o.dev/api/endtoend/handler"
 )

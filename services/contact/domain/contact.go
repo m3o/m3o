@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/store"
 	"github.com/pkg/errors"
 
 	pb "m3o.dev/services/contact/proto"

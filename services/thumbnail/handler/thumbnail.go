@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	iproto "m3o.dev/services/image/proto"
 	thumbnail "m3o.dev/services/thumbnail/proto"
 )

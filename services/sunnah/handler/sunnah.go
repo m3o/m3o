@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/pkg/api"
 	"m3o.dev/services/sunnah/domain"
 	pb "m3o.dev/services/sunnah/proto"

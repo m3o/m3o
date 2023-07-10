@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/nft/domain"
 	pb "m3o.dev/services/nft/proto"
 	"m3o.dev/services/pkg/api"

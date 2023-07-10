@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	"m3o.dev/services/pkg/api"
 	"m3o.dev/services/pkg/auth"
 	pb "m3o.dev/services/vehicle/proto"

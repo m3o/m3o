@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/micro/micro/v3/service"
+	"m3o.dev/platform/service"
 	"m3o.dev/services/location/handler"
 	pb "m3o.dev/services/location/proto"
 	admin "m3o.dev/services/pkg/service/proto"

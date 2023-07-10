@@ -5,9 +5,9 @@ import (
 	"m3o.dev/services/routing/handler"
 	pb "m3o.dev/services/routing/proto"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
 	"googlemaps.github.io/maps"
 )
 

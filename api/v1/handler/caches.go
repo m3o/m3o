@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/client"
+	"m3o.dev/platform/service/logger"
 	balance "m3o.dev/api/balance/proto"
 	billing "m3o.dev/api/billing/proto"
 	publicapi "m3o.dev/api/publicapi/proto"

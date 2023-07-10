@@ -3,11 +3,11 @@ package main
 import (
 	_ "net/http/pprof"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/api"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/registry"
-	"github.com/micro/micro/v3/service/registry/cache"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/api"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/registry"
+	"m3o.dev/platform/service/registry/cache"
 	"m3o.dev/api/v1/handler"
 )
 

@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/micro/micro/v3/service/client"
-	log "github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/client"
+	log "m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	custpb "m3o.dev/api/customers/proto"
 	publicapipb "m3o.dev/api/publicapi/proto"
 	pb "m3o.dev/api/usage/proto"

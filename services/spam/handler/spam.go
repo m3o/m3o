@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/Teamwork/spamc"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/errors"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/errors"
+	log "m3o.dev/platform/service/logger"
 	spam "m3o.dev/services/spam/proto"
 	"gopkg.in/gomail.v2"
 )

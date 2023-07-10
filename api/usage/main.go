@@ -5,10 +5,9 @@ import (
 	"m3o.dev/api/pkg/tracing"
 	"m3o.dev/api/usage/handler"
 	pb "m3o.dev/api/usage/proto"
-
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
-	dbproto "github.com/micro/services/db/proto"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
+	dbproto "m3o.dev/services/db/proto"
 )
 
 func main() {

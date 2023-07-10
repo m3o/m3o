@@ -4,9 +4,9 @@ import (
 	"database/sql"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/db/handler"
 	pb "m3o.dev/services/db/proto"
 	admin "m3o.dev/services/pkg/service/proto"

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/micro/micro/v3/service/errors"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/errors"
+	"m3o.dev/platform/service/logger"
 	"m3o.dev/services/pkg/api"
 	"m3o.dev/services/quran/domain"
 	pb "m3o.dev/services/quran/proto"

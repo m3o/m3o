@@ -5,8 +5,8 @@ import (
 	"m3o.dev/services/sentiment/handler"
 	pb "m3o.dev/services/sentiment/proto"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service"
+	"m3o.dev/platform/service/logger"
 )
 
 func main() {

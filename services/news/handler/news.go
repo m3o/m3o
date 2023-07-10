@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/errors"
 	pb "m3o.dev/services/news/proto"
 	"m3o.dev/services/pkg/api"
 )
