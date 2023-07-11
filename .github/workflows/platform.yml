@@ -7,8 +7,6 @@ on:
     paths:
       - '.github/workflows/platform.yml'
       - 'platform/**'
-  repository_dispatch:
-    types: [micro_release]
 
 jobs:
   build:
