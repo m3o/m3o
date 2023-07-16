@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	mevents "github.com/micro/micro/v3/service/events"
-	"github.com/micro/micro/v3/service/logger"
+	mevents "m3o.dev/platform/service/events"
+	"m3o.dev/platform/service/logger"
 )
 
 func ProcessTopic(topic, groupPrefix string, handler func(ev mevents.Event) error) {

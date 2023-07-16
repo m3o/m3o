@@ -29,7 +29,7 @@ import (
 	"regexp"
 	"strings"
 
-	log "github.com/micro/micro/v3/service/logger"
+	log "m3o.dev/platform/service/logger"
 	"github.com/teris-io/shortid"
 	"github.com/xanzy/go-gitlab"
 )

@@ -3,8 +3,8 @@ package auth
 import (
 	"context"
 
-	"github.com/micro/micro/v3/service/auth"
-	"github.com/micro/micro/v3/service/errors"
+	"m3o.dev/platform/service/auth"
+	"m3o.dev/platform/service/errors"
 )
 
 const (

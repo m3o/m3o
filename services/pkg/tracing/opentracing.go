@@ -3,10 +3,10 @@ package tracing
 import (
 	"io"
 
-	"github.com/micro/micro/v3/service/config"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/util/opentelemetry"
-	"github.com/micro/micro/v3/util/opentelemetry/jaeger"
+	"m3o.dev/platform/service/config"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/util/opentelemetry"
+	"m3o.dev/platform/util/opentelemetry/jaeger"
 )
 
 func SetupOpentracing(serviceName string) io.Closer {

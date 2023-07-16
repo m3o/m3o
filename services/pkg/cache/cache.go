@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/hashicorp/golang-lru"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/store"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/service/store"
 	"m3o.dev/services/pkg/tenant"
 	"github.com/peterbourgon/diskv/v3"
 )

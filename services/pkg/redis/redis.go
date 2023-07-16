@@ -8,8 +8,8 @@ import (
 	"sync"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/micro/micro/v3/service/config"
-	log "github.com/micro/micro/v3/service/logger"
+	"m3o.dev/platform/service/config"
+	log "m3o.dev/platform/service/logger"
 )
 
 type Counter struct {
