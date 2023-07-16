@@ -1,6 +1,6 @@
 module m3o.dev
 
-go 1.18
+go 1.20
 
 require (
 	cloud.google.com/go/translate v1.4.0

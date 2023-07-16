@@ -14,10 +14,10 @@ jobs:
     name: Generate Clients
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.18
+      - name: Set up Go 1.20
         uses: actions/setup-go@v2
         with:
-          go-version: 1.18
+          go-version: 1.20
         id: go
 
       - name: Install Protoc
