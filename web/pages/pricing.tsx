@@ -72,8 +72,8 @@ const Pricing: NextPage<PricingProps> = ({ prices }) => {
           </h2>
           <div className="my-10">
             <p className="mb-4">
-              M3O uses an API credit top-up model. Requests are billed from credit on account.
-              Just add credit to your account to get started. Base requests are charged at 0.000001 USD per request aka $1 per million requests.
+              M3O uses an API credit model. Requests are billed from credit on account. Top-up via credit card to get started. 
+              Base requests are charged at 0.000001 USD per request aka $1 per million requests.
               Premium APIs are charged above the base rate, see pricing below.
               Any requests beyond the free quota are taken from the account balance.
               If there is no credit on account aka zero balance and the quota has been exceeded all requests are blocked.
