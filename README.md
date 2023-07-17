@@ -5,8 +5,7 @@ Serverless Micro Services
 ## Overview
 
 M3O transforms public APIs into smaller easier to use Micro services which you can explore, discover and consume 
-as serverless building blocks. The platform generates unified api docs, client libraries and examples on top 
-of [Micro](https://github.com/micro/micro) services using protobuf to OpenAPI conversion and some custom tooling. 
+as serverless building blocks. The platform generates unified api docs, client libraries and examples using protobuf to OpenAPI conversion and some custom tools. 
 
 ## Features
 
