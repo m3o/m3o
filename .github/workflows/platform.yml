@@ -26,11 +26,6 @@ jobs:
       - name: Fetch tags
         run: git fetch --prune --unshallow
 
-      - name: Build platform
-        run: |
-          cd platform
-          GOPROXY=direct go get
-
       - name: Publish to platform image to registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
