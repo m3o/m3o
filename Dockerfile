@@ -8,7 +8,7 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 COPY . /
-RUN cd platform && make build; rm -rf $GOPATH/pkg/mod
+RUN make build; rm -rf $GOPATH/pkg/mod
 
 FROM alpine:3.18
 COPY --from=golang:1.20-alpine /usr/local/go/ /usr/local/go/
@@ -17,5 +17,5 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 RUN apk --no-cache add make git gcc libtool musl-dev
 RUN apk --no-cache add ca-certificates && rm -rf /var/cache/apk/* /tmp/* 
 
-COPY --from=builder /platform/micro /micro
+COPY --from=builder /micro /micro
 ENTRYPOINT ["/micro"]
