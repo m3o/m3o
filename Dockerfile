@@ -17,5 +17,5 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 RUN apk --no-cache add make git gcc libtool musl-dev
 RUN apk --no-cache add ca-certificates && rm -rf /var/cache/apk/* /tmp/* 
 
-COPY --from=builder /micro /micro
+COPY --from=builder /platform/micro /micro
 ENTRYPOINT ["/micro"]
