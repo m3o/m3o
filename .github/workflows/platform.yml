@@ -39,4 +39,3 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           snapshot: true
           registry: ghcr.io
-          workdir: platform

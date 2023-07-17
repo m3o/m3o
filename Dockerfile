@@ -8,7 +8,7 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 COPY . /
-RUN make build; rm -rf $GOPATH/pkg/mod
+RUN cd platform && make build; rm -rf $GOPATH/pkg/mod
 
 FROM alpine:3.18
 COPY --from=golang:1.20-alpine /usr/local/go/ /usr/local/go/
