@@ -1,8 +1,8 @@
 NAME=micro
 
-all: build
+all: platform
 
-build:
+platform:
 	go build -a -installsuffix cgo -o $(NAME) ./platform/main.go
 
-.PHONY: build
+.PHONY: platform 
