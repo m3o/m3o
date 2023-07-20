@@ -8,8 +8,8 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	pb "github.com/golang/protobuf/protoc-gen-go/descriptor"
-	"m3o.dev/platform/cmd/protoc-gen-m3o/generator"
 	options "google.golang.org/genproto/googleapis/api/annotations"
+	"m3o.dev/platform/cmd/protoc-gen-m3o/generator"
 )
 
 // Paths for packages used by code generated in this file,
@@ -17,9 +17,9 @@ import (
 const (
 	contextPkgPath = "context"
 
-	apiPkgPath     = "m3o.dev/platform/service/api"
-	clientPkgPath  = "m3o.dev/platform/service/client"
-	serverPkgPath  = "m3o.dev/platform/service/server"
+	apiPkgPath    = "m3o.dev/platform/service/api"
+	clientPkgPath = "m3o.dev/platform/service/client"
+	serverPkgPath = "m3o.dev/platform/service/server"
 )
 
 func init() {

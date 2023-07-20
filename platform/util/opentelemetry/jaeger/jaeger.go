@@ -3,10 +3,10 @@ package jaeger
 import (
 	"io"
 
-	"m3o.dev/platform/service/logger"
-	"m3o.dev/platform/util/opentelemetry"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go/config"
+	"m3o.dev/platform/service/logger"
+	"m3o.dev/platform/util/opentelemetry"
 )
 
 const (

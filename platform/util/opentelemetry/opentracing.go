@@ -3,8 +3,8 @@ package opentelemetry
 import (
 	"strings"
 
-	mmd "m3o.dev/platform/service/context/metadata"
 	"github.com/opentracing/opentracing-go"
+	mmd "m3o.dev/platform/service/context/metadata"
 )
 
 var (

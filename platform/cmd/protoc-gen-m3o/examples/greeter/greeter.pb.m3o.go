@@ -13,8 +13,8 @@ import (
 	context "context"
 
 	api "m3o.dev/platform/service/api"
-	server "m3o.dev/platform/service/server"
 	client "m3o.dev/platform/service/client"
+	server "m3o.dev/platform/service/server"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
