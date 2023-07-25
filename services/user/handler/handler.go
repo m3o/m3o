@@ -10,13 +10,13 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"m3o.dev/platform/service/errors"
 	"m3o.dev/platform/service/logger"
 	"m3o.dev/platform/service/store"
 	pauth "m3o.dev/services/pkg/auth"
 	adminpb "m3o.dev/services/pkg/service/proto"
 	"m3o.dev/services/pkg/tenant"
-	"golang.org/x/crypto/bcrypt"
 
 	otp "m3o.dev/services/otp/proto"
 	"m3o.dev/services/user/domain"
@@ -188,7 +188,6 @@ func (s *User) Read(ctx context.Context, req *pb.ReadRequest, rsp *pb.ReadRespon
 }
 
 func (s *User) Update(ctx context.Context, req *pb.UpdateRequest, rsp *pb.UpdateResponse) error {
-
 	// based on the docs, Update allows user to update email or username.
 	// here we handle three cases, when Id and Email are provided,
 	// when Id and Username are provided and lastly, when Id, Email and Username are provided.
@@ -200,102 +199,84 @@ func (s *User) Update(ctx context.Context, req *pb.UpdateRequest, rsp *pb.Update
 		return nil
 	}
 
+	// look for account id
+	if len(req.Id) == 0 {
+		return errors.BadRequest("user.update", "missing user id")
+	}
+
 	// fetch account
 	account, err := s.domain.SearchByUserId(ctx, req.Id)
 	if err != nil {
 		return err
 	}
 
-	// check if req.Email is empty and replace it with account.Email
-	// in case of absence, this is neccessary step to prevent validatePostUserData
-	// form throwing an error
-	if req.Email == "" {
-		req.Email = account.Email
+	// non matching account
+	if account.Id != req.Id {
+		return errors.InternalServerError("user.update", "failed to get account")
+	}
 
-		p := &userPayload{Id: req.Id, Email: req.Email, Username: req.Username}
+	// change profile
+	if len(req.Profile) > 0 {
+		account.Profile = req.Profile
+	}
+
+	// check username
+	if len(req.Username) > 0 && req.Username != account.Username {
+		p := &userPayload{Id: account.Id, Email: account.Email, Username: req.Username}
 
 		if err := s.validatePostUserData(ctx, p); err != nil {
 			return err
 		}
 
-		// check if the new Username is already exists in thge store
-		account, err = s.domain.SearchByUsername(ctx, p.Username)
+		// check if the new Username is already exists
+		acc, err := s.domain.SearchByUsername(ctx, p.Username)
 		if check(err) != nil {
 			return err
 		}
 
-		if account.Id != "" && account.Username == p.Username {
+		// check the account matches
+		if acc.Id != "" && acc.Username == p.Username {
 			return errors.BadRequest("users-username-check", "username already exists")
 		}
 
-		return s.domain.Update(ctx, &pb.Account{
-			Id:       p.Id,
-			Username: p.Username,
-			Email:    p.Email,
-			Profile:  req.Profile,
-		})
+		// changing the username
+		account.Username = req.Username
 	}
 
-	// check if req.Username is empty, same as above
-	if req.Username == "" {
-		req.Username = account.Username
-
-		p := &userPayload{Id: req.Id, Email: req.Email, Username: req.Username}
+	// check by email
+	if len(req.Email) > 0 && req.Email != account.Email {
+		p := &userPayload{Id: account.Id, Email: req.Email, Username: account.Username}
 
 		if err := s.validatePostUserData(ctx, p); err != nil {
 			return err
 		}
 
 		// check if the new Email is already exists in the store
-		account, err = s.domain.SearchByEmail(ctx, p.Email)
+		acc, err := s.domain.SearchByEmail(ctx, p.Email)
 		if check(err) != nil {
 			return err
 		}
 
-		if account.Id != "" && account.Email == p.Email {
+		if acc.Id != "" && acc.Email == p.Email {
 			return errors.BadRequest("users-email-check", "email already exists")
 		}
 
-		return s.domain.Update(ctx, &pb.Account{
-			Id:       p.Id,
-			Username: p.Username,
-			Email:    p.Email,
-			Profile:  req.Profile,
-		})
+		// change the email
+		account.Email = req.Email
 	}
 
-	// if both new Email and new Username were provided
-	p := &userPayload{Id: req.Id, Email: req.Email, Username: req.Username}
+	p := &userPayload{Id: account.Id, Email: account.Email, Username: account.Username}
 
 	if err := s.validatePostUserData(ctx, p); err != nil {
 		return err
 	}
 
-	// check if the new Email is already exists in the store
-	account, err = s.domain.SearchByEmail(ctx, p.Email)
-	if check(err) != nil {
-		return err
-	}
-
-	if account.Id != "" && account.Email == p.Email {
-		return errors.BadRequest("users-email-check", "email already exists")
-	}
-
-	// check if the new Username is already exists in thge store
-	account, err = s.domain.SearchByUsername(ctx, p.Username)
-	if check(err) != nil {
-		return err
-	}
-
-	if account.Id != "" && account.Username == p.Username {
-		return errors.BadRequest("users-username-check", "username already exists")
-	}
-
+	// update the account
 	return s.domain.Update(ctx, &pb.Account{
-		Id:       p.Id,
-		Username: p.Username,
-		Email:    p.Email,
-		Profile:  req.Profile,
+		Id:       account.Id,
+		Username: account.Username,
+		Email:    account.Email,
+		Profile:  account.Profile,
 	})
 }
 
