@@ -8,6 +8,7 @@ on:
       - '.github/workflows/platform.yml'
       - 'platform/**'
       - 'Dockerfile'
+      - 'Makefile'
 
 jobs:
   build:
