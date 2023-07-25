@@ -106,7 +106,7 @@ var Platform = &Profile{
 				logger.Fatalf("Error configuring golang builder: %v", err)
 			}
 
-			kubernetes.DefaultImage = "ghcr.io/micro/cells:v3"
+			kubernetes.DefaultImage = "ghcr.io/m3o/cells:v3"
 		})
 		return retErr
 	},

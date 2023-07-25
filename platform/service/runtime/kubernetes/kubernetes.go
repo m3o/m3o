@@ -33,7 +33,7 @@ var (
 		// explicitly not doing CPU here
 	}
 
-	DefaultImage = "ghcr.io/micro/cells:v3"
+	DefaultImage = "ghcr.io/m3o/cells:v3"
 )
 
 // action to take on runtime service
