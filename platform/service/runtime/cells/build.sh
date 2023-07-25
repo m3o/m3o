@@ -3,7 +3,7 @@
 set -e
 
 if [ ! $IMAGE ]; then
-  IMAGE=micro/cells
+  IMAGE=m3o/cells
 fi
 
 echo ${PASSWORD} | docker login $DOCKER_DOMAIN -u ${USERNAME} --password-stdin
