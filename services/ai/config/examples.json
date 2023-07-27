@@ -27,7 +27,7 @@
 	},
         "response": {
 	  "partial": true,
-          "reply": ""
+          "words": ["..."]
         }
     }],
     "complete": [{
