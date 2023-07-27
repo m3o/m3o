@@ -7,6 +7,7 @@ option go_package = "./proto;ai";
 service Ai {
 	rpc Complete(CompleteRequest) returns (CompleteResponse) {}
 	rpc Chat(ChatRequest) returns (ChatResponse) {}
+	rpc Stream(StreamRequest) returns (stream StreamResponse) {}
 	rpc Edit(EditRequest) returns (EditResponse) {}
 	rpc Moderate(ModerateRequest) returns (ModerateResponse) {}
 	rpc Generate(GenerateRequest) returns (GenerateResponse) {}
@@ -34,6 +35,21 @@ message ChatRequest {
 message ChatResponse {
 	// the response
 	string reply = 1;
+}
+
+// Stream a response from chatgpt
+message StreamRequest {
+	// the prompt to provide
+	string prompt = 1;
+	// the potential model e.g gpt-4
+	string model = 2;
+}
+
+message StreamResponse {
+	// a set of words in the response
+	repeated string words = 1;
+	// whether its a complete or partial response
+	bool partial = 2;
 }
 
 // Make a request to the AI

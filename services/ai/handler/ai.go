@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"hash/fnv"
 	"time"
+	"io"
+	gerrors "errors"
 
 	"m3o.dev/platform/service/config"
 	"m3o.dev/platform/service/errors"
@@ -94,6 +96,73 @@ func (e *Ai) Chat(ctx context.Context, req *pb.ChatRequest, rsp *pb.ChatResponse
 
 	// set response
 	rsp.Reply = resp.Choices[0].Message.Content
+	return nil
+}
+
+func (e *Ai) Stream(ctx context.Context, req *pb.StreamRequest, stream pb.Ai_StreamStream) error {
+	if len(req.Model) == 0 {
+		req.Model = openai.GPT3Dot5Turbo
+	}
+	if len(req.Prompt) == 0 {
+		return errors.BadRequest("ai.stream", "missing prompt")
+	}
+
+	message := []openai.ChatCompletionMessage{}
+
+	message = append(message, openai.ChatCompletionMessage{
+		Role:    openai.ChatMessageRoleUser,
+		Content: req.Prompt,
+	})
+
+	user := "user"
+	tnt, ok := tenant.FromContext(ctx)
+	if ok {
+		user = User(tnt)
+	}
+
+	resp, err := e.Client.CreateChatCompletionStream(
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model:    req.Model,
+			Messages: message,
+			User:     user,
+			Stream: true,
+		},
+	)
+
+	if err != nil {
+		return errors.InternalServerError("ai.stream", err.Error())
+	}
+
+	defer resp.Close()
+
+	var words []string
+
+	for {
+		response, err := resp.Recv()
+
+		if gerrors.Is(err, io.EOF) {
+			stream.Send(&pb.StreamResponse{
+				Words: words,
+			})
+			return nil
+		}
+
+		if err != nil {
+			return err
+		}
+
+		if err := stream.Send(&pb.StreamResponse{
+			Words: []string{response.Choices[0].Delta.Content},
+			Partial: true,
+		}); err != nil {
+			return err
+		}
+
+		// append to words for full response
+		words = append(words, response.Choices[0].Delta.Content)
+	}
+
 	return nil
 }
 

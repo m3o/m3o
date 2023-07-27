@@ -3,7 +3,7 @@ GOPATH:=$(shell go env GOPATH)
 .PHONY: init
 init:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install m3o.dev/platform/cmd/protoc-gen-micro@latest
+	go install m3o.dev/platform/cmd/protoc-gen-m3o@latest
 	go install m3o.dev/platform/cmd/protoc-gen-openapi@latest
 
 .PHONY: api
@@ -12,7 +12,7 @@ api:
 
 .PHONY: proto
 proto:
-	protoc --proto_path=. --micro_out=. --go_out=:. proto/ai.proto
+	protoc --proto_path=. --m3o_out=. --go_out=:. proto/ai.proto
 	
 .PHONY: build
 build:
