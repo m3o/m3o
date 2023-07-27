@@ -5,6 +5,7 @@
   "display_name": "AI",
   "pricing": {
     "Ai.Chat": 50000,
+    "Ai.Stream": 50000,
     "Ai.Complete": 50000,
     "Ai.Edit": 50000,
     "Ai.Generate": 50000,

@@ -18,6 +18,18 @@
           "reply": "Leonardo da Vinci died on May 2, 1519."
         }
     }],
+    "stream": [{
+        "title": "Stream response from chat gpt",
+        "run_check": false,
+        "request": {
+          "prompt": "write helloworld in node.js",
+          "model": "gpt-3.5-turbo"
+	},
+        "response": {
+	  "partial": true,
+          "reply": ""
+        }
+    }],
     "complete": [{
         "title": "Complete the text",
         "run_check": false,
