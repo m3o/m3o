@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 
@@ -92,6 +93,7 @@ type githubConf struct {
 type oauthConf struct {
 	Google googleConf `json:"google"`
 	Github githubConf `json:"github"`
+	AllowList []string `json:allow_list"`
 }
 
 type Oauth struct {
@@ -160,6 +162,20 @@ func NewOauth(srv *service.Service, auth auth.Auth) *Oauth {
 		cache:           cache.New(1*time.Minute, 5*time.Minute),
 	}
 	return s
+}
+
+func (e *Oauth) allowed(email string) bool {
+	for _, regex := range e.config.AllowList {
+		re, err := regexp.Compile(regex)
+		if err != nil {
+			logger.Warnf("Failed to compile allow list regexp %s", regex)
+			continue
+		}
+		if re.MatchString(email) {
+			return true
+		}
+	}
+	return false
 }
 
 // GoogleOauthURL returns the url which kicks off the google oauth flow
@@ -241,6 +257,9 @@ func (e *Oauth) GoogleLogin(ctx context.Context, req *oauth.GoogleLoginRequest, 
 		Email: email,
 	}, client.WithAuthToken())
 	if err != nil && (strings.Contains(err.Error(), "notfound") || strings.Contains(err.Error(), "not found")) {
+		if !e.allowed(email) {
+			return merrors.Forbidden("oauth.google", "not allowed")
+		}
 		logger.Infof("Oauth registering %v", email)
 		rsp.IsSignup = true
 		return e.registerOauthUser(ctx, rsp, email, "google")
@@ -327,6 +346,9 @@ func (e *Oauth) GithubLogin(ctx context.Context, req *oauth.GithubLoginRequest, 
 		Email: email,
 	}, client.WithAuthToken())
 	if err != nil && (strings.Contains(err.Error(), "notfound") || strings.Contains(err.Error(), "not found")) {
+		if !e.allowed(email) {
+			return merrors.Forbidden("oauth.google", "not allowed")
+		}
 		logger.Infof("Oauth registering %v", email)
 		rsp.IsSignup = true
 		return e.registerOauthUser(ctx, rsp, email, "github")
