@@ -45,7 +45,7 @@ interface SidebarItemsProps {
 export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
   const { isMobile } = useWindowResizeTrigger()
   const { pathname } = useRouter()
-  const [menuHeight, setMenuHeight] = useState('auto')
+  const [menuHeight, setMenuHeight] = useState(0)
   const menuRef = useRef<HTMLDivElement>(null)
 
   const link = items
@@ -67,7 +67,7 @@ export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
     <div>
       <div
         ref={menuRef}
-        style={{ height: isMobile ? menuHeight : 'auto' }}
+        style={{ height: menuHeight }}
         className="overflow-hidden transition-all border-b md:border-b-0 tbc">
         <div>
           {items.map((item, i) => (
