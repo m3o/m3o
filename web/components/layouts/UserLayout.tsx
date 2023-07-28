@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Footer, Header } from '@/components/ui'
+import { Header } from '@/components/ui'
 
 interface Props {
   title: string
@@ -21,7 +21,6 @@ export const UserLayout: FC<Props> = ({ children, subTitle, title }) => {
       <section className="bg-zinc-50 py-6 dark:bg-zinc-900">
         <div className="m3o-container">{children}</div>
       </section>
-      <Footer />
     </>
   )
 }

@@ -5,7 +5,7 @@ import { NextSeo } from 'next-seo'
 import { WithAuthProps } from '@/lib/api/m3o/withAuth'
 import { useDownloadFile, useGetRelatedApis, useRecentlyViewed } from '@/hooks'
 import { getDescription } from '@/utils/api'
-import { Footer, Header } from '@/components/ui'
+import { Header } from '@/components/ui'
 import { Navigation, DownloadModal } from '@/components/pages/Api'
 import Link from 'next/link'
 
@@ -58,7 +58,6 @@ export const ApiLayout: FC<ApiLayoutProps> = ({
         <Navigation onDownloadsClick={() => console.log()} />
         {children}
       </div>
-      <Footer />
       <DownloadModal
         open={showDownloadsModal}
         closeModal={() => setShowDownloadsModal(false)}
