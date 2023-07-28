@@ -156,7 +156,9 @@ func (e *Signup) User(ctx context.Context, req *signup.UserRequest, rsp *signup.
 				return merrors.InternalServerError("signup.User", "Error sending verification email for user")
 			}
 		}
-	} else if len(e.config.AllowList) > 0 {
+	}
+
+	if len(e.config.AllowList) > 0 {
 		// only allow these to signup
 		allowed := false
 		for _, email := range e.config.AllowList {
