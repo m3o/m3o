@@ -44,6 +44,14 @@ function formatDataForTable(data: Usage): UsageTableItem[] {
 }
 
 function getPercentageBasedOnMax(requestsAmount: number, max: number): number {
+  if (requestsAmount == 0) {
+    return 0.1
+  }
+
+  if (max == 0) {
+    return 0.1
+  }
+
   return (requestsAmount / max) * 100
 }
 

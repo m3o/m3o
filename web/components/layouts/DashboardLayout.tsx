@@ -1,7 +1,6 @@
 import type { ComponentType, ComponentProps } from 'react'
 import type { ReactElement, PropsWithChildren } from 'react'
 import { Fragment, useRef, useState, useEffect } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
@@ -45,36 +44,27 @@ interface SidebarItemsProps {
 
 export function SidebarItems({ items }: SidebarItemsProps): ReactElement {
   const { isMobile } = useWindowResizeTrigger()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { pathname } = useRouter()
-  const [menuHeight, setMenuHeight] = useState(0)
+  const [menuHeight, setMenuHeight] = useState('auto')
   const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      const height = (menuRef.current?.firstChild as HTMLDivElement)
-        .clientHeight
-      setMenuHeight(height)
-    } else {
-      setMenuHeight(0)
-    }
-  }, [isMenuOpen])
 
   const link = items
     .flatMap(item => item.items)
     .filter(item => !!item)
     .find(item => item!.href === pathname)!
 
+  useEffect(() => {
+    if (!isMobile) {
+      const height = (menuRef.current?.firstChild as HTMLDivElement)
+        .clientHeight
+      setMenuHeight(height)
+    } else {
+      setMenuHeight(0)
+    }
+  }, [isMobile])
+
   return (
     <div>
-      <button
-        className="md:hidden w-full p-4 text-left flex justify-between"
-        onClick={() => setIsMenuOpen(prev => !prev)}>
-        Navigation
-        <ChevronDownIcon
-          className={classNames('w-6', { 'rotate-180': isMenuOpen })}
-        />
-      </button>
       <div
         ref={menuRef}
         style={{ height: isMobile ? menuHeight : 'auto' }}
