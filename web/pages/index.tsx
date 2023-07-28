@@ -38,7 +38,9 @@ export default function Home({
         description={user ? seo.home.description : seo.landing.description}
         canonical="https://m3o.com"
       />
-      <LoggedInView user={user} apiToken={apiToken} />
+      {user ? (
+        <LoggedInView user={user} apiToken={apiToken} />
+      ) : (<div></div>) }
     </>
   )
 }
