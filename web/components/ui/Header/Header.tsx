@@ -27,7 +27,7 @@ export const Header: FC = () => {
   )
 
   return (
-    <div className="sticky top-0 z-50">
+    <div className="top-0 z-50">
       <HeaderBanner />
       <header
         className={classNames(
