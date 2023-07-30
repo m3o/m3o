@@ -89,7 +89,7 @@ const Login: NextPage = () => {
               <h1 className="font-bold text-3xl mb-6 text-black dark:text dark:text-white">
                 Log in
               </h1>
-              <OAuthSignInButtons footerText="or sign in with your email" />
+              <OAuthSignInButtons footerText="sign in with email" />
               <form
                 onSubmit={handleSubmit((values: LoginFormFields) =>
                   loginMutation.mutate(values),
