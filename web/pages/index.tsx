@@ -21,7 +21,6 @@ const Home: NextPage<ExploreProps & WithAuthProps> = ({
       <NextSeo
         title={user ? seo.home.title : seo.landing.title}
         description={user ? seo.home.description : seo.landing.description}
-        title={seo.explore.title}
         canonical="https://m3o.com"
       />
       <MainLayout>
