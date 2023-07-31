@@ -1,21 +1,45 @@
-import type { NextPage } from 'next'
+import type { ReactElement } from 'react'
 import { NextSeo } from 'next-seo'
 import seo from '@/lib/seo.json'
-import { MainLayout } from '@/components/layouts'
-import { WithAuthProps } from '@/lib/api/m3o/withAuth'
-import {
-  Explore,
-  ExploreHeader,
-  ExploreProps,
-  exploreGetServerSideProps,
-} from '@/components/ui'
+import { Landing } from '@/components/ui'
+import { LoggedInView } from '@/components/pages/Home'
+import { WithAuthProps, withAuth } from '@/lib/api/m3o/withAuth'
+import { exploreServices } from '@/lib/api/m3o/services/explore'
+import { AuthCookieNames } from '@/lib/constants'
 
-export const getServerSideProps = exploreGetServerSideProps
+interface Props extends WithAuthProps {
+  apiToken: string
+  services: ExploreAPI[]
+}
 
-const Home: NextPage<ExploreProps & WithAuthProps> = ({
+const SERVICES_NAMES = [
+  'app',
+  'cache',
+  'db',
+  'event',
+  'user',
+  'space'
+]
+
+export const getServerSideProps = withAuth(async context => {
+  const services = await exploreServices()
+
+  return {
+    props: {
+      apiToken: context.req.cookies[AuthCookieNames.ApiToken] || '',
+      services: SERVICES_NAMES.map(name =>
+        services.find(item => item.name === name),
+      ),
+      user: context.req.user,
+    } as Props,
+  }
+})
+
+export default function Home({
+  apiToken,
+  services,
   user,
-  ...exploreProps
-}) => {
+}: Props): ReactElement {
   return (
     <>
       <NextSeo
@@ -23,11 +47,15 @@ const Home: NextPage<ExploreProps & WithAuthProps> = ({
         description={user ? seo.home.description : seo.landing.description}
         canonical="https://m3o.com"
       />
-      <MainLayout>
-        <Explore {...exploreProps} header={<ExploreHeader title="M3O Services" />} />
-      </MainLayout>
+      {user ? (
+        <LoggedInView user={user} apiToken={apiToken} />
+      ) : (
+        <Landing
+          heading="Universal Micro Services"
+          services={services}
+          subHeading="Explore the cloud as serverless building blocks"
+        />
+      )}
     </>
   )
 }
-
-export default Home
