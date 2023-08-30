@@ -188,8 +188,11 @@ func (domain *Domain) CreateSession(ctx context.Context, sess *user.Session) err
 	if err != nil {
 		return err
 	}
+
+	key := generateSessionStoreKey(ctx, sess.Id)
+
 	record := &store.Record{
-		Key:   generateSessionStoreKey(ctx, sess.Id),
+		Key:   key,
 		Value: val,
 	}
 
@@ -201,6 +204,12 @@ func (domain *Domain) CreateSession(ctx context.Context, sess *user.Session) err
 		Key:   generateSessionUserStoreKey(ctx, sess.UserId, sess.Id),
 		Value: val,
 	}
+
+	// cache session
+	mtx.Lock()
+	sessions[key] = sess
+	mtx.Unlock()
+
 	return store.Write(record)
 }
 
@@ -210,6 +219,12 @@ func (domain *Domain) DeleteSession(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
+
+	// delete the session
+	mtx.Lock()
+	delete(sessions, sessKey)
+	mtx.Unlock()
+
 	var sess user.Session
 	if err := json.Unmarshal(recs[0].Value, &sess); err != nil {
 		return err
@@ -217,27 +232,44 @@ func (domain *Domain) DeleteSession(ctx context.Context, id string) error {
 	if err := domain.store.Delete(generateSessionUserStoreKey(ctx, sess.UserId, id)); err != nil {
 		return err
 	}
+
 	return domain.store.Delete(sessKey)
 }
 
 func (domain *Domain) DeleteAllSessions(ctx context.Context, userID string) error {
+
 	sessKey := generateSessionUserStoreKey(ctx, userID, "")
 	recs, err := domain.store.Read(sessKey, store.ReadPrefix())
 	if err != nil {
 		return err
 	}
+
+	var keys []string
+
 	for _, rec := range recs {
 		var sess user.Session
 		if err := json.Unmarshal(rec.Value, &sess); err != nil {
 			return err
 		}
-		if err := domain.store.Delete(generateSessionStoreKey(ctx, sess.Id)); err != nil {
+
+		key := generateSessionStoreKey(ctx, sess.Id)
+		keys = append(keys, key)
+
+		if err := domain.store.Delete(key); err != nil {
 			return err
 		}
 		if err := domain.store.Delete(rec.Key); err != nil {
 			return err
 		}
 	}
+
+	// delete all sessions
+	mtx.Lock()
+	for _, key := range keys {
+		delete(sessions, key)
+	}
+	mtx.Unlock()
+
 	return nil
 }
 
@@ -294,6 +326,17 @@ func (domain *Domain) CreateToken(ctx context.Context, email, token string) erro
 }
 
 func (domain *Domain) ReadSession(ctx context.Context, id string) (*user.Session, error) {
+	key := generateSessionStoreKey(ctx, id)
+
+	// check cache
+	mtx.RLock()
+	sess, ok := sessions[key]
+	mtx.RUnlock()
+
+	if ok {
+		return sess, nil
+	}
+
 	records, err := domain.store.Read(generateSessionStoreKey(ctx, id))
 	if err != nil {
 		return nil, err
@@ -303,11 +346,16 @@ func (domain *Domain) ReadSession(ctx context.Context, id string) (*user.Session
 		return nil, ErrNotFound
 	}
 
-	sess := &user.Session{}
+	sess = &user.Session{}
 	err = json.Unmarshal(records[0].Value, sess)
 	if err != nil {
 		return nil, err
 	}
+
+	// store the session
+	mtx.Lock()
+	sessions[key] = sess
+	mtx.Unlock()
 
 	return sess, nil
 }
@@ -604,11 +652,8 @@ func (domain *Domain) List(ctx context.Context, o, l uint32) (result []*user.Acc
 }
 
 func (domain *Domain) CacheToken(ctx context.Context, token, email string, ttl int) error {
-
 	expires := time.Now().Add(time.Duration(ttl) * time.Second)
-
 	err := cache.Context(ctx).Set(token, email, expires)
-
 	return err
 }
 
