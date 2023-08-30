@@ -415,6 +415,13 @@ func (domain *Domain) Create(ctx context.Context, user *user.Account, salt strin
 		{Key: generatePasswordStoreKey(ctx, user.Id), Value: passwordVal},
 	}
 
+	mtx.Lock()
+	for i := 0; i < 3; i++ {
+		key := records[i].Key
+		accounts[key] = user
+	}
+	mtx.Unlock()
+
 	return domain.batchWrite(records)
 }
 
@@ -461,6 +468,13 @@ func (domain *Domain) Delete(ctx context.Context, userId string) error {
 		generatePasswordStoreKey(ctx, userId),
 	}
 
+	mtx.Lock()
+	for i := 0; i < 3; i++ {
+		key := keys[i]
+		delete(accounts, key)
+	}
+	mtx.Unlock()
+
 	return domain.batchDelete(keys)
 }
 
@@ -489,6 +503,13 @@ func (domain *Domain) MarkVerified(ctx context.Context, id, email string) error 
 		{Key: generateAccountTenantUsernameKey(id, user.Username), Value: val},
 		{Key: generateAccountTenantEmailKey(id, user.Email), Value: val},
 	}
+
+	// update the cache
+	mtx.Lock()
+	for _, rec := range records {
+		accounts[rec.Key] = user
+	}
+	mtx.Unlock()
 
 	// update
 	if err := domain.batchWrite(records); err != nil {
@@ -528,6 +549,18 @@ func (domain *Domain) Update(ctx context.Context, user *user.Account) error {
 		{Key: generateAccountEmailStoreKey(ctx, user.Email), Value: val},
 	}
 
+	// update the cache
+	mtx.Lock()
+	// delete certain keys
+	for _, key := range keysToDelete {
+		delete(accounts, key)
+	}
+	// create new keys
+	for _, rec := range records {
+		accounts[rec.Key] = user
+	}
+	mtx.Unlock()
+
 	// update
 	if err := domain.batchWrite(records); err != nil {
 		return err
@@ -543,6 +576,14 @@ func (domain *Domain) Update(ctx context.Context, user *user.Account) error {
 
 // ReadUserByKey read user account in store by key
 func (domain *Domain) ReadUserByKey(ctx context.Context, key string) (*user.Account, error) {
+	mtx.RLock()
+	account, ok := accounts[key]
+	mtx.RUnlock()
+
+	if ok {
+		return account, nil
+	}
+
 	var result = &user.Account{}
 	records, err := domain.store.Read(key, store.ReadLimit(1))
 	if err != nil {
@@ -553,7 +594,15 @@ func (domain *Domain) ReadUserByKey(ctx context.Context, key string) (*user.Acco
 		return result, ErrNotFound
 	}
 
-	err = json.Unmarshal(records[0].Value, result)
+	if err := json.Unmarshal(records[0].Value, result); err != nil {
+		return nil, err
+	}
+
+	// save the user
+	mtx.Lock()
+	accounts[key] = result
+	mtx.Unlock()
+
 	return result, err
 }
 

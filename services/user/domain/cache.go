@@ -9,4 +9,6 @@ import (
 var (
 	mtx      sync.RWMutex
 	sessions = map[string]*user.Session{}
+
+	accounts = map[string]*user.Account{}
 )
