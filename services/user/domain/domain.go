@@ -128,7 +128,7 @@ func (domain *Domain) DeletePasswordResetCode(ctx context.Context, userId, code 
 
 // ReadPasswordResetCode returns the user reset code
 func (domain *Domain) ReadPasswordResetCode(ctx context.Context, userId, code string) (*passwordResetCode, error) {
-	records, err := domain.store.Read(generatePasswordResetCodeStoreKey(ctx, userId, code))
+	records, err := domain.store.Read(generatePasswordResetCodeStoreKey(ctx, userId, code), store.ReadLimit(1))
 	if err != nil && err != store.ErrNotFound {
 		return nil, err
 	}
@@ -215,7 +215,7 @@ func (domain *Domain) CreateSession(ctx context.Context, sess *user.Session) err
 
 func (domain *Domain) DeleteSession(ctx context.Context, id string) error {
 	sessKey := generateSessionStoreKey(ctx, id)
-	recs, err := domain.store.Read(sessKey)
+	recs, err := domain.store.Read(sessKey, store.ReadLimit(1))
 	if err != nil {
 		return err
 	}
@@ -281,7 +281,7 @@ func (domain *Domain) ReadToken(ctx context.Context, token string) (string, stri
 
 	key := generateVerificationTokenStoreKey(token)
 
-	records, err := domain.store.Read(key)
+	records, err := domain.store.Read(key, store.ReadLimit(1))
 	if err != nil {
 		return "", "", err
 	}
@@ -337,7 +337,7 @@ func (domain *Domain) ReadSession(ctx context.Context, id string) (*user.Session
 		return sess, nil
 	}
 
-	records, err := domain.store.Read(generateSessionStoreKey(ctx, id))
+	records, err := domain.store.Read(generateSessionStoreKey(ctx, id), store.ReadLimit(1))
 	if err != nil {
 		return nil, err
 	}
@@ -544,7 +544,7 @@ func (domain *Domain) Update(ctx context.Context, user *user.Account) error {
 // ReadUserByKey read user account in store by key
 func (domain *Domain) ReadUserByKey(ctx context.Context, key string) (*user.Account, error) {
 	var result = &user.Account{}
-	records, err := domain.store.Read(key)
+	records, err := domain.store.Read(key, store.ReadLimit(1))
 	if err != nil {
 		return result, err
 	}
@@ -610,7 +610,7 @@ func (domain *Domain) UpdatePassword(ctx context.Context, userId string, salt st
 }
 
 func (domain *Domain) SaltAndPassword(ctx context.Context, userId string) (string, string, error) {
-	records, err := domain.store.Read(generatePasswordStoreKey(ctx, userId))
+	records, err := domain.store.Read(generatePasswordStoreKey(ctx, userId), store.ReadLimit(1))
 	if err != nil {
 		return "", "", err
 	}
