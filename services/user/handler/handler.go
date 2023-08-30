@@ -371,11 +371,22 @@ func (s *User) LogoutAll(ctx context.Context, req *pb.LogoutAllRequest, rsp *pb.
 }
 
 func (s *User) ReadSession(ctx context.Context, req *pb.ReadSessionRequest, rsp *pb.ReadSessionResponse) error {
+	// get the user session
 	sess, err := s.domain.ReadSession(ctx, req.SessionId)
 	if err != nil {
 		return err
 	}
 	rsp.Session = sess
+
+	// get the user account
+	account, err := s.domain.Read(ctx, sess.UserId)
+	if err != nil {
+		return err
+	}
+
+	// set the account
+	rsp.Account = account
+
 	return nil
 }
 

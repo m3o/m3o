@@ -134,6 +134,8 @@ message ReadSessionRequest {
 message ReadSessionResponse {
 	// the session for the user
 	Session session = 1;
+	// the user for the session
+	Account account = 2;
 }
 
 
