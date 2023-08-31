@@ -537,7 +537,7 @@ func (g *grpcClient) Stream(ctx context.Context, req client.Request, opts ...cli
 	// inject proxy address
 	// TODO: don't even bother using Lookup/Select in this case
 	if len(g.opts.Proxy) > 0 {
-		callOpts.Address = []string{g.opts.Proxy}
+		callOpts.Address = append(callOpts.Address, g.opts.Proxy)
 	}
 
 	// lookup the route to send the reques to
