@@ -277,6 +277,8 @@ func (s *User) Update(ctx context.Context, req *pb.UpdateRequest, rsp *pb.Update
 		Username: account.Username,
 		Email:    account.Email,
 		Profile:  account.Profile,
+		Verified: account.Verified,
+		VerificationDate: account.VerificationDate,
 	})
 }
 
