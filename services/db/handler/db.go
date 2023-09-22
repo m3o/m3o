@@ -366,6 +366,12 @@ func (e *Db) Read(ctx context.Context, req *db.ReadRequest, rsp *db.ReadResponse
 		rsp.Records = append(rsp.Records, s)
 	}
 
+	// single record retrieval, cache it
+	if len(req.Id) > 0 && len(recs) == 1 {
+		val, _ := recs[0].Data.MarshalJSON()
+		Cache.Add(tableName+"/"+req.Id, val)
+	}
+
 	return nil
 }
 
