@@ -9,6 +9,11 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/hashicorp/golang-lru"
+	"github.com/patrickmn/go-cache"
+	"google.golang.org/protobuf/types/known/structpb"
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
 	"m3o.dev/platform/service/errors"
 	"m3o.dev/platform/service/logger"
 	db "m3o.dev/services/db/proto"
@@ -16,10 +21,6 @@ import (
 	gorm2 "m3o.dev/services/pkg/gorm"
 	adminpb "m3o.dev/services/pkg/service/proto"
 	"m3o.dev/services/pkg/tenant"
-	"github.com/patrickmn/go-cache"
-	"google.golang.org/protobuf/types/known/structpb"
-	"gorm.io/datatypes"
-	"gorm.io/gorm"
 )
 
 const idKey = "id"
@@ -32,6 +33,10 @@ const renameTableStmt = `ALTER TABLE "%v" RENAME TO "%v"`
 var re = regexp.MustCompile("^[a-zA-Z0-9_]*$")
 var c = cache.New(5*time.Minute, 10*time.Minute)
 var usageCache = cache.New(30*time.Second, 10*time.Minute)
+
+var (
+	Cache, _ = lru.New(128)
+)
 
 type Record struct {
 	ID   string
@@ -143,6 +148,9 @@ func (e *Db) Create(ctx context.Context, req *db.CreateRequest, rsp *db.CreateRe
 	// set the response id
 	rsp.Id = id
 
+	// cache it
+	Cache.Add(tableName+"/"+id, bs)
+
 	return nil
 }
 
@@ -184,6 +192,7 @@ func (e *Db) Update(ctx context.Context, req *db.UpdateRequest, rsp *db.UpdateRe
 		if len(rec) == 0 {
 			return fmt.Errorf("update failed: not found")
 		}
+
 		old := map[string]interface{}{}
 		err = json.Unmarshal(rec[0].Data, &old)
 		if err != nil {
@@ -194,10 +203,19 @@ func (e *Db) Update(ctx context.Context, req *db.UpdateRequest, rsp *db.UpdateRe
 		}
 		bs, _ := json.Marshal(old)
 
-		return tx.Table(tableName).Save(&Record{
+		err = tx.Table(tableName).Save(&Record{
 			ID:   id,
 			Data: bs,
 		}).Error
+
+		if err != nil {
+			return err
+		}
+
+		// cache it
+		Cache.Add(tableName+"/"+id, bs)
+
+		return nil
 	})
 }
 
@@ -234,6 +252,35 @@ func (e *Db) Read(ctx context.Context, req *db.ReadRequest, rsp *db.ReadResponse
 	if req.Id != "" {
 		logger.Infof("Query by id: %v", req.Id)
 		db = db.Where("id = ?", req.Id)
+
+		// get the cached value
+		val, ok := Cache.Get(tableName + "/" + req.Id)
+		if ok {
+			ma := map[string]interface{}{}
+			json.Unmarshal(val.([]byte), &ma)
+
+			// only inject the ID if it does not exist
+			if id, ok := ma[idKey]; !ok {
+				ma[idKey] = req.Id
+			} else if id != req.Id {
+				// inject an _id key because
+				// they don't match e.g user defined
+				// an id field in their data
+				// and separately set an id
+				ma[_idKey] = req.Id
+			}
+
+			m, _ := json.Marshal(ma)
+			s := &structpb.Struct{}
+
+			if err = s.UnmarshalJSON(m); err != nil {
+				return err
+			}
+
+			// return the cached value
+			rsp.Records = append(rsp.Records, s)
+			return nil
+		}
 	} else {
 		for _, query := range queries {
 			logger.Infof("Query field: %v, op: %v, value: %v", query.Field, query.Op, query.Value)
@@ -336,6 +383,8 @@ func (e *Db) Delete(ctx context.Context, req *db.DeleteRequest, rsp *db.DeleteRe
 	if err != nil {
 		return err
 	}
+
+	Cache.Remove(tableName + "/" + req.Id)
 
 	return db.Table(tableName).Delete(Record{
 		ID: req.Id,
