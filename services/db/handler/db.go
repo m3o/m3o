@@ -256,6 +256,8 @@ func (e *Db) Read(ctx context.Context, req *db.ReadRequest, rsp *db.ReadResponse
 		// get the cached value
 		val, ok := Cache.Get(tableName + "/" + req.Id)
 		if ok {
+			logger.Infof("Reading %v from cache", req.Id)
+
 			ma := map[string]interface{}{}
 			json.Unmarshal(val.([]byte), &ma)
 
