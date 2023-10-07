@@ -245,7 +245,7 @@ func (e *Db) Read(ctx context.Context, req *db.ReadRequest, rsp *db.ReadResponse
 		return errors.BadRequest("db.read", fmt.Sprintf("limit over 1000 is invalid, you specified %v", req.Limit))
 	}
 	if req.Limit == 0 {
-		req.Limit = 25
+		req.Limit = 100
 	}
 
 	db = db.Table(tableName)
