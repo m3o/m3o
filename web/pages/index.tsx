@@ -12,14 +12,7 @@ interface Props extends WithAuthProps {
   services: ExploreAPI[]
 }
 
-const SERVICES_NAMES = [
-  'app',
-  'cache',
-  'db',
-  'event',
-  'user',
-  'space'
-]
+const SERVICES_NAMES = []
 
 export const getServerSideProps = withAuth(async context => {
   const services = await exploreServices()
